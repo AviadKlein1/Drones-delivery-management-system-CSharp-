@@ -75,6 +75,28 @@ namespace DAL
                     pickedUp + "\ndelivered: " + delivered + '\n';
             }
         }
+        namespace DalObject
+        {
+            class DataSource
+            {
+                internal static Drone[] drones = new Drone[10];
+                internal static Station[] stations = new Station[5];
+                internal static Customer[] customers = new Customer[100];
+                internal static Parcel[] parcel = new Parcel[1000];
+
+                internal class Config
+                {
+                    //first Available item in each array;
+                    internal static int DronesIndex = 0;
+                    internal static int StationIndex = 0;
+                    internal static int CustomerIndex = 0;
+                    internal static int ParcelIndex = 0;
+                }
+                 //מספר מזהה רץ עבור חבילות?
+
+            }
+
+        }
     }
     public struct enums
     {
@@ -82,8 +104,5 @@ namespace DAL
         enum WeightCategory { light, medium, heavy };
         enum DroneStation { available, maintenance, delivery };
     }
-}
-namespace DalObject
-{
-
+    
 }
