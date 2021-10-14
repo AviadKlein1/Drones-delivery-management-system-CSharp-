@@ -4,6 +4,12 @@ namespace DAL
 {
     namespace DO
     {
+        public class enums
+        {
+            public enum PriorityLevel { regular, quickly, ergent };
+            public enum WeightCategory { light, medium, heavy };
+            public enum DroneStatus { available, maintenance, delivery };
+        }
         public struct Station
         {
             public int id { get; set; }
@@ -22,13 +28,13 @@ namespace DAL
         {
             public int id { get; set; }
             public string model { get; set; }
-            //public WeightCategory Weight { get; set; }
-            //public DroneStatus Status { get; set; }
+            public enums.WeightCategory weight { get; set; }
+            public enums.DroneStatus status { get; set; }
             public int battery { get; set; }
             public override string ToString()
             {
-                return "ID: " + id + "\nModel: " + model + "\nWeight Category: " + "\nStatus: " +
-                    "\nBattery: " + battery + "\n";
+                return "ID: " + id + "\nModel: " + model + "\nWeight Category: " + weight +  "\nStatus: " + 
+                    status + "\nBattery: " + battery + "\n";
             }
         }
 
@@ -61,8 +67,8 @@ namespace DAL
             public int id { get; set; }
             public int senderId { get; set; }
             public int targetId { get; set; }
-            //public WeightCategory Weight { get; set; }
-            //public PriorityLevel Priority { get; set; }
+            public enums.WeightCategory weight { get; set; }
+            public enums.PriorityLevel priority { get; set; }
             public DateTime requested { get; set; }
             public int droneId { get; set; }
             public DateTime scheduled { get; set; }
@@ -70,39 +76,12 @@ namespace DAL
             public DateTime delivered { get; set; }
             public override string ToString()
             {
-                return "ID: " + id + "\nsender ID: " + senderId + "\ntarget ID: " + targetId + "\nrequested: " +
-                    requested + "\ndrone ID: " + droneId + "\nscheduled: " + scheduled + "\nnpicked up: " +
-                    pickedUp + "\ndelivered: " + delivered + '\n';
+                return "ID: " + id + "\nsender ID: " + senderId + "\ntarget ID: " + targetId + "\nWeight Category: " + 
+                    weight + "\nrequested: " + "\nPriority: " + priority + "\nrequested" + requested + "\ndrone ID: " +
+                    droneId + "\nscheduled: " + scheduled + "\npicked up: " + pickedUp + "\ndelivered: " + 
+                    delivered + '\n';
             }
         }
-        namespace DalObject
-        {
-            class DataSource
-            {
-                internal static Drone[] drones = new Drone[10];
-                internal static Station[] stations = new Station[5];
-                internal static Customer[] customers = new Customer[100];
-                internal static Parcel[] parcel = new Parcel[1000];
-
-                internal class Config
-                {
-                    //first Available item in each array;
-                    internal static int DronesIndex = 0;
-                    internal static int StationIndex = 0;
-                    internal static int CustomerIndex = 0;
-                    internal static int ParcelIndex = 0;
-                }
-                 //מספר מזהה רץ עבור חבילות?
-
-            }
-
-        }
-    }
-    public struct enums
-    {
-        enum PriorityLevel { regular, quickly, ergent };
-        enum WeightCategory { light, medium, heavy };
-        enum DroneStation { available, maintenance, delivery };
     }
     
 }
