@@ -4,6 +4,12 @@ namespace DAL
 {
     namespace DO
     {
+        public class enums
+        {
+            public enum PriorityLevel { regular, quickly, ergent };
+            public enum WeightCategory { light, medium, heavy };
+            public enum DroneStatus { available, maintenance, delivery };
+        }
         public struct Station
         {
             public int id { get; set; }
@@ -22,8 +28,8 @@ namespace DAL
         {
             public int id { get; set; }
             public string model { get; set; }
-            //public WeightCategory Weight { get; set; }
-            //public DroneStatus Status { get; set; }
+            public enums.WeightCategory weight { get; set; }
+            public enums.DroneStatus status { get; set; }
             public int battery { get; set; }
             public override string ToString()
             {
@@ -61,8 +67,8 @@ namespace DAL
             public int id { get; set; }
             public int senderId { get; set; }
             public int targetId { get; set; }
-            //public WeightCategory Weight { get; set; }
-            //public PriorityLevel Priority { get; set; }
+            public enums.WeightCategory weight { get; set; }
+            public enums.PriorityLevel priority { get; set; }
             public DateTime requested { get; set; }
             public int droneId { get; set; }
             public DateTime scheduled { get; set; }
@@ -75,12 +81,6 @@ namespace DAL
                     pickedUp + "\ndelivered: " + delivered + '\n';
             }
         }
-    }
-    public struct enums
-    {
-        enum PriorityLevel { regular, quickly, ergent };
-        enum WeightCategory { light, medium, heavy };
-        enum DroneStation { available, maintenance, delivery };
     }
 }
 namespace DalObject
