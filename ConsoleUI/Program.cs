@@ -6,7 +6,8 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            DAL.DO.Station myStation = new DAL.DO.Station();
+            Console.WriteLine(myStation.toString());
         }
     }
 }
