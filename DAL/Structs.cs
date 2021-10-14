@@ -33,8 +33,8 @@ namespace DAL
             public int battery { get; set; }
             public override string ToString()
             {
-                return "ID: " + id + "\nModel: " + model + "\nWeight Category: " + "\nStatus: " +
-                    "\nBattery: " + battery + "\n";
+                return "ID: " + id + "\nModel: " + model + "\nWeight Category: " + weight +  "\nStatus: " + 
+                    status + "\nBattery: " + battery + "\n";
             }
         }
 
@@ -76,9 +76,10 @@ namespace DAL
             public DateTime delivered { get; set; }
             public override string ToString()
             {
-                return "ID: " + id + "\nsender ID: " + senderId + "\ntarget ID: " + targetId + "\nrequested: " +
-                    requested + "\ndrone ID: " + droneId + "\nscheduled: " + scheduled + "\nnpicked up: " +
-                    pickedUp + "\ndelivered: " + delivered + '\n';
+                return "ID: " + id + "\nsender ID: " + senderId + "\ntarget ID: " + targetId + "\nWeight Category: " + 
+                    weight + "\nrequested: " + "\nPriority: " + priority + "\nrequested" + requested + "\ndrone ID: " +
+                    droneId + "\nscheduled: " + scheduled + "\npicked up: " + pickedUp + "\ndelivered: " + 
+                    delivered + '\n';
             }
         }
     }
