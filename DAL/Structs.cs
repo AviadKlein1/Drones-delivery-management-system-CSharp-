@@ -76,11 +76,10 @@ namespace DAL
             public DateTime delivered { get; set; }
             public override string ToString()
             {
-                return "ID: " + id + "\nsender ID: " + senderId + "\ntarget ID: " + targetId + "\nWeight Category: " + 
-                    weight + "\nrequested: " + "\nPriority: " + priority + "\nrequested" + requested + "\ndrone ID: " +
-                    droneId + "\nscheduled: " + scheduled + "\npicked up: " + pickedUp + "\ndelivered: " + 
-                    delivered + '\n';
-            }
+                return  "ID: " + id + "\nsender ID: " + senderId + "\ntarget ID: " + targetId + "\nWeight Category: " +
+                     weight + "\nrequested: " + "\nPriority: " + priority + "\nrequested" + requested + "\ndrone ID: " +
+                     droneId + "\nscheduled: " + scheduled + "\npicked up: " + pickedUp + "\ndelivered: " +
+                     delivered + '\n';
         }
     }
 }
