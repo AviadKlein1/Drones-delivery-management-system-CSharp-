@@ -81,6 +81,42 @@ namespace DAL
                     droneId + "\nscheduled: " + scheduled + "\npicked up: " + pickedUp + "\ndelivered: " + 
                     delivered + '\n';
             }
+
+        }
+         namespace DalObject
+        {
+            class DataSource
+            {
+
+                internal static Station[] stations = new Station[5];
+                internal static Drone[] drones = new Drone[10];
+                internal static Customer[] customers = new Customer[100];
+                internal static DroneCharge[] droneCharges = new DroneCharge[5];
+                internal static Parcel[] parcels = new Parcel[1000];
+
+                internal class Config
+                {
+                    internal static int stationIndex=0;
+                    internal static int droneIndex=0;
+                    internal static int customerIndex=0;
+                    internal static int droneChargeIndex=0;
+                    internal static int parcelIndex=0;
+                     //שדה של מספר מזהה רץ עבור חבילות
+                }
+
+                public static void  Initialize()
+                {
+                    for(int i = 0; i<2; i++) stations[i]= addStation();
+                    for (int i = 0; i < 5; i++) drones[i] = addDrone();
+                    for (int i = 0; i < 10; i++) customers[i] = addCustomer();
+                    for (int i = 0; i < 10; i++) parcels[i] = addParcel();
+                    //for (int i = 0; i < 2; i++) ChrgeStations[i] = addChrgeStation();
+
+
+
+                }
+
+            }
         }
     }
     
