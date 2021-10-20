@@ -106,16 +106,24 @@ namespace DAL
 
                 public static void  Initialize()
                 {
-                    for(int i = 0; i<2; i++) stations[i]= addStation();
+                    for(int i = 0; i<2; i++) stations[i]= new DAL.DO.addStation();
                     for (int i = 0; i < 5; i++) drones[i] = addDrone();
                     for (int i = 0; i < 10; i++) customers[i] = addCustomer();
                     for (int i = 0; i < 10; i++) parcels[i] = addParcel();
                     //for (int i = 0; i < 2; i++) ChrgeStations[i] = addChrgeStation();
 
 
-
                 }
 
+              
+            }
+            class constructors
+            {
+                public static void addStation()
+                {
+
+
+                }
             }
         }
     }
