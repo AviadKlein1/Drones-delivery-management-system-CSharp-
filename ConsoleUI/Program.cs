@@ -6,16 +6,15 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            DAL.DO.Station myStation = new DAL.DO.Station();
-            Console.WriteLine(myStation);
-            DAL.DO.Drone myDrone = new DAL.DO.Drone();
-            Console.WriteLine(myDrone);
-            DAL.DO.Customer myCustomer = new DAL.DO.Customer();
-            Console.WriteLine(myCustomer);
-            DAL.DO.DroneCharge myDroneCharge = new DAL.DO.DroneCharge();
-            Console.WriteLine(myDroneCharge);
-            DAL.DO.Parcel myParcel = new DAL.DO.Parcel();
-            Console.WriteLine(myParcel);
+            Console.WriteLine("To add station enter 1 \nTo add drone enter 2\n To add customer enter 3\nTo add paracel enter 4");
+
+            IDAL.DO.DalObject.DalObject station1 = new IDAL.DO.DalObject.DalObject();
+            station1.addStation(0);
+            
+
+            
+
+
         }
     }
 }
