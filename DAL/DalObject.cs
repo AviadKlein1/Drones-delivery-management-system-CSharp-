@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace IDAL
 {
     namespace DO
@@ -12,6 +13,11 @@ namespace IDAL
         {
             public class DalObject
             {
+                public DalObject()
+                {
+                    IDAL.DO.DalObject.DataSource.Initialize();
+                }
+
                 public void addStation()
                 {
                     Station myStation = new Station();
@@ -140,7 +146,7 @@ namespace IDAL
                 }
 
                 //updates
-                public void ParacelToDrone(int myId)
+                public void paracelToDrone(int myId)
                 {
                     int i;
                     bool flag =false;
