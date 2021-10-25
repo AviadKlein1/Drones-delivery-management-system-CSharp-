@@ -10,9 +10,11 @@ namespace IDAL
     {
         namespace DalObject
         {
+            
             public class DataSource
             {
                 private static Random rd = new Random();
+                
                 internal static IDAL.DO.Station[] stations = new Station[5];
                 internal static IDAL.DO.Drone[] drones = new Drone[10];
                 internal static IDAL.DO.Customer[] customers = new Customer[100];
@@ -29,16 +31,17 @@ namespace IDAL
                     //run id number for parcel
                     public static int ParcelRunId = 100000;
                 }
+                
                 public static void Initialize()
                 {
                     
                     //stations
                     for (int i = 0; i < 2; i++)
                     {
-                        stations[i].id = rd.Next(100,999);
+                        stations[i].id = rd.Next(100,1000);
                         stations[i].name = "station" + (i+1);
-                        stations[i].longitude = rd.NextDouble() + rd.Next(0,179);
-                        stations[i].lattitude = rd.NextDouble() + rd.Next(0, 179);
+                        stations[i].longitude = rd.NextDouble() + rd.Next(180);
+                        stations[i].lattitude = rd.NextDouble() + rd.Next(180);
                         stations[i].numOfChargeSlots = rd.Next(1, 5);
                         stations[i].numOfAvailableChargeSlots = stations[i].numOfChargeSlots;
                         Config.stationIndex++;
@@ -46,36 +49,47 @@ namespace IDAL
                     //drones
                     for (int i = 0; i < 5; i++)
                     {
-                        drones[i].id = rd.Next(100, 999);
+                        drones[i].id = rd.Next(100, 1000);
                         drones[i].model = "drone" + (i+1);
-                        drones[i].weight = MyEnums.WeightCategory.lite;
-                        drones[i].status = MyEnums.DroneStatus.available;
-                        drones[i].battery = rd.Next(0, 100);
+                        drones[i].weight = (IDAL.DO.MyEnums.WeightCategory)rd.Next(3);
+                        drones[i].status = (IDAL.DO.MyEnums.DroneStatus)rd.Next(3);
+                        drones[i].battery = rd.Next(101);
                         Config.droneIndex++;
                     }
                     //customers
                     for (int i = 0; i < 10; i++)
                     {
-                        customers[i].id = rd.Next(100000000, 999999999);
+                        customers[i].id = rd.Next(100000000, 1000000000);
                         customers[i].name= "customer" + (i + 1);
-                        customers[i].longitude = rd.NextDouble() + rd.Next(0, 179);
-                        customers[i].lattitude = rd.NextDouble() + rd.Next(0, 179);
-                        customers[i].phoneNumber = "100"+(i + 1); ;
+                        customers[i].longitude = rd.NextDouble() + rd.Next(180);
+                        customers[i].lattitude = rd.NextDouble() + rd.Next(180);
+                        string phoneNumber = "05" + rd.Next(9) + "-";
+                        for (int j = 0; j < 7; j++)
+                            phoneNumber += rd.Next(10);
+                        customers[i].phoneNumber = phoneNumber;
                         Config.customerIndex++;
                     }
+
                     //parcels
                     for (int i = 0; i < 10; i++)
                     {
-                        parcels[i].id = rd.Next(100, 999);
-                        parcels[i].senderId = rd.Next(100000000, 999999999);
-                        parcels[i].targetId = rd.Next(100000000, 999999999);
+                        parcels[i].id = rd.Next(100, 1000);
+                        parcels[i].senderId = rd.Next(100000000, 1000000000);
+                        parcels[i].targetId = rd.Next(100000000, 1000000000);
                         parcels[i].droneId = 0;
-                        parcels[i].weight = MyEnums.WeightCategory.lite;
-                        parcels[i].priority = MyEnums.PriorityLevel.regular;
-                        //parcels[i].requested = DateTime.Now;
-                        //parcels[i].scheduled = DateTime.Now;
-                        //parcels[i].pickedUp = DateTime.Now;
-                        //parcels[i].delivered = DateTime.Now;
+                        parcels[i].weight = (IDAL.DO.MyEnums.WeightCategory)rd.Next(3);
+                        parcels[i].priority = (IDAL.DO.MyEnums.PriorityLevel)rd.Next(3);
+                        parcels[i].requested = DateTime.Now;
+
+                        //int rndMonth1 = rd.Next(1, 12);
+                        //int rndDay1 = rd.Next(1, 31);
+                        //parcels[i].scheduled =  new DateTime(2021, rndMonth1, rndDay1);
+                        //int rndMonth2 = rd.Next(1, 12);
+                        //int rndDay2 = rd.Next(1, 31);
+                        //parcels[i].pickedUp = new DateTime(2021, rndMonth2, rndDay2);
+                        //int rndMonth3 = rd.Next(1, 12);
+                        //int rndDay3 = rd.Next(1, 31);
+                        //parcels[i].delivered = new DateTime(2021, rndMonth3, rndDay3);
                         Config.parcelIndex++;
                     }
                     //drone charges

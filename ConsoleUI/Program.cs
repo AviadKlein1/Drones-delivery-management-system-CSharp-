@@ -32,7 +32,7 @@ namespace ConsoleUI
                             "\nTo add a drone enter 2" +
                             "\nTo add a customer enter 3" +
                             "\nTo add a paracel enter 4" +
-                            "\nTo continue enter 0");
+                            "\nTo return to main menu enter 0");
                             int.TryParse(Console.ReadLine(), out choice2);
                             switch (choice2)
                             {
@@ -63,7 +63,7 @@ namespace ConsoleUI
                             "\nTo update parcel's delivery time enter 3" +
                             "\nTo charge drone enter 4" +
                             "\nTo end drone charge enter 5" +
-                            "\nTo continue enter 0");
+                            "\nTo return to main menu enter 0");
                             int.TryParse(Console.ReadLine(), out choice2);
                             int sid;
                             switch (choice2)
@@ -118,7 +118,7 @@ namespace ConsoleUI
                             "\nTo display drone enter 2" +
                             "\nTo display customer enter 3" +
                             "\nTo display paracel enter 4" +
-                            "\nTo continuo enter 0");
+                            "\nTo return to main menu enter 0");
                             int.TryParse(Console.ReadLine(), out choice2);
                             switch (choice2)
                             {
@@ -159,7 +159,7 @@ namespace ConsoleUI
                             "\nTo display all parcels enter 4" +
                             "\nTo display not associated parcels enter 5" +
                             "\nTo display available to charge stations enter 6" +
-                            "\nTo continue enter 0");
+                            "\nTo return to main menu enter 0");
                             int.TryParse(Console.ReadLine(), out choice2);
                             switch (choice2)
                             {
