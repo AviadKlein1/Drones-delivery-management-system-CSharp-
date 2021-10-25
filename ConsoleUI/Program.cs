@@ -9,17 +9,18 @@ namespace ConsoleUI
             IDAL.DO.DalObject.DalObject dal = new IDAL.DO.DalObject.DalObject();
 
             Console.WriteLine("\nWelcome to your --Skimmer delivery system management interface--\n\n");
-
-            int id = 1;
+            int id = 0;
             int choice1 = -1;
             int choice2 = -1;
             while (choice1 != 0)
             {
-                Console.WriteLine("Do you want to add(enter 1)?\n" +
-                "Do you want do update(enter 2)?\n" +
-                "Do you want do get display(enter 3)?\n" +
-                "do you want to get lists-displays(enter 4)?\n" +
-                "to exit enter 0\n");
+                choice2 = -1;
+                Console.WriteLine("Choose one of the following:\n" +
+                "1: Add a new item\n" +
+                "2: Update an item\n" +
+                "3: Display an item\n" +
+                "4: Display a list of items\n" +
+                "0: exit\n");
                 int.TryParse(Console.ReadLine(), out choice1);
                 switch (choice1)
                 {
@@ -27,10 +28,10 @@ namespace ConsoleUI
                         //add
                         while (choice2 != 0)
                         {
-                            Console.WriteLine("To add station enter 1," +
-                            "\nTo add drone enter 2," +
-                            "\nTo add customer enter 3," +
-                            "\nTo add paracel enter 4," +
+                            Console.WriteLine("To add station enter 1" +
+                            "\nTo add a drone enter 2" +
+                            "\nTo add a customer enter 3" +
+                            "\nTo add a paracel enter 4" +
                             "\nTo continue enter 0");
                             int.TryParse(Console.ReadLine(), out choice2);
                             switch (choice2)
@@ -57,32 +58,35 @@ namespace ConsoleUI
                         //update
                         while (choice2 != 0)
                         {
-                            Console.WriteLine("To update parcel to drone enter 1," +
-                            "\nTo updateparcel pickeup time enter 2," +
-                            "\nTo update the time parcel deliverd enter 3," +
-                            "\nTo send drone to charge enter 4," +
-                            "\nTo end drone charge enter 5, " +
+                            Console.WriteLine("To belong parcel to drone enter 1" +
+                            "\nTo update parcel's pickup time enter 2" +
+                            "\nTo update parcel's delivery time enter 3" +
+                            "\nTo charge drone enter 4" +
+                            "\nTo end drone charge enter 5" +
                             "\nTo continue enter 0");
                             int.TryParse(Console.ReadLine(), out choice2);
                             int sid;
                             switch (choice2)
                             {
                                 case 1:
-                                    Console.WriteLine("enter drone id\n");
+                                    Console.WriteLine("enter parcel id\n");
                                     int.TryParse(Console.ReadLine(), out id);
                                     dal.paracelToDrone(id);
+                                    Console.WriteLine("successfuly updated\n");
                                     break;
 
                                 case 2:
                                     Console.WriteLine("enter parcel id\n");
                                     int.TryParse(Console.ReadLine(), out id);
                                     dal.pickUp(id);
+                                    Console.WriteLine("successfuly updated\n");
                                     break;
 
                                 case 3:
                                     Console.WriteLine("enter parcel id\n");
                                     int.TryParse(Console.ReadLine(), out id);
                                     dal.delivered(id);
+                                    Console.WriteLine("successfuly updated\n");
                                     break;
 
                                 case 4:
@@ -91,6 +95,7 @@ namespace ConsoleUI
                                     Console.WriteLine("enter station id\n");
                                     int.TryParse(Console.ReadLine(), out sid);
                                     dal.sendToCharge(id, sid);
+                                    Console.WriteLine("successfuly updated\n");
                                     break;
 
                                 case 5:
@@ -99,9 +104,9 @@ namespace ConsoleUI
                                     Console.WriteLine("enter station id\n");
                                     int.TryParse(Console.ReadLine(), out sid);
                                     dal.endCharge(id, sid);
+                                    Console.WriteLine("successfuly updated\n");
                                     break;
                             }
-                        
                         }
                         break;
 
@@ -109,11 +114,11 @@ namespace ConsoleUI
                         //display;
                         while (choice2 != 0)
                         {
-                            Console.WriteLine("To display station enter 1," +
-                            "\nTo display drone enter 2," +
-                            "\nTo display customer enter 3," +
-                            "\nTo display paracel enter 4," +
-                            " \nTo continuo enter 0");
+                            Console.WriteLine("To display station enter 1" +
+                            "\nTo display drone enter 2" +
+                            "\nTo display customer enter 3" +
+                            "\nTo display paracel enter 4" +
+                            "\nTo continuo enter 0");
                             int.TryParse(Console.ReadLine(), out choice2);
                             switch (choice2)
                             {
@@ -143,17 +148,18 @@ namespace ConsoleUI
                             }
                         }
                         break;
+
                     case 4:
                         // lists-display
                         while (choice2 != 0)
                         {
-                            Console.WriteLine("To display stations enter 1," +
-                            "\nTo display drones enter 2," +
-                            "\nTo display customers enter 3," +
-                            "\nTo display paracels enter 4," +
-                            "\nTo display 'not associated parcels' enter 5," +
-                            "\nTo display 'available to charge stations' enter 6," +
-                            " \nTo continue enter 0");
+                            Console.WriteLine("To display all stations enter 1" +
+                            "\nTo display all drones enter 2" +
+                            "\nTo display all customers enter 3" +
+                            "\nTo display all parcels enter 4" +
+                            "\nTo display not associated parcels enter 5" +
+                            "\nTo display available to charge stations enter 6" +
+                            "\nTo continue enter 0");
                             int.TryParse(Console.ReadLine(), out choice2);
                             switch (choice2)
                             {
@@ -180,12 +186,17 @@ namespace ConsoleUI
                                 case 6:
                                     dal.availableToChargeStattions();
                                     break;
+
+                                default:
+                                    break;
                             }
                         }
                     break;
+
                     case 0:
                         Console.WriteLine("see you soon");
                     return;
+
                     default:
                         break;
                 }

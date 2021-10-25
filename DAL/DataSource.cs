@@ -13,7 +13,6 @@ namespace IDAL
             public class DataSource
             {
                 private static Random rd = new Random();
-                
                 internal static IDAL.DO.Station[] stations = new Station[5];
                 internal static IDAL.DO.Drone[] drones = new Drone[10];
                 internal static IDAL.DO.Customer[] customers = new Customer[100];
@@ -38,8 +37,8 @@ namespace IDAL
                     {
                         stations[i].id = rd.Next(100,999);
                         stations[i].name = "station" + (i+1);
-                        stations[i].longitude = rd.Next(0, 180);
-                        stations[i].lattitude = rd.Next(0, 180);
+                        stations[i].longitude = rd.NextDouble() + rd.Next(0,179);
+                        stations[i].lattitude = rd.NextDouble() + rd.Next(0, 179);
                         stations[i].numOfChargeSlots = rd.Next(1, 5);
                         stations[i].numOfAvailableChargeSlots = stations[i].numOfChargeSlots;
                         Config.stationIndex++;
@@ -57,10 +56,10 @@ namespace IDAL
                     //customers
                     for (int i = 0; i < 10; i++)
                     {
-                        customers[i].id = rd.Next(100, 999);
+                        customers[i].id = rd.Next(100000000, 999999999);
                         customers[i].name= "customer" + (i + 1);
-                        customers[i].lattitude= rd.Next(0,180);
-                        customers[i].longitude = rd.Next(0,180);
+                        customers[i].longitude = rd.NextDouble() + rd.Next(0, 179);
+                        customers[i].lattitude = rd.NextDouble() + rd.Next(0, 179);
                         customers[i].phoneNumber = "100"+(i + 1); ;
                         Config.customerIndex++;
                     }
@@ -68,15 +67,15 @@ namespace IDAL
                     for (int i = 0; i < 10; i++)
                     {
                         parcels[i].id = rd.Next(100, 999);
-                        parcels[i].senderId = rd.Next(100, 999);
-                        parcels[i].targetId = rd.Next(100, 999);
-                        parcels[i].droneId = rd.Next(100, 999);
+                        parcels[i].senderId = rd.Next(100000000, 999999999);
+                        parcels[i].targetId = rd.Next(100000000, 999999999);
+                        parcels[i].droneId = 0;
                         parcels[i].weight = MyEnums.WeightCategory.lite;
                         parcels[i].priority = MyEnums.PriorityLevel.regular;
-                        parcels[i].requested = DateTime.Today;
-                        parcels[i].scheduled = DateTime.Today;
-                        parcels[i].pickedUp = DateTime.Today;
-                        parcels[i].delivered = DateTime.Today;
+                        //parcels[i].requested = DateTime.Now;
+                        //parcels[i].scheduled = DateTime.Now;
+                        //parcels[i].pickedUp = DateTime.Now;
+                        //parcels[i].delivered = DateTime.Now;
                         Config.parcelIndex++;
                     }
                     //drone charges
