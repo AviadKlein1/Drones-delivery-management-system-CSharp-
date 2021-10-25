@@ -11,6 +11,8 @@ namespace IDAL
             public double longitude { get; set; }
             public double lattitude { get; set; }
             public int numOfChargeSlots { get; set; }
+            public int numOfAvailableChargeSlots { get; set; }
+
             public override string ToString()
             {
                 return "ID: " + id + "\nName: " + name + "\nLongitude: " + longitude + "\nLattitude " +
