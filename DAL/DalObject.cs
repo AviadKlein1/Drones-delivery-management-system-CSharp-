@@ -12,6 +12,7 @@ namespace IDAL
         {
             public class DalObject
             {
+                //consructor
                 public DalObject()
                 {
                     IDAL.DO.DalObject.DataSource.Initialize();
