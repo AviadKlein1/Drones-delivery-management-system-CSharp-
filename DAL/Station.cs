@@ -4,6 +4,7 @@ namespace IDAL
 {
     namespace DO
     {
+        //station's fields
         public struct Station
         {
             public int id { get; set; }
@@ -13,6 +14,9 @@ namespace IDAL
             public int numOfChargeSlots { get; set; }
             public int numOfAvailableChargeSlots { get; set; }
 
+            /// <summary>
+            /// prints an item's details
+            /// </summary>
             public override string ToString()
             {
                 return "ID: " + id + "\nName: " + name + "\nLongitude: " + longitude + "\nLattitude: " +
@@ -20,5 +24,4 @@ namespace IDAL
             }
         }
     }
-
 }    

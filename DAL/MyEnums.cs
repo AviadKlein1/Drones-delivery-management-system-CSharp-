@@ -8,6 +8,9 @@ namespace IDAL
 {
     namespace DO
     {
+        /// <summary>
+        /// defines enums for items' fields - weight, priority.
+        /// </summary>
         public class MyEnums
         {
             public enum PriorityLevel { regular, quickly, ergent };

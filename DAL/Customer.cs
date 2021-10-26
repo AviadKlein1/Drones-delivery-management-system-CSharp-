@@ -9,6 +9,7 @@ namespace IDAL
 {
     namespace DO
     {
+        //item's fields
         public struct Customer
         {
             public int id { get; set; }
@@ -16,6 +17,10 @@ namespace IDAL
             public string phoneNumber { get; set; }
             public double longitude { get; set; }
             public double lattitude { get; set; }
+
+            /// <summary>
+            /// prints item's details
+            /// </summary>
             public override string ToString()
             {
                 return "ID: " + id + "\nName: " + name + "\nPhone: " + phoneNumber + "\nLongitude: " +
@@ -24,4 +29,3 @@ namespace IDAL
         }
     }
 }
-

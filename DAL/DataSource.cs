@@ -13,8 +13,10 @@ namespace IDAL
             
             public class DataSource
             {
+                //random static variable
                 private static Random rd = new Random();
-                
+               
+                //arrays for items
                 internal static IDAL.DO.Station[] stations = new Station[5];
                 internal static IDAL.DO.Drone[] drones = new Drone[10];
                 internal static IDAL.DO.Customer[] customers = new Customer[100];
@@ -23,18 +25,22 @@ namespace IDAL
 
                 internal class Config
                 {
+                    //indexes for first available index in arrays
                     internal static int stationIndex = 0;
                     internal static int droneIndex = 0;
                     internal static int customerIndex = 0;
                     internal static int droneChargeIndex = 0;
                     internal static int parcelIndex = 0;
-                    //run id number for parcel
+                    //running id number for parcel
                     public static int ParcelRunId = 100000;
                 }
                 
+                /// <summary>
+                /// randomly initializes first cells of arrays, 
+                /// promotes indexes of availabe cells in arrays.
+                /// </summary>
                 public static void Initialize()
-                {
-                    
+                {           
                     //stations
                     for (int i = 0; i < 2; i++)
                     {
@@ -69,7 +75,6 @@ namespace IDAL
                         customers[i].phoneNumber = phoneNumber;
                         Config.customerIndex++;
                     }
-
                     //parcels
                     for (int i = 0; i < 10; i++)
                     {
@@ -80,16 +85,6 @@ namespace IDAL
                         parcels[i].weight = (IDAL.DO.MyEnums.WeightCategory)rd.Next(3);
                         parcels[i].priority = (IDAL.DO.MyEnums.PriorityLevel)rd.Next(3);
                         parcels[i].requested = DateTime.Now;
-
-                        //int rndMonth1 = rd.Next(1, 12);
-                        //int rndDay1 = rd.Next(1, 31);
-                        //parcels[i].scheduled =  new DateTime(2021, rndMonth1, rndDay1);
-                        //int rndMonth2 = rd.Next(1, 12);
-                        //int rndDay2 = rd.Next(1, 31);
-                        //parcels[i].pickedUp = new DateTime(2021, rndMonth2, rndDay2);
-                        //int rndMonth3 = rd.Next(1, 12);
-                        //int rndDay3 = rd.Next(1, 31);
-                        //parcels[i].delivered = new DateTime(2021, rndMonth3, rndDay3);
                         Config.parcelIndex++;
                     }
                     //drone charges
@@ -99,8 +94,17 @@ namespace IDAL
                         droneCharges[i].stationId = stations[i].id;
                     }
                 }
-                
             }
         }
     }
 }
+
+//int rndMonth1 = rd.Next(1, 12);
+//int rndDay1 = rd.Next(1, 31);
+//parcels[i].scheduled =  new DateTime(2021, rndMonth1, rndDay1);
+//int rndMonth2 = rd.Next(1, 12);
+//int rndDay2 = rd.Next(1, 31);
+//parcels[i].pickedUp = new DateTime(2021, rndMonth2, rndDay2);
+//int rndMonth3 = rd.Next(1, 12);
+//int rndDay3 = rd.Next(1, 31);
+//parcels[i].delivered = new DateTime(2021, rndMonth3, rndDay3);
