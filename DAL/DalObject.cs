@@ -89,7 +89,7 @@ namespace IDAL
                     int.TryParse(Console.ReadLine(), out battaryStatus);
                     myDrone.battery = battaryStatus;
 
-                    //insert srone to array
+                    //insert drone to array
                     IDAL.DO.DalObject.DataSource.drones[IDAL.DO.DalObject.DataSource.Config.droneIndex] = myDrone;
                     //print new drone
                     Console.WriteLine("\n" + IDAL.DO.DalObject.DataSource.drones[IDAL.DO.DalObject.DataSource.Config.droneIndex]);
@@ -205,7 +205,7 @@ namespace IDAL
                         int j = 0;
                         while (IDAL.DO.DalObject.DataSource.parcels[j].id != parcelId)
                             j++;
-                        //ubelong pacel
+                        //belong parcel
                         IDAL.DO.DalObject.DataSource.parcels[j].droneId = IDAL.DO.DalObject.DataSource.drones[i].id;
                         //update scheduled time
                         IDAL.DO.DalObject.DataSource.parcels[j].scheduled = DateTime.Now;

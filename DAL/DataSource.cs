@@ -99,12 +99,3 @@ namespace IDAL
     }
 }
 
-//int rndMonth1 = rd.Next(1, 12);
-//int rndDay1 = rd.Next(1, 31);
-//parcels[i].scheduled =  new DateTime(2021, rndMonth1, rndDay1);
-//int rndMonth2 = rd.Next(1, 12);
-//int rndDay2 = rd.Next(1, 31);
-//parcels[i].pickedUp = new DateTime(2021, rndMonth2, rndDay2);
-//int rndMonth3 = rd.Next(1, 12);
-//int rndDay3 = rd.Next(1, 31);
-//parcels[i].delivered = new DateTime(2021, rndMonth3, rndDay3);
