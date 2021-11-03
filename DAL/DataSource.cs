@@ -31,16 +31,23 @@ namespace IDAL
 
                 internal class Config
                 {
-                    //indexes for first available index in arrays
-                    internal static int stationIndex = 0;
-                    internal static int droneIndex = 0;
-                    internal static int customerIndex = 0;
-                    internal static int droneChargeIndex = 0;
-                    internal static int parcelIndex = 0;
+                    ////indexes for first available index in arrays
+                    //internal static int stationIndex = 0;
+                    //internal static int droneIndex = 0;
+                    //internal static int customerIndex = 0;
+                    //internal static int droneChargeIndex = 0;
+                    //internal static int parcelIndex = 0;
                     //running id number for parcel
                     public static int ParcelRunId = 100000;
+
+                    public static double avialable;
+                    public static double lightWeight;
+                    public static double mediumWeight;
+                    public static double heavyWeight;
+                    public static double DroneLoadRate;
+                    
                 }
-                
+
                 /// <summary>
                 /// randomly initializes first cells of arrays, 
                 /// promotes indexes of availabe cells in arrays.

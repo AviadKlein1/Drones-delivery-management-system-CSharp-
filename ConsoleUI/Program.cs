@@ -7,7 +7,7 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             IDAL.DO.DalObject.DalObject dal = new IDAL.DO.DalObject.DalObject();
-
+           
             Console.WriteLine("\n-- Welcome to -- Delivery by Drones --  System management interface --\n\n");
             int id = 0;
             int choice1 = -1;
@@ -164,27 +164,45 @@ namespace ConsoleUI
                             switch (choice2)
                             {
                                 case 1:
-                                    dal.stationsDisplay();
+                                    foreach (IDAL.DO.Station element in dal.stationsDisplay())
+                                    {
+                                        Console.WriteLine(element);
+                                    }
                                     break;
 
                                 case 2:
-                                    dal.dronesDisplay();
+                                    foreach (IDAL.DO.Drone element in dal.dronesDisplay())
+                                    {
+                                        Console.WriteLine(element);
+                                    }
                                     break;
 
                                 case 3:
-                                    dal.customersDisplay();
+                                    foreach (IDAL.DO.Customer element in dal.customersDisplay())
+                                    {
+                                        Console.WriteLine(element);
+                                    }
                                     break;
 
                                 case 4:
-                                    dal.parcelsDisplay();
+                                    foreach (IDAL.DO.Parcel element in dal.parcelsDisplay())
+                                    {
+                                        Console.WriteLine(element);
+                                    }
                                     break;
 
                                 case 5:
-                                    dal.notAssociatedParcelsDisplay();
+                                    foreach (IDAL.DO.Parcel element in dal.notAssociatedParcelsDisplay())
+                                    {
+                                        Console.WriteLine(element);
+                                    }
                                     break;
 
                                 case 6:
-                                    dal.availableToChargeStattions();
+                                    foreach (IDAL.DO.Station element in dal.availableToChargeStattions())
+                                    {
+                                        Console.WriteLine(element);
+                                    }
                                     break;
 
                                 default:
