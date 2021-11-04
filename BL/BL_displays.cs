@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace IBL
 {
-    class BL: IBL
+    namespace BO
     {
+        public partial class BL : IBL
+        {
+            public class dispalys
+            {
 
+            }
+        }
     }
 }

@@ -21,166 +21,43 @@ namespace IDAL
                 /// <summary>
                 /// create a new station and add to array
                 /// </summary>
-                public void addStation()
+                public void addStation(IDAL.DO.Station myStation)
                 {
-                    Station myStation = new Station();
-                    //recieve details from user
-                    int id;
-                    Console.WriteLine("enter id");
-                    int.TryParse(Console.ReadLine(), out id);
-                    myStation.id = id;
-
-                    Console.WriteLine("enter name");
-                    myStation.name = (Console.ReadLine());
-
-                    double longitude;
-                    Console.WriteLine("enter longitude");
-                    double.TryParse(Console.ReadLine(), out longitude);
-                    myStation.longitude = longitude;
-
-                    double lattitude;
-                    Console.WriteLine("enter lattitude");
-                    double.TryParse(Console.ReadLine(), out lattitude);
-                    myStation.lattitude = lattitude;
-
-                    int numOfChargeSlots;
-                    Console.WriteLine("enter number of charge slots");
-                    int.TryParse(Console.ReadLine(), out numOfChargeSlots);
-                    myStation.numOfChargeSlots = numOfChargeSlots;
-                    myStation.numOfAvailableChargeSlots = numOfChargeSlots;
-
                     //insert station to array
                     IDAL.DO.DalObject.DataSource.stations.Add(myStation);
-                    //print new station
-                    Console.WriteLine("\n" + myStation);
-                    //promote index points to first empty cell
-                    //IDAL.DO.DalObject.DataSource.Config.stationIndex++;
                 }
 
                 /// <summary>
-                /// create a new drone, and add it to array
+                /// add it to array
                 /// </summary>
-                public void addDrone()
+                public void addDrone(Drone myDrone)
                 {
-                    Drone myDrone = new Drone();
-                    //recieve details from user
-                    int id;
-                    Console.WriteLine("enter id");
-                    int.TryParse(Console.ReadLine(), out id);
-                    myDrone.id = id;
-
-                    Console.WriteLine("enter model");
-                    myDrone.model = (Console.ReadLine());
-
-                    int choice = 0;
-                    //Console.WriteLine("enter status (available = 1, maintenance = 2, delivery = 3)");
-                    //int.TryParse(Console.ReadLine(), out choice);
-                    //if (choice == 1) myDrone.status = MyEnums.DroneStatus.available;
-                    //if (choice == 2) myDrone.status = MyEnums.DroneStatus.maintenance;
-                    //if (choice == 3) myDrone.status = MyEnums.DroneStatus.delivery;
-
-                    Console.WriteLine("enter weight (lite = 1, medium = 2, heavy = 3)");
-                    int.TryParse(Console.ReadLine(), out choice);
-                    if (choice == 1) myDrone.weight = MyEnums.WeightCategory.lite;
-                    if (choice == 2) myDrone.weight = MyEnums.WeightCategory.medium;
-                    if (choice == 3) myDrone.weight = MyEnums.WeightCategory.heavy;
-
-                    //int battaryStatus;
-                    //Console.WriteLine("enter battary status");
-                    //int.TryParse(Console.ReadLine(), out battaryStatus);
-                    //myDrone.battery = battaryStatus;
-
                     //insert drone to array
                     IDAL.DO.DalObject.DataSource.drones.Add(myDrone);
-                    //print new drone
-                    Console.WriteLine("\n" + myDrone);
-                    //promote index points to first empty cell
-                    //IDAL.DO.DalObject.DataSource.Config.droneIndex++;
                 }
 
                 /// <summary>
-                /// create a new customer and add it to array
+                ///  add it to array
                 /// </summary>
-                public void addcustomer()
+                public void addcustomer(Customer myCustomer)
                 {
-                    Customer myCustomer = new Customer();
-                    //recieve daetauls from user
-                    int id;
-                    Console.WriteLine("enter id");
-                    int.TryParse(Console.ReadLine(), out id);
-                    myCustomer.id = id;
-
-                    Console.WriteLine("enter name");
-                    myCustomer.name = (Console.ReadLine());
-
-                    Console.WriteLine("enter phone number");
-                    myCustomer.phoneNumber = (Console.ReadLine());
-
-                    double longitude;
-                    Console.WriteLine("enter longitude");
-                    double.TryParse(Console.ReadLine(), out longitude);
-                    myCustomer.longitude = longitude;
-
-                    double lattitude;
-                    Console.WriteLine("enter lattitude");
-                    double.TryParse(Console.ReadLine(), out lattitude);
-                    myCustomer.lattitude = lattitude;
-
                     //insert customer to array
                     IDAL.DO.DalObject.DataSource.customers.Add(myCustomer);
-                    //print new customer
-                    Console.WriteLine("\n" + myCustomer);
-                    //promote index points to first empty cell
-                    //IDAL.DO.DalObject.DataSource.Config.customerIndex++;
                 }
 
                 /// <summary>
-                /// create a new parcel and add it to array
+                /// add it to array
                 /// </summary>
                 /// returns new parcel's id
-                public int addParcel()
+                public void addParcel(Parcel myParcel)
                 {
-                    Parcel myParcel = new Parcel();
-                    myParcel.id = IDAL.DO.DalObject.DataSource.Config.ParcelRunId;
-
-                    int senderId;
-                    Console.WriteLine("enter sender id");
-                    int.TryParse(Console.ReadLine(), out senderId);
-                    myParcel.senderId = senderId;
-
-                    int targetId;
-                    Console.WriteLine("enter target id");
-                    int.TryParse(Console.ReadLine(), out targetId);
-                    myParcel.targetId = targetId;
-
-                    int droneId;
-                    Console.WriteLine("enter drone id");
-                    int.TryParse(Console.ReadLine(), out droneId);
-                    myParcel.droneId = droneId;
-
-                    int choice;
-                    Console.WriteLine("enter weight (lite = 1, medium = 2, heavy = 3)");
-                    int.TryParse(Console.ReadLine(), out choice);
-                    if (choice == 1) myParcel.weight = MyEnums.WeightCategory.lite;
-                    if (choice == 2) myParcel.weight = MyEnums.WeightCategory.medium;
-                    if (choice == 3) myParcel.weight = MyEnums.WeightCategory.heavy;
-
-                    Console.WriteLine("enter priority (regular = 1, quickly = 2, ergent = 3 )");
-                    int.TryParse(Console.ReadLine(), out choice);
-                    if (choice == 1) myParcel.priority = MyEnums.PriorityLevel.regular;
-                    if (choice == 2) myParcel.priority = MyEnums.PriorityLevel.quickly;
-                    if (choice == 3) myParcel.priority = MyEnums.PriorityLevel.ergent;                    
-                    myParcel.requested = DateTime.Now;
-
                     //insert parcel to array
                     //IDAL.DO.DalObject.DataSource.parcels[IDAL.DO.DalObject.DataSource.Config.parcelIndex] = myParcel;
                     IDAL.DO.DalObject.DataSource.parcels.Add(myParcel);
-                    //promote index to first empty cell
-                    //IDAL.DO.DalObject.DataSource.Config.parcelIndex++;
-                    //print new parcel
-                    Console.WriteLine(myParcel);
-                    //return parcel id
-                    return IDAL.DO.DalObject.DataSource.Config.ParcelRunId;
+                }
+                public int ParcelRunId()
+                {
+                    return IDAL.DO.DalObject.DataSource.Config.ParcelRunId++;
                 }
 
                 /// <summary>
@@ -546,6 +423,19 @@ namespace IDAL
                     droneElectricityConsumption[3] = IDAL.DO.DalObject.DataSource.Config.heavyWeight;
                     droneElectricityConsumption[4] = IDAL.DO.DalObject.DataSource.Config.DroneLoadRate;
                     return droneElectricityConsumption;
+                }
+
+                public IDAL.DO.Location stationLocate(int StationId)
+                {
+                    for (int i = 0; i < IDAL.DO.DalObject.DataSource.stations.Count; i++)
+                    {
+                        if (IDAL.DO.DalObject.DataSource.stations[i].id == StationId)
+                        {
+                           
+                            return IDAL.DO.DalObject.DataSource.stations[i].location;
+                            
+                        }
+                    }
                 }
             }
         }

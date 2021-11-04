@@ -17,6 +17,8 @@ namespace IBL
             public double lattitude { get; set; }
             public int numOfChargeSlots { get; set; }
             public int numOfAvailableChargeSlots { get; set; }
+            public static List<Station> DronesInCharge = new List<Station>();
+            public  IDAL.DO.Location location = new IDAL.DO.Location();
 
             /// <summary>
             /// prints an item's details

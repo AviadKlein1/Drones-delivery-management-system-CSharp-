@@ -6,25 +6,26 @@ using System.Threading.Tasks;
 
 namespace IDAL
 {
-    interface IDal
+    public interface IDal
     {
+        public int ParcelRunId();
         /// <summary>
         /// create a new station and add to array
         /// </summary>
-        public void addStation();
+        public void addStation(IDAL.DO.Station station);
         /// <summary>
         /// create a new drone, and add it to array
         /// </summary>
-        public void addDrone();
+        public void addDrone(IDAL.DO.Drone drone);
         /// <summary>
         /// create a new customer and add it to array
         /// </summary>
-        public void addcustomer();
+        public void addcustomer(IDAL.DO.Customer customer);
         /// <summary>
         /// create a new parcel and add it to array
         /// </summary>
         /// returns new parcel's id
-        public int addParcel();
+        public int addParcel(IDAL.DO.Parcel parcel);
         /// <summary>
         /// belong parcel to specific drone
         /// </summary>
@@ -98,6 +99,6 @@ namespace IDAL
 
         //new method electric consum
         public double[] droneElectricityConsumption();
-        
+
     }
 }

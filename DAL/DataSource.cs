@@ -10,7 +10,6 @@ namespace IDAL
     {
         namespace DalObject
         {
-            
             public class DataSource
             {
                 //random static variable
@@ -97,7 +96,7 @@ namespace IDAL
                     for (int i = 0; i < 10; i++)
                     {
                         IDAL.DO.Parcel myParcel = new IDAL.DO.Parcel();
-                        myParcel.id = rd.Next(100, 1000);
+                        myParcel.id = IDAL.DO.DalObject.DataSource.Config.ParcelRunId++;
                         myParcel.senderId = rd.Next(100000000, 1000000000);
                         myParcel.targetId = rd.Next(100000000, 1000000000);
                         myParcel.droneId = 0;

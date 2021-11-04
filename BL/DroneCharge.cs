@@ -5,7 +5,7 @@ namespace IBL
     namespace BO
     {
         //item's sields 
-        public struct DroneCharge
+        public class DroneCharge
         {
             public int droneId { get; set; }
             public int stationId { get; set; }

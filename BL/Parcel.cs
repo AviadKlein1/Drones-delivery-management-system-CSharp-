@@ -10,8 +10,8 @@ namespace IBL
             public int id { get; set; }
             public int senderId { get; set; }
             public int targetId { get; set; }
-            public IBL.BO.MyEnums.WeightCategory weight { get; set; }
-            public IBL.BO.MyEnums.PriorityLevel priority { get; set; }
+            public MyEnums.WeightCategory weight { get; set; }
+            public MyEnums.PriorityLevel priority { get; set; }
             public DateTime requested { get; set; }
             public int droneId { get; set; }
             public DateTime scheduled { get; set; }
