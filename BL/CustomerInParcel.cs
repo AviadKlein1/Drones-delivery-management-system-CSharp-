@@ -8,13 +8,9 @@ namespace IBL
 {
     namespace BO
     {
-        class Exceptions
+        public class CustomerInParcel : Customer
         {
-
-           
+          
         }
-    
-	
     }
-
 }

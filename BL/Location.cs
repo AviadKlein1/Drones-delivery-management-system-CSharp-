@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IDAL
+namespace IBL
 {
-    namespace DO
+    namespace BO
     {
         public class Location
         {

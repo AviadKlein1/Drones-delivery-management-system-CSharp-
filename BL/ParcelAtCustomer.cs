@@ -8,13 +8,13 @@ namespace IBL
 {
     namespace BO
     {
-        class Exceptions
+        public class ParcelAtCustomer : Parcel
         {
-
-           
+            public MyEnums.ParcelStatus parcelStatus;
+            public CustomerInParcel theSecondSide;
         }
-    
-	
+
+
     }
 
 }

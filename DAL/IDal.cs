@@ -17,6 +17,9 @@ namespace IDAL
         /// create a new drone, and add it to array
         /// </summary>
         public void addDrone(IDAL.DO.Drone drone);
+        void addStation(global::IBL.BO.Station myStation);
+        void addStation(global::IBL.BO.Station myStation);
+
         /// <summary>
         /// create a new customer and add it to array
         /// </summary>
@@ -99,6 +102,8 @@ namespace IDAL
 
         //new method electric consum
         public double[] droneElectricityConsumption();
+        public IDAL.DO.Location stationLocate(int StationId);
+
 
     }
 }

@@ -8,9 +8,9 @@ namespace ConsoleUI_BL
 {
     public class InputOutput
     {
-        public IDAL.DO.Station Station()
+        public IBL.BO.Station addStation()
         {
-            IDAL.DO.Station myStation = new IDAL.DO.Station();
+            IBL.BO.Station myStation = new IBL.BO.Station();
             //recieve details from user
             int id;
             Console.WriteLine("enter id");
@@ -20,15 +20,13 @@ namespace ConsoleUI_BL
             Console.WriteLine("enter name");
             myStation.name = (Console.ReadLine());
 
-            double longitude;
+            double locat;
             Console.WriteLine("enter longitude");
-            double.TryParse(Console.ReadLine(), out longitude);
-            myStation.longitude = longitude;
-
-            double lattitude;
+            double.TryParse(Console.ReadLine(), out locat);
+            myStation.location.longitude = locat;
             Console.WriteLine("enter lattitude");
-            double.TryParse(Console.ReadLine(), out lattitude);
-            myStation.lattitude = lattitude;
+            double.TryParse(Console.ReadLine(), out locat);
+            myStation.location.lattitude = locat;
 
             int numOfChargeSlots;
             Console.WriteLine("enter number of charge slots");
@@ -37,9 +35,9 @@ namespace ConsoleUI_BL
             myStation.numOfAvailableChargeSlots = numOfChargeSlots;
             return myStation;
         }
-        public IDAL.DO.Drone Drone()
+        public IBL.BO.Drone addDrone()
         {
-            IDAL.DO.Drone myDrone = new IDAL.DO.Drone();
+            IBL.BO.Drone myDrone = new IBL.BO.Drone();
             //recieve details from user
             int id;
             Console.WriteLine("enter id");
@@ -50,11 +48,6 @@ namespace ConsoleUI_BL
             myDrone.model = (Console.ReadLine());
 
             int choice = 0;
-            //Console.WriteLine("enter status (available = 1, maintenance = 2, delivery = 3)");
-            //int.TryParse(Console.ReadLine(), out choice);
-            //if (choice == 1) myDrone.status = MyEnums.DroneStatus.available;
-            //if (choice == 2) myDrone.status = MyEnums.DroneStatus.maintenance;
-            //if (choice == 3) myDrone.status = MyEnums.DroneStatus.delivery;
 
             Console.WriteLine("enter max weight (lite = 1, medium = 2, heavy = 3)");
             int.TryParse(Console.ReadLine(), out choice);
@@ -68,9 +61,9 @@ namespace ConsoleUI_BL
 
             return myDrone;
         }
-        public IDAL.DO.Customer Customer()
+        public IBL.BO.Customer addCustomer()
         {
-            IDAL.DO.Customer myCustomer = new IDAL.DO.Customer();
+            IBL.BO.Customer myCustomer = new IBL.BO.Customer();
             //recieve details from user
             int id;
             Console.WriteLine("enter id");
@@ -83,39 +76,34 @@ namespace ConsoleUI_BL
             Console.WriteLine("enter phone number");
             myCustomer.phoneNumber = (Console.ReadLine());
 
-            double longitude;
+            double locat;
             Console.WriteLine("enter longitude");
-            double.TryParse(Console.ReadLine(), out longitude);
-            myCustomer.longitude = longitude;
-
-            double lattitude;
+            double.TryParse(Console.ReadLine(), out locat);
+            myCustomer.location.longitude = locat;
             Console.WriteLine("enter lattitude");
-            double.TryParse(Console.ReadLine(), out lattitude);
-            myCustomer.lattitude = lattitude;
+            double.TryParse(Console.ReadLine(), out locat);
+            myCustomer.location.lattitude = locat;
 
             return myCustomer;
         }
-        public IDAL.DO.Parcel Parcel(int ParcelRunId)
+        public IBL.BO.Parcel addParcel()
         {
-            IDAL.DO.Parcel myParcel = new IDAL.DO.Parcel();
-
-            
-            myParcel.id = ParcelRunId;
-
+            IBL.BO.Parcel myParcel = new IBL.BO.Parcel();
+         
             int senderId;
             Console.WriteLine("enter sender id");
             int.TryParse(Console.ReadLine(), out senderId);
-            myParcel.senderId = senderId;
+            myParcel.sender.id = senderId;
 
             int targetId;
             Console.WriteLine("enter target id");
             int.TryParse(Console.ReadLine(), out targetId);
-            myParcel.targetId = targetId;
+            myParcel.reciver.id = targetId;
 
             int droneId;
             Console.WriteLine("enter drone id");
             int.TryParse(Console.ReadLine(), out droneId);
-            myParcel.droneId = droneId;
+            myParcel.drone.id = droneId;
 
             int choice;
             Console.WriteLine("enter weight (lite = 1, medium = 2, heavy = 3)");
@@ -129,6 +117,7 @@ namespace ConsoleUI_BL
             if (choice == 1) myParcel.priority = IDAL.DO.MyEnums.PriorityLevel.regular;
             if (choice == 2) myParcel.priority = IDAL.DO.MyEnums.PriorityLevel.quickly;
             if (choice == 3) myParcel.priority = IDAL.DO.MyEnums.PriorityLevel.ergent;
+
             myParcel.requested = DateTime.Now;
 
             return myParcel;

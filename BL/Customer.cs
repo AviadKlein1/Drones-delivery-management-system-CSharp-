@@ -15,8 +15,11 @@ namespace IBL
             public int id { get; set; }
             public string name { get; set; }
             public string phoneNumber { get; set; }
-            public double longitude { get; set; }
-            public double lattitude { get; set; }
+            public Location location { get; set; }
+
+            public List<Parcel> parcelsFromCustomer;
+            public List<Parcel> parcelsToCustomer;
+
 
             /// <summary>
             /// prints item's details
@@ -24,7 +27,7 @@ namespace IBL
             public override string ToString()
             {
                 return "ID: " + id + "\nName: " + name + "\nPhone: " + phoneNumber + "\nLongitude: " +
-                    longitude + "\nLattitude: " + lattitude + "\n";
+                    location.longitude + "\nLattitude: " + location.lattitude + "\n";
             }
         }
     }

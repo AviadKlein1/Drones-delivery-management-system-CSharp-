@@ -15,8 +15,8 @@ namespace IDAL
             public int id { get; set; }
             public string name { get; set; }
             public string phoneNumber { get; set; }
-            public double longitude { get; set; }
-            public double lattitude { get; set; }
+            public Location location { get; set; }
+
 
             /// <summary>
             /// prints item's details
@@ -24,7 +24,7 @@ namespace IDAL
             public override string ToString()
             {
                 return "ID: " + id + "\nName: " + name + "\nPhone: " + phoneNumber + "\nLongitude: " +
-                    longitude + "\nLattitude: " + lattitude + "\n";
+                    location.longitude + "\nLattitude: " + location.lattitude + "\n";
             }
         }
     }

@@ -8,21 +8,14 @@ namespace ConsoleUI_BL
         {
             IBL.BO.BL bl = new IBL.BO.BL();
             ConsoleUI_BL.InputOutput myInputOutput = new InputOutput();
+
             //תוכנית משנית הוספות
-            bl.addStation(myInputOutput.Station());
-
-            bl.addDrone(myInputOutput.Drone());
-            bl.
-
-            bl.addcustomer(myInputOutput.Customer());
-            bl.addParcel(myInputOutput.Parcel(bl.dal.ParcelRunId()));
-
-
-
-
-
+            bl.addStation(myInputOutput.addStation());
+            bl.addDrone(myInputOutput.addDrone());
+            bl.addcustomer(myInputOutput.addCustomer());
+            bl.addParcel(myInputOutput.addParcel());
             //תוכנית משנית עדכונים
-
+            
             //תוכנית משנית הוספות
             //תוכנית משנית הוספות
 

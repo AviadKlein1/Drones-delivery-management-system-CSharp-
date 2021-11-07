@@ -21,9 +21,9 @@ namespace IDAL
                 /// <summary>
                 /// create a new station and add to array
                 /// </summary>
-                public void addStation(IDAL.DO.Station myStation)
+                public void addStation(Station myStation)
                 {
-                    //insert station to array
+                    //insert station to 
                     IDAL.DO.DalObject.DataSource.stations.Add(myStation);
                 }
 
@@ -427,15 +427,15 @@ namespace IDAL
 
                 public IDAL.DO.Location stationLocate(int StationId)
                 {
+                    Station temp = new Station();
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.stations.Count; i++)
                     {
                         if (IDAL.DO.DalObject.DataSource.stations[i].id == StationId)
                         {
-                           
-                            return IDAL.DO.DalObject.DataSource.stations[i].location;
-                            
+                            temp.location = IDAL.DO.DalObject.DataSource.stations[i].location;
                         }
                     }
+                    return temp.location;
                 }
             }
         }
