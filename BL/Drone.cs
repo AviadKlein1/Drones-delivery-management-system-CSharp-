@@ -11,6 +11,22 @@ namespace IBL
         //item's fields
         public class Drone
         {
+            public Drone() { }
+
+            public Drone(IDAL.DO.Drone temp)
+            {
+                id = temp.id;
+                model = temp.model;
+                status = temp.status;
+                weight = temp.weight;
+                battery = temp.battery;
+                chargeStationId = temp.chargeStationId;
+                weight = temp.weight;
+                status = temp.status;
+                location.lattitude = temp.location.lattitude;
+                location.longitude = temp.location.longitude;
+            }
+
             public int id { get; set; }
             public string model { get; set; }
             public IDAL.DO.MyEnums.WeightCategory weight { get; set; }
@@ -20,9 +36,14 @@ namespace IBL
             public virtual Location location { get; set; }
             public  ParcelDeliverd deliverdParcel { get; set; }
 
+         
+                
+
             /// <summary>
             /// prints item's details
             /// </summary>
+            /// 
+
             public override string ToString()
             {
                 return "ID: " + id + "\nModel: " + model + "\nWeight Category: " + weight + "\nStatus: " +

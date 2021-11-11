@@ -18,13 +18,14 @@ namespace IDAL
             public Location location { get; set; }
 
 
+
             /// <summary>
             /// prints item's details
             /// </summary>
             public override string ToString()
             {
-                return "ID: " + id + "\nName: " + name + "\nPhone: " + phoneNumber + "\nLongitude: " +
-                    location.longitude + "\nLattitude: " + location.lattitude + "\n";
+                return "ID: " + id + "\nName: " + name + "\nPhone: " + phoneNumber + "\nlocation: " +
+                    location + "\n";
             }
         }
     }

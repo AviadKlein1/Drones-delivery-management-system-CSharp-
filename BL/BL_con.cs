@@ -8,19 +8,15 @@ namespace IBL
 {
     namespace BO
     {
-        public partial class BL : IBL
+        public partial class BL 
         {
             public Random rd = new Random();
 
             public List<DronesToList> dronelist = new List<DronesToList>();
 
-            public IDAL.IDal dal;
+            public IDAL.IDal dal = new IDAL.DO.DalObject.DalObject();
 
-            public BL()
-            {
-                this.dal = new IDAL.DO.DalObject.DalObject();
-            }
-        
+           
         }
     }
 }

@@ -12,21 +12,20 @@ namespace IDAL
         {
             public class DalObject : IDal
             {
-                //consructor
+                
                 public DalObject()
                 {
                     IDAL.DO.DalObject.DataSource.Initialize();
                 }
-
                 /// <summary>
-                /// create a new station and add to array
+                /// add to array
                 /// </summary>
                 public void addStation(Station myStation)
                 {
                     //insert station to 
+                    
                     IDAL.DO.DalObject.DataSource.stations.Add(myStation);
                 }
-
                 /// <summary>
                 /// add it to array
                 /// </summary>
@@ -35,7 +34,6 @@ namespace IDAL
                     //insert drone to array
                     IDAL.DO.DalObject.DataSource.drones.Add(myDrone);
                 }
-
                 /// <summary>
                 ///  add it to array
                 /// </summary>
@@ -44,7 +42,6 @@ namespace IDAL
                     //insert customer to array
                     IDAL.DO.DalObject.DataSource.customers.Add(myCustomer);
                 }
-
                 /// <summary>
                 /// add it to array
                 /// </summary>
@@ -59,6 +56,13 @@ namespace IDAL
                 {
                     return IDAL.DO.DalObject.DataSource.Config.ParcelRunId++;
                 }
+
+
+
+
+
+
+
 
                 /// <summary>
                 /// belong parcel to specific drone
@@ -215,8 +219,9 @@ namespace IDAL
                 /// print stations details
                 /// </summary>
                 /// <param name="myId"></param>
-                public void stationDisplay(int myId)
+                public Station getStation(int myId)
                 {
+                    Station temp = new Station();
                     //int j = 0;
                     //while (IDAL.DO.DalObject.DataSource.stations[j].id != myId)
                     //    j++;
@@ -225,71 +230,107 @@ namespace IDAL
                     {
                         if (IDAL.DO.DalObject.DataSource.stations[i].id == myId)
                         {
-                            Console.WriteLine(IDAL.DO.DalObject.DataSource.stations[i]);
+                           temp =  IDAL.DO.DalObject.DataSource.stations[i];
                         }
                     }
+                    return temp;
                 }
-
-                /// <summary>
-                /// print drone details
-                /// </summary>
-                /// <param name="myId"></param>
-                public void droneDisplay(int myId)
+                public IDAL.DO.Drone getDrone(int myId)
                 {
-                    //int j = 0;
-                    //while (IDAL.DO.DalObject.DataSource.drones[j].id != myId)
-                    //    j++;
-                    //Console.WriteLine(IDAL.DO.DalObject.DataSource.drones[j]);
+                    Drone temp = new Drone();
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.drones.Count; i++)
                     {
                         if (IDAL.DO.DalObject.DataSource.drones[i].id == myId)
                         {
-                            Console.WriteLine(IDAL.DO.DalObject.DataSource.drones[i]);
+                           temp =  IDAL.DO.DalObject.DataSource.drones[i];
                         }
                     }
+                    return temp;
                 }
-
-                /// <summary>
-                /// print customer details
-                /// </summary>
-                /// <param name="myId"></param>
-                public void customerDisplay(int myId)
+                public IDAL.DO.Customer getCustomer(int myId)
                 {
-                    //int j = 0;
-                    //while (IDAL.DO.DalObject.DataSource.customers[j].id != myId)
-                    //    j++;
-                    //Console.WriteLine(IDAL.DO.DalObject.DataSource.customers[j]);
+                    Customer temp = new Customer();
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.customers.Count; i++)
                     {
                         if (IDAL.DO.DalObject.DataSource.customers[i].id == myId)
                         {
-                            Console.WriteLine(IDAL.DO.DalObject.DataSource.customers[i]);
+                            temp = IDAL.DO.DalObject.DataSource.customers[i];
                         }
                     }
+                    return temp;
                 }
-                /// <summary>
-                /// print parcel details
-                /// </summary>
-                /// <param name="myId"></param>
-                public void parcelDisplay(int myId)
+                public IDAL.DO.Parcel getParcel(int myId)
                 {
-                    //int j = 0;
-                    //while (IDAL.DO.DalObject.DataSource.parcels[j].id != myId)
-                    //    j++;
-                    //Console.WriteLine(IDAL.DO.DalObject.DataSource.parcels[j]);
+                    Parcel temp = new Parcel();
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
                     {
                         if (IDAL.DO.DalObject.DataSource.parcels[i].id == myId)
                         {
-                            Console.WriteLine(IDAL.DO.DalObject.DataSource.parcels[i]);
+                            temp = IDAL.DO.DalObject.DataSource.parcels[i];
                         }
                     }
+                    return temp;
                 }
+                /// <summary>
+                /// print drone details
+                /// </summary>
+                /// <param name="myId"></param>
+                //public void droneDisplay(int myId)
+                //{
+                //    //int j = 0;
+                //    //while (IDAL.DO.DalObject.DataSource.drones[j].id != myId)
+                //    //    j++;
+                //    //Console.WriteLine(IDAL.DO.DalObject.DataSource.drones[j]);
+                //    for (int i = 0; i < IDAL.DO.DalObject.DataSource.drones.Count; i++)
+                //    {
+                //        if (IDAL.DO.DalObject.DataSource.drones[i].id == myId)
+                //        {
+                //            Console.WriteLine(IDAL.DO.DalObject.DataSource.drones[i]);
+                //        }
+                //    }
+                //}
+
+                ///// <summary>
+                ///// print customer details
+                ///// </summary>
+                ///// <param name="myId"></param>
+                //public void customerDisplay(int myId)
+                //{
+                //    //int j = 0;
+                //    //while (IDAL.DO.DalObject.DataSource.customers[j].id != myId)
+                //    //    j++;
+                //    //Console.WriteLine(IDAL.DO.DalObject.DataSource.customers[j]);
+                //    for (int i = 0; i < IDAL.DO.DalObject.DataSource.customers.Count; i++)
+                //    {
+                //        if (IDAL.DO.DalObject.DataSource.customers[i].id == myId)
+                //        {
+                //            Console.WriteLine(IDAL.DO.DalObject.DataSource.customers[i]);
+                //        }
+                //    }
+                //}
+                ///// <summary>
+                ///// print parcel details
+                ///// </summary>
+                ///// <param name="myId"></param>
+                //public void parcelDisplay(int myId)
+                //{
+                //    //int j = 0;
+                //    //while (IDAL.DO.DalObject.DataSource.parcels[j].id != myId)
+                //    //    j++;
+                //    //Console.WriteLine(IDAL.DO.DalObject.DataSource.parcels[j]);
+                //    for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
+                //    {
+                //        if (IDAL.DO.DalObject.DataSource.parcels[i].id == myId)
+                //        {
+                //            Console.WriteLine(IDAL.DO.DalObject.DataSource.parcels[i]);
+                //        }
+                //    }
+                //}
 
                 /// <summary>
                 /// print all stations
                 /// </summary>
-                public IEnumerable<Station> stationsDisplay()
+                public IEnumerable<Station> getStations()
                 {
                     //int size = IDAL.DO.DalObject.DataSource.Config.stationIndex;
                     ////create a new array for stations
@@ -309,7 +350,7 @@ namespace IDAL
                 /// <summary>
                 /// print all drones
                 /// </summary>
-                public IEnumerable<Drone> dronesDisplay()
+                public IEnumerable<Drone> getDrones()
                 {
                     //int size = IDAL.DO.DalObject.DataSource.Config.droneIndex;
                     ////create a new array for drones
@@ -327,7 +368,7 @@ namespace IDAL
                 /// <summary>
                 /// print all customers
                 /// </summary>
-                public IEnumerable<Customer> customersDisplay()
+                public IEnumerable<Customer> getCustomers()
                 {
                         //int size = IDAL.DO.DalObject.DataSource.Config.customerIndex;
                         ////create a new array for customers
@@ -345,7 +386,7 @@ namespace IDAL
                 /// <summary>
                 /// print all parcels
                 /// </summary>
-                public IEnumerable<Parcel> parcelsDisplay()
+                public IEnumerable<Parcel> getParcels()
                 {
                     //int size = IDAL.DO.DalObject.DataSource.Config.parcelIndex;
                     ////create a new array for parcels
@@ -363,7 +404,7 @@ namespace IDAL
                 /// <summary>
                 /// print all parcels which are not associated with a drone
                 /// </summary>
-                public IEnumerable<Parcel> notAssociatedParcelsDisplay()
+                public IEnumerable<Parcel> getNotAssociatedParcels()
                 {
                     //find size of new array for parcels
                     List<IDAL.DO.Parcel> temp = new List<IDAL.DO.Parcel>();
@@ -390,7 +431,7 @@ namespace IDAL
                 /// <summary>
                 /// print all available to charge stations
                 /// </summary>
-                public IEnumerable<Station> availableToChargeStattions()
+                public IEnumerable<Station> getAvailableToChargeStations()
                 {
                     int size = IDAL.DO.DalObject.DataSource.stations.Count;
                     List<IDAL.DO.Station> temp = new List<IDAL.DO.Station>();
@@ -427,15 +468,17 @@ namespace IDAL
 
                 public IDAL.DO.Location stationLocate(int StationId)
                 {
-                    Station temp = new Station();
+                    Location temp = new Location();
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.stations.Count; i++)
                     {
                         if (IDAL.DO.DalObject.DataSource.stations[i].id == StationId)
                         {
-                            temp.location = IDAL.DO.DalObject.DataSource.stations[i].location;
+                            temp.lattitude = IDAL.DO.DalObject.DataSource.stations[i].lattitude;
+                            temp.longitude = IDAL.DO.DalObject.DataSource.stations[i].longitude;
+
                         }
                     }
-                    return temp.location;
+                    return temp;
                 }
             }
         }

@@ -14,22 +14,22 @@ namespace IDAL
         {
             public int id { get; set; }
             public string name { get; set; }
-            //public double longitude { get; set; }
-            //public double lattitude { get; set; }
+            public double longitude { get; set; }
+            public double lattitude { get; set; }
             public int numOfChargeSlots { get; set; }
             public int numOfAvailableChargeSlots { get; set; }
-            public Location location { get; set; }
+            //public Location location { get; set; }
 
-            public static List<Station> DronesInCharge;
-
+            public List<Drone> DronesInCharge;
+                       
             /// <summary>
             /// prints an item's details
             /// </summary>
             /// 
             public override string ToString()
             {
-                return "ID: " + id + "\nName: " + name + "\nLongitude: " + location.longitude + "\nLattitude: " +
-                    location.lattitude + "\nCharge Slots: " + numOfChargeSlots + "\n";
+                return "ID: " + id + "\nName: " + name + "\nLongitude: " + /*location.*/longitude + "\nLattitude: " +
+                    /*location.*/lattitude + "\nCharge Slots: " + numOfChargeSlots + "\n";
             }
         }
     }

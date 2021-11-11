@@ -57,7 +57,7 @@ namespace ConsoleUI_BL
 
             Console.WriteLine("enter number of station for first charge");
             int.TryParse(Console.ReadLine(), out choice);
-            myDrone.chargeStationId = choice; 
+            myDrone.chargeStationId = choice;
 
             return myDrone;
         }
@@ -89,7 +89,7 @@ namespace ConsoleUI_BL
         public IBL.BO.Parcel addParcel()
         {
             IBL.BO.Parcel myParcel = new IBL.BO.Parcel();
-         
+
             int senderId;
             Console.WriteLine("enter sender id");
             int.TryParse(Console.ReadLine(), out senderId);
@@ -100,10 +100,10 @@ namespace ConsoleUI_BL
             int.TryParse(Console.ReadLine(), out targetId);
             myParcel.reciver.id = targetId;
 
-            int droneId;
-            Console.WriteLine("enter drone id");
-            int.TryParse(Console.ReadLine(), out droneId);
-            myParcel.drone.id = droneId;
+            //int droneId;
+            //Console.WriteLine("enter drone id");
+            //int.TryParse(Console.ReadLine(), out droneId);
+            //myParcel.drone.id = droneId;
 
             int choice;
             Console.WriteLine("enter weight (lite = 1, medium = 2, heavy = 3)");
@@ -118,10 +118,12 @@ namespace ConsoleUI_BL
             if (choice == 2) myParcel.priority = IDAL.DO.MyEnums.PriorityLevel.quickly;
             if (choice == 3) myParcel.priority = IDAL.DO.MyEnums.PriorityLevel.ergent;
 
-            myParcel.requested = DateTime.Now;
+
+           
 
             return myParcel;
         }
 
+        
     }
 }

@@ -12,13 +12,11 @@ namespace IBL
         {
             public Location()
             {
-                longitude = 0.0;
-                lattitude = 0.0;
             }
-            public Location(double longitude, double lattitude)
+            public Location(IDAL.DO.Location l)
             {
-                this.longitude = longitude;
-                this.lattitude = lattitude;
+                this.longitude = l.longitude;
+                this.lattitude = l.lattitude;
             }
 
             public double longitude { get; set; }

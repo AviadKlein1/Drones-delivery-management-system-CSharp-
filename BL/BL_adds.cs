@@ -8,18 +8,18 @@ namespace IBL
 {
     namespace BO
     {
-        public partial class BL : IBL
+        public partial class BL 
         {
             public void addStation(Station myStation)
             {
                 IDAL.DO.Station temp = new IDAL.DO.Station();
                 temp.id = myStation.id;
-                temp.location.lattitude = myStation.location.lattitude;
-                temp.location.longitude = myStation.location.longitude;
+                temp/*.location*/.lattitude = myStation.location.lattitude;
+                temp/*.location*/.longitude = myStation.location.longitude;
                 temp.name = myStation.name;
                 temp.numOfAvailableChargeSlots = myStation.numOfAvailableChargeSlots;
                 temp.numOfChargeSlots = myStation.numOfChargeSlots;
-
+                temp.DronesInCharge.Clear();
                 //checks
            
                 
@@ -52,8 +52,8 @@ namespace IBL
                 temp.id = myCustomer.id;
                 temp.name = myCustomer.name;
                 temp.phoneNumber = myCustomer.phoneNumber;
-                temp.location.longitude = myCustomer.location.longitude;
-                temp.location.lattitude = myCustomer.location.lattitude;
+                temp.longitude = myCustomer.location.longitude;
+                temp.lattitude = myCustomer.location.lattitude;
 
 
 
@@ -74,11 +74,11 @@ namespace IBL
                 temp.priority = myParcel.priority;
                 temp.weight = myParcel.weight;
 
-                temp.scheduled = myParcel.scheduled;
-                temp.requested = myParcel.requested;
-                temp.pickedUp = myParcel.pickedUp;
-                temp.delivered = myParcel.delivered;
 
+                temp.scheduled = DateTime.Now;
+                temp.requested = new DateTime();
+                temp.pickedUp = new DateTime();
+                temp.delivered = new DateTime();
 
                 //checks
 

@@ -44,7 +44,7 @@ namespace IDAL
                     public static double mediumWeight;
                     public static double heavyWeight;
                     public static double DroneLoadRate;
-                    
+
                 }
 
                 /// <summary>
@@ -58,10 +58,10 @@ namespace IDAL
                         IDAL.DO.Station myStation = new IDAL.DO.Station();
                         myStation.id = rd.Next(100, 1000);
                         myStation.name = "station" + (i + 1);
-                        myStation.longitude = rd.NextDouble() + rd.Next(180);
-                        myStation.lattitude = rd.NextDouble() + rd.Next(180);
+                        myStation./*location.*/longitude = rd.NextDouble() + rd.Next(180);
+                        myStation./*location.*/lattitude = rd.NextDouble() + rd.Next(180);
                         myStation.numOfChargeSlots = rd.Next(1, 5);
-                        myStation.numOfAvailableChargeSlots = stations[i].numOfChargeSlots;
+                        myStation.numOfAvailableChargeSlots = myStation.numOfChargeSlots;
                         //Config.stationIndex++;
                         stations.Add(myStation);
                     }

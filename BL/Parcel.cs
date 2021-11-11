@@ -22,9 +22,21 @@ namespace IBL
             public DateTime pickedUp { get; set; }
             public DateTime delivered { get; set; }
 
-            public CustomerInParcel sender { get; set; }
-            public CustomerInParcel reciver { get; set; }
-            public DroneInParcel drone { get; set; }
+            public CustomerInParcel sender = new CustomerInParcel();
+            public CustomerInParcel reciver = new CustomerInParcel();
+            public DroneInParcel drone = new DroneInParcel();
+
+            public Parcel() { }
+            public Parcel(IDAL.DO.Parcel temp) 
+            {
+                id = temp.id;
+                weight = temp.weight;
+                priority = temp.priority;
+                sender.id = temp.senderId;
+                reciver.id = temp.targetId;
+                drone.id = temp.droneId;
+            }
+
             /// <summary>
             /// prints an item's details
             /// </summary>

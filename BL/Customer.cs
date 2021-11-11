@@ -15,11 +15,20 @@ namespace IBL
             public int id { get; set; }
             public string name { get; set; }
             public string phoneNumber { get; set; }
-            public Location location { get; set; }
-
+            public Location location = new Location();
             public List<Parcel> parcelsFromCustomer;
             public List<Parcel> parcelsToCustomer;
 
+            public Customer()
+            {
+            }
+            public Customer(IDAL.DO.Customer temp)
+            {
+                id = temp.id;
+                name = temp.name;
+                phoneNumber = temp.phoneNumber;
+                location = new Location(temp.location);
+            }
 
             /// <summary>
             /// prints item's details
