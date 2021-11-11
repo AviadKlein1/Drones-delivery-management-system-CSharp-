@@ -48,5 +48,28 @@ namespace IBL
                     delivered + '\n';
             }
         }
+        public class ParcelAtCustomer : Parcel
+        {
+            public MyEnums.ParcelStatus parcelStatus;
+            public CustomerInParcel theSecondSide;
+        }
+        public class ParcelDeliverd : Parcel
+        {
+            public bool parcelStatus { get; set; }
+            public Location pickUpLocation { get; set; }
+            public Location targetLocation { get; set; }
+            public double destination { get; set; }
+        }
+        public class ParcelToList : Parcel
+        {
+
+            public string senderName { get; set; }
+
+            public MyEnums.ParcelStatus parcelStatus;
+            public ParcelToList()
+            {
+                senderName = base.sender.name;
+            }
+        }
     }
 }

@@ -39,5 +39,25 @@ namespace IBL
                     location.longitude + "\nLattitude: " + location.lattitude + "\n";
             }
         }
+
+        public class CustomerInParcel : Customer
+        {
+
+        }
+        public class CustomerToList : Customer
+        {
+            public int parcelsSendAndDeliverd;
+            public int parcelsSendAndNotDeliverd;
+            public int parcelsRecived;
+            public int parcelsInTheWayToMe;
+
+            public override string ToString()
+            {
+                base.ToString();
+                return "parcelsSendAndDeliverd: " + parcelsSendAndDeliverd +
+                    "\nparcelsSendAndNotDeliverd: " + parcelsSendAndNotDeliverd +
+                    "\nparcelsRecived: " + parcelsRecived;
+            }
+        }
     }
 }

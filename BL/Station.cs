@@ -46,6 +46,15 @@ namespace IBL
                     location.lattitude + "\nCharge Slots: " + numOfChargeSlots + "\n";
             }
         }
+        class StationToList : Station
+        {
+            public StationToList()
+            {
+                this.numOfNotAvailableChargeSlots = base.numOfChargeSlots - base.numOfAvailableChargeSlots;
+            }
+            public int numOfNotAvailableChargeSlots { get; set; }
+
+        }
     }
 }
 

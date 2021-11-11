@@ -52,5 +52,28 @@ namespace IBL
                     "\ndeliverdParcel: " + deliverdParcel +"\n";
             }
         }
+        public class DroneInCharge : Drone
+        {
+            public DroneInCharge(IDAL.DO.Drone temp)
+            {
+                base.id = temp.id;
+                base.battery = temp.battery;
+                base.chargeStationId = temp.chargeStationId;
+                base.location = new Location(temp.location);
+                base.model = temp.model;
+                base.status = temp.status;
+            }
+        }
+        public class DroneInParcel : Drone
+        {
+        }
+        public class DronesToList : Drone
+        {
+            public DronesToList()
+            {
+                this.deliverdParcelId = base.deliverdParcel.id;
+            }
+            public int deliverdParcelId { get; set; }
+        }
     }
 }
