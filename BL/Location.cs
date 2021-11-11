@@ -10,8 +10,12 @@ namespace IBL
     {
         public class Location
         {
-            public Location()
+            public Location(){}
+            public Location(double longitude, double lattitude)
             {
+                this.longitude = longitude;
+                this.lattitude = lattitude;
+
             }
             public Location(IDAL.DO.Location l)
             {

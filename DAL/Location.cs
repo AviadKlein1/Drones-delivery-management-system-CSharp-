@@ -11,10 +11,7 @@ namespace IDAL
         public class Location
         {
             public Location()
-            {
-                longitude = 0.0;
-                lattitude = 0.0;
-            }
+            {}
             public Location(double longitude, double lattitude)
             {
                 this.longitude = longitude;

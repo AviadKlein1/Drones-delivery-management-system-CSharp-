@@ -27,7 +27,7 @@ namespace IBL
                 id = temp.id;
                 name = temp.name;
                 phoneNumber = temp.phoneNumber;
-                location = new Location(temp.location);
+                location = new Location(temp.longitude, temp.lattitude);
             }
 
             /// <summary>
