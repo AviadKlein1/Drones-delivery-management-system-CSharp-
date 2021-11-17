@@ -60,8 +60,8 @@ namespace IDAL
                         myStation.name = "station" + (i + 1);
                         myStation./*location.*/longitude = rd.NextDouble() + rd.Next(180);
                         myStation./*location.*/lattitude = rd.NextDouble() + rd.Next(180);
-                        myStation.numOfChargeSlots = rd.Next(1, 5);
-                        myStation.numOfAvailableChargeSlots = myStation.numOfChargeSlots;
+                        //myStation.numOfChargeSlots = rd.Next(1, 5);
+                        myStation.numOfAvailableChargeSlots = rd.Next(1, 5);
                         //Config.stationIndex++;
                         stations.Add(myStation);
                     }
@@ -97,9 +97,9 @@ namespace IDAL
                     {
                         IDAL.DO.Parcel myParcel = new IDAL.DO.Parcel();
                         myParcel.id = IDAL.DO.DalObject.DataSource.Config.ParcelRunId++;
-                        myParcel.senderId = rd.Next(100000000, 1000000000);
-                        myParcel.targetId = rd.Next(100000000, 1000000000);
-                        myParcel.droneId = 0;
+                        //myParcel.senderId = rd.Next(100000000, 1000000000);
+                        //myParcel.targetId = rd.Next(100000000, 1000000000);
+                        //myParcel.droneId = 0;
                         myParcel.weight = (IDAL.DO.MyEnums.WeightCategory)rd.Next(3);
                         myParcel.priority = (IDAL.DO.MyEnums.PriorityLevel)rd.Next(3);
                         myParcel.requested = DateTime.Now;

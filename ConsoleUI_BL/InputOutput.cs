@@ -18,7 +18,7 @@ namespace ConsoleUI_BL
             myStation.id = id;
 
             Console.WriteLine("enter name");
-            myStation.name = (Console.ReadLine());
+            myStation.Name = (Console.ReadLine());
 
             double locat;
             Console.WriteLine("enter longitude");
@@ -31,7 +31,6 @@ namespace ConsoleUI_BL
             int numOfChargeSlots;
             Console.WriteLine("enter number of charge slots");
             int.TryParse(Console.ReadLine(), out numOfChargeSlots);
-            myStation.numOfChargeSlots = numOfChargeSlots;
             myStation.numOfAvailableChargeSlots = numOfChargeSlots;
             return myStation;
         }
@@ -57,7 +56,7 @@ namespace ConsoleUI_BL
 
             Console.WriteLine("enter number of station for first charge");
             int.TryParse(Console.ReadLine(), out choice);
-            myDrone.chargeStationId = choice;
+            myDrone.firstChargeStationId = choice;
 
             return myDrone;
         }
@@ -96,14 +95,9 @@ namespace ConsoleUI_BL
             myParcel.sender.id = senderId;
 
             int targetId;
-            Console.WriteLine("enter target id");
+            Console.WriteLine("enter reciever id");
             int.TryParse(Console.ReadLine(), out targetId);
-            myParcel.reciver.id = targetId;
-
-            //int droneId;
-            //Console.WriteLine("enter drone id");
-            //int.TryParse(Console.ReadLine(), out droneId);
-            //myParcel.drone.id = droneId;
+            myParcel.reciever.id = targetId;
 
             int choice;
             Console.WriteLine("enter weight (lite = 1, medium = 2, heavy = 3)");

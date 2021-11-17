@@ -13,13 +13,13 @@ namespace IBL
             public void addStation(Station myStation)
             {
                 IDAL.DO.Station temp = new IDAL.DO.Station();
+
                 temp.id = myStation.id;
                 temp/*.location*/.lattitude = myStation.location.lattitude;
                 temp/*.location*/.longitude = myStation.location.longitude;
-                temp.name = myStation.name;
+                temp.name = myStation.Name;
                 temp.numOfAvailableChargeSlots = myStation.numOfAvailableChargeSlots;
-                temp.numOfChargeSlots = myStation.numOfChargeSlots;
-                temp.DronesInCharge = new List<IDAL.DO.Drone>();
+                temp.DronesInCharge = new List<IDAL.DO.DroneInCharge>();
                 //checks
            
                 
@@ -34,10 +34,10 @@ namespace IBL
                 temp.id = myDrone.id;
                 temp.model = myDrone.model;
                 temp.weight = myDrone.weight;
-                temp.chargeStationId = myDrone.chargeStationId;
+                temp.firstChargeStationId = myDrone.firstChargeStationId;
                 temp.battery =  rd.Next(20, 41);
                 temp.status = IDAL.DO.MyEnums.DroneStatus.maintenance;
-                temp.location = dal.stationLocate(temp.chargeStationId);
+                temp.location = dal.stationLocate(temp.firstChargeStationId);
 
 
                 //checks
@@ -67,18 +67,28 @@ namespace IBL
                 IDAL.DO.Parcel temp = new IDAL.DO.Parcel();
 
                 temp.id = dal.ParcelRunId();
-                temp.droneId = myParcel.drone.id;
-                temp.senderId = myParcel.sender.id;
-                temp.targetId = myParcel.reciver.id;
+
+                IDAL.DO.CustomerInParcel CusSender = new IDAL.DO.CustomerInParcel();
+                CusSender.id = myParcel.sender.id;
+                CusSender.name = myParcel.sender.name;
+                temp.sender = CusSender;
+
+                IDAL.DO.CustomerInParcel cusReciever = new IDAL.DO.CustomerInParcel();
+                cusReciever.id = myParcel.reciever.id;
+                cusReciever.name = myParcel.reciever.name;
+                temp.reciever = cusReciever;
 
                 temp.priority = myParcel.priority;
                 temp.weight = myParcel.weight;
-
 
                 temp.scheduled = DateTime.Now;
                 temp.requested = new DateTime();
                 temp.pickedUp = new DateTime();
                 temp.delivered = new DateTime();
+
+                IDAL.DO.DroneInParcel droneInParcel = new IDAL.DO.DroneInParcel();
+                temp.DroneInParcel = droneInParcel;
+
                 Console.WriteLine("your parcel ID is: " + temp.id + "\n");
                 //checks
 

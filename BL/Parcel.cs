@@ -12,94 +12,116 @@ namespace IBL
         public class Parcel
         {
             public int id { get; set; }
-            //public int droneId { get; set; }
-            //public int senderId { get; set; }
-            //public int targetId { get; set; }
+            public CustomerInParcel sender { get; set; }
+            public CustomerInParcel reciever { get; set; }
             public IDAL.DO.MyEnums.WeightCategory weight { get; set; }
             public IDAL.DO.MyEnums.PriorityLevel priority { get; set; }
+            public DroneInParcel DroneInParcel { get; set; }
             public DateTime requested { get; set; }
             public DateTime scheduled { get; set; }
             public DateTime pickedUp { get; set; }
             public DateTime delivered { get; set; }
 
-            public Customer sender;
-            public Customer reciver;
-            public DroneInParcel drone = new DroneInParcel();
-
-            public Parcel() { }
-            public Parcel(IDAL.DO.Parcel temp) 
+            public Parcel()
+            {
+                sender = new CustomerInParcel();
+                reciever = new CustomerInParcel();
+                DroneInParcel = new DroneInParcel();
+            }
+        
+            public Parcel(IDAL.DO.Parcel temp)
             {
                 id = temp.id;
+                sender = new CustomerInParcel(temp.sender);
+                reciever = new CustomerInParcel(temp.reciever);
+                DroneInParcel = new DroneInParcel(temp.DroneInParcel);
                 weight = temp.weight;
                 priority = temp.priority;
-                sender.id = temp.senderId;
-                reciver.id = temp.targetId;
-                drone.id = temp.droneId;
+                requested = temp.requested;
+                scheduled = temp.scheduled;
+                pickedUp = temp.pickedUp;
+                delivered = temp.delivered;
             }
-
-            /// <summary>
-            /// prints an item's details
-            /// </summary>
             public override string ToString()
             {
-                return "ID: " + id + "\nsender ID: " + sender.id + "\ntarget ID: " + reciver.id + "\ndrone ID: " +
-                    drone.id + "\nWeight Category: " + weight + "\nPriority: " + priority + "\nrequested" +
-                    requested + "\nscheduled: " + scheduled + "\npicked up: " + pickedUp + "\ndelivered: " +
-                    delivered + '\n';
+                return $"ID: {id}\n sender: {sender}\n reciever: {reciever}\n drone: {DroneInParcel}\n" +
+                    $" Weight Category: {weight}\n Priority: {priority}\n requested: {requested}\n" +
+                    $" scheduled: {scheduled}\n picked up: {pickedUp}\n delivered: {delivered}\n";
             }
         }
-        public class ParcelAtCustomer : Parcel
+        public class ParcelAtCustomer
         {
-            public IDAL.DO.MyEnums.ParcelStatus parcelStatus;
-            public Customer theSecondSide;
+            public int id { get; set; }
+            public IDAL.DO.MyEnums.WeightCategory weight { get; set; }
+            public IDAL.DO.MyEnums.PriorityLevel priority { get; set; }
+            public IDAL.DO.MyEnums.ParcelStatus parcelStatus { get; set; }
+            public CustomerInParcel theSecondSide { get; set; }
 
             public ParcelAtCustomer(IDAL.DO.ParcelAtCustomer parcel)
             {
                 id = parcel.id;
-                sender.id = parcel.senderId;
-                reciver.id = parcel.targetId;
-                drone.id = parcel.droneId;
                 weight = parcel.weight;
                 priority = parcel.priority;
-                requested = parcel.requested;
-                scheduled = parcel.scheduled;
-                pickedUp = parcel.pickedUp;
-                delivered = parcel.delivered;
                 parcelStatus = parcel.parcelStatus;
-                theSecondSide = new Customer(parcel.theSecondSide);
+                theSecondSide = new CustomerInParcel(parcel.theSecondSide);
+            }
+
+            public ParcelAtCustomer()
+            {
+                theSecondSide = new CustomerInParcel();
+            }
+
+            public override string ToString()
+            {
+                return $"ID: {id}\n the custoner in the second side: {theSecondSide}\n" +
+                    $" Weight Category: {weight}\n Priority: {priority}\n Parcel Status: {parcelStatus}";
             }
         }
-        public class deliverdParcel : Parcel
+        public class ParcelInDelivery
         {
-            public deliverdParcel(IDAL.DO.ParcelDeliverd temp)
+            public ParcelInDelivery(IDAL.DO.ParcelInDelivery temp)
             {
                 id = temp.id;
                 weight = temp.weight;
                 priority = temp.priority;
-                sender.id = temp.senderId;
-                reciver.id = temp.targetId;
-                drone.id = temp.droneId;
                 boolParcelStatus = temp.boolParcelStatus;
                 pickUpLocation = new Location(temp.pickUpLocation);
                 targetLocation = new Location(temp.targetLocation);
-                destination = temp.destination;
+                distance = temp.distance;
+                sender =  new CustomerInParcel( temp.sender);
+                reciever = new CustomerInParcel(temp.reciever);
             }
 
+            public int id { get; set; }
+            public IDAL.DO.MyEnums.WeightCategory weight { get; set; }
+            public IDAL.DO.MyEnums.PriorityLevel priority { get; set; }
             public bool boolParcelStatus { get; set; }
+            public CustomerInParcel sender { get; set; }
+            public CustomerInParcel reciever { get; set; }
             public Location pickUpLocation { get; set; }
             public Location targetLocation { get; set; }
-            public double destination { get; set; }
+            public double distance { get; set; }
 
-        }
-        public class ParcelToList : Parcel
-        {
-
-            public string senderName { get; set; }
-
-            public MyEnums.ParcelStatus parcelStatus;
-            public ParcelToList()
+            public override string ToString()
             {
-                senderName = base.sender.name;
+                return $"ID: {id}\n sender: {sender}\n reciever: {reciever}\n bool Parcel Status: {boolParcelStatus}" +
+                    $" Weight Category: {weight}\n Priority: {priority}\n distance: {distance}\n" +
+                    $" pick Up Location: {pickUpLocation}\n target Location: {targetLocation}\n";
+            }
+        }
+        public class ParcelToList
+        {
+            public int id { get; set; }
+            public string senderName { get; set; }
+            public string recieverName { get; set; }
+            public MyEnums.WeightCategory weight { get; set; }
+            public MyEnums.PriorityLevel priority { get; set; }
+            public MyEnums.ParcelStatus parcelStatus { get; set; }
+
+            public override string ToString()
+            {
+                return $"ID: {id}\n sender name: {senderName}\n reciever name: {recieverName}\n" +
+                    $" Weight Category: {weight}\n Priority: {priority}\n Parcel Status: {parcelStatus}";
             }
         }
     }

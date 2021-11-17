@@ -15,12 +15,15 @@ namespace IBL
             public int id { get; set; }
             public string name { get; set; }
             public string phoneNumber { get; set; }
-            public Location location = new Location();
+            public Location location { get; set; } 
             public List<ParcelAtCustomer> parcelsFromCustomer { get; set; }
-            public List<ParcelAtCustomer> parcelsToCustomer{ get; set; }
+            public List<ParcelAtCustomer> parcelsToCustomer { get; set; }
 
             public Customer()
             {
+                location = new Location();
+                parcelsFromCustomer = new List<ParcelAtCustomer>();
+                parcelsToCustomer = new List<ParcelAtCustomer>();
             }
             public Customer(IDAL.DO.Customer temp)
             {
@@ -29,16 +32,21 @@ namespace IBL
                 phoneNumber = temp.phoneNumber;
                 location = new Location(temp.longitude, temp.lattitude);
 
-                foreach (IDAL.DO.ParcelAtCustomer element in temp.parcelsFromCustomer)
+                while (temp.parcelsFromCustomer != null)
                 {
-                    ParcelAtCustomer parcel = new ParcelAtCustomer(element);
-                    parcelsFromCustomer.Add(parcel);
+                    foreach (IDAL.DO.ParcelAtCustomer element in temp.parcelsFromCustomer)
+                    {
+                        ParcelAtCustomer parcel = new ParcelAtCustomer(element);
+                        parcelsFromCustomer.Add(parcel);
+                    }
                 }
-
-                foreach (IDAL.DO.ParcelAtCustomer element in temp.parcelsToCustomer)
+                while (temp.parcelsToCustomer != null)
                 {
-                    ParcelAtCustomer parcel = new ParcelAtCustomer(element);
-                    parcelsToCustomer.Add(parcel);
+                    foreach (IDAL.DO.ParcelAtCustomer element in temp.parcelsToCustomer)
+                    {
+                        ParcelAtCustomer parcel = new ParcelAtCustomer(element);
+                        parcelsToCustomer.Add(parcel);
+                    }
                 }
             }
 
@@ -49,29 +57,47 @@ namespace IBL
             {
                 return "ID: " + id + "\nName: " + name + "\nPhone: " + phoneNumber + "\nLongitude: " +
                     location.longitude + "\nLattitude: " + location.lattitude + "\nparcels From Customer: " +
-                   parcelsFromCustomer + "\nnparcels To Customer :" + parcelsToCustomer + "\n";
-               
-            }
+                   parcelsFromCustomer + "\nparcels To Customer :" + parcelsToCustomer + "\n";
 
-            //public class CustomerInParcel : Customer
-            //{
-
-            //}
-            public class CustomerToList : Customer
-            {
-                public int parcelsSendAndDeliverd;
-                public int parcelsSendAndNotDeliverd;
-                public int parcelsRecived;
-                public int parcelsInTheWayToMe;
-
-                public override string ToString()
-                {
-                    base.ToString();
-                    return "parcelsSendAndDeliverd: " + parcelsSendAndDeliverd +
-                        "\nparcelsSendAndNotDeliverd: " + parcelsSendAndNotDeliverd +
-                        "\nparcelsRecived: " + parcelsRecived;
-                }
             }
         }
+
+        public class CustomerInParcel
+        {
+            public CustomerInParcel() { }
+            public CustomerInParcel(IDAL.DO.CustomerInParcel customerInParcel)
+            {
+                id = customerInParcel.id;
+                name = customerInParcel.name;
+            }
+
+            public int id { get; set; }
+            public string name { get; set; }
+            public override string ToString()
+            {
+                return "ID: " + id + "\nName: " + name + "\n";
+            }
+
+        }
+        public class CustomerToList
+        {
+            public int id { get; set; }
+            public string name { get; set; }
+            public string phoneNumber { get; set; }
+            public int parcelsSendAndDeliverd { get; set; }
+            public int parcelsSendAndNotDeliverd { get; set; }
+            public int parcelsRecived { get; set; }
+            public int parcelsInTheWayToMe { get; set; }
+
+            public override string ToString()
+            {
+
+                return $"ID: {id}\n name: {name}\n phone number: {phoneNumber}\n" +
+                $" parcels Send And Deliverd: {parcelsSendAndDeliverd}\n parcels Send And Not Deliverd: " +
+                $"{ parcelsSendAndNotDeliverd}\n parcels Recived: { parcelsRecived}" +
+                $"parcels In The Way To Me: {parcelsInTheWayToMe}";
+            }
+
+        }       
     }
 }

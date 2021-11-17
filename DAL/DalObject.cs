@@ -411,10 +411,10 @@ namespace IDAL
                     temp = IDAL.DO.DalObject.DataSource.parcels;
                     int size = IDAL.DO.DalObject.DataSource.parcels.Count;
                     //int count = 0;
-                    for (int i = 0; i < size; i++)
-                        if (IDAL.DO.DalObject.DataSource.parcels[i].droneId == 0)
-                            temp.Add(IDAL.DO.DalObject.DataSource.parcels[i]);
-                            //count++;
+                    ////////for (int i = 0; i < size; i++)
+                    ////////    if (IDAL.DO.DalObject.DataSource.parcels[i].droneId == 0)
+                    ////////        temp.Add(IDAL.DO.DalObject.DataSource.parcels[i]);
+                    //count++;
                     ////create a new array for parcels
                     //IDAL.DO.Parcel[] notAssociatedParcels = new Parcel[count];
                     //int j = 0;
@@ -424,7 +424,7 @@ namespace IDAL
                     ////print parcels
                     //for(int k=0; k < count; k++ )
                     //    Console.WriteLine(notAssociatedParcels[k]);
-                    
+
                     return temp;
                 }
 
