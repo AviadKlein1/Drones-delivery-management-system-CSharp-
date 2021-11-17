@@ -19,7 +19,7 @@ namespace IBL
                 temp.name = myStation.name;
                 temp.numOfAvailableChargeSlots = myStation.numOfAvailableChargeSlots;
                 temp.numOfChargeSlots = myStation.numOfChargeSlots;
-                temp.DronesInCharge.Clear();
+                temp.DronesInCharge = new List<IDAL.DO.Drone>();
                 //checks
            
                 
@@ -79,7 +79,7 @@ namespace IBL
                 temp.requested = new DateTime();
                 temp.pickedUp = new DateTime();
                 temp.delivered = new DateTime();
-
+                Console.WriteLine("your parcel ID is: " + temp.id + "\n");
                 //checks
 
 

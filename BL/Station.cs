@@ -26,7 +26,7 @@ namespace IBL
 
                 numOfChargeSlots = temp.numOfChargeSlots;
                 numOfAvailableChargeSlots = temp.numOfAvailableChargeSlots;
-                location.lattitude = temp.lattitude;
+                location = new Location(0,temp.lattitude);
                 location.longitude = temp.longitude;
             }
             public int id { get; set; }
@@ -35,15 +35,16 @@ namespace IBL
             //public double lattitude { get; set; }
             public int numOfChargeSlots { get; set; }
             public int numOfAvailableChargeSlots { get; set; }
-            public List<DroneInCharge> dronesInCharge = new List<DroneInCharge>();
-            public Location location = new Location();
+            public List<DroneInCharge> dronesInCharge { get; set; }
+            public Location location { get; set; }
             /// <summary>
             /// prints an item's details
             /// </summary>
             public override string ToString()
             {
                 return "ID: " + id + "\nName: " + name + "\nLongitude: " + location.longitude + "\nLattitude: " +
-                    location.lattitude + "\nCharge Slots: " + numOfChargeSlots + "\n";
+                    location.lattitude + "\nCharge Slots: " + numOfChargeSlots + "\nAvailable Charge Slots: " + numOfAvailableChargeSlots +
+                    "\nDrones in charge: " + dronesInCharge + "\n";
             }
         }
         class StationToList : Station

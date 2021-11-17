@@ -18,18 +18,19 @@ namespace IDAL
             public int battery { get; set; }
             public int chargeStationId { get; set; }
 
+            public ParcelDeliverd deliverdParcel;
             public Location location { get; set; }
 
 
             /// <summary>
             /// prints item's details
             /// </summary>
-            public override string ToString()
-            {
-                return "ID: " + id + "\nModel: " + model + "\nWeight Category: " + weight + "\nStatus: " +
-                    status + "\nBattery: " + battery + "\ncharge Station Id: " + chargeStationId +
-                    "\nLongitude: " + location.longitude + "\nLattitude: " + location.lattitude + "\n";
-            }
+            //public override string ToString()
+            //{
+            //    return "ID: " + id + "\nModel: " + model + "\nWeight Category: " + weight + "\nStatus: " +
+            //        status + "\nBattery: " + battery + "\ncharge Station Id: " + chargeStationId +
+            //        "\nLongitude: " + location.longitude + "\nLattitude: " + location.lattitude + "\n";
+            //}
         }
     }
 }

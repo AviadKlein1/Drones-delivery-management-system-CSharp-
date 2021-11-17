@@ -16,8 +16,8 @@ namespace IBL
             public string name { get; set; }
             public string phoneNumber { get; set; }
             public Location location = new Location();
-            public List<Parcel> parcelsFromCustomer;
-            public List<Parcel> parcelsToCustomer;
+            public List<ParcelAtCustomer> parcelsFromCustomer { get; set; }
+            public List<ParcelAtCustomer> parcelsToCustomer{ get; set; }
 
             public Customer()
             {
@@ -28,6 +28,18 @@ namespace IBL
                 name = temp.name;
                 phoneNumber = temp.phoneNumber;
                 location = new Location(temp.longitude, temp.lattitude);
+
+                foreach (IDAL.DO.ParcelAtCustomer element in temp.parcelsFromCustomer)
+                {
+                    ParcelAtCustomer parcel = new ParcelAtCustomer(element);
+                    parcelsFromCustomer.Add(parcel);
+                }
+
+                foreach (IDAL.DO.ParcelAtCustomer element in temp.parcelsToCustomer)
+                {
+                    ParcelAtCustomer parcel = new ParcelAtCustomer(element);
+                    parcelsToCustomer.Add(parcel);
+                }
             }
 
             /// <summary>
@@ -36,27 +48,29 @@ namespace IBL
             public override string ToString()
             {
                 return "ID: " + id + "\nName: " + name + "\nPhone: " + phoneNumber + "\nLongitude: " +
-                    location.longitude + "\nLattitude: " + location.lattitude + "\n";
+                    location.longitude + "\nLattitude: " + location.lattitude + "\nparcels From Customer: " +
+                   parcelsFromCustomer + "\nnparcels To Customer :" + parcelsToCustomer + "\n";
+               
             }
-        }
 
-        public class CustomerInParcel : Customer
-        {
+            //public class CustomerInParcel : Customer
+            //{
 
-        }
-        public class CustomerToList : Customer
-        {
-            public int parcelsSendAndDeliverd;
-            public int parcelsSendAndNotDeliverd;
-            public int parcelsRecived;
-            public int parcelsInTheWayToMe;
-
-            public override string ToString()
+            //}
+            public class CustomerToList : Customer
             {
-                base.ToString();
-                return "parcelsSendAndDeliverd: " + parcelsSendAndDeliverd +
-                    "\nparcelsSendAndNotDeliverd: " + parcelsSendAndNotDeliverd +
-                    "\nparcelsRecived: " + parcelsRecived;
+                public int parcelsSendAndDeliverd;
+                public int parcelsSendAndNotDeliverd;
+                public int parcelsRecived;
+                public int parcelsInTheWayToMe;
+
+                public override string ToString()
+                {
+                    base.ToString();
+                    return "parcelsSendAndDeliverd: " + parcelsSendAndDeliverd +
+                        "\nparcelsSendAndNotDeliverd: " + parcelsSendAndNotDeliverd +
+                        "\nparcelsRecived: " + parcelsRecived;
+                }
             }
         }
     }

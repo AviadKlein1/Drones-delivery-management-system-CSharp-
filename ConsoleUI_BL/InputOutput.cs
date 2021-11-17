@@ -23,7 +23,7 @@ namespace ConsoleUI_BL
             double locat;
             Console.WriteLine("enter longitude");
             double.TryParse(Console.ReadLine(), out locat);
-            myStation.location.longitude = locat;
+            myStation.location = new IBL.BO.Location(0, locat);
             Console.WriteLine("enter lattitude");
             double.TryParse(Console.ReadLine(), out locat);
             myStation.location.lattitude = locat;

@@ -21,9 +21,8 @@ namespace IBL
                 weight = temp.weight;
                 battery = temp.battery;
                 chargeStationId = temp.chargeStationId;
-                weight = temp.weight;
-                status = temp.status;
-                location.lattitude = temp.location.lattitude;
+                deliverdParcel = new deliverdParcel(temp.deliverdParcel);
+                location = new Location(0, temp.location.lattitude);
                 location.longitude = temp.location.longitude;
             }
 
@@ -34,7 +33,7 @@ namespace IBL
             public int battery { get; set; }
             public int chargeStationId { get; set; }
             public virtual Location location { get; set; }
-            public  ParcelDeliverd deliverdParcel { get; set; }
+            public  deliverdParcel deliverdParcel { get; set; }
 
          
                 
@@ -49,7 +48,7 @@ namespace IBL
                 return "ID: " + id + "\nModel: " + model + "\nWeight Category: " + weight + "\nStatus: " +
                     status + "\nBattery: " + battery + "\ncharge Station Id: " + chargeStationId +
                     "\nLongitude: " + location.longitude + "\nLattitude: " + location.lattitude +
-                    "\ndeliverdParcel: " + deliverdParcel +"\n";
+                    "\ndeliverd Parcel: " + deliverdParcel +"\n";
             }
         }
         public class DroneInCharge : Drone

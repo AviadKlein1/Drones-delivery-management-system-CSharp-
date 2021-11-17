@@ -8,10 +8,10 @@ namespace IDAL
 {
     namespace DO
     {
-        public class Location
+        public struct Location
         {
-            public Location()
-            {}
+            //public Location()
+            //{}
             public Location(double longitude, double lattitude)
             {
                 this.longitude = longitude;

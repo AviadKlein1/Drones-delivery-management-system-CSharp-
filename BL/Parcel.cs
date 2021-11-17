@@ -22,8 +22,8 @@ namespace IBL
             public DateTime pickedUp { get; set; }
             public DateTime delivered { get; set; }
 
-            public CustomerInParcel sender = new CustomerInParcel();
-            public CustomerInParcel reciver = new CustomerInParcel();
+            public Customer sender;
+            public Customer reciver;
             public DroneInParcel drone = new DroneInParcel();
 
             public Parcel() { }
@@ -50,15 +50,46 @@ namespace IBL
         }
         public class ParcelAtCustomer : Parcel
         {
-            public MyEnums.ParcelStatus parcelStatus;
-            public CustomerInParcel theSecondSide;
+            public IDAL.DO.MyEnums.ParcelStatus parcelStatus;
+            public Customer theSecondSide;
+
+            public ParcelAtCustomer(IDAL.DO.ParcelAtCustomer parcel)
+            {
+                id = parcel.id;
+                sender.id = parcel.senderId;
+                reciver.id = parcel.targetId;
+                drone.id = parcel.droneId;
+                weight = parcel.weight;
+                priority = parcel.priority;
+                requested = parcel.requested;
+                scheduled = parcel.scheduled;
+                pickedUp = parcel.pickedUp;
+                delivered = parcel.delivered;
+                parcelStatus = parcel.parcelStatus;
+                theSecondSide = new Customer(parcel.theSecondSide);
+            }
         }
-        public class ParcelDeliverd : Parcel
+        public class deliverdParcel : Parcel
         {
-            public bool parcelStatus { get; set; }
+            public deliverdParcel(IDAL.DO.ParcelDeliverd temp)
+            {
+                id = temp.id;
+                weight = temp.weight;
+                priority = temp.priority;
+                sender.id = temp.senderId;
+                reciver.id = temp.targetId;
+                drone.id = temp.droneId;
+                boolParcelStatus = temp.boolParcelStatus;
+                pickUpLocation = new Location(temp.pickUpLocation);
+                targetLocation = new Location(temp.targetLocation);
+                destination = temp.destination;
+            }
+
+            public bool boolParcelStatus { get; set; }
             public Location pickUpLocation { get; set; }
             public Location targetLocation { get; set; }
             public double destination { get; set; }
+
         }
         public class ParcelToList : Parcel
         {
