@@ -10,10 +10,6 @@ namespace IBL
     {
         public partial class BL 
         {
-            public BL()
-            {
-            }
-
             public class updates
             {
 

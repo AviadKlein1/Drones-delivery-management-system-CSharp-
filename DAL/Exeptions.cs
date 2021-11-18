@@ -11,9 +11,7 @@ namespace IDAL
     {
         class Exeptions : Exception
         {
-            protected Exeptions(SerializationInfo info, StreamingContext context) : base(info, context)
-            {
-            }
+           
         }
     }
 }
