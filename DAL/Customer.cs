@@ -15,27 +15,25 @@ namespace IDAL
             public int id { get; set; }
             public string name { get; set; }
             public string phoneNumber { get; set; }
-            //public Location location { get; set; }
             public double longitude { get; set; }
             public double lattitude { get; set; }
-            public List<ParcelAtCustomer> parcelsFromCustomer { get; set; }
-            public List<ParcelAtCustomer> parcelsToCustomer { get; set; }
-        }
-        public struct CustomerInParcel
-        {
-            public int id { get; set; }
-            public string name { get; set; }
-        }
 
-        public struct CustomerToList
-        {
-            public int id { get; set; }
-            public string name { get; set; }
-            public string phoneNumber { get; set; }
-            public int parcelsSendAndDeliverd { get; set; }
-            public int parcelsSendAndNotDeliverd { get; set; }
-            public int parcelsRecived { get; set; }
-            public int parcelsInTheWayToMe { get; set; }
         }
+        //public struct CustomerInParcel
+        //{
+        //    public int id { get; set; }
+        //    public string name { get; set; }
+        //}
+
+        //public struct CustomerToList
+        //{
+        //    public int id { get; set; }
+        //    public string name { get; set; }
+        //    public string phoneNumber { get; set; }
+        //    public int parcelsSendAndDeliverd { get; set; }
+        //    public int parcelsSendAndNotDeliverd { get; set; }
+        //    public int parcelsRecived { get; set; }
+        //    public int parcelsInTheWayToMe { get; set; }
+        //}
     }
 }
