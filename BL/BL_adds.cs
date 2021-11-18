@@ -19,6 +19,8 @@ namespace IBL
                 temp/*.location*/.longitude = myStation.location.longitude;
                 temp.name = myStation.Name;
                 temp.numOfAvailableChargeSlots = myStation.numOfAvailableChargeSlots;
+                temp.numOfChargeSlots = myStation.numOfChargeSlots;
+
                 temp.DronesInCharge = new List<IDAL.DO.DroneInCharge>();
                 //checks
            

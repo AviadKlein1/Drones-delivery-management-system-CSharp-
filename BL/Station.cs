@@ -29,6 +29,8 @@ namespace IBL
             public int id { get; set; }
             public string Name { get; set; }
             public int numOfAvailableChargeSlots { get; set; }
+            public int numOfChargeSlots { get; set; }
+            
             public List<DroneInCharge> dronesInCharge { get; set; }
             public Location location { get; set; }
             /// <summary>

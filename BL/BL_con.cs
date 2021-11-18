@@ -12,7 +12,7 @@ namespace IBL
         {
             public Random rd = new Random();
 
-            public List<DronesToList> dronelist = new List<DronesToList>();
+            public List<DronesToList> dronesList = new List<DronesToList>(); 
 
             public IDAL.IDal dal = new IDAL.DO.DalObject.DalObject();
 

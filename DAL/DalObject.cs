@@ -222,15 +222,15 @@ namespace IDAL
                 public Station getStation(int myId)
                 {
                     Station temp = new Station();
-                    //int j = 0;
-                    //while (IDAL.DO.DalObject.DataSource.stations[j].id != myId)
-                    //    j++;
-                    //Console.WriteLine(IDAL.DO.DalObject.DataSource.stations[j]);
+                    
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.stations.Count; i++)
                     {
-                        if (IDAL.DO.DalObject.DataSource.stations[i].id == myId)
+                        try
                         {
-                           temp =  IDAL.DO.DalObject.DataSource.stations[i];
+                            if (IDAL.DO.DalObject.DataSource.stations[i].id == myId)
+                            {
+                                temp = IDAL.DO.DalObject.DataSource.stations[i];
+                            }
                         }
                     }
                     return temp;

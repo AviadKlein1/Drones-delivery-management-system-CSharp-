@@ -14,8 +14,6 @@ namespace IDAL
             public int id { get; set; }
             public string model { get; set; }
             public IDAL.DO.MyEnums.WeightCategory weight { get; set; }
-            public IDAL.DO.MyEnums.DroneStatus status { get; set; }
-            public int battery { get; set; }
         }
         //public struct DroneInCharge
         //{

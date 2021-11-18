@@ -7,12 +7,13 @@ namespace ConsoleUI_BL
         static void Main(string[] args)
         {
             IBL.BO.BL bl = new IBL.BO.BL();
+            
             ConsoleUI_BL.InputOutput myInputOutput = new ConsoleUI_BL.InputOutput();
-
             Console.WriteLine("\n-- Welcome to -- Delivery by Drones --  System management interface --\n\n");
             int id = 0;
             int choice1 = -1;
             int choice2 = -1;
+            
             while (choice1 != 0)
             {
                 choice2 = -1;
