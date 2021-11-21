@@ -15,13 +15,11 @@ namespace IBL
                 IDAL.DO.Station temp = new IDAL.DO.Station();
 
                 temp.id = myStation.id;
-                temp/*.location*/.lattitude = myStation.location.lattitude;
-                temp/*.location*/.longitude = myStation.location.longitude;
+                temp.location = new IDAL.DO.Location(myStation.location.longitude, myStation.location.lattitude );
                 temp.name = myStation.Name;
                 temp.numOfAvailableChargeSlots = myStation.numOfAvailableChargeSlots;
                 temp.numOfChargeSlots = myStation.numOfChargeSlots;
 
-                //temp.DronesInCharge = new List<IDAL.DO.DroneInCharge>();
                 try
                 {
                     //insert station to array
@@ -35,21 +33,30 @@ namespace IBL
             public void addDrone(Drone myDrone)
             {
                 IDAL.DO.Drone temp = new IDAL.DO.Drone();
+
                 temp.id = myDrone.id;
                 temp.model = myDrone.model;
                 temp.weight = myDrone.weight;
-                temp.firstChargeStationId = myDrone.firstChargeStationId;
-                temp.battery =  rd.Next(20, 41);
-                temp.status = IDAL.DO.MyEnums.DroneStatus.maintenance;
-                temp.location = dal.stationLocate(temp.firstChargeStationId);
                 try
                 {
                     dal.addDrone(temp);
                 }
-                catch(IDAL.DO.ExcistingIdException ex)
+                catch (IDAL.DO.ExcistingIdException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
+            }
+            public DronesToList addDroneToBLList(Drone myDrone)
+            {
+                //add to the list in BL
+                DronesToList myDronesToList = new DronesToList();
+                myDronesToList.id = myDrone.id;
+                myDronesToList.model = myDrone.model;
+                myDronesToList.weight = myDrone.weight;
+                myDronesToList.battery = rd.Next(20, 41);
+                myDronesToList.status = MyEnums.DroneStatus.maintenance;
+                myDronesToList.location = new Location(dal.stationLocate(myDrone.firstChargeStationId));
+                return myDronesToList;
             }
             public void addcustomer(Customer myCustomer)
             {
@@ -57,8 +64,7 @@ namespace IBL
                 temp.id = myCustomer.id;
                 temp.name = myCustomer.name;
                 temp.phoneNumber = myCustomer.phoneNumber;
-                temp.longitude = myCustomer.location.longitude;
-                temp.lattitude = myCustomer.location.lattitude;
+                temp.location = new IDAL.DO.Location( myCustomer.location.longitude, myCustomer.location.lattitude);
                 try
                 {
                     dal.addcustomer(temp);
@@ -73,29 +79,17 @@ namespace IBL
                 IDAL.DO.Parcel temp = new IDAL.DO.Parcel();
 
                 temp.id = dal.ParcelRunId();
-
-                IDAL.DO.CustomerInParcel CusSender = new IDAL.DO.CustomerInParcel();
-                CusSender.id = myParcel.sender.id;
-                CusSender.name = myParcel.sender.name;
-                temp.sender = CusSender;
-
-                IDAL.DO.CustomerInParcel cusReciever = new IDAL.DO.CustomerInParcel();
-                cusReciever.id = myParcel.reciever.id;
-                cusReciever.name = myParcel.reciever.name;
-                temp.reciever = cusReciever;
-
-                temp.priority = myParcel.priority;
                 temp.weight = myParcel.weight;
-
+                temp.priority = myParcel.priority;
+                temp.senderId = myParcel.sender.id;
+                temp.reciverId = myParcel.reciever.id;
+                temp.droneId = myParcel.DroneInParcel.id;
                 temp.scheduled = DateTime.Now;
                 temp.requested = new DateTime();
                 temp.pickedUp = new DateTime();
                 temp.delivered = new DateTime();
-
-                IDAL.DO.DroneInParcel droneInParcel = new IDAL.DO.DroneInParcel();
-                temp.DroneInParcel = droneInParcel;
-
                 Console.WriteLine("your parcel ID is: " + temp.id + "\n");
+
                 try
                 {
                     dal.addParcel(temp);

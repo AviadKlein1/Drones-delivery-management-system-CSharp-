@@ -205,7 +205,7 @@ namespace IBL
                         //find the sender of the parcel
                         foreach (var cElement in customersList)
                         {
-                            if (cElement.id == pElement.targetId)
+                            if (cElement.id == pElement.reciverId)
                                 temp.Add(cElement);
                         }
                     }

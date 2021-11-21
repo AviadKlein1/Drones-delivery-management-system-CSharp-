@@ -25,31 +25,6 @@ namespace IBL
                 parcelsFromCustomer = new List<ParcelAtCustomer>();
                 parcelsToCustomer = new List<ParcelAtCustomer>();
             }
-            public Customer(IDAL.DO.Customer temp)
-            {
-                id = temp.id;
-                name = temp.name;
-                phoneNumber = temp.phoneNumber;
-                location = new Location(temp.longitude, temp.lattitude);
-
-                while (temp.parcelsFromCustomer != null)
-                {
-                    foreach (IDAL.DO.ParcelAtCustomer element in temp.parcelsFromCustomer)
-                    {
-                        ParcelAtCustomer parcel = new ParcelAtCustomer(element);
-                        parcelsFromCustomer.Add(parcel);
-                    }
-                }
-                while (temp.parcelsToCustomer != null)
-                {
-                    foreach (IDAL.DO.ParcelAtCustomer element in temp.parcelsToCustomer)
-                    {
-                        ParcelAtCustomer parcel = new ParcelAtCustomer(element);
-                        parcelsToCustomer.Add(parcel);
-                    }
-                }
-            }
-
             /// <summary>
             /// prints item's details
             /// </summary>
@@ -65,12 +40,6 @@ namespace IBL
         public class CustomerInParcel
         {
             public CustomerInParcel() { }
-            public CustomerInParcel(IDAL.DO.CustomerInParcel customerInParcel)
-            {
-                id = customerInParcel.id;
-                name = customerInParcel.name;
-            }
-
             public int id { get; set; }
             public string name { get; set; }
             public override string ToString()

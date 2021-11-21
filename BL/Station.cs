@@ -17,14 +17,15 @@ namespace IBL
             {
                 id = temp.id;
                 Name = temp.name;
-                foreach(IDAL.DO.DroneInCharge element in temp.DronesInCharge)
-                {
-                    DroneInCharge droneIn = new DroneInCharge(element);
-                    dronesInCharge.Add(droneIn);
-                }
+
+                //foreach (IDAL.DO.DroneInCharge element in temp.DronesInCharge)
+                //{
+                //    DroneInCharge droneIn = new DroneInCharge(element);
+                //    dronesInCharge.Add(droneIn);
+                //}
+
                 numOfAvailableChargeSlots = temp.numOfAvailableChargeSlots;
-                location = new Location(0,temp.lattitude);
-                location.longitude = temp.longitude;
+                location = new Location(temp.location);
             }
             public int id { get; set; }
             public string Name { get; set; }
