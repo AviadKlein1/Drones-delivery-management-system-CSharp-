@@ -43,9 +43,11 @@ namespace ConsoleUI_BL
                             {
                                 case 1:
                                     bl.addStation(myInputOutput.addStation());
+                                    
                                     break;
                                 case 2:
                                     bl.addDrone(myInputOutput.addDrone());
+                                    bl.dronesList.Add(bl.addDroneToBLList(myInputOutput.addDrone()));
                                     break;
                                 case 3:
                                     bl.addcustomer(myInputOutput.addCustomer());

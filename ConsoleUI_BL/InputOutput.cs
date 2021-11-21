@@ -8,6 +8,8 @@ namespace ConsoleUI_BL
 {
     public class InputOutput
     {
+        public Random rd = new Random();
+
         public IBL.BO.Station addStation()
         {
             IBL.BO.Station myStation = new IBL.BO.Station();
@@ -32,6 +34,7 @@ namespace ConsoleUI_BL
             Console.WriteLine("enter number of charge slots");
             int.TryParse(Console.ReadLine(), out numOfChargeSlots);
             myStation.numOfAvailableChargeSlots = numOfChargeSlots;
+            myStation.dronesInCharge = new List<IBL.BO.DroneInCharge>();
             return myStation;
         }
         public IBL.BO.Drone addDrone()
@@ -57,7 +60,6 @@ namespace ConsoleUI_BL
             Console.WriteLine("enter number of station for first charge");
             int.TryParse(Console.ReadLine(), out choice);
             myDrone.firstChargeStationId = choice;
-
             return myDrone;
         }
         public IBL.BO.Customer addCustomer()
@@ -111,10 +113,6 @@ namespace ConsoleUI_BL
             if (choice == 1) myParcel.priority = IDAL.DO.MyEnums.PriorityLevel.regular;
             if (choice == 2) myParcel.priority = IDAL.DO.MyEnums.PriorityLevel.quickly;
             if (choice == 3) myParcel.priority = IDAL.DO.MyEnums.PriorityLevel.ergent;
-
-
-           
-
             return myParcel;
         }
 

@@ -27,14 +27,19 @@ namespace IBL
                 sender = new CustomerInParcel();
                 reciever = new CustomerInParcel();
                 DroneInParcel = new DroneInParcel();
+                requested = DateTime.Now;
+                scheduled = new DateTime();
+                pickedUp = new DateTime();
+                delivered = new DateTime();
+                DroneInParcel = null;
             }
         
             public Parcel(IDAL.DO.Parcel temp)
             {
                 id = temp.id;
-                sender = new CustomerInParcel(temp.sender);
-                reciever = new CustomerInParcel(temp.reciever);
-                DroneInParcel = new DroneInParcel(temp.DroneInParcel);
+                sender = new CustomerInParcel();
+                reciever = new CustomerInParcel();
+                DroneInParcel = new DroneInParcel();
                 weight = temp.weight;
                 priority = temp.priority;
                 requested = temp.requested;
@@ -57,15 +62,6 @@ namespace IBL
             public IDAL.DO.MyEnums.ParcelStatus parcelStatus { get; set; }
             public CustomerInParcel theSecondSide { get; set; }
 
-            public ParcelAtCustomer(IDAL.DO.ParcelAtCustomer parcel)
-            {
-                id = parcel.id;
-                weight = parcel.weight;
-                priority = parcel.priority;
-                parcelStatus = parcel.parcelStatus;
-                theSecondSide = new CustomerInParcel(parcel.theSecondSide);
-            }
-
             public ParcelAtCustomer()
             {
                 theSecondSide = new CustomerInParcel();
@@ -79,18 +75,18 @@ namespace IBL
         }
         public class ParcelInDelivery
         {
-            public ParcelInDelivery(IDAL.DO.ParcelInDelivery temp)
-            {
-                id = temp.id;
-                weight = temp.weight;
-                priority = temp.priority;
-                boolParcelStatus = temp.boolParcelStatus;
-                pickUpLocation = new Location(temp.pickUpLocation);
-                targetLocation = new Location(temp.targetLocation);
-                distance = temp.distance;
-                sender =  new CustomerInParcel( temp.sender);
-                reciever = new CustomerInParcel(temp.reciever);
-            }
+            //public ParcelInDelivery(IDAL.DO.ParcelInDelivery temp)
+            //{
+            //    id = temp.id;
+            //    weight = temp.weight;
+            //    priority = temp.priority;
+            //    boolParcelStatus = temp.boolParcelStatus;
+            //    pickUpLocation = new Location(temp.pickUpLocation);
+            //    targetLocation = new Location(temp.targetLocation);
+            //    distance = temp.distance;
+            //    sender =  new CustomerInParcel( temp.sender);
+            //    reciever = new CustomerInParcel(temp.reciever);
+            //}
 
             public int id { get; set; }
             public IDAL.DO.MyEnums.WeightCategory weight { get; set; }

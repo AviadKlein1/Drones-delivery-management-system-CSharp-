@@ -12,19 +12,6 @@ namespace IBL
         public class Drone
         {
             public Drone() { }
-
-            public Drone(IDAL.DO.Drone temp)
-            {
-                id = temp.id;
-                model = temp.model;
-                status = temp.status;
-                weight = temp.weight;
-                battery = temp.battery;
-                deliverdParcel = new ParcelInDelivery(temp.deliverdParcel);
-                location = new Location(0, temp.location.lattitude);
-                location.longitude = temp.location.longitude;
-            }
-
             public int id { get; set; }
             public string model { get; set; }
             public IDAL.DO.MyEnums.WeightCategory weight { get; set; }
@@ -44,12 +31,6 @@ namespace IBL
         }
         public class DroneInCharge
         {
-            public DroneInCharge(IDAL.DO.DroneInCharge droneInCharge)
-            {
-                id = droneInCharge.id;
-                battery = droneInCharge.battery;
-            }
-
             public int id { get; set; }
             public int battery { get; set; }
             public override string ToString()
@@ -60,12 +41,7 @@ namespace IBL
         public class DroneInParcel
         {
             public DroneInParcel () { }
-            public DroneInParcel(IDAL.DO.DroneInParcel droneInParcel)
-            {
-                this.id = droneInParcel.id;
-                this.battery = droneInParcel.battery;
-                this.location = new Location (droneInParcel.location);
-            }
+           
 
             public int id { get; set; }
             public int battery { get; set; }
