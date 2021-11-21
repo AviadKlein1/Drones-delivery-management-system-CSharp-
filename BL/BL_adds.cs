@@ -21,14 +21,16 @@ namespace IBL
                 temp.numOfAvailableChargeSlots = myStation.numOfAvailableChargeSlots;
                 temp.numOfChargeSlots = myStation.numOfChargeSlots;
 
-                temp.DronesInCharge = new List<IDAL.DO.DroneInCharge>();
-                //checks
-           
-                
-
-                //insert station to array
-                dal.addStation(temp);
-                
+                //temp.DronesInCharge = new List<IDAL.DO.DroneInCharge>();
+                try
+                {
+                    //insert station to array
+                    dal.addStation(temp);
+                }
+                catch (IDAL.DO.ExcistingIdException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
             public void addDrone(Drone myDrone)
             {
@@ -40,13 +42,14 @@ namespace IBL
                 temp.battery =  rd.Next(20, 41);
                 temp.status = IDAL.DO.MyEnums.DroneStatus.maintenance;
                 temp.location = dal.stationLocate(temp.firstChargeStationId);
-
-
-                //checks
-
-
-
-                dal.addDrone(temp);
+                try
+                {
+                    dal.addDrone(temp);
+                }
+                catch(IDAL.DO.ExcistingIdException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
             public void addcustomer(Customer myCustomer)
             {
@@ -56,13 +59,14 @@ namespace IBL
                 temp.phoneNumber = myCustomer.phoneNumber;
                 temp.longitude = myCustomer.location.longitude;
                 temp.lattitude = myCustomer.location.lattitude;
-
-
-
-                //checks
-
-
-                dal.addcustomer(temp);
+                try
+                {
+                    dal.addcustomer(temp);
+                }
+                catch(IDAL.DO.ExcistingIdException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
             public void addParcel(Parcel myParcel)
             {
@@ -92,10 +96,14 @@ namespace IBL
                 temp.DroneInParcel = droneInParcel;
 
                 Console.WriteLine("your parcel ID is: " + temp.id + "\n");
-                //checks
-
-
-                dal.addParcel(temp);
+                try
+                {
+                    dal.addParcel(temp);
+                }
+                catch(IDAL.DO.ExcistingIdException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
     }

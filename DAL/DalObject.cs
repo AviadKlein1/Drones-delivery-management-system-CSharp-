@@ -12,7 +12,6 @@ namespace IDAL
         {
             public class DalObject : IDal
             {
-                
                 public DalObject()
                 {
                     IDAL.DO.DalObject.DataSource.Initialize();
@@ -22,8 +21,10 @@ namespace IDAL
                 /// </summary>
                 public void addStation(Station myStation)
                 {
-                    //insert station to 
-                    
+                    for(int i=0;i < IDAL.DO.DalObject.DataSource.stations.Count;i++)
+                        if(IDAL.DO.DalObject.DataSource.stations[i].id == myStation.id)
+                            throw new ExcistingIdException(myStation.id, $"station already exist: {myStation.id}");
+                    //insert station to list
                     IDAL.DO.DalObject.DataSource.stations.Add(myStation);
                 }
                 /// <summary>
@@ -31,6 +32,9 @@ namespace IDAL
                 /// </summary>
                 public void addDrone(Drone myDrone)
                 {
+                    for(int i=0;i< IDAL.DO.DalObject.DataSource.drones.Count;i++)
+                        if(IDAL.DO.DalObject.DataSource.drones[i].id == myDrone.id)
+                            throw new ExcistingIdException(myDrone.id, $"drone already exist: {myDrone.id}");
                     //insert drone to array
                     IDAL.DO.DalObject.DataSource.drones.Add(myDrone);
                 }
@@ -39,8 +43,11 @@ namespace IDAL
                 /// </summary>
                 public void addcustomer(Customer myCustomer)
                 {
-                    //insert customer to array
-                    IDAL.DO.DalObject.DataSource.customers.Add(myCustomer);
+                    for(int i=0;i < IDAL.DO.DalObject.DataSource.customers.Count;i++)
+                        if (IDAL.DO.DalObject.DataSource.customers[i].id == myCustomer.id)
+                            throw new ExcistingIdException(myCustomer.id, $"customer already exist: {myCustomer.id}");
+                     //insert customer to array
+                     IDAL.DO.DalObject.DataSource.customers.Add(myCustomer);
                 }
                 /// <summary>
                 /// add it to array
@@ -50,6 +57,9 @@ namespace IDAL
                 {
                     //insert parcel to array
                     //IDAL.DO.DalObject.DataSource.parcels[IDAL.DO.DalObject.DataSource.Config.parcelIndex] = myParcel;
+                    for(int i=0;i< IDAL.DO.DalObject.DataSource.parcels.Count;i++)
+                        if (IDAL.DO.DalObject.DataSource.parcels[i].id == myParcel.id)
+                            throw new ExcistingIdException(myParcel.id, $"parcel already exist: {myParcel.id}");
                     IDAL.DO.DalObject.DataSource.parcels.Add(myParcel);
                 }
                 public int ParcelRunId()
@@ -116,18 +126,20 @@ namespace IDAL
                 /// <param name="myId"></param>
                 public void pickUp(int myId)
                 {
-                    //int j = 0;
+                    bool parcelExist = false;               //int j = 0;
                     //while (IDAL.DO.DalObject.DataSource.parcels[j].id != myId)
                     //    j++;
                     //IDAL.DO.DalObject.DataSource.parcels[j].pickedUp = DateTime.Now;
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
-                    {
                         if (IDAL.DO.DalObject.DataSource.parcels[i].id == myId)
-                        {
-                            IDAL.DO.Parcel temp = IDAL.DO.DalObject.DataSource.parcels[i];
-                            temp.pickedUp = DateTime.Now;
-                            IDAL.DO.DalObject.DataSource.parcels[i] = temp;
-                        }
+                            parcelExist = true;
+                    if(parcelExist == false)
+                        throw new WrongIdException(myId, $"wrong parcel id: {myId}");
+                    else
+                    {
+                        IDAL.DO.Parcel temp = IDAL.DO.DalObject.DataSource.parcels[i];
+                        temp.pickedUp = DateTime.Now;
+                        IDAL.DO.DalObject.DataSource.parcels[i] = temp;
                     }
                 }
 
@@ -137,18 +149,21 @@ namespace IDAL
                 /// <param name="myId"></param>
                 public void delivered(int myId)
                 {
+                    bool parcelExist = false;
                     //int j = 0;
                     //while (IDAL.DO.DalObject.DataSource.parcels[j].id != myId)
                     //    j++;
                     //IDAL.DO.DalObject.DataSource.parcels[j].delivered = DateTime.Now;
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
-                    {
                         if (IDAL.DO.DalObject.DataSource.parcels[i].id == myId)
-                        {
-                            IDAL.DO.Parcel temp = IDAL.DO.DalObject.DataSource.parcels[i];
-                            temp.delivered = DateTime.Now;
-                            IDAL.DO.DalObject.DataSource.parcels[i] = temp;
-                        }
+                            parcelExist = true;
+                    if (parcelExist == false)
+                        throw new WrongIdException(myId, $"wrong parcel id: {myId}");
+                    else
+                    {
+                        IDAL.DO.Parcel temp = IDAL.DO.DalObject.DataSource.parcels[i];
+                        temp.delivered = DateTime.Now;
+                        IDAL.DO.DalObject.DataSource.parcels[i] = temp;
                     }
                 }
                 
@@ -221,55 +236,69 @@ namespace IDAL
                 /// <param name="myId"></param>
                 public Station getStation(int myId)
                 {
+                    bool isDouble = false;
                     Station temp = new Station();
-                    
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.stations.Count; i++)
-                    {
-                        try
+                        if (IDAL.DO.DalObject.DataSource.stations[i].id == myId)
                         {
-                            if (IDAL.DO.DalObject.DataSource.stations[i].id == myId)
-                            {
-                                temp = IDAL.DO.DalObject.DataSource.stations[i];
-                            }
+                            isDouble = true;
+                            temp = IDAL.DO.DalObject.DataSource.stations[i];
                         }
-                    }
-                    return temp;
+                    if (isDouble == false)
+                        return temp;
+                    else
+                        throw new WrongIdException(myId, $"wrong id: {myId}");
                 }
                 public IDAL.DO.Drone getDrone(int myId)
                 {
+                    bool isDouble = false;
                     Drone temp = new Drone();
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.drones.Count; i++)
                     {
                         if (IDAL.DO.DalObject.DataSource.drones[i].id == myId)
                         {
+                           isDouble = true;
                            temp =  IDAL.DO.DalObject.DataSource.drones[i];
                         }
                     }
-                    return temp;
+                    if(isDouble == false)
+                        return temp;
+                    else
+                        throw new WrongIdException(myId, $"wrong id: {myId}");
                 }
                 public IDAL.DO.Customer getCustomer(int myId)
                 {
+                    bool isDouble = false;
                     Customer temp = new Customer();
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.customers.Count; i++)
                     {
                         if (IDAL.DO.DalObject.DataSource.customers[i].id == myId)
                         {
+                            isDouble = true;
                             temp = IDAL.DO.DalObject.DataSource.customers[i];
                         }
                     }
-                    return temp;
+                    if(isDouble == false)
+                        return temp;
+                    else
+                       throw new WrongIdException(myId, $"wrong id: {myId}");
                 }
                 public IDAL.DO.Parcel getParcel(int myId)
                 {
+                    bool isDouble = false;
                     Parcel temp = new Parcel();
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
                     {
                         if (IDAL.DO.DalObject.DataSource.parcels[i].id == myId)
                         {
+                            isDouble = true;
                             temp = IDAL.DO.DalObject.DataSource.parcels[i];
                         }
                     }
-                    return temp;
+                    if(isDouble == false)
+                        return temp;
+                    else
+                        throw new WrongIdException(myId, $"wrong id: {myId}");
                 }
                 /// <summary>
                 /// print drone details
