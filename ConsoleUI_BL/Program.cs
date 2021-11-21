@@ -115,7 +115,7 @@ namespace ConsoleUI_BL
                     //    }
                     //    break;
                     case 3:
-                        //display;
+                        //display
                         while (choice2 != 0)
                         {
                             Console.WriteLine("To display a station enter 1" +
@@ -152,67 +152,67 @@ namespace ConsoleUI_BL
                             }
                         }
                         break;
-                    //case 4:
-                    //    // lists-display
-                    //    while (choice2 != 0)
-                    //    {
-                    //        Console.WriteLine("To display all stations enter 1" +
-                    //        "\nTo display all drones enter 2" +
-                    //        "\nTo display all customers enter 3" +
-                    //        "\nTo display all parcels enter 4" +
-                    //        "\nTo display not associated parcels enter 5" +
-                    //        "\nTo display available to charge stations enter 6" +
-                    //        "\nTo return to main menu enter 0\n");
-                    //        int.TryParse(Console.ReadLine(), out choice2);
-                    //        switch (choice2)
-                    //        {
-                    //            case 1:
-                    //                foreach (IDAL.DO.Station element in dal.stationsDisplay())
-                    //                {
-                    //                    Console.WriteLine(element);
-                    //                }
-                    //                break;
+                        //case 4:
+                        // lists-display
+                        while (choice2 != 0)
+                        {
+                            Console.WriteLine("To display all stations enter 1" +
+                            "\nTo display all drones enter 2" +
+                            "\nTo display all customers enter 3" +
+                            "\nTo display all parcels enter 4" +
+                            "\nTo display not associated parcels enter 5" +
+                            "\nTo display available to charge stations enter 6" +
+                            "\nTo return to main menu enter 0\n");
+                            int.TryParse(Console.ReadLine(), out choice2);
+                            switch (choice2)
+                            {
+                                case 1:
+                                    foreach (IDAL.DO.Station element in dal.stationsDisplay())
+                                    {
+                                        Console.WriteLine(element);
+                                    }
+                                    break;
 
-                    //            case 2:
-                    //                foreach (IDAL.DO.Drone element in dal.dronesDisplay())
-                    //                {
-                    //                    Console.WriteLine(element);
-                    //                }
-                    //                break;
+                                case 2:
+                                    foreach (IDAL.DO.Drone element in dal.dronesDisplay())
+                                    {
+                                        Console.WriteLine(element);
+                                    }
+                                    break;
 
-                    //            case 3:
-                    //                foreach (IDAL.DO.Customer element in dal.customersDisplay())
-                    //                {
-                    //                    Console.WriteLine(element);
-                    //                }
-                    //                break;
+                                case 3:
+                                    foreach (IDAL.DO.Customer element in dal.customersDisplay())
+                                    {
+                                        Console.WriteLine(element);
+                                    }
+                                    break;
 
-                    //            case 4:
-                    //                foreach (IDAL.DO.Parcel element in dal.parcelsDisplay())
-                    //                {
-                    //                    Console.WriteLine(element);
-                    //                }
-                    //                break;
+                                case 4:
+                                    foreach (IDAL.DO.Parcel element in dal.parcelsDisplay())
+                                    {
+                                        Console.WriteLine(element);
+                                    }
+                                    break;
 
-                    //            case 5:
-                    //                foreach (IDAL.DO.Parcel element in dal.notAssociatedParcelsDisplay())
-                    //                {
-                    //                    Console.WriteLine(element);
-                    //                }
-                    //                break;
+                                case 5:
+                                    foreach (IDAL.DO.Parcel element in dal.notAssociatedParcelsDisplay())
+                                    {
+                                        Console.WriteLine(element);
+                                    }
+                                    break;
 
-                    //            case 6:
-                    //                foreach (IDAL.DO.Station element in dal.availableToChargeStattions())
-                    //                {
-                    //                    Console.WriteLine(element);
-                    //                }
-                    //                break;
+                                case 6:
+                                    foreach (IDAL.DO.Station element in dal.availableToChargeStattions())
+                                    {
+                                        Console.WriteLine(element);
+                                    }
+                                    break;
 
-                    //            default:
-                    //                break;
-                    //        }
-                    //    }
-                    //    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        break;
                     case 0:
                         Console.WriteLine("see you soon");
                         return;
@@ -223,4 +223,3 @@ namespace ConsoleUI_BL
         }
     }
 }
-

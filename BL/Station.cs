@@ -17,7 +17,7 @@ namespace IBL
             {
                 id = temp.id;
                 Name = temp.name;
-                foreach (IDAL.DO.DroneInCharge element in temp.DronesInCharge)
+                foreach(IDAL.DO.DroneInCharge element in temp.DronesInCharge)
                 {
                     DroneInCharge droneIn = new DroneInCharge(element);
                     dronesInCharge.Add(droneIn);
@@ -44,15 +44,15 @@ namespace IBL
                     $"\nDrones in charge: {listOut}\n";
             }
         }
-        class StationToList
+        public class StationToList
         {
             public int id { get; set; }
-            public string Name { get; set; }
+            public string name { get; set; }
             public int numOfAvailableChargeSlots { get; set; }
             public int numOfOccupiedChargeSlots { get; set; }
             public override string ToString()
             {
-                return $"ID: {id}\n Name: {Name}\n Available Charge Slots: {numOfAvailableChargeSlots}\n" +
+                return $"ID: {id}\n Name: {name}\n Available Charge Slots: {numOfAvailableChargeSlots}\n" +
                     $"Occupied Charge Slots: {numOfOccupiedChargeSlots}\n";
             }
         }

@@ -12,7 +12,7 @@ namespace IBL
         {
             public Random rd = new Random();
 
-            public List<DronesToList> dronesList;
+            public List<DroneToList> dronesList;
 
             public IDAL.IDal dal = new IDAL.DO.DalObject.DalObject();
 
@@ -37,7 +37,7 @@ namespace IBL
                 var dalDrones = dal.getDrones();
                 foreach (var element in dalDrones)
                 {
-                    DronesToList temp = new DronesToList();
+                    DroneToList temp = new DroneToList();
                     temp.id = element.id;
                     temp.model = element.model;
                     temp.weight = element.weight;
