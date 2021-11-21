@@ -25,6 +25,15 @@ namespace IBL
                 parcelsFromCustomer = new List<ParcelAtCustomer>();
                 parcelsToCustomer = new List<ParcelAtCustomer>();
             }
+            public Customer(IDAL.DO.Customer customer)
+            {
+                id = customer.id;
+                name = customer.name;
+                phoneNumber = customer.phoneNumber;
+                location = new Location();
+                parcelsFromCustomer = new List<ParcelAtCustomer>();
+                parcelsToCustomer = new List<ParcelAtCustomer>();
+            }
             /// <summary>
             /// prints item's details
             /// </summary>

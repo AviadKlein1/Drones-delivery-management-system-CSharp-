@@ -46,10 +46,10 @@ namespace IBL
                     Console.WriteLine(ex.Message);
                 }
             }
-            public DronesToList addDroneToBLList(Drone myDrone)
+            public DroneToList addDroneToBLList(Drone myDrone)
             {
                 //add to the list in BL
-                DronesToList myDronesToList = new DronesToList();
+                DroneToList myDronesToList = new DroneToList();
                 myDronesToList.id = myDrone.id;
                 myDronesToList.model = myDrone.model;
                 myDronesToList.weight = myDrone.weight;

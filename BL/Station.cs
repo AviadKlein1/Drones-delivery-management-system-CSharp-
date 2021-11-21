@@ -17,13 +17,6 @@ namespace IBL
             {
                 id = temp.id;
                 Name = temp.name;
-
-                //foreach (IDAL.DO.DroneInCharge element in temp.DronesInCharge)
-                //{
-                //    DroneInCharge droneIn = new DroneInCharge(element);
-                //    dronesInCharge.Add(droneIn);
-                //}
-
                 numOfAvailableChargeSlots = temp.numOfAvailableChargeSlots;
                 location = new Location(temp.location);
             }

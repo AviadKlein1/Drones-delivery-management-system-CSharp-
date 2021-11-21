@@ -12,6 +12,13 @@ namespace IBL
         public class Drone
         {
             public Drone() { }
+            public Drone(IDAL.DO.Drone myDrone) 
+            {
+                id = myDrone.id;
+                model = myDrone.model;
+                weight = myDrone.weight;
+            }
+
             public int id { get; set; }
             public string model { get; set; }
             public IDAL.DO.MyEnums.WeightCategory weight { get; set; }
