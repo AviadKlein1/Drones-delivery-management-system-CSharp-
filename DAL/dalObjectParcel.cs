@@ -72,7 +72,8 @@ namespace IDAL
             /// <param name="myId"></param>
             public void pickUp(int myId)
             {
-                bool parcelExist = false;               //int j = 0;
+                bool parcelExist = false;      
+                //int j = 0;
                                                         //while (IDAL.DO.DalObject.DataSource.parcels[j].id != myId)
                                                         //    j++;
                                                         //IDAL.DO.DalObject.DataSource.parcels[j].pickedUp = DateTime.Now;
