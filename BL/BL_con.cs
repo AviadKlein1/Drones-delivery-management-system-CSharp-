@@ -14,7 +14,7 @@ namespace IBL
 
             public List<DronesToList> dronesList;
 
-            public IDAL.IDal dal = new IDAL.DO.DalObject.DalObject();
+            public IDAL.IDal dal = new IDAL.DO.DalObject.DalObjectStation();
 
             public BL()
             {

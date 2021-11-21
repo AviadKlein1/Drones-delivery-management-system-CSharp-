@@ -21,29 +21,16 @@ namespace IDAL
                 internal static List<IDAL.DO.Customer> customers = new List<IDAL.DO.Customer>();
                 internal static List<IDAL.DO.DroneCharge> droneCharges = new List<IDAL.DO.DroneCharge>();
                 internal static List<IDAL.DO.Parcel> parcels = new List<IDAL.DO.Parcel>();
-                
-
-                //internal static IDAL.DO.Drone[] drones = new Drone[10];
-                //internal static IDAL.DO.Customer[] customers = new Customer[100];
-                //internal static IDAL.DO.DroneCharge[] droneCharges = new DroneCharge[5];
-                //internal static IDAL.DO.Parcel[] parcels = new Parcel[1000];
-
                 internal class Config
                 {
-                    ////indexes for first available index in arrays
-                    //internal static int stationIndex = 0;
-                    //internal static int droneIndex = 0;
-                    //internal static int customerIndex = 0;
-                    //internal static int droneChargeIndex = 0;
-                    //internal static int parcelIndex = 0;
-                    //running id number for parcel
                     public static int ParcelRunId = 100000;
 
-                    public static double avialable;
-                    public static double lightWeight;
-                    public static double mediumWeight;
-                    public static double heavyWeight;
-                    public static double DroneLoadRate;
+                    public static double available = 15;
+                    public static double lightWeight = 30;
+                    public static double mediumWeight = 50;
+                    public static double heavyWeight = 75;
+
+                    public static double DroneLoadRate = 25 ;
 
                 }
 
@@ -62,7 +49,6 @@ namespace IDAL
                         myStation./*location.*/lattitude = rd.NextDouble() + rd.Next(180);
                         //myStation.numOfChargeSlots = rd.Next(1, 5);
                         myStation.numOfAvailableChargeSlots = rd.Next(1, 5);
-                        //Config.stationIndex++;
                         stations.Add(myStation);
                     }
                     //drones
@@ -72,9 +58,6 @@ namespace IDAL
                         myDrone.id = rd.Next(100, 1000);
                         myDrone.model = "drone" + (i+1);
                         myDrone.weight = (IDAL.DO.MyEnums.WeightCategory)rd.Next(3);
-                        //drones[i].status = (IDAL.DO.MyEnums.DroneStatus)rd.Next(3);
-                        //drones[i].battery = rd.Next(101);
-                        //Config.droneIndex++;
                         drones.Add(myDrone);
                     }
                     //customers
@@ -89,7 +72,6 @@ namespace IDAL
                         for (int j = 0; j < 7; j++)
                             phoneNumber += rd.Next(10);
                         myCustomer.phoneNumber = phoneNumber;
-                        //Config.customerIndex++;
                         customers.Add(myCustomer);
                     }
                     //parcels
