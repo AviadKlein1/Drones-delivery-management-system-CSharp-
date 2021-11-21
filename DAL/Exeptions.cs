@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBL
+namespace IDAL
 {
-    namespace BO
+    namespace DO
     {
-        public partial class BL 
+        class Exeptions : Exception
         {
-            public class updates
-            {
-
-            }
-            
            
         }
     }

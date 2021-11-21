@@ -12,6 +12,7 @@ namespace IDAL
         {
             public class DalObject : IDal
             {
+
                 public DalObject()
                 {
                     IDAL.DO.DalObject.DataSource.Initialize();
@@ -174,32 +175,32 @@ namespace IDAL
                 /// <param name="stationId"></param>
                 public void sendToCharge(int droneId, int stationId)
                 {
-                //    //create a new item "drone charge"
-                //    IDAL.DO.DroneCharge myDroneCharge = new DroneCharge();
-                //    int j = 0;
-                //    while (IDAL.DO.DalObject.DataSource.drones[j].id != droneId)
-                //        j++;
-                //    //update drone status - maintenance
-                //    IDAL.DO.DalObject.DataSource.drones[j].status = MyEnums.DroneStatus.maintenance;
-                //    myDroneCharge.droneId = IDAL.DO.DalObject.DataSource.drones[j].id;
+                    //    //create a new item "drone charge"
+                    //    IDAL.DO.DroneCharge myDroneCharge = new DroneCharge();
+                    //    int j = 0;
+                    //    while (IDAL.DO.DalObject.DataSource.drones[j].id != droneId)
+                    //        j++;
+                    //    //update drone status - maintenance
+                    //    IDAL.DO.DalObject.DataSource.drones[j].status = MyEnums.DroneStatus.maintenance;
+                    //    myDroneCharge.droneId = IDAL.DO.DalObject.DataSource.drones[j].id;
 
-                //    //int k = 0;
-                //    //while (IDAL.DO.DalObject.DataSource.stations[k].id != stationId)
-                //    //    k++;
+                    //    //int k = 0;
+                    //    //while (IDAL.DO.DalObject.DataSource.stations[k].id != stationId)
+                    //    //    k++;
 
-                //    //myDroneCharge.stationId = IDAL.DO.DalObject.DataSource.stations[k].id;
-                //    for (int i = 0; i < IDAL.DO.DalObject.DataSource.stations.Count; i++)
-                //    {
-                //        if (IDAL.DO.DalObject.DataSource.stations[i].id == stationId)
-                //        {
-                //            IDAL.DO.Station temp = IDAL.DO.DalObject.DataSource.stations[i];
-                //            temp.id = stationId;
-                //            //update number of available charge slots in station
-                //            temp.numOfAvailableChargeSlots--;
-                //            IDAL.DO.DalObject.DataSource.stations[i] = temp;
-                //        }
-                //    }
-                //    IDAL.DO.DalObject.DataSource.droneCharges.Add( myDroneCharge);
+                    //    //myDroneCharge.stationId = IDAL.DO.DalObject.DataSource.stations[k].id;
+                    //    for (int i = 0; i < IDAL.DO.DalObject.DataSource.stations.Count; i++)
+                    //    {
+                    //        if (IDAL.DO.DalObject.DataSource.stations[i].id == stationId)
+                    //        {
+                    //            IDAL.DO.Station temp = IDAL.DO.DalObject.DataSource.stations[i];
+                    //            temp.id = stationId;
+                    //            //update number of available charge slots in station
+                    //            temp.numOfAvailableChargeSlots--;
+                    //            IDAL.DO.DalObject.DataSource.stations[i] = temp;
+                    //        }
+                    //    }
+                    //    IDAL.DO.DalObject.DataSource.droneCharges.Add( myDroneCharge);
                 }
 
                 /// <summary>
@@ -399,17 +400,17 @@ namespace IDAL
                 /// </summary>
                 public IEnumerable<Customer> getCustomers()
                 {
-                        //int size = IDAL.DO.DalObject.DataSource.Config.customerIndex;
-                        ////create a new array for customers
-                        //IDAL.DO.Customer[] customersToDisplay = new Customer[IDAL.DO.DalObject.DataSource.Config.customerIndex];
-                        //for (int i = 0; i < size; i++)
-                        //    customersToDisplay[i] = IDAL.DO.DalObject.DataSource.customers[i];
-                        ////print customers
-                        //for (int j = 0; j < size; j++)
-                        //    Console.WriteLine(customersToDisplay[j]);
-                        List<IDAL.DO.Customer> temp = new List<IDAL.DO.Customer>();
-                        temp = IDAL.DO.DalObject.DataSource.customers;
-                        return temp;
+                    //int size = IDAL.DO.DalObject.DataSource.Config.customerIndex;
+                    ////create a new array for customers
+                    //IDAL.DO.Customer[] customersToDisplay = new Customer[IDAL.DO.DalObject.DataSource.Config.customerIndex];
+                    //for (int i = 0; i < size; i++)
+                    //    customersToDisplay[i] = IDAL.DO.DalObject.DataSource.customers[i];
+                    ////print customers
+                    //for (int j = 0; j < size; j++)
+                    //    Console.WriteLine(customersToDisplay[j]);
+                    List<IDAL.DO.Customer> temp = new List<IDAL.DO.Customer>();
+                    temp = IDAL.DO.DalObject.DataSource.customers;
+                    return temp;
                 }
 
                 /// <summary>
@@ -508,6 +509,87 @@ namespace IDAL
                         }
                     }
                     return temp;
+                }
+
+                public bool thereAreParcelsThatNotDeliverdYet()
+                {
+                    var dalParcelsList = getParcels();
+                    foreach (var element in dalParcelsList)
+                    {
+                        DateTime emptyDateTime = new DateTime();
+                        if (element.delivered == emptyDateTime) return true;
+                    }
+                    return false;
+                }
+                public bool thisDroneIsAssociated(int droneId)
+                {
+                    var dalParcelsList = getParcels();
+                    foreach (var element in dalParcelsList)
+                    {
+                        if (element.droneId == droneId) return true;
+                    }
+                    return false;
+                }
+                public bool myParcelScheduledButNotPickedUp(int parcelId)
+                {
+                    var dalParcelsList = getParcels();
+                    foreach (var element in dalParcelsList)
+                    {
+                        if (element.id == parcelId)
+                        {
+                            DateTime emptyDateTime = new DateTime();
+                            if (element.pickedUp == emptyDateTime && element.scheduled != emptyDateTime) return true;
+                        }
+                    }
+                    return false;
+                }
+
+                public bool myParcelPickedUpButNotDeliverd(int parcelId)
+                {
+                    var dalParcelsList = getParcels();
+                    foreach (var element in dalParcelsList)
+                    {
+                        if (element.id == parcelId)
+                        {
+                            DateTime emptyDateTime = new DateTime();
+                            if (element.delivered == emptyDateTime && element.pickedUp != emptyDateTime) return true;
+                        }
+                    }
+                    return false;
+                }
+                public IDAL.DO.Location theNearestToSenderStationLocation(int parcelId)
+                {
+                    Location tempLocation = new Location();
+                    var dalParcelsList = getParcels();
+                    foreach (var pElement in dalParcelsList)
+                    {
+                        if (pElement.id == parcelId)
+                        {
+                            var customersList = getCustomers();
+
+                            foreach (var cElement in customersList)
+                            {
+
+                                (cElement.);
+                            }
+                        }
+                    }
+                    return tempLocation;
+                }
+                public Station theNearestStation(Location l)
+                {
+                    Station tempStation = new Station();
+                    var stationList = getStations();
+                    double min = 99999999999;
+                    foreach (var element in stationList)
+                    {
+                        distance(l, element.)
+                    }
+                }
+                public double distance(Location a, Location b)
+                {
+                    return Math.Sqrt(Math.Pow((b.longitude - a.longitude), 2) -
+                        Math.Pow((b.lattitude - a.lattitude), 2));
                 }
             }
         }
