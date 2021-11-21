@@ -25,7 +25,7 @@ namespace IDAL
                 {
                     public static int ParcelRunId = 100000;
 
-                    public static double available = 15;
+                    public static double free = 15;
                     public static double lightWeight = 30;
                     public static double mediumWeight = 50;
                     public static double heavyWeight = 75;

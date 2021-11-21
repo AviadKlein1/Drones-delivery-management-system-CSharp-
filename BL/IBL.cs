@@ -9,18 +9,8 @@ namespace IBL
     interface IBL
     {
         public void addStation();
-        /// <summary>
-        /// create a new drone, and add it to array
-        /// </summary>
         public void addDrone();
-        /// <summary>
-        /// create a new customer and add it to array
-        /// </summary>
         public void addcustomer();
-        /// <summary>
-        /// create a new parcel and add it to array
-        /// </summary>
-        /// returns new parcel's id
         public int addParcel();
         /// <summary>
         /// belong parcel to specific drone

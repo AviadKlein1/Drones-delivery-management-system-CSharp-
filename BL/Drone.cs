@@ -28,7 +28,7 @@ namespace IBL
             public int id { get; set; }
             public string model { get; set; }
             public IDAL.DO.MyEnums.WeightCategory weight { get; set; }
-            public IDAL.DO.MyEnums.DroneStatus status { get; set; }
+            public MyEnums.DroneStatus status { get; set; }
             public int battery { get; set; }
             public ParcelInDelivery deliverdParcel { get; set; }
             public Location location { get; set; }
@@ -81,7 +81,7 @@ namespace IBL
             public int id { get; set; }
             public string model { get; set; }
             public IDAL.DO.MyEnums.WeightCategory weight { get; set; }
-            public IDAL.DO.MyEnums.DroneStatus status { get; set; }
+            public MyEnums.DroneStatus status { get; set; }
             public int battery { get; set; }
             public Location location { get; set; }
             public int deliveredParcelId { get; set; }

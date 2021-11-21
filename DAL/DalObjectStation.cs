@@ -154,81 +154,8 @@ namespace IDAL
 
 
 
-                public bool thereAreParcelsThatNotDeliverdYet()
-                {
-                    var dalParcelsList = getParcels();
-                    foreach (var element in dalParcelsList)
-                    {
-                        DateTime emptyDateTime = new DateTime();
-                        if (element.delivered == emptyDateTime) return true;
-                    }
-                    return false;
-                }
-                public bool thisDroneIsAssociated(int droneId)
-                {
-                    var dalParcelsList = getParcels();
-                    foreach (var element in dalParcelsList)
-                    {
-                        if (element.droneId == droneId) return true;
-                    }
-                    return false;
-                }
-                public bool myParcelScheduledButNotPickedUp(int parcelId)
-                {
-                    var dalParcelsList = getParcels();
-                    foreach (var element in dalParcelsList)
-                    {
-                        if (element.id == parcelId)
-                        {
-                            DateTime emptyDateTime = new DateTime();
-                            if (element.pickedUp == emptyDateTime && element.scheduled != emptyDateTime) return true;
-                        }
-                    }
-                    return false;
-                }
-
-                public bool myParcelPickedUpButNotDeliverd(int parcelId)
-                {
-                    var dalParcelsList = getParcels();
-                    foreach (var element in dalParcelsList)
-                    {
-                        if (element.id == parcelId)
-                        {
-                            DateTime emptyDateTime = new DateTime();
-                            if (element.delivered == emptyDateTime && element.pickedUp != emptyDateTime) return true;
-                        }
-                    }
-                    return false;
-                }
-                public IDAL.DO.Location theNearestToSenderStationLocation(int parcelId)
-                {
-                    Location tempLocation = new Location();
-                    var dalParcelsList = getParcels();
-                    foreach (var pElement in dalParcelsList)
-                    {
-                        if (pElement.id == parcelId)
-                        {
-                            var customersList = getCustomers();
-
-                            foreach (var cElement in customersList)
-                            {
-
-                                (cElement.);
-                            }
-                        }
-                    }
-                    return tempLocation;
-                }
-                public Station theNearestStation(Location l)
-                {
-                    Station tempStation = new Station();
-                    var stationList = getStations();
-                    double min = 99999999999;
-                    foreach (var element in stationList)
-                    {
-                        distance(l, element.)
-                    }
-                }
+                
+              
                 public double distance(Location a, Location b)
                 {
                     return Math.Sqrt(Math.Pow((b.longitude - a.longitude), 2) -
