@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IBL
 {
@@ -33,7 +29,7 @@ namespace IBL
                 delivered = new DateTime();
                 DroneInParcel = null;
             }
-        
+
             public Parcel(IDAL.DO.Parcel temp)
             {
                 id = temp.id;
@@ -49,7 +45,8 @@ namespace IBL
             }
             public override string ToString()
             {
-                return $"ID: {id}\n sender: {sender}\n reciever: {reciever}\n drone: {DroneInParcel}\n" +
+                //\n sender: {sender}\n reciever: {reciever}\n drone: {DroneInParcel}
+                return $"ID: {id}\n" +
                     $" Weight Category: {weight}\n Priority: {priority}\n requested: {requested}\n" +
                     $" scheduled: {scheduled}\n picked up: {pickedUp}\n delivered: {delivered}\n";
             }
@@ -110,9 +107,9 @@ namespace IBL
             public int id { get; set; }
             public string senderName { get; set; }
             public string recieverName { get; set; }
-            public MyEnums.WeightCategory weight { get; set; }
-            public MyEnums.PriorityLevel priority { get; set; }
-            public MyEnums.ParcelStatus parcelStatus { get; set; }
+            public IDAL.DO.MyEnums.WeightCategory weight { get; set; }
+            public IDAL.DO.MyEnums.PriorityLevel priority { get; set; }
+            public IDAL.DO.MyEnums.ParcelStatus parcelStatus { get; set; }
 
             public override string ToString()
             {

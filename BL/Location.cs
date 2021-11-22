@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IBL
+﻿namespace IBL
 {
     namespace BO
     {
         public class Location
         {
-            public Location(){}
+            public Location() { }
             public Location(double longitude, double lattitude)
             {
                 this.longitude = longitude;

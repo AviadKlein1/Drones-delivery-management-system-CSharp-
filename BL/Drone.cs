@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IBL
+﻿namespace IBL
 {
     namespace BO
     {
@@ -12,7 +6,7 @@ namespace IBL
         public class Drone
         {
             public Drone() { }
-            public Drone(IDAL.DO.Drone myDrone) 
+            public Drone(IDAL.DO.Drone myDrone)
             {
                 id = myDrone.id;
                 model = myDrone.model;
@@ -29,11 +23,10 @@ namespace IBL
             public int firstChargeStationId { get; set; }
             public override string ToString()
             {
-                var delPar = deliverdParcel.id < 100 ? "" : string.Join(", ", deliverdParcel);
-                var del = deliverdParcel.id < 100 ? "" : "deliverd Parcel: ";
+                //var delPar = deliverdParcel.id < 100 ? "" : string.Join(", ", deliverdParcel);
+                //var del = deliverdParcel.id < 100 ? "" : "deliverd Parcel: ";
                 return $"ID: {id}\nModel: {model}\nWeight Category: {weight}\nStatus: {status}\nBattery: " +
-                    $" {battery}\nLongitude: {location.longitude}\nLattitude: {location.lattitude}\n " +
-                    $"{del} \n{delPar}\n";
+                    $" {battery}\nLongitude: {location.longitude}\nLattitude: {location.lattitude}\n "/*+$"{del} \n{delPar}\n"*/;
             }
         }
         public class DroneInCharge
@@ -47,8 +40,8 @@ namespace IBL
         }
         public class DroneInParcel
         {
-            public DroneInParcel () { }
-           
+            public DroneInParcel() { }
+
 
             public int id { get; set; }
             public int battery { get; set; }
@@ -72,7 +65,7 @@ namespace IBL
             {
                 return "ID: " + id + "\nModel: " + model + "\nWeight Category: " + weight + "\nStatus: " +
                     status + "\nBattery: " + battery + "\nLongitude: " + location.longitude +
-                    "\nLattitude: " + location.lattitude +"\ndeliverd Parcel id: " + deliveredParcelId + "\n";
+                    "\nLattitude: " + location.lattitude + "\ndeliverd Parcel id: " + deliveredParcelId + "\n";
             }
 
         }

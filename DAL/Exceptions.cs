@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IDAL
 {
@@ -16,7 +11,7 @@ namespace IDAL
             public int ID;
             public WrongIdException(int id) : base() => ID = id;
             public WrongIdException(int id, string message) : base(message) => ID = id;
-            public WrongIdException(int id, string message, Exception innerException) : 
+            public WrongIdException(int id, string message, Exception innerException) :
                 base(message, innerException) => ID = id;
             public override string ToString() => base.ToString() + $", wrong id: {ID}";
         }

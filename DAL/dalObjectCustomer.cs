@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace IDAL
 {
@@ -35,7 +31,7 @@ namespace IDAL
                             temp = IDAL.DO.DalObject.DataSource.customers[i];
                         }
                     }
-                    if (isDouble == false)
+                    if (isDouble == true)
                         return temp;
                     else
                         throw new WrongIdException(myId, $"wrong id: {myId}");

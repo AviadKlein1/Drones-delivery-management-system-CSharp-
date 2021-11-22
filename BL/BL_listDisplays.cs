@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace IBL
 {
@@ -10,7 +6,7 @@ namespace IBL
     {
         public partial class BL
         {
-            public List<StationToList> DisplayStations()
+            public IEnumerable<StationToList> DisplayStations()
             {
                 List<StationToList> tmp1 = new List<StationToList>();
                 List<IDAL.DO.Station> tmp2 = new List<IDAL.DO.Station>();
@@ -64,7 +60,68 @@ namespace IBL
                 {
                     ParcelToList myParcel = new ParcelToList();
                     myParcel.id = element.id;
+                    myParcel.weight = element.weight;
+                    myParcel.priority = element.priority;
+                    var customersList = dal.getCustomers();
+                    string senderName = null;
+                    string reciverName = null;
+                    foreach (var cElement in customersList)
+                    {
+                        if (cElement.id == element.senderId) senderName = cElement.name;
+                        if (cElement.id == element.reciverId) reciverName = cElement.name;
+                    }
+                    myParcel.senderName = senderName;
+                    myParcel.senderName = reciverName;
+
                     tmp1.Add(myParcel);
+                }
+                return tmp1;
+            }
+            public List<ParcelToList> notAssociatedParcelsDisplay()
+            {
+                List<ParcelToList> tmp1 = new List<ParcelToList>();
+                List<IDAL.DO.Parcel> tmp2 = new List<IDAL.DO.Parcel>();
+                var v = dal.getParcels();
+                foreach (var element in v)
+                {
+                    if (element.droneId > 0)
+                    {
+                        ParcelToList myParcel = new ParcelToList();
+                        myParcel.id = element.id;
+                        myParcel.weight = element.weight;
+                        myParcel.priority = element.priority;
+                        var customersList = dal.getCustomers();
+                        string senderName = null;
+                        string reciverName = null;
+                        foreach (var cElement in customersList)
+                        {
+                            if (cElement.id == element.senderId) senderName = cElement.name;
+                            if (cElement.id == element.reciverId) reciverName = cElement.name;
+                        }
+                        myParcel.senderName = senderName;
+                        myParcel.senderName = reciverName;
+
+                        tmp1.Add(myParcel);
+                    }
+                }
+                return tmp1;
+            }
+            public List<StationToList> availableToChargeStattions()
+            {
+                List<StationToList> tmp1 = new List<StationToList>();
+                List<IDAL.DO.Station> tmp2 = new List<IDAL.DO.Station>();
+                var v = dal.getStations();
+                foreach (var element in v)
+                {
+                    if (element.numOfAvailableChargeSlots > 0)
+                    {
+                        StationToList myStation = new StationToList();
+                        myStation.id = element.id;
+                        myStation.name = element.name;
+                        myStation.numOfAvailableChargeSlots = element.numOfAvailableChargeSlots;
+                        myStation.numOfOccupiedChargeSlots = element.numOfChargeSlots - element.numOfAvailableChargeSlots;
+                        tmp1.Add(myStation);
+                    }
                 }
                 return tmp1;
             }

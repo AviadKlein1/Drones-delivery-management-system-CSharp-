@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IBL
+﻿namespace IBL
 {
     namespace BO
     {
@@ -17,7 +11,6 @@ namespace IBL
             public enum WeightCategory { lite, medium, heavy };
             public enum DroneStatus { available, maintenance, delivery };
             public enum ParcelStatus { requested, scheduled, pickedUp, delivered };
-
         }
     }
 }

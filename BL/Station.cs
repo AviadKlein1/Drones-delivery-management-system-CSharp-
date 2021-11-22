@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace IBL
 {
@@ -11,7 +7,7 @@ namespace IBL
         //station's fields
         public class Station
         {
-            public Station(){ }
+            public Station() { }
 
             public Station(IDAL.DO.Station temp)
             {
@@ -24,7 +20,7 @@ namespace IBL
             public string Name { get; set; }
             public int numOfAvailableChargeSlots { get; set; }
             public int numOfChargeSlots { get; set; }
-            
+
             public List<DroneInCharge> dronesInCharge { get; set; }
             public Location location { get; set; }
             /// <summary>

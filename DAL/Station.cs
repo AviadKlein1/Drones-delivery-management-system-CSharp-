@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-namespace IDAL
+﻿namespace IDAL
 {
     namespace DO
     {
@@ -17,7 +10,7 @@ namespace IDAL
             public Location location { get; set; }
             public int numOfChargeSlots { get; set; }
             public int numOfAvailableChargeSlots { get; set; }
-          
+
         }
     }
 }

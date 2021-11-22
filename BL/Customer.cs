@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 
 namespace IBL
@@ -15,7 +11,7 @@ namespace IBL
             public int id { get; set; }
             public string name { get; set; }
             public string phoneNumber { get; set; }
-            public Location location { get; set; } 
+            public Location location { get; set; }
             public List<ParcelAtCustomer> parcelsFromCustomer { get; set; }
             public List<ParcelAtCustomer> parcelsToCustomer { get; set; }
 
@@ -30,7 +26,7 @@ namespace IBL
                 id = customer.id;
                 name = customer.name;
                 phoneNumber = customer.phoneNumber;
-                location = new Location();
+                location = new Location(customer.location);
                 parcelsFromCustomer = new List<ParcelAtCustomer>();
                 parcelsToCustomer = new List<ParcelAtCustomer>();
             }
@@ -39,9 +35,15 @@ namespace IBL
             /// </summary>
             public override string ToString()
             {
-                return "ID: " + id + "\nName: " + name + "\nPhone: " + phoneNumber + "\nLongitude: " +
-                    location.longitude + "\nLattitude: " + location.lattitude + "\nparcels From Customer: " +
-                   parcelsFromCustomer + "\nparcels To Customer :" + parcelsToCustomer + "\n";
+                var listFromCustomerOut = parcelsFromCustomer == null ? "" : string.Join(", ", parcelsFromCustomer);
+                var listToCustomerOut = parcelsToCustomer == null ? "" : string.Join(", ", parcelsToCustomer);
+
+                return $"ID: {id}\nName:  {name}\nLongitude: { location.longitude }\nLattitude: { location.lattitude}" +
+                    $"\nphone number: {phoneNumber}\nparcels To Customer : { listToCustomerOut}" +
+                    $"\nparcels from Customer : { listFromCustomerOut}\n";
+
+                   
+                    
 
             }
         }
@@ -76,6 +78,6 @@ namespace IBL
                 $"parcels In The Way To Me: {parcelsInTheWayToMe}";
             }
 
-        }       
+        }
     }
 }

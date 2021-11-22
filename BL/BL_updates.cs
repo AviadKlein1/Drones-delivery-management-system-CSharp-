@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IBL
+﻿namespace IBL
 {
     namespace BO
     {
-        public partial class BL 
+        public partial class BL
         {
             public class updates
             {
 
             }
-            
-           
+
+
         }
     }
 }

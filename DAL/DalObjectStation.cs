@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IDAL
 {
@@ -10,28 +7,29 @@ namespace IDAL
     {
         namespace DalObject
         {
-            public partial class DalObject : IDal
+            public partial class dalObject : IDal
             {
 
-                public DalObject()
+                public void DalObject()
                 {
                     IDAL.DO.DalObject.DataSource.Initialize();
+                    
                 }
                 /// <summary>
                 /// add to array
                 /// </summary>
                 public void addStation(Station myStation)
                 {
-                    for(int i=0;i < IDAL.DO.DalObject.DataSource.stations.Count;i++)
-                        if(IDAL.DO.DalObject.DataSource.stations[i].id == myStation.id)
+                    for (int i = 0; i < IDAL.DO.DalObject.DataSource.stations.Count; i++)
+                        if (IDAL.DO.DalObject.DataSource.stations[i].id == myStation.id)
                             throw new ExcistingIdException(myStation.id, $"station already exist: {myStation.id}");
                     //insert station to list
                     IDAL.DO.DalObject.DataSource.stations.Add(myStation);
                 }
-               
-                
-               
-                
+
+
+
+
 
 
 
@@ -86,11 +84,11 @@ namespace IDAL
                     //}
                 }
 
-               
-                
-               
 
-             
+
+
+
+
 
                 /// <summary>
                 /// print stations details
@@ -101,13 +99,18 @@ namespace IDAL
                     bool isDouble = false;
                     Station temp = new Station();
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.stations.Count; i++)
+                    {
                         if (IDAL.DO.DalObject.DataSource.stations[i].id == myId)
                         {
                             isDouble = true;
                             temp = IDAL.DO.DalObject.DataSource.stations[i];
                         }
-                    if (isDouble == false)
+                    }
+                    if (isDouble == true)
+                    {
+                        Console.WriteLine("ssdasdasd");
                         return temp;
+                    }
                     else
                         throw new WrongIdException(myId, $"wrong id: {myId}");
                 }
@@ -140,8 +143,8 @@ namespace IDAL
                     {
                         if (IDAL.DO.DalObject.DataSource.stations[i].id == StationId)
                         {
-                            temp.lattitude = IDAL.DO.DalObject.DataSource.stations[i].lattitude;
-                            temp.longitude = IDAL.DO.DalObject.DataSource.stations[i].longitude;
+                            temp.lattitude = IDAL.DO.DalObject.DataSource.stations[i].location.lattitude;
+                            temp.longitude = IDAL.DO.DalObject.DataSource.stations[i].location.longitude;
 
                         }
                     }
@@ -154,11 +157,11 @@ namespace IDAL
 
 
 
-                
-              
-                public double distance(Location a, Location b)
+
+
+                public int distance(Location a, Location b)
                 {
-                    return Math.Sqrt(Math.Pow((b.longitude - a.longitude), 2) -
+                    return (int)Math.Sqrt(Math.Pow((b.longitude - a.longitude), 2) -
                         Math.Pow((b.lattitude - a.lattitude), 2));
                 }
             }

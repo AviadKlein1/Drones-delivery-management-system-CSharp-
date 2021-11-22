@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace IDAL
 {
@@ -21,8 +17,8 @@ namespace IDAL
         public IEnumerable<IDAL.DO.Drone> getDrones();
         public IEnumerable<IDAL.DO.Customer> getCustomers();
         public IEnumerable<IDAL.DO.Parcel> getParcels();
-        public IEnumerable<IDAL.DO.Parcel> getNotAssociatedParcels();
-        public IEnumerable<IDAL.DO.Station> getAvailableToChargeStations();
+        //public IEnumerable<IDAL.DO.Parcel> getNotAssociatedParcels();
+        //public IEnumerable<IDAL.DO.Station> getAvailableToChargeStations();
         public double[] droneElectricityConsumption();
         public IDAL.DO.Location stationLocate(int StationId);
 

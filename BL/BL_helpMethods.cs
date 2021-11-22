@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IBL
 {
@@ -211,6 +208,20 @@ namespace IBL
                     }
                 }
                 return temp;
+            }
+            public CustomerInParcel theOtherSide(int parcelId, int customerId)
+            {
+                var parcelsList = dal.getParcels();
+                CustomerInParcel sender = new CustomerInParcel();
+                CustomerInParcel reciver = new CustomerInParcel();
+                foreach (var item in parcelsList)
+                {
+                    if(item.id == parcelId)
+                    {
+                        if(item.senderId != customerId) se
+                    }
+                }
+
             }
         }
     }

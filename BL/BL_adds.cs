@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IBL
 {
     namespace BO
     {
-        public partial class BL 
+        public partial class BL
         {
             public void addStation(Station myStation)
             {
                 IDAL.DO.Station temp = new IDAL.DO.Station();
 
                 temp.id = myStation.id;
-                temp.location = new IDAL.DO.Location(myStation.location.longitude, myStation.location.lattitude );
+                temp.location = new IDAL.DO.Location(myStation.location.longitude, myStation.location.lattitude);
                 temp.name = myStation.Name;
                 temp.numOfAvailableChargeSlots = myStation.numOfAvailableChargeSlots;
                 temp.numOfChargeSlots = myStation.numOfChargeSlots;
@@ -45,6 +41,7 @@ namespace IBL
                 {
                     Console.WriteLine(ex.Message);
                 }
+                dronesList.Add(addDroneToBLList(myDrone));
             }
             public DroneToList addDroneToBLList(Drone myDrone)
             {
@@ -64,12 +61,12 @@ namespace IBL
                 temp.id = myCustomer.id;
                 temp.name = myCustomer.name;
                 temp.phoneNumber = myCustomer.phoneNumber;
-                temp.location = new IDAL.DO.Location( myCustomer.location.longitude, myCustomer.location.lattitude);
+                temp.location = new IDAL.DO.Location(myCustomer.location.longitude, myCustomer.location.lattitude);
                 try
                 {
                     dal.addcustomer(temp);
                 }
-                catch(IDAL.DO.ExcistingIdException ex)
+                catch (IDAL.DO.ExcistingIdException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -94,7 +91,7 @@ namespace IBL
                 {
                     dal.addParcel(temp);
                 }
-                catch(IDAL.DO.ExcistingIdException ex)
+                catch (IDAL.DO.ExcistingIdException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }

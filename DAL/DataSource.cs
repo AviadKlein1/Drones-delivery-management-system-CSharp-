@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IDAL
 {
@@ -30,7 +27,7 @@ namespace IDAL
                     public static double mediumWeight = 50;
                     public static double heavyWeight = 75;
 
-                    public static double DroneLoadRate = 25 ;
+                    public static double DroneLoadRate = 25;
 
                 }
 
@@ -55,7 +52,7 @@ namespace IDAL
                     {
                         IDAL.DO.Drone myDrone = new IDAL.DO.Drone();
                         myDrone.id = rd.Next(100, 1000);
-                        myDrone.model = "drone" + (i+1);
+                        myDrone.model = "drone" + (i + 1);
                         myDrone.weight = (IDAL.DO.MyEnums.WeightCategory)rd.Next(3);
                         drones.Add(myDrone);
                     }
@@ -64,8 +61,8 @@ namespace IDAL
                     {
                         IDAL.DO.Customer myCustomer = new IDAL.DO.Customer();
                         myCustomer.id = rd.Next(100000000, 1000000000);
-                        myCustomer.name= "customer" + (i + 1);
-                        myCustomer.location = new Location( rd.NextDouble() + rd.Next(180), rd.NextDouble() + rd.Next(180));
+                        myCustomer.name = "customer" + (i + 1);
+                        myCustomer.location = new Location(rd.NextDouble() + rd.Next(180), rd.NextDouble() + rd.Next(180));
                         string phoneNumber = "05" + rd.Next(9) + "-";
                         for (int j = 0; j < 7; j++)
                             phoneNumber += rd.Next(10);
@@ -86,7 +83,7 @@ namespace IDAL
                         parcels.Add(myParcel);
                     }
                     //drone charges
-                    for (int i = 0; i < 2; i++) 
+                    for (int i = 0; i < 2; i++)
                     {
                         IDAL.DO.DroneCharge myDroneCharge = new IDAL.DO.DroneCharge();
                         myDroneCharge.droneId = drones[i].id;
