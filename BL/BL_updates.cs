@@ -91,7 +91,7 @@
                                     dItem.location = new Location(tempStation.location);
                                     //battery
                                     var dis = dal.distance(itemLocation, tempStation.location);
-                                    var neededBattery = (int)BatteryRequiredForVoyage(droneId, dis);
+                                    var neededBattery = (int)BatteryRequirementForVoyage(droneId, dis);
                                     dItem.battery = (dItem.battery - neededBattery);
                                     flag = true;
                                 }

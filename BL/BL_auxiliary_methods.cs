@@ -174,7 +174,7 @@ namespace IBL
                     {
                         var customersList = dal.getCustomers();
                         //search sender of parcel
-                        foreac(var cElement in customersList)
+                        foreach(var cElement in customersList)
                         {
                             if(cElement.id == pElement.senderId)
                                 tempStation = NearestStation(cElement.location);
@@ -315,6 +315,93 @@ namespace IBL
                     }
                 }
                 return other;
+            }
+            public int batteryAtDrone(int myDroneId)
+            {
+                int b = 0;
+                var v = dronesList;
+                foreach (var item in v)
+                {
+                    if (item.id == myDroneId) b = item.battery;
+                }
+                return b;
+            }
+            public int numOfDronesThatChargeingInThatStation(int stationId)
+            {
+                var dalStationsList = dal.getStations();
+                var myStationLocation = new Location();
+                int sum = 0;
+                foreach (var item in dalStationsList)
+                {
+                    if (item.id == stationId) myStationLocation = new Location(item.location);
+                }
+                var dalDronesList = dronesList;
+                foreach (var item in dalDronesList)
+                {
+                    if (item.status == MyEnums.DroneStatus.maintenance && item.location == myStationLocation)
+                        sum++;
+                }
+                return sum;
+            }
+            public CustomerInParcel theOtherSide(int parcelId, int customerId)
+            {
+                var parcelsList = dal.getParcels();
+                CustomerInParcel other = new CustomerInParcel();
+                int otherId = 0;
+                foreach (var item in parcelsList)
+                {
+                    //found our parcel
+                    if (item.id == parcelId)
+                    {
+                        // our customer is the sender, so the other side would be the reciver
+                        if (item.senderId != customerId) otherId = item.reciverId;
+                        if (item.reciverId != customerId) otherId = item.senderId;
+                    }
+                }
+                var customersList = dal.getCustomers();
+                foreach (var item in customersList)
+                {
+                    if (otherId == item.id)
+                    {
+                        other.id = item.id;
+                        other.name = item.name;
+                    }
+                }
+                return other;
+            }
+            public IDAL.DO.Station theNearestAvailableChargeSlotAndThereIsBattery(IDAL.DO.Location l, int myDroneId)
+            {
+                IDAL.DO.Station tempStation = new IDAL.DO.Station();
+                var stationList = dal.getStations();
+                double min = 99999999999;
+                var neededBattery = (int)BatteryRequirementForVoyage(myDroneId, min);
+                var existBattery = batteryAtDrone(myDroneId);
+                foreach (var element in stationList)
+                {
+                    var dis = dal.distance(l, element.location);
+                    if (dis < min && element.numOfAvailableChargeSlots > 0 && (neededBattery <= existBattery))
+                    {
+                        min = dis;
+                        tempStation = element;
+                    }
+                }
+                return tempStation;
+            }
+            public IDAL.DO.Station theNearestAvailableChargeSlot(IDAL.DO.Location l)
+            {
+                IDAL.DO.Station tempStation = new IDAL.DO.Station();
+                var stationList = dal.getStations();
+                double min = 99999999999;
+                foreach (var element in stationList)
+                {
+                    var dis = dal.distance(l, element.location);
+                    if (dis < min && element.numOfAvailableChargeSlots > 0)
+                    {
+                        min = dis;
+                        tempStation = element;
+                    }
+                }
+                return tempStation;
             }
         }
     }

@@ -88,8 +88,8 @@ namespace IBL
             {
 
                 return $"ID: {id}\nname: {name}\nphone number: {phoneNumber}\n" +
-                $"parcels Send And Deliverd: {parcelsSendAndDeliverd}\nparcels Send And Not Deliverd: " +
-                $"{ parcelsSendAndNotDeliverd}\nparcels Recived: { parcelsRecived}\n" +
+                $"parcels Send And Deliverd: {parcelsDelivered}\nparcels Send And Not Deliverd: " +
+                $"{ parcelsSentButNotDelivered}\nparcels Recived: { recievedParcels}\n" +
                 $"parcels In The Way To Me: {ScheduledParcels}";
             }
         }
