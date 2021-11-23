@@ -7,10 +7,10 @@ namespace IDAL
     {
         namespace DalObject
         {
-            public partial class dalObject : IDal
+            public partial class DalObject : IDal
             {
 
-                public void DalObject()
+                public DalObject()
                 {
                     IDAL.DO.DalObject.DataSource.Initialize();
                     
@@ -26,18 +26,6 @@ namespace IDAL
                     //insert station to list
                     IDAL.DO.DalObject.DataSource.stations.Add(myStation);
                 }
-
-
-
-
-
-
-
-
-
-
-
-
                 /// <summary>
                 /// belong parcel to specific drone
                 /// </summary>

@@ -63,9 +63,9 @@
             public int deliveredParcelId { get; set; }
             public override string ToString()
             {
-                return "ID: " + id + "\nModel: " + model + "\nWeight Category: " + weight + "\nStatus: " +
-                    status + "\nBattery: " + battery + "\nLongitude: " + location.longitude +
-                    "\nLattitude: " + location.lattitude + "\ndeliverd Parcel id: " + deliveredParcelId + "\n";
+                return $"ID: {id}\nModel: {model}\nWeight Category: {weight}\nStatus: {status}\nBattery: " +
+                   $" {battery}\nLongitude: {location.longitude}\nLattitude: " +
+                   $"{location.lattitude}\nDeliverd parcel id: {deliveredParcelId} ";
             }
 
         }

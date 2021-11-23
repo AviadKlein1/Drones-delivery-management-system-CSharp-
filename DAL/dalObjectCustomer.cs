@@ -6,7 +6,7 @@ namespace IDAL
     {
         namespace DalObject
         {
-            public partial class dalObject : IDal
+            public partial class DalObject : IDal
             {
                 /// <summary>
                 ///  add it to array

@@ -8,10 +8,10 @@ namespace IBL
         public partial class BL
         {
             public Random rd = new Random();
+            public IDAL.IDal dal;
 
             public List<DroneToList> dronesList = new List<DroneToList>();
 
-            public IDAL.IDal dal = new IDAL.DO.DalObject.dalObject();
 
             public static double free;
             public static double lightWeight;
@@ -24,6 +24,8 @@ namespace IBL
 
             public BL()
             {
+                dal = new IDAL.DO.DalObject.DalObject();
+
                 free = dal.droneElectricityConsumption()[0];
                 lightWeight = dal.droneElectricityConsumption()[1];
                 mediumWeight = dal.droneElectricityConsumption()[2];
@@ -82,16 +84,23 @@ namespace IBL
                             if (element.status == MyEnums.DroneStatus.maintenance)
                             {
                                 var dalStationsList = dal.getStations();
-                                int index = rd.Next(0, dalStationsList.Count() + 1);
+                                int index = rd.Next(0, dalStationsList.Count());
                                 element.location = new Location(dalStationsList.ElementAt(index).location);
                                 element.battery = rd.Next(0, 21);
                             }
                             else// free
                             {
                                 var customers = CustomersWhoRecievedParcel();
-                                int index = rd.Next(0, customers.Count() + 1);
-                                element.location = new Location(customers.ElementAt(index).location);
-
+                                int index = 0;
+                                if (customers.Count > 0)
+                                {
+                                    index = rd.Next(0, customers.Count());
+                                    element.location = new Location(customers.ElementAt(index).location);
+                                }
+                                else
+                                {
+                                    element.location = new Location();
+                                }
                                 IDAL.DO.Location myLocation = new IDAL.DO.Location(element.location.longitude, element.location.lattitude);
 
                                 IDAL.DO.Location locationOfNearestChargeSlot = (theNearestChargeSlot(myLocation).location);

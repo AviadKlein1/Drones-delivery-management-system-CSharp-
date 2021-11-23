@@ -31,6 +31,7 @@ namespace ConsoleUI_BL
             Console.WriteLine("enter number of charge slots");
             int.TryParse(Console.ReadLine(), out numOfChargeSlots);
             myStation.numOfAvailableChargeSlots = numOfChargeSlots;
+            myStation.numOfChargeSlots = numOfChargeSlots;
             myStation.dronesInCharge = new List<IBL.BO.DroneInCharge>();
             return myStation;
         }

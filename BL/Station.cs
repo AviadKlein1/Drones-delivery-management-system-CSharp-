@@ -42,7 +42,7 @@ namespace IBL
             public int numOfOccupiedChargeSlots { get; set; }
             public override string ToString()
             {
-                return $"ID: {id}\n Name: {name}\n Available Charge Slots: {numOfAvailableChargeSlots}\n" +
+                return $"ID: {id}\nName: {name}\nAvailable Charge Slots: {numOfAvailableChargeSlots}\n" +
                     $"Occupied Charge Slots: {numOfOccupiedChargeSlots}\n";
             }
         }

@@ -6,10 +6,9 @@ namespace IBL
     {
         public partial class BL
         {
-            public IEnumerable<StationToList> DisplayStations()
+            public List<StationToList> DisplayStations()
             {
                 List<StationToList> tmp1 = new List<StationToList>();
-                List<IDAL.DO.Station> tmp2 = new List<IDAL.DO.Station>();
                 var v = dal.getStations();
                 foreach (var element in v)
                 {
@@ -20,22 +19,13 @@ namespace IBL
                     myStation.numOfOccupiedChargeSlots = element.numOfChargeSlots - element.numOfAvailableChargeSlots;
                     tmp1.Add(myStation);
                 }
+                if (tmp1 == null) System.Console.WriteLine("empty list\n");
                 return tmp1;
             }
             public List<DroneToList> DisplayDrones()
             {
-                List<DroneToList> tmp1 = new List<DroneToList>();
-                List<IDAL.DO.Drone> tmp2 = new List<IDAL.DO.Drone>();
-                var v = dal.getDrones();
-                foreach (var element in v)
-                {
-                    DroneToList myDrone = new DroneToList();
-                    myDrone.id = element.id;
-                    myDrone.model = element.model;
-                    myDrone.weight = element.weight;
-                    tmp1.Add(myDrone);
-                }
-                return tmp1;
+                var v = dronesList;
+                return v;
             }
             public List<CustomerToList> DisplayCustomers()
             {
@@ -80,11 +70,10 @@ namespace IBL
             public List<ParcelToList> notAssociatedParcelsDisplay()
             {
                 List<ParcelToList> tmp1 = new List<ParcelToList>();
-                List<IDAL.DO.Parcel> tmp2 = new List<IDAL.DO.Parcel>();
                 var v = dal.getParcels();
                 foreach (var element in v)
                 {
-                    if (element.droneId > 0)
+                    if (element.droneId == 0)
                     {
                         ParcelToList myParcel = new ParcelToList();
                         myParcel.id = element.id;

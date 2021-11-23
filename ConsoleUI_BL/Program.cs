@@ -14,12 +14,11 @@ namespace ConsoleUI_BL
 
             int id = 0;
             int choice1 = -1;
-            int choice2 = -1;
             try
             {
                 while (choice1 != 0)
                 {
-                    choice2 = -1;
+                    int choice2 = -1;
                     Console.WriteLine("Choose one of the following:\n" +
                     "1: Add a new item\n" +
                     "2: Update an item\n" +
@@ -157,7 +156,7 @@ namespace ConsoleUI_BL
                                 }
                             }
                             break;
-                            //case 4:
+                        case 4:
                             // lists-display
                             while (choice2 != 0)
                             {
@@ -171,6 +170,7 @@ namespace ConsoleUI_BL
                                 int.TryParse(Console.ReadLine(), out choice2);
                                 switch (choice2)
                                 {
+
                                     case 1:
                                         var stationsList = bl.DisplayStations();
                                         foreach (var element in stationsList)
@@ -220,6 +220,7 @@ namespace ConsoleUI_BL
                                         break;
 
                                     default:
+
                                         break;
                                 }
                             }
