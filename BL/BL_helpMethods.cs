@@ -212,16 +212,28 @@ namespace IBL
             public CustomerInParcel theOtherSide(int parcelId, int customerId)
             {
                 var parcelsList = dal.getParcels();
-                CustomerInParcel sender = new CustomerInParcel();
-                CustomerInParcel reciver = new CustomerInParcel();
+                CustomerInParcel other = new CustomerInParcel();
+                int otherId = 0;
                 foreach (var item in parcelsList)
                 {
+                    //found our parcel
                     if(item.id == parcelId)
                     {
-                        if(item.senderId != customerId) se
+                        // our customer is the sender, so the other side would be the reciver
+                        if (item.senderId != customerId) otherId = item.reciverId;
+                        if (item.reciverId != customerId) otherId = item.senderId;
                     }
                 }
-
+                var customersList = dal.getCustomers();
+                foreach (var item in customersList)
+                {
+                    if(otherId == item.id)
+                    {
+                        other.id = item.id;
+                        other.name = item.name;
+                    }
+                }
+                return other;
             }
         }
     }

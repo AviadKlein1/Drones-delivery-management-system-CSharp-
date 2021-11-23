@@ -80,7 +80,7 @@ namespace IBL
                 temp.priority = myParcel.priority;
                 temp.senderId = myParcel.sender.id;
                 temp.reciverId = myParcel.reciever.id;
-                temp.droneId = myParcel.DroneInParcel.id;
+                temp.droneId = (myParcel.DroneInParcel == null ? 0 : myParcel.DroneInParcel.id);
                 temp.scheduled = DateTime.Now;
                 temp.requested = new DateTime();
                 temp.pickedUp = new DateTime();

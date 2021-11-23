@@ -38,9 +38,9 @@ namespace IBL
                 var listFromCustomerOut = parcelsFromCustomer == null ? "" : string.Join(", ", parcelsFromCustomer);
                 var listToCustomerOut = parcelsToCustomer == null ? "" : string.Join(", ", parcelsToCustomer);
 
-                return $"ID: {id}\nName:  {name}\nLongitude: { location.longitude }\nLattitude: { location.lattitude}" +
-                    $"\nphone number: {phoneNumber}\nparcels To Customer : { listToCustomerOut}" +
-                    $"\nparcels from Customer : { listFromCustomerOut}\n";
+                return $"ID: {id}\nName:  {name}\nLongitude: {location.longitude }\nLattitude: {location.lattitude}" +
+                    $"\nphone number: {phoneNumber}\nparcels To Customer: { listToCustomerOut}" +
+                    $"\nparcels from Customer: { listFromCustomerOut}\n";
 
                    
                     

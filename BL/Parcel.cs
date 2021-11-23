@@ -47,8 +47,8 @@ namespace IBL
             {
                 //\n sender: {sender}\n reciever: {reciever}\n drone: {DroneInParcel}
                 return $"ID: {id}\n" +
-                    $" Weight Category: {weight}\n Priority: {priority}\n requested: {requested}\n" +
-                    $" scheduled: {scheduled}\n picked up: {pickedUp}\n delivered: {delivered}\n";
+                    $"Weight Category: {weight}\nPriority: {priority}\nrequested: {requested}\n" +
+                    $"scheduled: {scheduled}\npicked up: {pickedUp}\ndelivered: {delivered}\n";
             }
         }
         public class ParcelAtCustomer

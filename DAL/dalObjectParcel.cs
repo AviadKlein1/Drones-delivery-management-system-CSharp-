@@ -38,7 +38,7 @@ namespace IDAL
                             temp = IDAL.DO.DalObject.DataSource.parcels[i];
                         }
                     }
-                    if (isDouble == false)
+                    if (isDouble == true)
                         return temp;
                     else
                         throw new WrongIdException(myId, $"wrong id: {myId}");

@@ -87,9 +87,22 @@ namespace IBL
                         if (item.delivered != empty) myParcel.parcelStatus = IDAL.DO.MyEnums.ParcelStatus.delivered;
                        
                         myParcel.theSecondSide = theOtherSide(myParcel.id, retTemp.id);
-                        
+                        retTemp.parcelsFromCustomer.Add(myParcel);
                     }
-                    retTemp.parcelsFromCustomer.Add(myParcel);
+                    if (item.reciverId == retTemp.id)
+                    {
+                        myParcel.id = item.id;
+                        myParcel.weight = item.weight;
+                        myParcel.priority = item.priority;
+
+                        if (item.requested != empty && item.scheduled == empty) myParcel.parcelStatus = IDAL.DO.MyEnums.ParcelStatus.requested;
+                        if (item.scheduled != empty && item.pickedUp == empty) myParcel.parcelStatus = IDAL.DO.MyEnums.ParcelStatus.scheduled;
+                        if (item.pickedUp != empty && item.delivered == empty) myParcel.parcelStatus = IDAL.DO.MyEnums.ParcelStatus.pickedUp;
+                        if (item.delivered != empty) myParcel.parcelStatus = IDAL.DO.MyEnums.ParcelStatus.delivered;
+
+                        myParcel.theSecondSide = theOtherSide(myParcel.id, retTemp.id);
+                        retTemp.parcelsToCustomer.Add(myParcel);
+                    }
                 }
                 return retTemp;
             }
