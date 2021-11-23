@@ -9,7 +9,6 @@ namespace IBL
         {
             public Random rd = new Random();
             public IDAL.IDal dal;
-
             public List<DroneToList> dronesList = new List<DroneToList>();
 
 
@@ -31,15 +30,16 @@ namespace IBL
                 mediumWeight = dal.droneElectricityConsumption()[2];
                 heavyWeight = dal.droneElectricityConsumption()[3];
                 DroneLoadRate = dal.droneElectricityConsumption()[4];
-                DroneToList temp = new DroneToList();
                 //insert all the drones to this list
                 var dalDrones = dal.getDrones();
-                foreach( var element in dalDrones)
+                DroneToList temp = new DroneToList();
+                foreach ( var element in dalDrones)
                 {
-                    temp.id = element.id;
-                    temp.model = element.model;
-                    temp.weight = element.weight;
-                    dronesList.Add(temp);
+                    DroneToList temp1 = new DroneToList();
+                    temp1.id = element.id;
+                    temp1.model = element.model;
+                    temp1.weight = element.weight;
+                    dronesList.Add(temp1);
                 }
                 if(dronesList != null)
                     {
@@ -103,7 +103,7 @@ namespace IBL
                                 }
                                 IDAL.DO.Location myLocation = new IDAL.DO.Location(element.location.longitude, element.location.lattitude);
 
-                                IDAL.DO.Location locationOfNearestChargeSlot = (theNearestChargeSlot(myLocation).location);
+                                IDAL.DO.Location locationOfNearestChargeSlot = (theNearestAvailableChargeSlot(myLocation).location);
 
                                 double distanceBetweenTargetToStation = dal.distance(myLocation, locationOfNearestChargeSlot);
                                 int minBattery = (int)(BatteryRequiredForVoyage(element.id, distanceBetweenTargetToStation));

@@ -148,7 +148,7 @@ namespace IBL
                         {
                             if (cElement.id == pElement.senderId)
                             {
-                                tempStation = theNearestChargeSlot(cElement.location);
+                                tempStation = theNearestAvailableChargeSlot(cElement.location);
                             }
                         }
                     }
@@ -171,7 +171,7 @@ namespace IBL
                 }
                 return tempStation;
             }
-            public IDAL.DO.Station theNearestChargeSlot(IDAL.DO.Location l)
+            public IDAL.DO.Station theNearestAvailableChargeSlot(IDAL.DO.Location l)
             {
                 IDAL.DO.Station tempStation = new IDAL.DO.Station();
                 var stationList = dal.getStations();
@@ -187,7 +187,25 @@ namespace IBL
                 }
                 return tempStation;
             }
-
+            public IDAL.DO.Station theNearestAvailableChargeSlotAndThereIsBattery(IDAL.DO.Location l, int myDroneId)
+            {
+                IDAL.DO.Station tempStation = new IDAL.DO.Station();
+                var stationList = dal.getStations();
+                double min = 99999999999;
+                var neededBattery = (int)BatteryRequiredForVoyage(myDroneId, min);
+                var existBattery = batteryAtDrone(myDroneId);
+                foreach (var element in stationList)
+                {
+                    var dis = dal.distance(l, element.location);
+                    if (dis < min && element.numOfAvailableChargeSlots > 0 && (neededBattery <= existBattery)) 
+                    {
+                        min = dis;
+                        tempStation = element;
+                    }
+                }
+                return tempStation;
+            }
+            
             public List<IDAL.DO.Customer> CustomersWhoRecievedParcel()
             {
                 List<IDAL.DO.Customer> temp = new List<IDAL.DO.Customer>();
@@ -234,6 +252,33 @@ namespace IBL
                     }
                 }
                 return other;
+            }
+            public int numOfDronesThatChargeingInThatStation(int stationId)
+            {
+                var dalStationsList = dal.getStations();
+                var myStationLocation = new Location();
+                int sum = 0;
+                foreach (var item in dalStationsList)
+                {
+                    if (item.id == stationId) myStationLocation = new Location(item.location);
+                }
+                var dalDronesList = dronesList;
+                foreach (var item in dalDronesList)
+                {
+                    if (item.status == MyEnums.DroneStatus.maintenance && item.location == myStationLocation)
+                        sum++;
+                }
+                return sum;
+            }
+            public int batteryAtDrone(int myDroneId)
+            {
+                int b = 0;
+                var v = dronesList;
+                foreach (var item in v)
+                {
+                    if (item.id == myDroneId) b = item.battery;
+                }
+                return b;
             }
         }
     }

@@ -21,18 +21,18 @@ namespace IBL
 
                 Station retTemp = new Station(temp);
 
-                //var dronesInCharge = new List<DroneInCharge>();
-                //foreach (var element in dronesList)
-                //{
-                //    if (element.status == MyEnums.DroneStatus.maintenance && element.location == retTemp.location)
-                //    {
-                //        DroneInCharge droneTemp = new DroneInCharge();
-                //        droneTemp.id = element.id;
-                //        droneTemp.battery = element.battery;
-                //        dronesInCharge.Add(droneTemp);
-                //    }
-                //}
-                //retTemp.dronesInCharge = dronesInCharge;
+                var dronesInCharge = new List<DroneInCharge>();
+                foreach (var element in dronesList)
+                {
+                    if (element.status == MyEnums.DroneStatus.maintenance && element.location == retTemp.location)
+                    {
+                        DroneInCharge droneTemp = new DroneInCharge();
+                        droneTemp.id = element.id;
+                        droneTemp.battery = element.battery;
+                        dronesInCharge.Add(droneTemp);
+                    }
+                }
+                retTemp.dronesInCharge = dronesInCharge;
                 return retTemp;
             }
             public Drone droneDisplay(int droneId)

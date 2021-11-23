@@ -15,8 +15,8 @@ namespace IBL
                     StationToList myStation = new StationToList();
                     myStation.id = element.id;
                     myStation.name = element.name;
-                    myStation.numOfAvailableChargeSlots = element.numOfAvailableChargeSlots;
-                    myStation.numOfOccupiedChargeSlots = element.numOfChargeSlots - element.numOfAvailableChargeSlots;
+                    myStation.numOfAvailableChargeSlots = element.numOfChargeSlots - numOfDronesThatChargeingInThatStation(element.id);
+                    myStation.numOfOccupiedChargeSlots = numOfDronesThatChargeingInThatStation(element.id);
                     tmp1.Add(myStation);
                 }
                 if (tmp1 == null) System.Console.WriteLine("empty list\n");
@@ -37,6 +37,7 @@ namespace IBL
                     CustomerToList myCustomer = new CustomerToList();
                     myCustomer.id = element.id;
                     myCustomer.name = element.name;
+                    myCustomer.phoneNumber = element.phoneNumber;
                     tmp1.Add(myCustomer);
                 }
                 return tmp1;

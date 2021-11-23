@@ -96,7 +96,6 @@ namespace IDAL
                     }
                     if (isDouble == true)
                     {
-                        Console.WriteLine("ssdasdasd");
                         return temp;
                     }
                     else
@@ -110,6 +109,24 @@ namespace IDAL
                     List<IDAL.DO.Station> temp = new List<IDAL.DO.Station>();
                     temp = IDAL.DO.DalObject.DataSource.stations;
                     return temp;
+                }
+                public void updatStation(int stationId, string newName, int numOfChargeSlots)
+                {
+                    Station temp = new Station();
+                    for (int i = 0; i < DataSource.stations.Count; i++)
+                    {
+                        Station item = IDAL.DO.DalObject.DataSource.stations[i];
+                        if (item.id == stationId)
+                        {
+                            temp.id = stationId;
+                            temp.location = item.location;
+                            if (newName != null) temp.name = newName;
+                            else temp.name = item.name;
+                            if (numOfChargeSlots != 0) temp.numOfChargeSlots = numOfChargeSlots;
+                            else temp.numOfChargeSlots = item.numOfChargeSlots;
+                            IDAL.DO.DalObject.DataSource.stations[i] = temp;
+                        }
+                    }
                 }
                 /// <summary>
                 /// print all available to charge stations
@@ -138,6 +155,23 @@ namespace IDAL
                     }
                     return temp;
                 }
+                public void decriseChargeSlot(int stationId)
+                {
+                    Station temp = new Station();
+                    for (int i = 0; i < DataSource.stations.Count; i++)
+                    {
+                        Station item = IDAL.DO.DalObject.DataSource.stations[i];
+                        if (item.id == stationId)
+                        {
+                            temp.id = stationId;
+                            temp.location = item.location;
+                            temp.name = item.name;
+                            temp.numOfChargeSlots = item.numOfChargeSlots - 1;
+                            IDAL.DO.DalObject.DataSource.stations[i] = temp;
+                        }
+                    }
+                }
+
 
 
 

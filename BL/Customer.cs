@@ -72,9 +72,9 @@ namespace IBL
             public override string ToString()
             {
 
-                return $"ID: {id}\n name: {name}\n phone number: {phoneNumber}\n" +
-                $" parcels Send And Deliverd: {parcelsSendAndDeliverd}\n parcels Send And Not Deliverd: " +
-                $"{ parcelsSendAndNotDeliverd}\n parcels Recived: { parcelsRecived}" +
+                return $"ID: {id}\nname: {name}\nphone number: {phoneNumber}\n" +
+                $"parcels Send And Deliverd: {parcelsSendAndDeliverd}\nparcels Send And Not Deliverd: " +
+                $"{ parcelsSendAndNotDeliverd}\nparcels Recived: { parcelsRecived}\n" +
                 $"parcels In The Way To Me: {parcelsInTheWayToMe}";
             }
 

@@ -45,6 +45,27 @@ namespace IDAL
                     temp = IDAL.DO.DalObject.DataSource.customers;
                     return temp;
                 }
+                public void updateCustomer(int customerId, string newName, string newPhone)
+                {
+                    Customer temp = new Customer();
+                    for (int i = 0; i < DataSource.customers.Count; i++)
+                    {
+                        Customer item = IDAL.DO.DalObject.DataSource.customers[i];
+                        if (item.id == customerId)
+                        {
+                            temp.id = customerId;
+                            temp.location = item.location;
+                            if (newName != null) temp.name = newName;
+                            else temp.name = item.name;
+                            if (newPhone != null) temp.phoneNumber = newPhone;
+                            else temp.phoneNumber = item.phoneNumber;
+                            temp.location = item.location;
+                            IDAL.DO.DalObject.DataSource.customers[i] = temp;
+                        }
+                    }
+
+                }
+
             }
         }
     }

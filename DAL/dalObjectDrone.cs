@@ -45,6 +45,22 @@ namespace IDAL
                     temp = IDAL.DO.DalObject.DataSource.drones;
                     return temp;
                 }
+                public void updateDrone(int droneId, string newModel)
+                {
+                    Drone temp = new Drone();
+                    for (int i = 0; i < DataSource.drones.Count; i++)
+                    {
+                        Drone item = IDAL.DO.DalObject.DataSource.drones[i];
+                        if (item.id == droneId)
+                        {
+                            temp.id = droneId;
+                            temp.model = newModel;
+                            temp.weight = item.weight;
+                            IDAL.DO.DalObject.DataSource.drones[i] = temp;
+                        }
+                    }
+                }
+
                 /// <summary>
                 /// send drone to charge slot
                 /// </summary>

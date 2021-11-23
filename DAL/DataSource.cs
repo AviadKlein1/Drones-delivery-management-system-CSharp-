@@ -44,7 +44,7 @@ namespace IDAL
                         myStation.name = "station" + (i + 1);
                         myStation.numOfChargeSlots = rd.Next(1, 5);
                         myStation.location = new Location(rd.NextDouble() + rd.Next(180), rd.NextDouble() + rd.Next(180));
-                        myStation.numOfAvailableChargeSlots = rd.Next(1, 5);
+                        myStation.numOfAvailableChargeSlots  = myStation.numOfChargeSlots - rd.Next(0,1);
                         stations.Add(myStation);
                     }
                     //drones
