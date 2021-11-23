@@ -88,19 +88,6 @@ namespace IBL
         }
         public class ParcelInDelivery
         {
-            //public ParcelInDelivery(IDAL.DO.ParcelInDelivery temp)
-            //{
-            //    id = temp.id;
-            //    weight = temp.weight;
-            //    priority = temp.priority;
-            //    boolParcelStatus = temp.boolParcelStatus;
-            //    pickUpLocation = new Location(temp.pickUpLocation);
-            //    targetLocation = new Location(temp.targetLocation);
-            //    distance = temp.distance;
-            //    sender =  new CustomerInParcel( temp.sender);
-            //    reciever = new CustomerInParcel(temp.reciever);
-            //}
-
             public int id { get; set; }
             public IDAL.DO.MyEnums.WeightCategory weight { get; set; }
             public IDAL.DO.MyEnums.PriorityLevel priority { get; set; }

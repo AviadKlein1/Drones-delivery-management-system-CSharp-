@@ -19,7 +19,6 @@ namespace IDAL
             public DateTime scheduled { get; set; }
             public DateTime pickedUp { get; set; }
             public DateTime delivered { get; set; }
-
         }
     }
 }

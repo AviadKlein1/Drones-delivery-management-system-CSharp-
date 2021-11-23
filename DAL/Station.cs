@@ -12,7 +12,6 @@
             public Location location { get; set; }
             public int numOfChargeSlots { get; set; }
             public int numOfAvailableChargeSlots { get; set; }
-
         }
     }
 }

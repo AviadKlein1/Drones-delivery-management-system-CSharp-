@@ -52,6 +52,7 @@ namespace IBL
                     Console.WriteLine(ex.Message);
                 }
 
+                //add new drone to list of drones (BL) 
                 dronesList.Add(addDroneToBLList(myDrone));
             }
 
