@@ -22,8 +22,6 @@ namespace IDAL
         public double[] droneElectricityConsumption();
         public IDAL.DO.Location stationLocate(int StationId);
 
-
-
         //public bool thisDroneIsAssociated(int droneId);
         //public bool thereAreParcelsThatNotDeliverdYet();
         //public bool myParcelScheduledButNotPickedUp(int parcelId);
@@ -32,11 +30,5 @@ namespace IDAL
         //public IDAL.DO.Location theNearestToSenderStationLocation(int parcelId);
         //public IDAL.DO.Station theNearestStation(IDAL.DO.Location l);
         public int distance(IDAL.DO.Location a, IDAL.DO.Location b);
-
-
-
-
-
-
     }
 }

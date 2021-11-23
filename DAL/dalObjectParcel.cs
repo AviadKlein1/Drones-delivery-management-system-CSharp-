@@ -6,10 +6,13 @@ namespace IDAL
     {
         namespace DalObject
         {
+            /// <summary>
+            /// entity parcel
+            /// </summary>
             public partial class DalObject : IDal
             {
                 /// <summary>
-                /// add it to array
+                /// add parcel to list
                 /// </summary>
                 /// returns new parcel's id
                 public void addParcel(Parcel myParcel)
@@ -17,21 +20,33 @@ namespace IDAL
                     //insert parcel to array
                     //IDAL.DO.DalObject.DataSource.parcels[IDAL.DO.DalObject.DataSource.Config.parcelIndex] = myParcel;
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
+                        //if already exist
                         if (IDAL.DO.DalObject.DataSource.parcels[i].id == myParcel.id)
                             throw new ExcistingIdException(myParcel.id, $"parcel already exist: {myParcel.id}");
                     IDAL.DO.DalObject.DataSource.parcels.Add(myParcel);
                 }
+
+                /// <summary>
+                /// promote parcel serial number
+                /// </summary>
+                /// <returns></returns>
                 public int ParcelRunId()
                 {
                     return IDAL.DO.DalObject.DataSource.Config.ParcelRunId++;
                 }
 
+                /// <summary>
+                /// return a parcel by its id
+                /// </summary>
+                /// <param name="myId"></param>
+                /// <returns></returns>
                 public IDAL.DO.Parcel getParcel(int myId)
                 {
                     bool isDouble = false;
                     Parcel temp = new Parcel();
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
                     {
+                        //search parcel
                         if (IDAL.DO.DalObject.DataSource.parcels[i].id == myId)
                         {
                             isDouble = true;
@@ -40,9 +55,11 @@ namespace IDAL
                     }
                     if (isDouble == true)
                         return temp;
+                    //if not found
                     else
                         throw new WrongIdException(myId, $"wrong id: {myId}");
                 }
+
                 /// <summary>
                 /// print all parcels
                 /// </summary>

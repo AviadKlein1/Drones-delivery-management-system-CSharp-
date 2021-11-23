@@ -4,36 +4,49 @@ namespace IBL
 {
     namespace BO
     {
-        //station's fields
+        /// <summary>
+        /// entity station - fields, ctors and ToString function
+        /// </summary>
         public class Station
         {
-            public Station() { }
+            /// <summary>
+            /// default ctor
+            /// </summary>
+            public Station()
+            {
+                
+            }
 
+            /// <summary>
+            /// copy ctor
+            /// </summary>
+            /// <param name="temp"></param>
             public Station(IDAL.DO.Station temp)
             {
                 id = temp.id;
-                Name = temp.name;
+                name = temp.name;
                 numOfAvailableChargeSlots = temp.numOfAvailableChargeSlots;
                 location = new Location(temp.location);
             }
             public int id { get; set; }
-            public string Name { get; set; }
+            public string name { get; set; }
             public int numOfAvailableChargeSlots { get; set; }
             public int numOfChargeSlots { get; set; }
-
             public List<DroneInCharge> dronesInCharge { get; set; }
             public Location location { get; set; }
-            /// <summary>
-            /// prints an item's details
-            /// </summary>
             public override string ToString()
             {
                 var listOut = dronesInCharge == null ? "" : string.Join(", ", dronesInCharge);
-                return $"ID: {id}\nName:  {Name}\nLongitude: { location.longitude }\nLattitude: { location.lattitude}\n" +
+                return $"ID: { id }\nName: { name }\nLongitude: { location.longitude }\nLattitude: " +
+                    $"{ location.lattitude }\n" +
                     $"Available Charge Slots: {numOfAvailableChargeSlots}\n" +
                     $"\nDrones in charge: {listOut}\n";
             }
         }
+
+        /// <summary>
+        /// entity station to list - fields and ToString function
+        /// </summary>
         public class StationToList
         {
             public int id { get; set; }
@@ -48,4 +61,3 @@ namespace IBL
         }
     }
 }
-

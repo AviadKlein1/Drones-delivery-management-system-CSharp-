@@ -5,9 +5,13 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// display item individually
+        /// </summary>
         public partial class BL
         {
-            public Station stationDisplay(int stationId)
+            //display station
+            public Station DisplayStation(int stationId)
             {
                 IDAL.DO.Station temp = new IDAL.DO.Station();
                 try
@@ -18,7 +22,7 @@ namespace IBL
                 {
                     Console.WriteLine(ex.Message);
                 }
-
+                //return new Station(temp);
                 Station retTemp = new Station(temp);
 
                 //var dronesInCharge = new List<DroneInCharge>();
@@ -35,15 +39,17 @@ namespace IBL
                 //retTemp.dronesInCharge = dronesInCharge;
                 return retTemp;
             }
-            public Drone droneDisplay(int droneId)
+
+            //display drone
+            public Drone DisplayDrone(int droneId)
             {
-                bool isExist = false;
+                bool exist = false;
                 Drone retDrone = new Drone();
                 foreach (var element in dronesList)
                 {
                     if (element.id == droneId)
                     {
-                        isExist = true;
+                        exist = true;
                         retDrone.id = element.id;
                         retDrone.location = element.location;
                         retDrone.weight = element.weight;
@@ -53,10 +59,13 @@ namespace IBL
                         retDrone.location = element.location;
                     }
                 }
-                if (isExist == false) throw new WrongIdException(droneId, $"Wrong ID: {droneId}");
+                if (exist == false)
+                    throw new WrongIdException(droneId, $"Wrong ID: {droneId}");
                 return retDrone;
             }
-            public Customer customerDisplay(int customerId)
+
+            //display customer
+            public Customer DisplayCustomer(int customerId)
             {
                 IDAL.DO.Customer temp = new IDAL.DO.Customer();
                 try
@@ -69,7 +78,7 @@ namespace IBL
                 }
 
                 Customer retTemp = new Customer(temp);
-                // maybe dusplay parcels at this customer? 
+                // maybe duiplay parcels at this customer? 
                 var parcelsList = dal.getParcels();
                 foreach (var item in parcelsList)
                 {
@@ -86,8 +95,8 @@ namespace IBL
                         if (item.pickedUp != empty && item.delivered == empty) myParcel.parcelStatus = IDAL.DO.MyEnums.ParcelStatus.pickedUp;
                         if (item.delivered != empty) myParcel.parcelStatus = IDAL.DO.MyEnums.ParcelStatus.delivered;
                        
-                        myParcel.theSecondSide = theOtherSide(myParcel.id, retTemp.id);
-                        retTemp.parcelsFromCustomer.Add(myParcel);
+                        myParcel.theSecondSide = TheOtherSide(myParcel.id, retTemp.id);
+                        retTemp.parcelsSent.Add(myParcel);
                     }
                     if (item.reciverId == retTemp.id)
                     {
@@ -100,8 +109,8 @@ namespace IBL
                         if (item.pickedUp != empty && item.delivered == empty) myParcel.parcelStatus = IDAL.DO.MyEnums.ParcelStatus.pickedUp;
                         if (item.delivered != empty) myParcel.parcelStatus = IDAL.DO.MyEnums.ParcelStatus.delivered;
 
-                        myParcel.theSecondSide = theOtherSide(myParcel.id, retTemp.id);
-                        retTemp.parcelsToCustomer.Add(myParcel);
+                        myParcel.theSecondSide = TheOtherSide(myParcel.id, retTemp.id);
+                        retTemp.parcelsRecieved.Add(myParcel);
                     }
                 }
                 return retTemp;

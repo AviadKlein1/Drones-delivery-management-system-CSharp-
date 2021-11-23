@@ -4,7 +4,7 @@ namespace IDAL
 {
     namespace DO
     {
-        //wrong id exeption
+        //wrong id exception
         [Serializable]
         public class WrongIdException : Exception
         {
@@ -16,6 +16,9 @@ namespace IDAL
             public override string ToString() => base.ToString() + $", wrong id: {ID}";
         }
 
+        /// <summary>
+        /// item already exist exception
+        /// </summary>
         [Serializable]
         public class ExcistingIdException : Exception
         {

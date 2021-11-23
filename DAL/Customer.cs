@@ -2,7 +2,9 @@
 {
     namespace DO
     {
-        //item's fields
+        /// <summary>
+        /// entity customer = fields
+        /// </summary>
         public struct Customer
         {
             public int id { get; set; }

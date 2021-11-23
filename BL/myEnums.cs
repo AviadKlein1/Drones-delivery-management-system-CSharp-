@@ -3,7 +3,7 @@
     namespace BO
     {
         /// <summary>
-        /// defines enums for items' fields - weight, priority.
+        /// defines enums for items' fields - weight, priority, status.
         /// </summary>
         public class MyEnums
         {

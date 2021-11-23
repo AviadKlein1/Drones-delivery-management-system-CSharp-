@@ -6,19 +6,29 @@ namespace IDAL
     {
         namespace DalObject
         {
+            /// <summary>
+            /// entity drone
+            /// </summary>
             public partial class DalObject : IDal
             {
                 /// <summary>
-                /// add it to array
+                /// add drone to list of drones
                 /// </summary>
                 public void addDrone(Drone myDrone)
                 {
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.drones.Count; i++)
+                        //if drone already exist
                         if (IDAL.DO.DalObject.DataSource.drones[i].id == myDrone.id)
                             throw new ExcistingIdException(myDrone.id, $"drone already exist: {myDrone.id}");
-                    //insert drone to array
+                    //insert drone to list
                     IDAL.DO.DalObject.DataSource.drones.Add(myDrone);
                 }
+
+                /// <summary>
+                /// returns a drone by its id
+                /// </summary>
+                /// <param name="myId"></param>
+                /// <returns></returns>
                 public IDAL.DO.Drone getDrone(int myId)
                 {
                     bool isDouble = false;
@@ -33,9 +43,11 @@ namespace IDAL
                     }
                     if (isDouble == false)
                         return temp;
+                    //if not found
                     else
                         throw new WrongIdException(myId, $"wrong id: {myId}");
                 }
+
                 /// <summary>
                 /// print all drones
                 /// </summary>
@@ -106,6 +118,11 @@ namespace IDAL
                     //    }
                     //}
                 }
+
+                /// <summary>
+                /// returns an array contains electricity consumption data
+                /// </summary>
+                /// <returns></returns> array of double nums (battery % per distance)
                 public double[] droneElectricityConsumption()
                 {
                     double[] droneElectricityConsumption = new double[5];
