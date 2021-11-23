@@ -79,9 +79,5 @@
 
         ////new method electric consum
         //public double[] droneElectricityConsumption();
-
-
-
-
     }
 }

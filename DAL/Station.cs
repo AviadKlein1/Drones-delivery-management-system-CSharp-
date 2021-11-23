@@ -2,7 +2,9 @@
 {
     namespace DO
     {
-        //station's fields
+        /// <summary>
+        /// entity station - fields
+        /// </summary>
         public struct Station
         {
             public int id { get; set; }

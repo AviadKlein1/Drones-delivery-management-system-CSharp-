@@ -2,8 +2,16 @@
 {
     namespace DO
     {
+        /// <summary>
+        /// location - fields, ctor and ToString function
+        /// </summary>
         public struct Location
         {
+            /// <summary>
+            /// params ctor
+            /// </summary>
+            /// <param name="longitude"></param>
+            /// <param name="lattitude"></param>
             public Location(double longitude, double lattitude)
             {
                 this.longitude = longitude;

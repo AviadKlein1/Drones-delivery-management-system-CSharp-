@@ -4,6 +4,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// exeptions for BL - captured in ConsuleUI_BL
+        /// </summary>
         [Serializable]
         public class WrongIdException : Exception
         {
@@ -14,8 +17,5 @@ namespace IBL
                 base(message, innerException) => ID = id;
             public override string ToString() => base.ToString() + $", wrong id: {ID}";
         }
-
-
     }
-
 }

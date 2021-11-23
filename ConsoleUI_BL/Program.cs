@@ -1,4 +1,10 @@
-﻿using System;
+﻿//Aviad Klein 315552679
+//Tomer Peretz 314083080
+//C# Mini Project
+//Exercise 2
+//The program handles and and monitors the ongoing management and activity of a courier company using drones  
+
+using System;
 
 namespace ConsoleUI_BL
 {
@@ -16,6 +22,7 @@ namespace ConsoleUI_BL
             int choice1 = -1;
             try
             {
+                //allow user to manage and coordinate deliveries
                 while (choice1 != 0)
                 {
                     int choice2 = -1;
@@ -28,8 +35,8 @@ namespace ConsoleUI_BL
                     int.TryParse(Console.ReadLine(), out choice1);
                     switch (choice1)
                     {
+                        //add items
                         case 1:
-                            //add
                             while (choice2 != 0)
                             {
                                 Console.WriteLine(
@@ -41,20 +48,23 @@ namespace ConsoleUI_BL
                                 int.TryParse(Console.ReadLine(), out choice2);
                                 switch (choice2)
                                 {
+                                    //add station
                                     case 1:
                                         bl.addStation(myInputOutput.addStation());
-
                                         break;
+                                    //add drone
                                     case 2:
                                         bl.addDrone(myInputOutput.addDrone());
-
                                         break;
+                                    //add customer
                                     case 3:
                                         bl.addcustomer(myInputOutput.addCustomer());
                                         break;
+                                    //add parcel
                                     case 4:
                                         bl.addParcel(myInputOutput.addParcel());
                                         break;
+
                                     default:
                                         break;
                                 }
@@ -146,7 +156,6 @@ namespace ConsoleUI_BL
                             }
                                 break;
                                     case 3:
-                            //display
                             while (choice2 != 0)
                             {
                                 Console.WriteLine("To display a station enter 1" +
@@ -155,51 +164,54 @@ namespace ConsoleUI_BL
                                 "\nTo display a parcel enter 4" +
                                 "\nTo return to main menu enter 0\n");
                                 int.TryParse(Console.ReadLine(), out choice2);
-
                                 switch (choice2)
                                 {
-
+                                    //dusplay station
                                     case 1:
                                         Console.WriteLine("enter station id\n");
                                         int.TryParse(Console.ReadLine(), out id);
-                                        Console.WriteLine(bl.stationDisplay(id));
+                                        Console.WriteLine(bl.DisplayStation(id));
                                         break;
-
+                                    //display drone
                                     case 2:
                                         Console.WriteLine("enter drone id\n");
                                         int.TryParse(Console.ReadLine(), out id);
-                                        Console.WriteLine(bl.droneDisplay(id));
+                                        Console.WriteLine(bl.DisplayDrone(id));
                                         break;
-
+                                    //display customer
                                     case 3:
                                         Console.WriteLine("enter customer id\n");
                                         int.TryParse(Console.ReadLine(), out id);
-                                        Console.WriteLine(bl.customerDisplay(id));
+                                        Console.WriteLine(bl.DisplayCustomer(id));
                                         break;
-
+                                    //display parcel
                                     case 4:
                                         Console.WriteLine("enter parcel id\n");
                                         int.TryParse(Console.ReadLine(), out id);
                                         Console.WriteLine(bl.parcelDisplay(id));
                                         break;
+
+                                    default:
+                                        break;
                                 }
                             }
                             break;
+
+                        //display list of items
                         case 4:
-                            // lists-display
                             while (choice2 != 0)
                             {
-                                Console.WriteLine("To display all stations enter 1" +
-                                "\nTo display all drones enter 2" +
-                                "\nTo display all customers enter 3" +
-                                "\nTo display all parcels enter 4" +
-                                "\nTo display not associated parcels enter 5" +
-                                "\nTo display available to charge stations enter 6" +
+                                Console.WriteLine("To display list of stations enter 1" +
+                                "\nTo display list of drones enter 2" +
+                                "\nTo display list of customers enter 3" +
+                                "\nTo display list of parcels enter 4" +
+                                "\nTo display list of not associated parcels enter 5" +
+                                "\nTo display list of available to charge stations enter 6" +
                                 "\nTo return to main menu enter 0\n");
                                 int.TryParse(Console.ReadLine(), out choice2);
                                 switch (choice2)
                                 {
-
+                                    //display list of stations
                                     case 1:
                                         var stationsList = bl.DisplayStations();
                                         foreach (var element in stationsList)
@@ -207,7 +219,7 @@ namespace ConsoleUI_BL
                                             Console.WriteLine(element + "\n");
                                         }
                                         break;
-
+                                    //display list of drones
                                     case 2:
                                         var dronesList = bl.DisplayDrones();
                                         foreach (var element in dronesList)
@@ -215,7 +227,7 @@ namespace ConsoleUI_BL
                                             Console.WriteLine(element + "\n");
                                         }
                                         break;
-
+                                    //display list of customers
                                     case 3:
                                         var customerList = bl.DisplayCustomers();
                                         foreach (var element in customerList)
@@ -223,7 +235,7 @@ namespace ConsoleUI_BL
                                             Console.WriteLine(element + "\n");
                                         }
                                         break;
-
+                                    //display list of parcels
                                     case 4:
                                         var parcelsList = bl.DisplayParcels();
                                         foreach (var element in parcelsList)
@@ -231,17 +243,17 @@ namespace ConsoleUI_BL
                                             Console.WriteLine(element + "\n");
                                         }
                                         break;
-
+                                    //display list of not associated parcels
                                     case 5:
-                                        var notAssociatedParcelsList = bl.notAssociatedParcelsDisplay();
+                                        var notAssociatedParcelsList = bl.DisplayUnassociatedParcels();
                                         foreach (var element in notAssociatedParcelsList)
                                         {
                                             Console.WriteLine(element + "\n");
                                         }
                                         break;
-
+                                    //display list of available to charge stations
                                     case 6:
-                                        var avilableToChargeStations = bl.availableToChargeStattions();
+                                        var avilableToChargeStations = bl.DisplayAvailableStations();
                                         foreach (var element in avilableToChargeStations)
                                         {
                                             Console.WriteLine(element + "\n");
@@ -249,14 +261,16 @@ namespace ConsoleUI_BL
                                         break;
 
                                     default:
-
                                         break;
                                 }
                             }
                             break;
+
+                        //end
                         case 0:
                             Console.WriteLine("see you soon");
                             return;
+
                         default:
                             break;
                     }

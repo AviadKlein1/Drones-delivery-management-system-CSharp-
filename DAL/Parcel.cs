@@ -4,7 +4,9 @@ namespace IDAL
 {
     namespace DO
     {
-        //parcel's fields
+        /// <summary>
+        /// entity parcel - fields
+        /// </summary>
         public struct Parcel
         {
             public int id { get; set; }

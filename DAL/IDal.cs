@@ -25,8 +25,6 @@ namespace IDAL
         public double[] droneElectricityConsumption();
         public IDAL.DO.Location stationLocate(int StationId);
 
-
-
         //public bool thisDroneIsAssociated(int droneId);
         //public bool thereAreParcelsThatNotDeliverdYet();
         //public bool myParcelScheduledButNotPickedUp(int parcelId);

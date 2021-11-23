@@ -4,8 +4,15 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// display list of items
+        /// </summary>
         public partial class BL
         {
+            /// <summary>
+            /// display stations list
+            /// </summary>
+            /// <returns></returns> return list of stations
             public List<StationToList> DisplayStations()
             {
                 List<StationToList> tmp1 = new List<StationToList>();
@@ -19,14 +26,26 @@ namespace IBL
                     myStation.numOfOccupiedChargeSlots = numOfDronesThatChargeingInThatStation(element.id);
                     tmp1.Add(myStation);
                 }
-                if (tmp1 == null) System.Console.WriteLine("empty list\n");
+                //if empty list
+                if (tmp1 == null)
+                    System.Console.WriteLine("empty list\n");
                 return tmp1;
             }
+
+            /// <summary>
+            /// display drones list
+            /// </summary>
+            /// <returns></returns> reyurn list of drones
             public List<DroneToList> DisplayDrones()
             {
                 var v = dronesList;
                 return v;
             }
+
+            /// <summary>
+            /// display customers list
+            /// </summary>
+            /// <returns></returns> return list of customers
             public List<CustomerToList> DisplayCustomers()
             {
                 List<CustomerToList> tmp1 = new List<CustomerToList>();
@@ -42,6 +61,11 @@ namespace IBL
                 }
                 return tmp1;
             }
+
+            /// <summary>
+            /// display parcels list
+            /// </summary>
+            /// <returns></returns> return list of parcels
             public List<ParcelToList> DisplayParcels()
             {
                 List<ParcelToList> tmp1 = new List<ParcelToList>();
@@ -54,12 +78,15 @@ namespace IBL
                     myParcel.weight = element.weight;
                     myParcel.priority = element.priority;
                     var customersList = dal.getCustomers();
+                    //display customers (sender and reciever)
                     string senderName = null;
                     string reciverName = null;
                     foreach (var cElement in customersList)
                     {
-                        if (cElement.id == element.senderId) senderName = cElement.name;
-                        if (cElement.id == element.reciverId) reciverName = cElement.name;
+                        if (cElement.id == element.senderId)
+                            senderName = cElement.name;
+                        if (cElement.id == element.reciverId)
+                            reciverName = cElement.name;
                     }
                     myParcel.senderName = senderName;
                     myParcel.senderName = reciverName;
@@ -68,7 +95,12 @@ namespace IBL
                 }
                 return tmp1;
             }
-            public List<ParcelToList> notAssociatedParcelsDisplay()
+
+            /// <summary>
+            /// display unassociated parcels list
+            /// </summary>
+            /// <returns></returns> return list of parcels
+            public List<ParcelToList> DisplayUnassociatedParcels()
             {
                 List<ParcelToList> tmp1 = new List<ParcelToList>();
                 var v = dal.getParcels();
@@ -81,6 +113,7 @@ namespace IBL
                         myParcel.weight = element.weight;
                         myParcel.priority = element.priority;
                         var customersList = dal.getCustomers();
+                        //disp;ay customers (sender and reciever)
                         string senderName = null;
                         string reciverName = null;
                         foreach (var cElement in customersList)
@@ -96,7 +129,12 @@ namespace IBL
                 }
                 return tmp1;
             }
-            public List<StationToList> availableToChargeStattions()
+
+            /// <summary>
+            /// display available for charge stations list
+            /// </summary>
+            /// <returns></returns> return list of stations
+            public List<StationToList> DisplayAvailableStations()
             {
                 List<StationToList> tmp1 = new List<StationToList>();
                 List<IDAL.DO.Station> tmp2 = new List<IDAL.DO.Station>();

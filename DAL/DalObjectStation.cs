@@ -7,27 +7,31 @@ namespace IDAL
     {
         namespace DalObject
         {
+            /// <summary>
+            /// entity station
+            /// </summary>
             public partial class DalObject : IDal
             {
-
                 public DalObject()
                 {
                     IDAL.DO.DalObject.DataSource.Initialize();
-                    
                 }
+
                 /// <summary>
-                /// add to array
+                /// add to list
                 /// </summary>
                 public void addStation(Station myStation)
                 {
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.stations.Count; i++)
+                        //if already exist
                         if (IDAL.DO.DalObject.DataSource.stations[i].id == myStation.id)
                             throw new ExcistingIdException(myStation.id, $"station already exist: {myStation.id}");
                     //insert station to list
                     IDAL.DO.DalObject.DataSource.stations.Add(myStation);
                 }
+
                 /// <summary>
-                /// belong parcel to specific drone
+                /// associate parcel with specific drone
                 /// </summary>
                 public void paracelToDrone(int parcelId)
                 {
@@ -72,14 +76,8 @@ namespace IDAL
                     //}
                 }
 
-
-
-
-
-
-
                 /// <summary>
-                /// print stations details
+                /// return station by its id
                 /// </summary>
                 /// <param name="myId"></param>
                 public Station getStation(int myId)
@@ -88,6 +86,7 @@ namespace IDAL
                     Station temp = new Station();
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.stations.Count; i++)
                     {
+                        //search station
                         if (IDAL.DO.DalObject.DataSource.stations[i].id == myId)
                         {
                             isDouble = true;
@@ -98,11 +97,13 @@ namespace IDAL
                     {
                         return temp;
                     }
+                    //if not found
                     else
                         throw new WrongIdException(myId, $"wrong id: {myId}");
                 }
+
                 /// <summary>
-                /// print all stations
+                /// return all stations
                 /// </summary>
                 public IEnumerable<Station> getStations()
                 {
@@ -129,7 +130,7 @@ namespace IDAL
                     }
                 }
                 /// <summary>
-                /// print all available to charge stations
+                /// return all available to charge stations
                 /// </summary>
                 public IEnumerable<Station> getAvailableToChargeStations()
                 {
@@ -137,10 +138,17 @@ namespace IDAL
                     List<IDAL.DO.Station> temp = new List<IDAL.DO.Station>();
                     temp = IDAL.DO.DalObject.DataSource.stations;
                     for (int i = 0; i < size; i++)
+                        //if available for charge
                         if (IDAL.DO.DalObject.DataSource.stations[i].numOfAvailableChargeSlots > 0)
                             temp.Add(IDAL.DO.DalObject.DataSource.stations[i]);
                     return temp;
                 }
+
+                /// <summary>
+                /// return stations location by its id
+                /// </summary>
+                /// <param name="StationId"></param>
+                /// <returns></returns>
                 public IDAL.DO.Location stationLocate(int StationId)
                 {
                     Location temp = new Location();
@@ -172,15 +180,12 @@ namespace IDAL
                     }
                 }
 
-
-
-
-
-
-
-
-
-
+                /// <summary>
+                /// return the distance between two coordinates
+                /// </summary>
+                /// <param name="a"></param>
+                /// <param name="b"></param>
+                /// <returns></returns>
                 public int distance(Location a, Location b)
                 {
                     return (int)Math.Sqrt(Math.Pow((b.longitude - a.longitude), 2) -

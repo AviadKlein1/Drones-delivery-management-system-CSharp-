@@ -7,12 +7,15 @@ namespace IDAL
     {
         namespace DalObject
         {
+            /// <summary>
+            /// defines and initialize lists of items
+            /// </summary>
             public class DataSource
             {
                 //random static variable
                 private static Random rd = new Random();
 
-                //arrays for items
+                //lists for items
                 internal static List<IDAL.DO.Station> stations = new List<IDAL.DO.Station>();
                 internal static List<IDAL.DO.Drone> drones = new List<IDAL.DO.Drone>();
                 internal static List<IDAL.DO.Customer> customers = new List<IDAL.DO.Customer>();
@@ -26,17 +29,15 @@ namespace IDAL
                     public static double lightWeight = 30;
                     public static double mediumWeight = 50;
                     public static double heavyWeight = 75;
-
                     public static double DroneLoadRate = 25;
-
                 }
 
                 /// <summary>
-                /// randomly initializes first cells of arrays, 
-                /// promotes indexes of availabe cells in arrays.
+                /// randomly initializes first cells of list, 
                 /// </summary>
                 public static void Initialize()
                 {
+                    //stations
                     for (int i = 0; i < 2; i++)
                     {
                         IDAL.DO.Station myStation = new IDAL.DO.Station();

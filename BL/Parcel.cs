@@ -4,7 +4,9 @@ namespace IBL
 {
     namespace BO
     {
-        //parcel's fields
+        /// <summary>
+        /// entity parcel - fields, constructors and ToString function
+        /// </summary>
         public class Parcel
         {
             public int id { get; set; }
@@ -18,6 +20,9 @@ namespace IBL
             public DateTime pickedUp { get; set; }
             public DateTime delivered { get; set; }
 
+            /// <summary>
+            /// default constructor
+            /// </summary>
             public Parcel()
             {
                 sender = new CustomerInParcel();
@@ -30,6 +35,10 @@ namespace IBL
                 DroneInParcel = null;
             }
 
+            /// <summary>
+            /// copy constructor
+            /// </summary>
+            /// <param name="temp"></param>
             public Parcel(IDAL.DO.Parcel temp)
             {
                 id = temp.id;
@@ -51,6 +60,10 @@ namespace IBL
                     $"scheduled: {scheduled}\npicked up: {pickedUp}\ndelivered: {delivered}\n";
             }
         }
+
+        /// <summary>
+        /// entity parcel at costumer - fields, ctors and ToString function
+        /// </summary>
         public class ParcelAtCustomer
         {
             public int id { get; set; }
@@ -59,6 +72,9 @@ namespace IBL
             public IDAL.DO.MyEnums.ParcelStatus parcelStatus { get; set; }
             public CustomerInParcel theSecondSide { get; set; }
 
+            /// <summary>
+            /// default ctor
+            /// </summary>
             public ParcelAtCustomer()
             {
                 theSecondSide = new CustomerInParcel();

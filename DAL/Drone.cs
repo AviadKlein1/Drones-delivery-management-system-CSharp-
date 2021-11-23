@@ -2,7 +2,9 @@
 {
     namespace DO
     {
-        //item's fields
+        /// <summary>
+        /// entity drone - fields
+        /// </summary>
         public struct Drone
         {
             public int id { get; set; }
