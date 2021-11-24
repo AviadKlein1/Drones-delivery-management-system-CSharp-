@@ -86,7 +86,6 @@ namespace ConsoleUI_BL
                                 "\nTo return to main menu enter 0\n");
                                 int.TryParse(Console.ReadLine(), out choice2);
                                 int cin1;
-                                int cin2;
                                 string string1 = "";
                                 string string2 = "";
 
@@ -148,7 +147,7 @@ namespace ConsoleUI_BL
                                         int.TryParse(Console.ReadLine(), out id);
                                         Console.WriteLine("enter charge - time (in minutes) id:\n");
                                         int.TryParse(Console.ReadLine(), out cin1);
-                                        var flag5 = bl.releaseDroneFromCharge(id, cin1);
+                                        var flag5 = bl.ReleaseDroneFromCharge(id, cin1);
                                         if (flag5)
                                             Console.WriteLine("successfully updated\n");
                                         else
@@ -158,7 +157,7 @@ namespace ConsoleUI_BL
                                     case 6:
                                         Console.WriteLine("enter drone id:\n");
                                         int.TryParse(Console.ReadLine(), out id);
-                                        var flag6 = bl.sheduleParcelToDrone(id);
+                                        var flag6 = bl.SheduleParcelToDrone(id);
                                         if (flag6)
                                             Console.WriteLine("successfully updated\n");
                                         else
@@ -167,7 +166,7 @@ namespace ConsoleUI_BL
                                     case 7:
                                         Console.WriteLine("enter drone id:\n");
                                         int.TryParse(Console.ReadLine(), out id);
-                                        var flag7 = bl.pickUpParcelByDrone(id);
+                                        var flag7 = bl.PickUpParcelByDrone(id);
                                         if (flag7)
                                             Console.WriteLine("successfully updated\n");
                                         else
@@ -176,7 +175,7 @@ namespace ConsoleUI_BL
                                     case 8:
                                         Console.WriteLine("enter drone id:\n");
                                         int.TryParse(Console.ReadLine(), out id);
-                                        var flag8 = bl.sheduleParcelToDrone(id);
+                                        var flag8 = bl.DeliverParcelByDrone(id);
                                         if (flag8)
                                             Console.WriteLine("successfully updated\n");
                                         else

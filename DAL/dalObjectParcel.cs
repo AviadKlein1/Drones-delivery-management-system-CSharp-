@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System;
+
 
 namespace IDAL
 {
@@ -69,6 +71,34 @@ namespace IDAL
                     temp = IDAL.DO.DalObject.DataSource.parcels;
                     return temp;
                 }
+                public void PickUpParcelByDrone(int droneId, int parcelId)
+                {
+                    Parcel temp = new Parcel();
+                    for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
+                    {
+                        //search parcel
+                        if (IDAL.DO.DalObject.DataSource.parcels[i].id == parcelId)
+                        {
+                            temp = IDAL.DO.DalObject.DataSource.parcels[i];
+                            temp.pickedUp = DateTime.Now;
+                        }
+                    }
+                }
+                public void DeliverParcelByDrone(int droneId, int parcelId)
+                {
+                    Parcel temp = new Parcel();
+                    for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
+                    {
+                        //search parcel
+                        if (IDAL.DO.DalObject.DataSource.parcels[i].id == parcelId)
+                        {
+                            temp = IDAL.DO.DalObject.DataSource.parcels[i];
+                            temp.delivered = DateTime.Now;
+                        }
+                    }
+                }
+
+
                 /// <summary>
                 /// print all parcels which are not associated with a drone
                 /// </summary>

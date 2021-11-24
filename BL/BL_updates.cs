@@ -1,4 +1,6 @@
-﻿namespace IBL
+﻿using System;
+
+namespace IBL
 {
     namespace BO
     {
@@ -144,22 +146,139 @@
                         }
                         else // is available 
                         {
-                          
-                          
+                            //int newParcelId = suitableParcel(dronId);
+
+
+
                         }
                 }
                 return flag;
             }
             public bool PickUpParcelByDrone(int droneId)
             {
-
+                var flag = false;
+                var droneExistFlag = false;
+                var v = dronesList;
+                int idOfThisParcel = 0;
+                IDAL.DO.Location ourSenderLocation = new IDAL.DO.Location();
+                foreach (var item in v)
+                {
+                    if (item.id == droneId)
+                    {
+                        idOfThisParcel = item.deliveredParcelId;
+                        droneExistFlag = true;
+                    }
+                }
+                if( droneExistFlag == false)// exeption
+                {
+                    Console.WriteLine("not such drone\n");
+                    return false;
+                }
+                if (! ScheduledButNotPickedUp(idOfThisParcel))
+                {
+                    System.Console.WriteLine("this parcel is not in the right status\n");
+                }
+                var parcelsList = dal.getParcels();
+                foreach (var item in parcelsList)
+                {
+                    //find our parcel
+                    if(item.id == idOfThisParcel)
+                    {
+                        // our parcel belong to our drone
+                        if (item.droneId == droneId)
+                        {
+                            ourSenderLocation = SenderLocation(item.id);
+                            //update parcel
+                            dal.PickUpParcelByDrone(droneId, item.id);
+                            flag = true;
+                            //update drone
+                            DroneToList temp = new DroneToList();
+                            for (int i = 0; i < v.Count; i++)
+                            {
+                                DroneToList dItem = v[i];
+                                if (dItem.id == droneId)
+                                {
+                                    temp.id = dItem.id;
+                                    temp.model = dItem.model;
+                                    temp.location = new Location(ourSenderLocation);
+                                    temp.status = dItem.status;
+                                    temp.weight = dItem.weight;
+                                    temp.deliveredParcelId = item.id;
+                                    IDAL.DO.Location earlyDroneLocation = new IDAL.DO.Location(dItem.location.longitude, dItem.location.lattitude);
+                                    // update battery
+                                    temp.battery = (temp.battery - (int)BatteryRequirementForVoyage(droneId, dal.distance(earlyDroneLocation, ourSenderLocation)));
+                                    v[i] = temp;
+                                }
+                            }
+                        }
+                        else System.Console.WriteLine("not our parcel");
+                    }
+                }
+                return flag;
             }
             public bool DeliverParcelByDrone(int droneId)
             {
-
+                var flag = false;
+                var droneExistFlag = false;
+                var v = dronesList;
+                int idOfThisParcel = 0;
+                IDAL.DO.Location ourReciverLocation = new IDAL.DO.Location();
+                foreach (var item in v)
+                {
+                    if (item.id == droneId)
+                    {
+                        idOfThisParcel = item.deliveredParcelId;
+                        droneExistFlag = true;
+                    }
+                }
+                if(droneExistFlag == false) // exeption
+                {
+                    Console.WriteLine("not such drone\n");
+                    return false;
+                }
+                if ( ! PickedUpButNotDeliverd(idOfThisParcel))
+                {
+                    System.Console.WriteLine("this parcel is not in the right status\n");
+                }
+                var parcelsList = dal.getParcels();
+                foreach (var item in parcelsList)
+                {
+                    //find our parcel
+                    if (item.id == idOfThisParcel)
+                    {
+                        // our parcel belong to our drone
+                        if (item.droneId == droneId)
+                        {
+                            ourReciverLocation = ReciverLocation(item.id);
+                            //update parcel
+                            dal.DeliverParcelByDrone(droneId, item.id);
+                            flag = true;
+                            //update drone
+                            DroneToList temp = new DroneToList();
+                            for (int i = 0; i < v.Count; i++)
+                            {
+                                DroneToList dItem = v[i];
+                                if (dItem.id == droneId)
+                                {
+                                    temp.id = dItem.id;
+                                    temp.model = dItem.model;
+                                    temp.location = new Location(ourReciverLocation);
+                                    temp.status = MyEnums.DroneStatus.available;
+                                    temp.weight = dItem.weight;
+                                    temp.deliveredParcelId = item.id;
+                                    IDAL.DO.Location earlyDroneLocation = new IDAL.DO.Location(dItem.location.longitude, dItem.location.lattitude);
+                                    // update battery
+                                    temp.battery = (temp.battery - (int)BatteryRequirementForVoyage(droneId, dal.distance(earlyDroneLocation, ourReciverLocation)));
+                                    v[i] = temp;
+                                }
+                            }
+                        }
+                        else System.Console.WriteLine("not our parcel");
+                    }
+                }
+                return flag;
 
             }
-
         }
     }
 }

@@ -158,6 +158,28 @@ namespace IBL
                 return tempLocation;
             }
 
+            public IDAL.DO.Location ReciverLocation(int parcelId)
+            {
+                IDAL.DO.Location tempLocation = new IDAL.DO.Location();
+                var dalParcelsList = dal.getParcels();
+                //search parcel
+                foreach (var pElement in dalParcelsList)
+                {
+                    if (pElement.id == parcelId)
+                    {
+                        var customersList = dal.getCustomers();
+                        //search parcel's reciver
+                        foreach (var cElement in customersList)
+                        {
+                            if (cElement.id == pElement.reciverId)
+                                tempLocation = cElement.location;
+                        }
+                    }
+                }
+                return tempLocation;
+
+            }
+
             /// <summary>
             /// finds the nearest to sender station (by parcel id)
             /// </summary>
@@ -403,6 +425,13 @@ namespace IBL
                 }
                 return tempStation;
             }
+            //public int suitableParcel(int dronId)
+            //{
+
+
+
+
+            //}
         }
     }
 }
