@@ -2,7 +2,7 @@
 //Tomer Peretz 314083080
 //C# Mini Project
 //Exercise 2
-//The program handles and and monitors the ongoing management and activity of a courier company using drones  
+//The program handles and monitors the ongoing management and activity of a courier company using drones  
 
 using System;
 
@@ -141,17 +141,47 @@ namespace ConsoleUI_BL
                                             Console.WriteLine("successfully updated\n");
                                         else
                                             Console.WriteLine("not successfully updated\n");
-                                        
                                         break;
 
-                                        //            case 5:
-                                        //                Console.WriteLine("enter drone id\n");
-                                        //                int.TryParse(Console.ReadLine(), out id);
-                                        //                Console.WriteLine("enter station id\n");
-                                        //                int.TryParse(Console.ReadLine(), out sid);
-                                        //                dal.endCharge(id, sid);
-                                        //                Console.WriteLine("successfully updated\n");
-                                        //                break;
+                                    case 5:
+                                        Console.WriteLine("enter drone id:\n");
+                                        int.TryParse(Console.ReadLine(), out id);
+                                        Console.WriteLine("enter charge - time (in minutes) id:\n");
+                                        int.TryParse(Console.ReadLine(), out cin1);
+                                        var flag5 = bl.releaseDroneFromCharge(id, cin1);
+                                        if (flag5)
+                                            Console.WriteLine("successfully updated\n");
+                                        else
+                                            Console.WriteLine("not successfully updated\n");
+                                        break;
+
+                                    case 6:
+                                        Console.WriteLine("enter drone id:\n");
+                                        int.TryParse(Console.ReadLine(), out id);
+                                        var flag6 = bl.sheduleParcelToDrone(id);
+                                        if (flag6)
+                                            Console.WriteLine("successfully updated\n");
+                                        else
+                                            Console.WriteLine("not successfully updated\n");
+                                        break;
+                                    case 7:
+                                        Console.WriteLine("enter drone id:\n");
+                                        int.TryParse(Console.ReadLine(), out id);
+                                        var flag7 = bl.pickUpParcelByDrone(id);
+                                        if (flag7)
+                                            Console.WriteLine("successfully updated\n");
+                                        else
+                                            Console.WriteLine("not successfully updated\n");
+                                        break;
+                                    case 8:
+                                        Console.WriteLine("enter drone id:\n");
+                                        int.TryParse(Console.ReadLine(), out id);
+                                        var flag8 = bl.sheduleParcelToDrone(id);
+                                        if (flag8)
+                                            Console.WriteLine("successfully updated\n");
+                                        else
+                                            Console.WriteLine("not successfully updated\n");
+                                        break;
                                 }
                             }
                                 break;

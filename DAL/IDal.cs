@@ -37,6 +37,7 @@ namespace IDAL
         public void updateDrone(int droneId, string newModel);
         public void updateCustomer(int customerId, string newName, string newPhone);
         public void decriseChargeSlot(int stationId);
+        public void increaseChargeSlot(int stationId);
 
 
 

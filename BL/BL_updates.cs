@@ -16,8 +16,6 @@
                         flag = true;
                         break;
                     }
-                    //else 
-                    //    throw new WrongIdException(droneId, $"wrong id: {droneId}");
                 }
                 foreach (var dItem in dronesList)
                 {
@@ -44,7 +42,6 @@
                 }
                 return flag;
             }
-            
             public bool updateCustomer(int customerId, string newName, string newPhone)
             {
                 var flag = false;
@@ -100,6 +97,69 @@
                 }
                 return flag;
             }
+            public bool ReleaseDroneFromCharge(int droneId, int chargeTime)
+            {
+                var flag = false;
+                var v = dronesList;
+                foreach (var item in v)
+                {
+                    if (item.id == droneId)
+                        if (item.status != MyEnums.DroneStatus.maintenance)
+                        {
+                            System.Console.WriteLine("not maintenance drone\n"); // exeption
+                            break;
+                        }
+                        else // is maintenance 
+                        {
+                            IDAL.DO.Location itemLocation = new IDAL.DO.Location(item.location.longitude, item.location.lattitude);
+                            var tempStation = NearestStation(itemLocation);
+                            dal.increaseChargeSlot(tempStation.id);
+
+                            foreach (var dItem in dronesList)
+                            {
+                                if (dItem.id == droneId)
+                                {
+                                    dItem.status = MyEnums.DroneStatus.available;
+                                    //battery
+                                    int newBattery = dItem.battery += (int)(DroneLoadRate * chargeTime);
+                                    dItem.battery = (newBattery > 100 ? 100 : newBattery);
+                                    flag = true;
+                                }
+                            }
+                        }
+                }
+                return flag;
+            }
+            public bool SheduleParcelToDrone(int droneId)
+            {
+                var flag = false;
+                var v = dronesList;
+                foreach (var item in v)
+                {
+                    if (item.id == droneId)
+                        if (item.status != MyEnums.DroneStatus.available)
+                        {
+                            System.Console.WriteLine("not available drone\n");
+                            break;
+                        }
+                        else // is available 
+                        {
+                          
+                          
+                        }
+                }
+                return flag;
+            }
+            public bool PickUpParcelByDrone(int droneId)
+            {
+
+            }
+            public bool DeliverParcelByDrone(int droneId)
+            {
+
+
+            }
+
         }
     }
 }
