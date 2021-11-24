@@ -23,23 +23,23 @@ namespace IBL
             /// <param name="temp"></param>
             public Station(IDAL.DO.Station temp)
             {
-                id = temp.id;
-                name = temp.name;
-                numOfAvailableChargeSlots = temp.numOfAvailableChargeSlots;
-                location = new Location(temp.location);
+                Id = temp.Id;
+                Name = temp.Name;
+                NumOfAvailableChargeSlots = temp.NumOfAvailableChargeSlots;
+                Location = new Location(temp.Location);
             }
-            public int id { get; set; }
-            public string name { get; set; }
-            public int numOfAvailableChargeSlots { get; set; }
-            public int numOfChargeSlots { get; set; }
-            public List<DroneInCharge> dronesInCharge { get; set; }
-            public Location location { get; set; }
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public int NumOfAvailableChargeSlots { get; set; }
+            public int NumOfChargeSlots { get; set; }
+            public List<DroneInCharge> DronesInCharge { get; set; }
+            public Location Location { get; set; }
             public override string ToString()
             {
-                var listOut = dronesInCharge == null ? "" : string.Join(", ", dronesInCharge);
-                return $"ID: { id }\nName: { name }\nLongitude: { location.longitude }\nLattitude: " +
-                    $"{ location.lattitude }\n" +
-                    $"Available Charge Slots: {numOfAvailableChargeSlots}\n" +
+                var listOut = DronesInCharge == null ? "" : string.Join(", ", DronesInCharge);
+                return $"ID: { Id }\nName: { Name }\nLongitude: { Location.longitude }\nLattitude: " +
+                    $"{ Location.lattitude }\n" +
+                    $"Available Charge Slots: {NumOfAvailableChargeSlots}\n" +
                     $"\nDrones in charge: {listOut}\n";
             }
         }
@@ -49,14 +49,14 @@ namespace IBL
         /// </summary>
         public class StationToList
         {
-            public int id { get; set; }
-            public string name { get; set; }
-            public int numOfAvailableChargeSlots { get; set; }
-            public int numOfOccupiedChargeSlots { get; set; }
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public int NumOfAvailableChargeSlots { get; set; }
+            public int NumOfOccupiedChargeSlots { get; set; }
             public override string ToString()
             {
-                return $"ID: {id}\nName: {name}\nAvailable Charge Slots: {numOfAvailableChargeSlots}\n" +
-                    $"Occupied Charge Slots: {numOfOccupiedChargeSlots}\n";
+                return $"ID: {Id}\nName: {Name}\nAvailable Charge Slots: {NumOfAvailableChargeSlots}\n" +
+                    $"Occupied Charge Slots: {NumOfOccupiedChargeSlots}\n";
             }
         }
     }

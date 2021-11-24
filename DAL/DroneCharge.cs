@@ -7,11 +7,11 @@
         /// </summary>
         public struct DroneCharge
         {
-            public int droneId { get; set; }
-            public int stationId { get; set; }
+            public int DroneId { get; set; }
+            public int StationId { get; set; }
             public override string ToString()
             {
-                return "Drone ID: " + droneId + "\nsStation ID: " + stationId + "\n";
+                return "Drone ID: " + DroneId + "\nsStation ID: " + StationId + "\n";
             }
         }
     }

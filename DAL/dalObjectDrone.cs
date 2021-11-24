@@ -14,12 +14,12 @@ namespace IDAL
                 /// <summary>
                 /// add drone to list of drones
                 /// </summary>
-                public void addDrone(Drone myDrone)
+                public void AddDrone(Drone myDrone)
                 {
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.drones.Count; i++)
                         //if drone already exist
-                        if (IDAL.DO.DalObject.DataSource.drones[i].id == myDrone.id)
-                            throw new ExcistingIdException(myDrone.id, $"drone already exist: {myDrone.id}");
+                        if (IDAL.DO.DalObject.DataSource.drones[i].Id == myDrone.Id)
+                            throw new ExcistingIdException(myDrone.Id, $"drone already exist: {myDrone.Id}");
                     //insert drone to list
                     IDAL.DO.DalObject.DataSource.drones.Add(myDrone);
                 }
@@ -29,13 +29,13 @@ namespace IDAL
                 /// </summary>
                 /// <param name="myId"></param>
                 /// <returns></returns>
-                public IDAL.DO.Drone getDrone(int myId)
+                public IDAL.DO.Drone GetDrone(int myId)
                 {
                     bool isDouble = false;
                     Drone temp = new Drone();
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.drones.Count; i++)
                     {
-                        if (IDAL.DO.DalObject.DataSource.drones[i].id == myId)
+                        if (IDAL.DO.DalObject.DataSource.drones[i].Id == myId)
                         {
                             isDouble = true;
                             temp = IDAL.DO.DalObject.DataSource.drones[i];
@@ -51,22 +51,22 @@ namespace IDAL
                 /// <summary>
                 /// print all drones
                 /// </summary>
-                public IEnumerable<Drone> getDrones()
+                public IEnumerable<Drone> GetDrones()
                 {
                     List<IDAL.DO.Drone> temp = new List<IDAL.DO.Drone>();
                     temp = IDAL.DO.DalObject.DataSource.drones;
                     return temp;
                 }
-                public void updateDrone(int droneId, string newModel)
+                public void UpdateDrone(int droneId, string newModel)
                 {
                     Drone temp = new Drone();
                     for (int i = 0; i < DataSource.drones.Count; i++)
                     {
                         Drone item = IDAL.DO.DalObject.DataSource.drones[i];
-                        if (item.id == droneId)
+                        if (item.Id == droneId)
                         {
-                            temp.id = droneId;
-                            temp.model = newModel;
+                            temp.Id = droneId;
+                            temp.Model = newModel;
                             temp.weight = item.weight;
                             IDAL.DO.DalObject.DataSource.drones[i] = temp;
                         }
@@ -139,7 +139,7 @@ namespace IDAL
                 /// returns an array contains electricity consumption data
                 /// </summary>
                 /// <returns></returns> array of double nums (battery % per distance)
-                public double[] droneElectricityConsumption()
+                public double[] DroneElectricityConsumption()
                 {
                     double[] droneElectricityConsumption = new double[5];
                     droneElectricityConsumption[0] = IDAL.DO.DalObject.DataSource.Config.free;

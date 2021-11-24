@@ -16,7 +16,7 @@ namespace IBL
                 IDAL.DO.Station temp = new IDAL.DO.Station();
                 try
                 {
-                    temp = dal.getStation(stationId);
+                    temp = dal.GetStation(stationId);
                 }
                 catch (IDAL.DO.WrongIdException ex)
                 {
@@ -28,7 +28,7 @@ namespace IBL
                 var dronesInCharge = new List<DroneInCharge>();
                 foreach (var element in dronesList)
                 {
-                    if (element.status == MyEnums.DroneStatus.maintenance && element.location == retTemp.location)
+                    if (element.status == MyEnums.DroneStatus.maintenance && element.location == retTemp.Location)
                     {
                         DroneInCharge droneTemp = new DroneInCharge();
                         droneTemp.id = element.id;
@@ -36,7 +36,7 @@ namespace IBL
                         dronesInCharge.Add(droneTemp);
                     }
                 }
-                retTemp.dronesInCharge = dronesInCharge;
+                retTemp.DronesInCharge = dronesInCharge;
                 return retTemp;
             }
 
@@ -70,7 +70,7 @@ namespace IBL
                 IDAL.DO.Customer temp = new IDAL.DO.Customer();
                 try
                 {
-                    temp = dal.getCustomer(customerId);
+                    temp = dal.GetCustomer(customerId);
                 }
                 catch (IDAL.DO.WrongIdException ex)
                 {
@@ -79,48 +79,50 @@ namespace IBL
 
                 Customer retTemp = new Customer(temp);
                 // maybe duiplay parcels at this customer? 
-                var parcelsList = dal.getParcels();
+                var parcelsList = dal.GetParcels();
                 foreach (var item in parcelsList)
                 {
                     ParcelAtCustomer myParcel = new ParcelAtCustomer();
                     DateTime empty = new DateTime();
-                    if (item.senderId == retTemp.id)
+                    if (item.SenderId == retTemp.id)
                     {
-                        myParcel.id = item.id;
-                        myParcel.weight = item.weight;
-                        myParcel.priority = item.priority;
+                        myParcel.Id = item.Id;
+                        myParcel.Weight = item.Weight;
+                        myParcel.Priority = item.Priority;
 
-                        if (item.requested != empty && item.scheduled == empty) myParcel.parcelStatus = IDAL.DO.MyEnums.ParcelStatus.requested;
-                        if (item.scheduled != empty && item.pickedUp == empty) myParcel.parcelStatus = IDAL.DO.MyEnums.ParcelStatus.scheduled;
-                        if (item.pickedUp != empty && item.delivered == empty) myParcel.parcelStatus = IDAL.DO.MyEnums.ParcelStatus.pickedUp;
-                        if (item.delivered != empty) myParcel.parcelStatus = IDAL.DO.MyEnums.ParcelStatus.delivered;
+                        if (item.Requested != empty && item.Scheduled == empty) myParcel.ParcelStatus = IDAL.DO.MyEnums.ParcelStatus.requested;
+                        if (item.Scheduled != empty && item.PickedUp == empty) myParcel.ParcelStatus = IDAL.DO.MyEnums.ParcelStatus.scheduled;
+                        if (item.PickedUp != empty && item.Delivered == empty) myParcel.ParcelStatus = IDAL.DO.MyEnums.ParcelStatus.pickedUp;
+                        if (item.Delivered != empty) myParcel.ParcelStatus = IDAL.DO.MyEnums.ParcelStatus.delivered;
                        
-                        myParcel.theSecondSide = TheOtherSide(myParcel.id, retTemp.id);
+                        myParcel.TheSecondSide = TheOtherSide(myParcel.Id, retTemp.id);
                         retTemp.parcelsSent.Add(myParcel);
                     }
-                    if (item.reciverId == retTemp.id)
+                    if (item.ReciverId == retTemp.id)
                     {
-                        myParcel.id = item.id;
-                        myParcel.weight = item.weight;
-                        myParcel.priority = item.priority;
+                        myParcel.Id = item.Id;
+                        myParcel.Weight = item.Weight;
+                        myParcel.Priority = item.Priority;
 
-                        if (item.requested != empty && item.scheduled == empty) myParcel.parcelStatus = IDAL.DO.MyEnums.ParcelStatus.requested;
-                        if (item.scheduled != empty && item.pickedUp == empty) myParcel.parcelStatus = IDAL.DO.MyEnums.ParcelStatus.scheduled;
-                        if (item.pickedUp != empty && item.delivered == empty) myParcel.parcelStatus = IDAL.DO.MyEnums.ParcelStatus.pickedUp;
-                        if (item.delivered != empty) myParcel.parcelStatus = IDAL.DO.MyEnums.ParcelStatus.delivered;
+                        if (item.Requested != empty && item.Scheduled == empty) myParcel.ParcelStatus = IDAL.DO.MyEnums.ParcelStatus.requested;
+                        if (item.Scheduled != empty && item.PickedUp == empty) myParcel.ParcelStatus = IDAL.DO.MyEnums.ParcelStatus.scheduled;
+                        if (item.PickedUp != empty && item.Delivered == empty) myParcel.ParcelStatus = IDAL.DO.MyEnums.ParcelStatus.pickedUp;
+                        if (item.Delivered != empty) myParcel.ParcelStatus = IDAL.DO.MyEnums.ParcelStatus.delivered;
 
-                        myParcel.theSecondSide = TheOtherSide(myParcel.id, retTemp.id);
+                        myParcel.TheSecondSide = TheOtherSide(myParcel.Id, retTemp.id);
                         retTemp.parcelsRecieved.Add(myParcel);
                     }
                 }
                 return retTemp;
             }
-            public Parcel parcelDisplay(int parcelId)
+
+            //display parcel
+            public Parcel DisplayParcel(int parcelId)
             {
                 IDAL.DO.Parcel temp = new IDAL.DO.Parcel();
                 try
                 {
-                    temp = dal.getParcel(parcelId);
+                    temp = dal.GetParcel(parcelId);
                 }
                 catch (IDAL.DO.WrongIdException ex)
                 {

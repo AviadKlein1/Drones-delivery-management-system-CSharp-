@@ -188,7 +188,7 @@ namespace ConsoleUI_BL
                                     case 4:
                                         Console.WriteLine("enter parcel id\n");
                                         int.TryParse(Console.ReadLine(), out id);
-                                        Console.WriteLine(bl.parcelDisplay(id));
+                                        Console.WriteLine(bl.DisplayParcel(id));
                                         break;
 
                                     default:

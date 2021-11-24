@@ -19,28 +19,28 @@ namespace ConsoleUI_BL
             int id;
             Console.WriteLine("enter id");
             int.TryParse(Console.ReadLine(), out id);
-            myStation.id = id;
+            myStation.Id = id;
 
             //name
             Console.WriteLine("enter name");
-            myStation.name = (Console.ReadLine());
+            myStation.Name = (Console.ReadLine());
 
             //location - longitude and lattitude
             double locat;
             Console.WriteLine("enter longitude");
             double.TryParse(Console.ReadLine(), out locat);
-            myStation.location = new IBL.BO.Location(0, locat);
+            myStation.Location = new IBL.BO.Location(0, locat);
             Console.WriteLine("enter lattitude");
             double.TryParse(Console.ReadLine(), out locat);
-            myStation.location.lattitude = locat;
+            myStation.Location.lattitude = locat;
 
             //number of charge slots
             int numOfChargeSlots;
             Console.WriteLine("enter number of charge slots");
             int.TryParse(Console.ReadLine(), out numOfChargeSlots);
-            myStation.numOfAvailableChargeSlots = numOfChargeSlots;
-            myStation.numOfChargeSlots = numOfChargeSlots;
-            myStation.dronesInCharge = new List<IBL.BO.DroneInCharge>();
+            myStation.NumOfAvailableChargeSlots = numOfChargeSlots;
+            myStation.NumOfChargeSlots = numOfChargeSlots;
+            myStation.DronesInCharge = new List<IBL.BO.DroneInCharge>();
 
             return myStation;
         }
@@ -116,28 +116,28 @@ namespace ConsoleUI_BL
             int senderId;
             Console.WriteLine("enter sender id");
             int.TryParse(Console.ReadLine(), out senderId);
-            myParcel.sender.id = senderId;
+            myParcel.Sender.id = senderId;
 
             //reciever id
             int targetId;
             Console.WriteLine("enter reciever id");
             int.TryParse(Console.ReadLine(), out targetId);
-            myParcel.reciever.id = targetId;
+            myParcel.Reciever.id = targetId;
 
             //parcel weight
             int choice;
             Console.WriteLine("enter weight (light = 1, medium = 2, heavy = 3)");
             int.TryParse(Console.ReadLine(), out choice);
-            if (choice == 1) myParcel.weight = IDAL.DO.MyEnums.WeightCategory.light;
-            if (choice == 2) myParcel.weight = IDAL.DO.MyEnums.WeightCategory.medium;
-            if (choice == 3) myParcel.weight = IDAL.DO.MyEnums.WeightCategory.heavy;
+            if (choice == 1) myParcel.Weight = IDAL.DO.MyEnums.WeightCategory.light;
+            if (choice == 2) myParcel.Weight = IDAL.DO.MyEnums.WeightCategory.medium;
+            if (choice == 3) myParcel.Weight = IDAL.DO.MyEnums.WeightCategory.heavy;
 
             //priority
             Console.WriteLine("enter priority (regular = 1, quickly = 2, ergent = 3)");
             int.TryParse(Console.ReadLine(), out choice);
-            if (choice == 1) myParcel.priority = IDAL.DO.MyEnums.PriorityLevel.regular;
-            if (choice == 2) myParcel.priority = IDAL.DO.MyEnums.PriorityLevel.quickly;
-            if (choice == 3) myParcel.priority = IDAL.DO.MyEnums.PriorityLevel.ergent;
+            if (choice == 1) myParcel.Priority = IDAL.DO.MyEnums.PriorityLevel.regular;
+            if (choice == 2) myParcel.Priority = IDAL.DO.MyEnums.PriorityLevel.quickly;
+            if (choice == 3) myParcel.Priority = IDAL.DO.MyEnums.PriorityLevel.ergent;
             
             return myParcel;
         }

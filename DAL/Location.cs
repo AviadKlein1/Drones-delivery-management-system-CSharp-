@@ -14,16 +14,16 @@
             /// <param name="lattitude"></param>
             public Location(double longitude, double lattitude)
             {
-                this.longitude = longitude;
-                this.lattitude = lattitude;
+                this.Longitude = longitude;
+                this.Lattitude = lattitude;
             }
 
-            public double longitude { get; set; }
-            public double lattitude { get; set; }
+            public double Longitude { get; set; }
+            public double Lattitude { get; set; }
 
             public override string ToString()
             {
-                return "longitude: " + longitude + "lattitude: " + lattitude + "\n";
+                return "longitude: " + Longitude + "lattitude: " + Lattitude + "\n";
             }
         }
     }

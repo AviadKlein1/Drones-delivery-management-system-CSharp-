@@ -9,16 +9,16 @@ namespace IDAL
         /// </summary>
         public struct Parcel
         {
-            public int id { get; set; }
-            public int senderId { get; set; }
-            public int reciverId { get; set; }
-            public int droneId { get; set; }
-            public IDAL.DO.MyEnums.WeightCategory weight { get; set; }
-            public IDAL.DO.MyEnums.PriorityLevel priority { get; set; }
-            public DateTime requested { get; set; }
-            public DateTime scheduled { get; set; }
-            public DateTime pickedUp { get; set; }
-            public DateTime delivered { get; set; }
+            public int Id { get; set; }
+            public int SenderId { get; set; }
+            public int ReciverId { get; set; }
+            public int DroneId { get; set; }
+            public IDAL.DO.MyEnums.WeightCategory Weight { get; set; }
+            public IDAL.DO.MyEnums.PriorityLevel Priority { get; set; }
+            public DateTime Requested { get; set; }
+            public DateTime Scheduled { get; set; }
+            public DateTime PickedUp { get; set; }
+            public DateTime Delivered { get; set; }
         }
     }
 }

@@ -14,11 +14,11 @@ namespace IBL
             /// returns boollean expression
             public bool IsAnyUnassociatedParcel()
             {
-                var dalParcelsList = dal.getParcels();
+                var dalParcelsList = dal.GetParcels();
                 foreach(var element in dalParcelsList)
                 {
                     DateTime emptyDateTime = new DateTime();
-                    if (element.delivered == emptyDateTime)
+                    if (element.Delivered == emptyDateTime)
                         return true;
                 }
                 return false;
@@ -29,12 +29,12 @@ namespace IBL
             /// </summary>
             /// <param name="droneId"></param>
             /// <returns></returns>
-            public bool thisDroneIsAssociated(int droneId)
+            public bool IsAssociatedDrone(int droneId)
             {
-                var dalParcelsList = dal.getParcels();
+                var dalParcelsList = dal.GetParcels();
                 foreach(var element in dalParcelsList)
                 {
-                    if(element.droneId == droneId)
+                    if(element.DroneId == droneId)
                        return true;
                 }
                 return false;
@@ -47,11 +47,11 @@ namespace IBL
             /// returns parcel id
             public int AssociatedParcelId(int droneId)
             {
-                var dalParcelsList = dal.getParcels();
+                var dalParcelsList = dal.GetParcels();
                 foreach(var element in dalParcelsList)
                 {
-                    if (element.droneId == droneId) 
-                        return element.id;
+                    if (element.DroneId == droneId) 
+                        return element.Id;
                 }
                 return 0;
             }
@@ -64,24 +64,24 @@ namespace IBL
             /// returns a number between 1 and 100
             public double BatteryRequirementForVoyage(int myDroneId, double distance)
             {
-                var dalDronesList = dal.getDrones();
+                var dalDronesList = dal.GetDrones();
                 foreach(var element in dalDronesList)
                 {
                     //search drone
-                    if(element.id == myDroneId)
+                    if(element.Id == myDroneId)
                     {
-                        var dalParcelsList = dal.getParcels();
+                        var dalParcelsList = dal.GetParcels();
                         //search parcel
                         foreach(var Pelement in dalParcelsList)
                         {
-                            if (Pelement.droneId == element.id)
+                            if (Pelement.DroneId == element.Id)
                             {
                                 //calculate requirement
-                                if(Pelement.weight == IDAL.DO.MyEnums.WeightCategory.light)
+                                if(Pelement.Weight == IDAL.DO.MyEnums.WeightCategory.light)
                                     return lightWeight * distance;
-                                if(Pelement.weight == IDAL.DO.MyEnums.WeightCategory.medium)
+                                if(Pelement.Weight == IDAL.DO.MyEnums.WeightCategory.medium)
                                     return mediumWeight * distance;
-                                if(Pelement.weight == IDAL.DO.MyEnums.WeightCategory.heavy)
+                                if(Pelement.Weight == IDAL.DO.MyEnums.WeightCategory.heavy)
                                         return heavyWeight * distance;
                             }
                         }
@@ -97,14 +97,14 @@ namespace IBL
             ///  returns boolean type
             public bool ScheduledButNotPickedUp(int parcelId)
             {
-                var dalParcelsList = dal.getParcels();
+                var dalParcelsList = dal.GetParcels();
                 //search parcel
                 foreach(var element in dalParcelsList)
                 {
-                    if(element.id == parcelId)
+                    if(element.Id == parcelId)
                     {
                         DateTime emptyDateTime = new DateTime();
-                        if(element.pickedUp == emptyDateTime && element.scheduled != emptyDateTime) 
+                        if(element.PickedUp == emptyDateTime && element.Scheduled != emptyDateTime) 
                            return true;
                     }
                 }
@@ -118,14 +118,14 @@ namespace IBL
             /// returns boolean type
             public bool PickedUpButNotDeliverd(int parcelId)
             {
-                var dalParcelsList = dal.getParcels();
+                var dalParcelsList = dal.GetParcels();
                 //search parcel
                 foreach(var element in dalParcelsList)
                 {
-                    if(element.id == parcelId)
+                    if(element.Id == parcelId)
                     {
                         DateTime emptyDateTime = new DateTime();
-                        if(element.delivered == emptyDateTime && element.pickedUp != emptyDateTime)
+                        if(element.Delivered == emptyDateTime && element.PickedUp != emptyDateTime)
                            return true;
                     }
                 }
@@ -140,18 +140,18 @@ namespace IBL
             public IDAL.DO.Location SenderLocation(int parcelId)
             {
                 IDAL.DO.Location tempLocation = new IDAL.DO.Location();
-                var dalParcelsList = dal.getParcels();
+                var dalParcelsList = dal.GetParcels();
                 //search parcel
                 foreach(var pElement in dalParcelsList)
                 {
-                    if(pElement.id == parcelId)
+                    if(pElement.Id == parcelId)
                     {
-                        var customersList = dal.getCustomers();
+                        var customersList = dal.GetCustomers();
                         //search parcel's sender
                         foreach(var cElement in customersList)
                         {
-                            if(cElement.id == pElement.senderId)
-                                tempLocation = cElement.location;
+                            if(cElement.Id == pElement.SenderId)
+                                tempLocation = cElement.Location;
                         }
                     }
                 }
@@ -166,18 +166,18 @@ namespace IBL
             public IDAL.DO.Station NearestToSenderStation(int parcelId)
             {
                 IDAL.DO.Station tempStation = new IDAL.DO.Station();
-                var dalParcelsList = dal.getParcels();
+                var dalParcelsList = dal.GetParcels();
                 //search parcel
                 foreach(var pElement in dalParcelsList)
                 {
-                    if(pElement.id == parcelId)
+                    if(pElement.Id == parcelId)
                     {
-                        var customersList = dal.getCustomers();
+                        var customersList = dal.GetCustomers();
                         //search sender of parcel
                         foreach(var cElement in customersList)
                         {
-                            if(cElement.id == pElement.senderId)
-                                tempStation = NearestStation(cElement.location);
+                            if(cElement.Id == pElement.SenderId)
+                                tempStation = NearestStation(cElement.Location);
                         }
                     }
                 }
@@ -192,18 +192,18 @@ namespace IBL
             public IDAL.DO.Station NearestToSenderChargeSlot(int parcelId)
             {
                 IDAL.DO.Station tempStation = new IDAL.DO.Station();
-                var dalParcelsList = dal.getParcels();
+                var dalParcelsList = dal.GetParcels();
                 //search parcel
                 foreach(var pElement in dalParcelsList)
                 {
-                    if(pElement.id == parcelId)
+                    if(pElement.Id == parcelId)
                     {
-                        var customersList = dal.getCustomers();
+                        var customersList = dal.GetCustomers();
                         //search sender of parcel
                         foreach(var cElement in customersList)
                         {
-                            if(cElement.id == pElement.senderId)
-                                tempStation = NearestChargeSlot(cElement.location);
+                            if(cElement.Id == pElement.SenderId)
+                                tempStation = NearestChargeSlot(cElement.Location);
                         }
                     }
                 }
@@ -218,11 +218,11 @@ namespace IBL
             public IDAL.DO.Station NearestStation(IDAL.DO.Location locate)
             {
                 IDAL.DO.Station tempStation = new IDAL.DO.Station();
-                var stationList = dal.getStations();
+                var stationList = dal.GetStations();
                 double min = 99999999999;
                 foreach(var element in stationList)
                 {
-                    var dis = dal.distance(locate, element.location);
+                    var dis = dal.Distance(locate, element.Location);
                     //if distance is smaller, update min distance
                     if(dis < min)
                     {
@@ -241,13 +241,13 @@ namespace IBL
             public IDAL.DO.Station NearestChargeSlot(IDAL.DO.Location l)
             {
                 IDAL.DO.Station tempStation = new IDAL.DO.Station();
-                var stationList = dal.getStations();
+                var stationList = dal.GetStations();
                 double min = 99999999999;
                 foreach(var element in stationList)
                 {
-                    var dis = dal.distance(l, element.location);
+                    var dis = dal.Distance(l, element.Location);
                     //if distance is smaller, update min distance
-                    if(dis < min && element.numOfAvailableChargeSlots > 0)
+                    if(dis < min && element.NumOfAvailableChargeSlots > 0)
                     {
                         min = dis;
                         tempStation = element;
@@ -264,22 +264,64 @@ namespace IBL
             {
                 List<IDAL.DO.Customer> temp = new List<IDAL.DO.Customer>();
                 DateTime emptyDateTime = new DateTime();
-                var dalParcelsList = dal.getParcels();
+                var dalParcelsList = dal.GetParcels();
                 //search parcel
                 foreach(var pElement in dalParcelsList)
                 {
-                    if(pElement.delivered != emptyDateTime)
+                    if(pElement.Delivered != emptyDateTime)
                     {
-                        var customersList = dal.getCustomers();
+                        var customersList = dal.GetCustomers();
                         //search sender of parcel
                         foreach (var cElement in customersList)
                         {
-                            if(cElement.id == pElement.reciverId)
+                            if(cElement.Id == pElement.ReciverId)
                                 temp.Add(cElement);
                         }
                     }
                 }
                 return temp;
+            }
+
+            /// <summary>
+            /// return charging level of drone by its id 
+            /// </summary>
+            /// <param name="myDroneId"></param>
+            /// <returns></returns>
+            public int ChargingLevel(int myDroneId)
+            {
+                int b = 0;
+                var v = dronesList;
+                foreach (var item in v)
+                {
+                    if (item.id == myDroneId)
+                        b = item.battery;
+                }
+                return b;
+            }
+
+            /// <summary>
+            /// return number of frones charging currently at station  
+            /// </summary>
+            /// <param name="stationId"></param>
+            /// <returns></returns>
+            public int NumofOccupiedChargeSlots(int stationId)
+            {
+                var dalStationsList = dal.GetStations();
+                var myStationLocation = new Location();
+                int num = 0;
+                foreach (var item in dalStationsList)
+                {
+                    if(item.Id == stationId) 
+                        myStationLocation = new Location(item.Location);
+                }
+                //search for drones charging currently at station
+                var dalDronesList = dronesList;
+                foreach(var item in dalDronesList)
+                {
+                    if(item.status == MyEnums.DroneStatus.maintenance && item.location == myStationLocation)
+                        num++;
+                }
+                return num;
             }
 
             /// <summary>
@@ -290,96 +332,50 @@ namespace IBL
             /// <returns></returns>
             public CustomerInParcel TheOtherSide(int parcelId, int customerId)
             {
-                var parcelsList = dal.getParcels();
-                CustomerInParcel other = new CustomerInParcel();
-                int otherId = 0;
-                foreach(var item in parcelsList)
-                {
-                    //search parcel
-                    if(item.id == parcelId)
-                    {
-                        //checks if current customer is sender or reciever
-                        if (item.senderId != customerId) 
-                            otherId = item.reciverId;
-                        if (item.reciverId != customerId)
-                            otherId = item.senderId;
-                    }
-                }
-                var customersList = dal.getCustomers();
-                foreach(var item in customersList)
-                {
-                    if(otherId == item.id)
-                    {
-                        other.id = item.id;
-                        other.name = item.name;
-                    }
-                }
-                return other;
-            }
-            public int batteryAtDrone(int myDroneId)
-            {
-                int b = 0;
-                var v = dronesList;
-                foreach (var item in v)
-                {
-                    if (item.id == myDroneId) b = item.battery;
-                }
-                return b;
-            }
-            public int numOfDronesThatChargeingInThatStation(int stationId)
-            {
-                var dalStationsList = dal.getStations();
-                var myStationLocation = new Location();
-                int sum = 0;
-                foreach (var item in dalStationsList)
-                {
-                    if (item.id == stationId) myStationLocation = new Location(item.location);
-                }
-                var dalDronesList = dronesList;
-                foreach (var item in dalDronesList)
-                {
-                    if (item.status == MyEnums.DroneStatus.maintenance && item.location == myStationLocation)
-                        sum++;
-                }
-                return sum;
-            }
-            public CustomerInParcel theOtherSide(int parcelId, int customerId)
-            {
-                var parcelsList = dal.getParcels();
+                var parcelsList = dal.GetParcels();
                 CustomerInParcel other = new CustomerInParcel();
                 int otherId = 0;
                 foreach (var item in parcelsList)
                 {
                     //found our parcel
-                    if (item.id == parcelId)
+                    if (item.Id == parcelId)
                     {
                         // our customer is the sender, so the other side would be the reciver
-                        if (item.senderId != customerId) otherId = item.reciverId;
-                        if (item.reciverId != customerId) otherId = item.senderId;
+                        if (item.SenderId != customerId) otherId = item.ReciverId;
+                        if (item.ReciverId != customerId) otherId = item.SenderId;
                     }
                 }
-                var customersList = dal.getCustomers();
+                var customersList = dal.GetCustomers();
                 foreach (var item in customersList)
                 {
-                    if (otherId == item.id)
+                    if (otherId == item.Id)
                     {
-                        other.id = item.id;
-                        other.name = item.name;
+                        other.id = item.Id;
+                        other.name = item.Name;
                     }
                 }
                 return other;
             }
-            public IDAL.DO.Station theNearestAvailableChargeSlotAndThereIsBattery(IDAL.DO.Location l, int myDroneId)
+
+            /// <summary>
+            /// returns the nearest available charge slot which is reachable for drone,
+            /// considering his charging level
+            /// </summary>
+            /// <param name="l"></param>
+            /// <param name="myDroneId"></param>
+            /// <returns></returns>
+            public IDAL.DO.Station NearestReachableChargeSlot(IDAL.DO.Location l, int myDroneId)
             {
                 IDAL.DO.Station tempStation = new IDAL.DO.Station();
-                var stationList = dal.getStations();
+                var stationList = dal.GetStations();
                 double min = 99999999999;
-                var neededBattery = (int)BatteryRequirementForVoyage(myDroneId, min);
-                var existBattery = batteryAtDrone(myDroneId);
+                var requiredChargingLevel = (int)BatteryRequirementForVoyage(myDroneId, min);
+                var currentChargingLevel = ChargingLevel(myDroneId);
+                //search for nearer stations
                 foreach (var element in stationList)
                 {
-                    var dis = dal.distance(l, element.location);
-                    if (dis < min && element.numOfAvailableChargeSlots > 0 && (neededBattery <= existBattery))
+                    var dis = dal.Distance(l, element.Location);
+                    if (dis < min && element.NumOfAvailableChargeSlots > 0 && (requiredChargingLevel <= currentChargingLevel))
                     {
                         min = dis;
                         tempStation = element;
@@ -387,22 +383,22 @@ namespace IBL
                 }
                 return tempStation;
             }
-            public IDAL.DO.Station theNearestAvailableChargeSlot(IDAL.DO.Location l)
-            {
-                IDAL.DO.Station tempStation = new IDAL.DO.Station();
-                var stationList = dal.getStations();
-                double min = 99999999999;
-                foreach (var element in stationList)
-                {
-                    var dis = dal.distance(l, element.location);
-                    if (dis < min && element.numOfAvailableChargeSlots > 0)
-                    {
-                        min = dis;
-                        tempStation = element;
-                    }
-                }
-                return tempStation;
-            }
+            //public IDAL.DO.Station NearestChargeSlot(IDAL.DO.Location l)
+            //{
+            //    IDAL.DO.Station tempStation = new IDAL.DO.Station();
+            //    var stationList = dal.getStations();
+            //    double min = 99999999999;
+            //    foreach (var element in stationList)
+            //    {
+            //        var dis = dal.distance(l, element.location);
+            //        if (dis < min && element.numOfAvailableChargeSlots > 0)
+            //        {
+            //            min = dis;
+            //            tempStation = element;
+            //        }
+            //    }
+            //    return tempStation;
+            //}
         }
     }
 }

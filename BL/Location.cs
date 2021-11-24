@@ -32,8 +32,8 @@
             /// <param name="l"></param>
             public Location(IDAL.DO.Location l)
             {
-                this.longitude = l.longitude;
-                this.lattitude = l.lattitude;
+                this.longitude = l.Longitude;
+                this.lattitude = l.Lattitude;
             }
             public double longitude { get; set; }
             public double lattitude { get; set; }

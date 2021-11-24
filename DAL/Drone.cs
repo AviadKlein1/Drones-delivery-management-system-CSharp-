@@ -7,8 +7,8 @@
         /// </summary>
         public struct Drone
         {
-            public int id { get; set; }
-            public string model { get; set; }
+            public int Id { get; set; }
+            public string Model { get; set; }
             public IDAL.DO.MyEnums.WeightCategory weight { get; set; }
         }
     }

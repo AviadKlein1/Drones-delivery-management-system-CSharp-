@@ -16,14 +16,14 @@ namespace IBL
             public List<StationToList> DisplayStations()
             {
                 List<StationToList> tmp1 = new List<StationToList>();
-                var v = dal.getStations();
+                var v = dal.GetStations();
                 foreach (var element in v)
                 {
                     StationToList myStation = new StationToList();
-                    myStation.id = element.id;
-                    myStation.name = element.name;
-                    myStation.numOfAvailableChargeSlots = element.numOfChargeSlots - numOfDronesThatChargeingInThatStation(element.id);
-                    myStation.numOfOccupiedChargeSlots = numOfDronesThatChargeingInThatStation(element.id);
+                    myStation.Id = element.Id;
+                    myStation.Name = element.Name;
+                    myStation.NumOfAvailableChargeSlots = element.NumOfChargeSlots - NumofOccupiedChargeSlots(element.Id);
+                    myStation.NumOfOccupiedChargeSlots = NumofOccupiedChargeSlots(element.Id);
                     tmp1.Add(myStation);
                 }
                 //if empty list
@@ -50,13 +50,13 @@ namespace IBL
             {
                 List<CustomerToList> tmp1 = new List<CustomerToList>();
                 List<IDAL.DO.Customer> tmp2 = new List<IDAL.DO.Customer>();
-                var v = dal.getCustomers();
+                var v = dal.GetCustomers();
                 foreach (var element in v)
                 {
                     CustomerToList myCustomer = new CustomerToList();
-                    myCustomer.id = element.id;
-                    myCustomer.name = element.name;
-                    myCustomer.phoneNumber = element.phoneNumber;
+                    myCustomer.id = element.Id;
+                    myCustomer.name = element.Name;
+                    myCustomer.phoneNumber = element.PhoneNumber;
                     tmp1.Add(myCustomer);
                 }
                 return tmp1;
@@ -70,26 +70,26 @@ namespace IBL
             {
                 List<ParcelToList> tmp1 = new List<ParcelToList>();
                 List<IDAL.DO.Parcel> tmp2 = new List<IDAL.DO.Parcel>();
-                var v = dal.getParcels();
+                var v = dal.GetParcels();
                 foreach (var element in v)
                 {
                     ParcelToList myParcel = new ParcelToList();
-                    myParcel.id = element.id;
-                    myParcel.weight = element.weight;
-                    myParcel.priority = element.priority;
-                    var customersList = dal.getCustomers();
+                    myParcel.Id = element.Id;
+                    myParcel.Weight = element.Weight;
+                    myParcel.Priority = element.Priority;
+                    var customersList = dal.GetCustomers();
                     //display customers (sender and reciever)
                     string senderName = null;
                     string reciverName = null;
                     foreach (var cElement in customersList)
                     {
-                        if (cElement.id == element.senderId)
-                            senderName = cElement.name;
-                        if (cElement.id == element.reciverId)
-                            reciverName = cElement.name;
+                        if (cElement.Id == element.SenderId)
+                            senderName = cElement.Name;
+                        if (cElement.Id == element.ReciverId)
+                            reciverName = cElement.Name;
                     }
-                    myParcel.senderName = senderName;
-                    myParcel.senderName = reciverName;
+                    myParcel.SenderName = senderName;
+                    myParcel.SenderName = reciverName;
 
                     tmp1.Add(myParcel);
                 }
@@ -103,26 +103,26 @@ namespace IBL
             public List<ParcelToList> DisplayUnassociatedParcels()
             {
                 List<ParcelToList> tmp1 = new List<ParcelToList>();
-                var v = dal.getParcels();
+                var v = dal.GetParcels();
                 foreach (var element in v)
                 {
-                    if (element.droneId == 0)
+                    if (element.DroneId == 0)
                     {
                         ParcelToList myParcel = new ParcelToList();
-                        myParcel.id = element.id;
-                        myParcel.weight = element.weight;
-                        myParcel.priority = element.priority;
-                        var customersList = dal.getCustomers();
+                        myParcel.Id = element.Id;
+                        myParcel.Weight = element.Weight;
+                        myParcel.Priority = element.Priority;
+                        var customersList = dal.GetCustomers();
                         //disp;ay customers (sender and reciever)
                         string senderName = null;
                         string reciverName = null;
                         foreach (var cElement in customersList)
                         {
-                            if (cElement.id == element.senderId) senderName = cElement.name;
-                            if (cElement.id == element.reciverId) reciverName = cElement.name;
+                            if (cElement.Id == element.SenderId) senderName = cElement.Name;
+                            if (cElement.Id == element.ReciverId) reciverName = cElement.Name;
                         }
-                        myParcel.senderName = senderName;
-                        myParcel.senderName = reciverName;
+                        myParcel.SenderName = senderName;
+                        myParcel.SenderName = reciverName;
 
                         tmp1.Add(myParcel);
                     }
@@ -138,16 +138,16 @@ namespace IBL
             {
                 List<StationToList> tmp1 = new List<StationToList>();
                 List<IDAL.DO.Station> tmp2 = new List<IDAL.DO.Station>();
-                var v = dal.getStations();
+                var v = dal.GetStations();
                 foreach (var element in v)
                 {
-                    if (element.numOfAvailableChargeSlots > 0)
+                    if (element.NumOfAvailableChargeSlots > 0)
                     {
                         StationToList myStation = new StationToList();
-                        myStation.id = element.id;
-                        myStation.name = element.name;
-                        myStation.numOfAvailableChargeSlots = element.numOfAvailableChargeSlots;
-                        myStation.numOfOccupiedChargeSlots = element.numOfChargeSlots - element.numOfAvailableChargeSlots;
+                        myStation.Id = element.Id;
+                        myStation.Name = element.Name;
+                        myStation.NumOfAvailableChargeSlots = element.NumOfAvailableChargeSlots;
+                        myStation.NumOfOccupiedChargeSlots = element.NumOfChargeSlots - element.NumOfAvailableChargeSlots;
                         tmp1.Add(myStation);
                     }
                 }

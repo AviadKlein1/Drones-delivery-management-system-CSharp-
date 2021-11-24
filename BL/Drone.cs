@@ -21,8 +21,8 @@
             /// <param name="myDrone"></param>
             public Drone(IDAL.DO.Drone myDrone)
             {
-                id = myDrone.id;
-                model = myDrone.model;
+                id = myDrone.Id;
+                model = myDrone.Model;
                 weight = myDrone.weight;
             }
 

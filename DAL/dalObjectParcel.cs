@@ -15,14 +15,14 @@ namespace IDAL
                 /// add parcel to list
                 /// </summary>
                 /// returns new parcel's id
-                public void addParcel(Parcel myParcel)
+                public void AddParcel(Parcel myParcel)
                 {
                     //insert parcel to array
                     //IDAL.DO.DalObject.DataSource.parcels[IDAL.DO.DalObject.DataSource.Config.parcelIndex] = myParcel;
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
                         //if already exist
-                        if (IDAL.DO.DalObject.DataSource.parcels[i].id == myParcel.id)
-                            throw new ExcistingIdException(myParcel.id, $"parcel already exist: {myParcel.id}");
+                        if (IDAL.DO.DalObject.DataSource.parcels[i].Id == myParcel.Id)
+                            throw new ExcistingIdException(myParcel.Id, $"parcel already exist: {myParcel.Id}");
                     IDAL.DO.DalObject.DataSource.parcels.Add(myParcel);
                 }
 
@@ -40,14 +40,14 @@ namespace IDAL
                 /// </summary>
                 /// <param name="myId"></param>
                 /// <returns></returns>
-                public IDAL.DO.Parcel getParcel(int myId)
+                public IDAL.DO.Parcel GetParcel(int myId)
                 {
                     bool isDouble = false;
                     Parcel temp = new Parcel();
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
                     {
                         //search parcel
-                        if (IDAL.DO.DalObject.DataSource.parcels[i].id == myId)
+                        if (IDAL.DO.DalObject.DataSource.parcels[i].Id == myId)
                         {
                             isDouble = true;
                             temp = IDAL.DO.DalObject.DataSource.parcels[i];
@@ -63,7 +63,7 @@ namespace IDAL
                 /// <summary>
                 /// print all parcels
                 /// </summary>
-                public IEnumerable<Parcel> getParcels()
+                public IEnumerable<Parcel> GetParcels()
                 {
                     List<IDAL.DO.Parcel> temp = new List<IDAL.DO.Parcel>();
                     temp = IDAL.DO.DalObject.DataSource.parcels;

@@ -13,7 +13,7 @@ namespace IDAL
             public class DataSource
             {
                 //random static variable
-                private static Random rd = new Random();
+                private static readonly Random rd = new Random();
 
                 //lists for items
                 internal static List<IDAL.DO.Station> stations = new List<IDAL.DO.Station>();
@@ -41,19 +41,19 @@ namespace IDAL
                     for (int i = 0; i < 2; i++)
                     {
                         IDAL.DO.Station myStation = new IDAL.DO.Station();
-                        myStation.id = rd.Next(100, 1000);
-                        myStation.name = "station" + (i + 1);
-                        myStation.numOfChargeSlots = rd.Next(1, 5);
-                        myStation.location = new Location(rd.NextDouble() + rd.Next(180), rd.NextDouble() + rd.Next(180));
-                        myStation.numOfAvailableChargeSlots  = myStation.numOfChargeSlots - rd.Next(0,1);
+                        myStation.Id = rd.Next(100, 1000);
+                        myStation.Name = "station" + (i + 1);
+                        myStation.NumOfChargeSlots = rd.Next(1, 5);
+                        myStation.Location = new Location(rd.NextDouble() + rd.Next(180), rd.NextDouble() + rd.Next(180));
+                        myStation.NumOfAvailableChargeSlots  = myStation.NumOfChargeSlots - rd.Next(0,1);
                         stations.Add(myStation);
                     }
                     //drones
                     for (int i = 0; i < 5; i++)
                     {
                         IDAL.DO.Drone myDrone = new IDAL.DO.Drone();
-                        myDrone.id = rd.Next(100, 1000);
-                        myDrone.model = "drone" + (i + 1);
+                        myDrone.Id = rd.Next(100, 1000);
+                        myDrone.Model = "drone" + (i + 1);
                         myDrone.weight = (IDAL.DO.MyEnums.WeightCategory)rd.Next(3);
                         drones.Add(myDrone);
                     }
@@ -61,34 +61,34 @@ namespace IDAL
                     for (int i = 0; i < 10; i++)
                     {
                         IDAL.DO.Customer myCustomer = new IDAL.DO.Customer();
-                        myCustomer.id = rd.Next(100000000, 1000000000);
-                        myCustomer.name = "customer" + (i + 1);
-                        myCustomer.location = new Location(rd.NextDouble() + rd.Next(180), rd.NextDouble() + rd.Next(180));
+                        myCustomer.Id = rd.Next(100000000, 1000000000);
+                        myCustomer.Name = "customer" + (i + 1);
+                        myCustomer.Location = new Location(rd.NextDouble() + rd.Next(180), rd.NextDouble() + rd.Next(180));
                         string phoneNumber = "05" + rd.Next(9) + "-";
                         for (int j = 0; j < 7; j++)
                             phoneNumber += rd.Next(10);
-                        myCustomer.phoneNumber = phoneNumber;
+                        myCustomer.PhoneNumber = phoneNumber;
                         customers.Add(myCustomer);
                     }
                     //parcels
                     for (int i = 0; i < 10; i++)
                     {
                         IDAL.DO.Parcel myParcel = new IDAL.DO.Parcel();
-                        myParcel.id = IDAL.DO.DalObject.DataSource.Config.ParcelRunId++;
-                        myParcel.senderId = rd.Next(100000000, 1000000000);
-                        myParcel.reciverId = rd.Next(100000000, 1000000000);
-                        myParcel.droneId = 0;
-                        myParcel.weight = (IDAL.DO.MyEnums.WeightCategory)rd.Next(3);
-                        myParcel.priority = (IDAL.DO.MyEnums.PriorityLevel)rd.Next(3);
-                        myParcel.requested = DateTime.Now;
+                        myParcel.Id = IDAL.DO.DalObject.DataSource.Config.ParcelRunId++;
+                        myParcel.SenderId = rd.Next(100000000, 1000000000);
+                        myParcel.ReciverId = rd.Next(100000000, 1000000000);
+                        myParcel.DroneId = 0;
+                        myParcel.Weight = (IDAL.DO.MyEnums.WeightCategory)rd.Next(3);
+                        myParcel.Priority = (IDAL.DO.MyEnums.PriorityLevel)rd.Next(3);
+                        myParcel.Requested = DateTime.Now;
                         parcels.Add(myParcel);
                     }
                     //drone charges
                     for (int i = 0; i < 2; i++)
                     {
                         IDAL.DO.DroneCharge myDroneCharge = new IDAL.DO.DroneCharge();
-                        myDroneCharge.droneId = drones[i].id;
-                        myDroneCharge.stationId = stations[i].id;
+                        myDroneCharge.DroneId = drones[i].Id;
+                        myDroneCharge.StationId = stations[i].Id;
                         droneCharges.Add(myDroneCharge);
                     }
                 }

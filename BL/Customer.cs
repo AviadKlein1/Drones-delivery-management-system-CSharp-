@@ -35,10 +35,10 @@ namespace IBL
             /// <param name="customer"></param>
             public Customer(IDAL.DO.Customer customer)
             {
-                id = customer.id;
-                name = customer.name;
-                phoneNumber = customer.phoneNumber;
-                location = new Location(customer.location);
+                id = customer.Id;
+                name = customer.Name;
+                phoneNumber = customer.PhoneNumber;
+                location = new Location(customer.Location);
                 parcelsSent = new List<ParcelAtCustomer>();
                 parcelsRecieved = new List<ParcelAtCustomer>();
             }

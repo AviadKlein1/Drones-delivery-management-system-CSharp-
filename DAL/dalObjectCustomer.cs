@@ -12,11 +12,11 @@ namespace IDAL
                 /// add costumer to list of costimers
                 /// </summary>
                 /// <param name="myCustomer"></param>
-                public void addcustomer(Customer myCustomer)
+                public void Addcustomer(Customer myCustomer)
                 {
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.customers.Count; i++)
-                        if (IDAL.DO.DalObject.DataSource.customers[i].id == myCustomer.id)
-                            throw new ExcistingIdException(myCustomer.id, $"customer already exist: {myCustomer.id}");
+                        if (IDAL.DO.DalObject.DataSource.customers[i].Id == myCustomer.Id)
+                            throw new ExcistingIdException(myCustomer.Id, $"customer already exist: {myCustomer.Id}");
                     //insert customer to list
                     IDAL.DO.DalObject.DataSource.customers.Add(myCustomer);
                 }
@@ -26,14 +26,14 @@ namespace IDAL
                 /// </summary>
                 /// <param name="myId"></param>
                 /// <returns></returns>
-                public IDAL.DO.Customer getCustomer(int myId)
+                public IDAL.DO.Customer GetCustomer(int myId)
                 {
                     bool isDouble = false;
                     Customer temp = new Customer();
                     //search costumer
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.customers.Count; i++)
                     {
-                        if (IDAL.DO.DalObject.DataSource.customers[i].id == myId)
+                        if (IDAL.DO.DalObject.DataSource.customers[i].Id == myId)
                         {
                             isDouble = true;
                             temp = IDAL.DO.DalObject.DataSource.customers[i];
@@ -49,27 +49,27 @@ namespace IDAL
                 /// <summary>
                 /// print all customers
                 /// </summary>
-                public IEnumerable<Customer> getCustomers()
+                public IEnumerable<Customer> GetCustomers()
                 {
                     List<IDAL.DO.Customer> temp = new List<IDAL.DO.Customer>();
                     temp = IDAL.DO.DalObject.DataSource.customers;
                     return temp;
                 }
-                public void updateCustomer(int customerId, string newName, string newPhone)
+                public void UpdateCustomer(int customerId, string newName, string newPhone)
                 {
                     Customer temp = new Customer();
                     for (int i = 0; i < DataSource.customers.Count; i++)
                     {
                         Customer item = IDAL.DO.DalObject.DataSource.customers[i];
-                        if (item.id == customerId)
+                        if (item.Id == customerId)
                         {
-                            temp.id = customerId;
-                            temp.location = item.location;
-                            if (newName != null) temp.name = newName;
-                            else temp.name = item.name;
-                            if (newPhone != null) temp.phoneNumber = newPhone;
-                            else temp.phoneNumber = item.phoneNumber;
-                            temp.location = item.location;
+                            temp.Id = customerId;
+                            temp.Location = item.Location;
+                            if (newName != null) temp.Name = newName;
+                            else temp.Name = item.Name;
+                            if (newPhone != null) temp.PhoneNumber = newPhone;
+                            else temp.PhoneNumber = item.PhoneNumber;
+                            temp.Location = item.Location;
                             IDAL.DO.DalObject.DataSource.customers[i] = temp;
                         }
                     }

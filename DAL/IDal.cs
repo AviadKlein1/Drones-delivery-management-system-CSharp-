@@ -5,25 +5,25 @@ namespace IDAL
     public interface IDal
     {
         public int ParcelRunId();
-        public void addStation(IDAL.DO.Station station);
-        public void addDrone(IDAL.DO.Drone drone);
-        public void addcustomer(IDAL.DO.Customer customer);
-        public void addParcel(IDAL.DO.Parcel parcel);
+        public void AddStation(IDAL.DO.Station station);
+        public void AddDrone(IDAL.DO.Drone drone);
+        public void Addcustomer(IDAL.DO.Customer customer);
+        public void AddParcel(IDAL.DO.Parcel parcel);
 
-        public IDAL.DO.Station getStation(int id);
-        public IDAL.DO.Drone getDrone(int id);
-        public IDAL.DO.Customer getCustomer(int id);
-        public IDAL.DO.Parcel getParcel(int id);
+        public IDAL.DO.Station GetStation(int id);
+        public IDAL.DO.Drone GetDrone(int id);
+        public IDAL.DO.Customer GetCustomer(int id);
+        public IDAL.DO.Parcel GetParcel(int id);
 
-        public IEnumerable<IDAL.DO.Station> getStations();
-        public IEnumerable<IDAL.DO.Drone> getDrones();
-        public IEnumerable<IDAL.DO.Customer> getCustomers();
-        public IEnumerable<IDAL.DO.Parcel> getParcels();
+        public IEnumerable<IDAL.DO.Station> GetStations();
+        public IEnumerable<IDAL.DO.Drone> GetDrones();
+        public IEnumerable<IDAL.DO.Customer> GetCustomers();
+        public IEnumerable<IDAL.DO.Parcel> GetParcels();
 
         //public IEnumerable<IDAL.DO.Parcel> getNotAssociatedParcels();
         //public IEnumerable<IDAL.DO.Station> getAvailableToChargeStations();
-        public double[] droneElectricityConsumption();
-        public IDAL.DO.Location stationLocate(int StationId);
+        public double[] DroneElectricityConsumption();
+        public IDAL.DO.Location StationLocate(int StationId);
 
         //public bool thisDroneIsAssociated(int droneId);
         //public bool thereAreParcelsThatNotDeliverdYet();
@@ -32,11 +32,11 @@ namespace IDAL
         ////public int idOfAssociatedParcel(int droneId);
         //public IDAL.DO.Location theNearestToSenderStationLocation(int parcelId);
         //public IDAL.DO.Station theNearestStation(IDAL.DO.Location l);
-        public int distance(IDAL.DO.Location a, IDAL.DO.Location b);
-        public void updatStation(int stationId, string newName, int numOfChargeSlots);
-        public void updateDrone(int droneId, string newModel);
-        public void updateCustomer(int customerId, string newName, string newPhone);
-        public void decriseChargeSlot(int stationId);
+        public int Distance(IDAL.DO.Location a, IDAL.DO.Location b);
+        public void UpdatStation(int stationId, string newName, int numOfChargeSlots);
+        public void UpdateDrone(int droneId, string newModel);
+        public void UpdateCustomer(int customerId, string newName, string newPhone);
+        public void DecriseChargeSlot(int stationId);
 
 
 
