@@ -15,7 +15,7 @@ namespace IBL
             /// <param name="droneId"></param>
             /// <param name="newModel"></param>
             /// <returns></returns>
-            public void UpdateDrone(int droneId, string newModel)
+            public bool UpdateDrone(int droneId, string newModel)
             {
                 bool flag = false;
                 var dalDronesList = dal.GetDrones();
@@ -43,6 +43,7 @@ namespace IBL
 
                 else
                     throw new WrongIdException(droneId, $"wrong id: {droneId}");
+                return flag;
             }
 
             /// <summary>
@@ -52,7 +53,7 @@ namespace IBL
             /// <param name="newName"></param>
             /// <param name="numOfChargeSlots"></param>
             /// <returns></returns>
-            public void UpdateStation(int stationId, string newName, int numOfChargeSlots)
+            public bool UpdateStation(int stationId, string newName, int numOfChargeSlots)
             {
                 var flag = false;
                 var dalStationsList = dal.GetStations();
@@ -69,6 +70,7 @@ namespace IBL
                     dal.UpdateStation(stationId, newName, numOfChargeSlots);
                 else
                     throw new WrongIdException(stationId, $"wrong id: {stationId}");
+                return flag;
             }
 
             /// <summary>

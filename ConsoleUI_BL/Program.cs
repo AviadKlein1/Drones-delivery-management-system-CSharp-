@@ -50,19 +50,19 @@ namespace ConsoleUI_BL
                                 {
                                     //add station
                                     case 1:
-                                        bl.addStation(myInputOutput.addStation());
+                                        bl.AddStation(myInputOutput.AddStation());
                                         break;
                                     //add drone
                                     case 2:
-                                        bl.addDrone(myInputOutput.addDrone());
+                                        bl.AddDrone(myInputOutput.AddDrone());
                                         break;
                                     //add customer
                                     case 3:
-                                        bl.addcustomer(myInputOutput.addCustomer());
+                                        bl.Addcustomer(myInputOutput.AddCustomer());
                                         break;
                                     //add parcel
                                     case 4:
-                                        bl.addParcel(myInputOutput.addParcel());
+                                        bl.AddParcel(myInputOutput.AddParcel());
                                         break;
 
                                     default:

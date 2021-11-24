@@ -8,13 +8,13 @@ namespace ConsoleUI_BL
     /// </summary>
     public class Input
     {
-        public Random rd = new Random();
+        public Random rd = new();
 
         //station details
-        public IBL.BO.Station addStation()
+        public IBL.BO.Station AddStation()
         {
-            IBL.BO.Station myStation = new IBL.BO.Station();
-            
+            IBL.BO.Station myStation = new();
+
             //id
             int id;
             Console.WriteLine("enter id");
@@ -46,9 +46,9 @@ namespace ConsoleUI_BL
         }
 
         //drone details
-        public IBL.BO.Drone addDrone()
+        public IBL.BO.Drone AddDrone()
         {
-            IBL.BO.Drone myDrone = new IBL.BO.Drone();
+            IBL.BO.Drone myDrone = new();
 
             //id
             int id;
@@ -77,9 +77,9 @@ namespace ConsoleUI_BL
         }
 
         //customer details
-        public IBL.BO.Customer addCustomer()
+        public IBL.BO.Customer AddCustomer()
         {
-            IBL.BO.Customer myCustomer = new IBL.BO.Customer();
+            IBL.BO.Customer myCustomer = new();
 
             //id
             int id;
@@ -108,9 +108,9 @@ namespace ConsoleUI_BL
         }
 
         //parcel details
-        public IBL.BO.Parcel addParcel()
+        public IBL.BO.Parcel AddParcel()
         {
-            IBL.BO.Parcel myParcel = new IBL.BO.Parcel();
+            IBL.BO.Parcel myParcel = new();
 
             //sender id
             int senderId;

@@ -85,7 +85,7 @@ namespace IBL
         /// <param name="droneId"></param>
         /// <param name="newModel"></param>
         /// <returns></returns>
-        public void UpdateDrone(int droneId, string newModel);
+        public bool UpdateDrone(int droneId, string newModel);
         /// <summary>
         /// update station details
         /// </summary>
@@ -93,7 +93,7 @@ namespace IBL
         /// <param name="newName"></param>
         /// <param name="numOfChargeSlots"></param>
         /// <returns></returns>
-        public void UpdateStation(int stationId, string newName, int numOfChargeSlots);
+        public bool UpdateStation(int stationId, string newName, int numOfChargeSlots);
         /// <summary>
         /// update customer details
         /// </summary>
