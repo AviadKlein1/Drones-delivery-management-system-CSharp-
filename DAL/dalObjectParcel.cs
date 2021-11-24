@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System;
+
 
 namespace IDAL
 {
@@ -69,6 +71,53 @@ namespace IDAL
                     temp = IDAL.DO.DalObject.DataSource.parcels;
                     return temp;
                 }
+
+                public void SheduleParcelToDrone(int newParcelId, int droneId)
+                {
+                    Parcel temp = new Parcel();
+                    for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
+                    {
+                        //search parcel
+                        if (IDAL.DO.DalObject.DataSource.parcels[i].id == newParcelId)
+                        {
+                            temp = IDAL.DO.DalObject.DataSource.parcels[i];
+                            temp.scheduled = DateTime.Now;
+                            temp.droneId = droneId;
+                            IDAL.DO.DalObject.DataSource.parcels[i] = temp;
+                        }
+                    }
+                }
+
+                public void PickUpParcelByDrone(int droneId, int parcelId)
+                {
+                    Parcel temp = new Parcel();
+                    for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
+                    {
+                        //search parcel
+                        if (IDAL.DO.DalObject.DataSource.parcels[i].id == parcelId)
+                        {
+                            temp = IDAL.DO.DalObject.DataSource.parcels[i];
+                            temp.pickedUp = DateTime.Now;
+                            IDAL.DO.DalObject.DataSource.parcels[i] = temp;
+                        }
+                    }
+                }
+                public void DeliverParcelByDrone(int droneId, int parcelId)
+                {
+                    Parcel temp = new Parcel();
+                    for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
+                    {
+                        //search parcel
+                        if (IDAL.DO.DalObject.DataSource.parcels[i].id == parcelId)
+                        {
+                            temp = IDAL.DO.DalObject.DataSource.parcels[i];
+                            temp.delivered = DateTime.Now;
+                            IDAL.DO.DalObject.DataSource.parcels[i] = temp;
+                        }
+                    }
+                }
+
+
                 /// <summary>
                 /// print all parcels which are not associated with a drone
                 /// </summary>

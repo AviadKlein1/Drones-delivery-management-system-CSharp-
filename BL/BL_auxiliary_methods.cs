@@ -158,6 +158,28 @@ namespace IBL
                 return tempLocation;
             }
 
+            public IDAL.DO.Location ReciverLocation(int parcelId)
+            {
+                IDAL.DO.Location tempLocation = new IDAL.DO.Location();
+                var dalParcelsList = dal.getParcels();
+                //search parcel
+                foreach (var pElement in dalParcelsList)
+                {
+                    if (pElement.id == parcelId)
+                    {
+                        var customersList = dal.getCustomers();
+                        //search parcel's reciver
+                        foreach (var cElement in customersList)
+                        {
+                            if (cElement.id == pElement.reciverId)
+                                tempLocation = cElement.location;
+                        }
+                    }
+                }
+                return tempLocation;
+
+            }
+
             /// <summary>
             /// finds the nearest to sender station (by parcel id)
             /// </summary>
@@ -383,22 +405,104 @@ namespace IBL
                 }
                 return tempStation;
             }
-            //public IDAL.DO.Station NearestChargeSlot(IDAL.DO.Location l)
-            //{
-            //    IDAL.DO.Station tempStation = new IDAL.DO.Station();
-            //    var stationList = dal.getStations();
-            //    double min = 99999999999;
-            //    foreach (var element in stationList)
-            //    {
-            //        var dis = dal.distance(l, element.location);
-            //        if (dis < min && element.numOfAvailableChargeSlots > 0)
-            //        {
-            //            min = dis;
-            //            tempStation = element;
-            //        }
-            //    }
-            //    return tempStation;
-            //}
+            public int suitableParcel(int droneId)
+            {
+                var v = dronesList;
+                IDAL.DO.MyEnums.WeightCategory myDroneWeight = new IDAL.DO.MyEnums.WeightCategory();
+                IDAL.DO.Location myDroneLocation = new IDAL.DO.Location();
+                IDAL.DO.Parcel tempParcel = new IDAL.DO.Parcel();
+                int myDroneBattery = 0;
+
+                foreach (var item in v) // my drone data
+                {
+                    if(item.id == droneId)
+                    {
+                        myDroneWeight = item.weight;
+                        myDroneLocation = new IDAL.DO.Location(item.location.longitude, item.location.lattitude);
+                        myDroneBattery = item.battery;
+                    }
+                }
+                // start searching
+                List<IDAL.DO.Parcel> notSuitableParcels = new List<IDAL.DO.Parcel>();
+                var dalParcelsList = dal.getParcels();
+
+                foreach (var item in dalParcelsList) // remove not suitable weight
+                {
+                    if(item.weight > myDroneWeight)
+                    {
+                        notSuitableParcels.Add(item);
+                    }
+                }
+                foreach (var item in dalParcelsList)
+                {
+                    // in the high priority, and not at our list
+                    if(item.priority == HighPriority(dalParcelsList, notSuitableParcels) &&
+                        ISNotAt_NotSuitableParcels(notSuitableParcels, item))
+                    {
+                        // the nearest parcel
+                        tempParcel = theNearestParcel(dalParcelsList, myDroneLocation, notSuitableParcels);
+                        //if we have enough battery
+                        var senderLocation = SenderLocation(tempParcel.id);
+                        var reciverLocation = ReciverLocation(tempParcel.id);
+                        var chargeStation = theNearestAvailableChargeSlot(reciverLocation);
+
+                        var dis1 = dal.distance(myDroneLocation, senderLocation);
+                        var dis2 = dal.distance(senderLocation, reciverLocation);
+                        var dis3 = dal.distance(reciverLocation, chargeStation.location);
+                        var fullDistance = dis1 + dis2 + dis3;
+
+                        double Consumption = 0;
+                        if (tempParcel.weight == IDAL.DO.MyEnums.WeightCategory.light) Consumption = lightWeight;
+                        if (tempParcel.weight == IDAL.DO.MyEnums.WeightCategory.medium) Consumption = mediumWeight;
+                        if (tempParcel.weight == IDAL.DO.MyEnums.WeightCategory.heavy) Consumption = heavyWeight;
+                        //
+                        if (myDroneBattery < (fullDistance * Consumption))
+                            notSuitableParcels.Add(item);
+                        else return tempParcel.id;
+                    }
+                }
+                Console.WriteLine(" not suitable parcel\n");
+                return 0;
+            }
+            public bool ISNotAt_NotSuitableParcels(List<IDAL.DO.Parcel> list, IDAL.DO.Parcel myParcel)
+            {
+                bool flag = true;
+                foreach (var item in list)
+                {
+                    if (item.id == myParcel.id)
+                        flag = false;
+                }
+                return flag;
+            }
+            public IDAL.DO.MyEnums.PriorityLevel HighPriority(IEnumerable<IDAL.DO.Parcel> dalParcelsList, List<IDAL.DO.Parcel> notSuatableList)
+            {
+                IDAL.DO.MyEnums.PriorityLevel max = IDAL.DO.MyEnums.PriorityLevel.regular;
+                foreach (var item in dalParcelsList)
+                {
+                    if(item.priority > max && ISNotAt_NotSuitableParcels(notSuatableList, item))
+                    {
+                        max = item.priority;
+                    }
+                }
+                return max;
+            }
+            public IDAL.DO.Parcel theNearestParcel(IEnumerable<IDAL.DO.Parcel> dalParcelsList,IDAL.DO.Location myDroneLocation, List<IDAL.DO.Parcel> notSuatableList)
+            {
+                IDAL.DO.Parcel temp = new IDAL.DO.Parcel();
+                var min = 9999999999;
+                foreach (var item in dalParcelsList)
+                {
+                    var dis =dal.distance(SenderLocation(item.id), myDroneLocation);
+                    if (dis < min && ISNotAt_NotSuitableParcels(notSuatableList, item))
+                        min = dis;
+                }
+                foreach (var item in dalParcelsList)
+                {
+                    if (min == dal.distance(SenderLocation(item.id), myDroneLocation))
+                        return item;
+                }
+                return temp;
+            }
         }
     }
 }

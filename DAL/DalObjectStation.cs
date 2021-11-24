@@ -179,7 +179,22 @@ namespace IDAL
                         }
                     }
                 }
-
+                public void increaseChargeSlot(int stationId)
+                {
+                    Station temp = new Station();
+                    for (int i = 0; i < DataSource.stations.Count; i++)
+                    {
+                        Station item = IDAL.DO.DalObject.DataSource.stations[i];
+                        if (item.id == stationId)
+                        {
+                            temp.id = stationId;
+                            temp.location = item.location;
+                            temp.name = item.name;
+                            temp.numOfChargeSlots = item.numOfChargeSlots + 1;
+                            IDAL.DO.DalObject.DataSource.stations[i] = temp;
+                        }
+                    }
+                }
                 /// <summary>
                 /// return the distance between two coordinates
                 /// </summary>

@@ -32,11 +32,17 @@ namespace IDAL
         ////public int idOfAssociatedParcel(int droneId);
         //public IDAL.DO.Location theNearestToSenderStationLocation(int parcelId);
         //public IDAL.DO.Station theNearestStation(IDAL.DO.Location l);
-        public int Distance(IDAL.DO.Location a, IDAL.DO.Location b);
-        public void UpdatStation(int stationId, string newName, int numOfChargeSlots);
-        public void UpdateDrone(int droneId, string newModel);
-        public void UpdateCustomer(int customerId, string newName, string newPhone);
-        public void DecriseChargeSlot(int stationId);
+        public int distance(IDAL.DO.Location a, IDAL.DO.Location b);
+        public void updatStation(int stationId, string newName, int numOfChargeSlots);
+        public void updateDrone(int droneId, string newModel);
+        public void updateCustomer(int customerId, string newName, string newPhone);
+        public void decriseChargeSlot(int stationId);
+        public void increaseChargeSlot(int stationId);
+        public void SheduleParcelToDrone(int newParcelId,int droneId);
+        public void PickUpParcelByDrone(int droneId, int parcelId);
+        public void DeliverParcelByDrone(int droneId, int parcelId);
+
+        
 
 
 
