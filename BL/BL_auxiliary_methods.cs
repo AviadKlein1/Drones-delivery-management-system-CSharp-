@@ -12,7 +12,7 @@ namespace IBL
             /// checks if there is any unassociated parcel left
             /// </summary>
             /// returns boollean expression
-            public bool IsAnyUnassociatedParcel()
+            internal bool IsAnyUnassociatedParcel()
             {
                 var dalParcelsList = dal.GetParcels();
                 foreach(var element in dalParcelsList)
@@ -29,7 +29,7 @@ namespace IBL
             /// </summary>
             /// <param name="droneId"></param>
             /// <returns></returns>
-            public bool IsAssociatedDrone(int droneId)
+            internal bool IsAssociatedDrone(int droneId)
             {
                 var dalParcelsList = dal.GetParcels();
                 foreach(var element in dalParcelsList)
@@ -45,7 +45,7 @@ namespace IBL
             /// </summary>
             /// <param name="droneId"></param>
             /// returns parcel id
-            public int AssociatedParcelId(int droneId)
+            internal int AssociatedParcelId(int droneId)
             {
                 var dalParcelsList = dal.GetParcels();
                 foreach(var element in dalParcelsList)
@@ -62,7 +62,7 @@ namespace IBL
             /// <param name="myDroneId"></param>
             /// <param name="distance"></param>
             /// returns a number between 1 and 100
-            public double BatteryRequirementForVoyage(int myDroneId, double distance)
+            internal double BatteryRequirementForVoyage(int myDroneId, double distance)
             {
                 var dalDronesList = dal.GetDrones();
                 foreach(var element in dalDronesList)
@@ -95,7 +95,7 @@ namespace IBL
             /// </summary>
             /// <param name="parcelId"></param>
             ///  returns boolean type
-            public bool ScheduledButNotPickedUp(int parcelId)
+            internal bool ScheduledButNotPickedUp(int parcelId)
             {
                 var dalParcelsList = dal.GetParcels();
                 //search parcel
@@ -116,7 +116,7 @@ namespace IBL
             /// </summary>
             /// <param name="parcelId"></param>
             /// returns boolean type
-            public bool PickedUpButNotDeliverd(int parcelId)
+            internal bool PickedUpButNotDeliverd(int parcelId)
             {
                 var dalParcelsList = dal.GetParcels();
                 //search parcel
@@ -137,7 +137,7 @@ namespace IBL
             /// </summary>
             /// <param name="parcelId"></param>
             /// return location type (longitude, lattitude)
-            public IDAL.DO.Location SenderLocation(int parcelId)
+            internal IDAL.DO.Location SenderLocation(int parcelId)
             {
                 IDAL.DO.Location tempLocation = new IDAL.DO.Location();
                 var dalParcelsList = dal.GetParcels();
@@ -158,21 +158,21 @@ namespace IBL
                 return tempLocation;
             }
 
-            public IDAL.DO.Location ReciverLocation(int parcelId)
+            internal IDAL.DO.Location ReciverLocation(int parcelId)
             {
                 IDAL.DO.Location tempLocation = new IDAL.DO.Location();
-                var dalParcelsList = dal.getParcels();
+                var dalParcelsList = dal.GetParcels();
                 //search parcel
                 foreach (var pElement in dalParcelsList)
                 {
-                    if (pElement.id == parcelId)
+                    if (pElement.Id == parcelId)
                     {
-                        var customersList = dal.getCustomers();
+                        var customersList = dal.GetCustomers();
                         //search parcel's reciver
                         foreach (var cElement in customersList)
                         {
-                            if (cElement.id == pElement.reciverId)
-                                tempLocation = cElement.location;
+                            if (cElement.Id == pElement.ReciverId)
+                                tempLocation = cElement.Location;
                         }
                     }
                 }
@@ -185,7 +185,7 @@ namespace IBL
             /// </summary>
             /// <param name="parcelId"></param>
             /// returns station
-            public IDAL.DO.Station NearestToSenderStation(int parcelId)
+            internal IDAL.DO.Station NearestToSenderStation(int parcelId)
             {
                 IDAL.DO.Station tempStation = new IDAL.DO.Station();
                 var dalParcelsList = dal.GetParcels();
@@ -211,7 +211,7 @@ namespace IBL
             /// </summary>
             /// <param name="parcelId"></param>
             /// returns station
-            public IDAL.DO.Station NearestToSenderChargeSlot(int parcelId)
+            internal IDAL.DO.Station NearestToSenderChargeSlot(int parcelId)
             {
                 IDAL.DO.Station tempStation = new IDAL.DO.Station();
                 var dalParcelsList = dal.GetParcels();
@@ -237,7 +237,7 @@ namespace IBL
             /// </summary>
             /// <param name="locate"></param>
             /// returns station
-            public IDAL.DO.Station NearestStation(IDAL.DO.Location locate)
+            internal IDAL.DO.Station NearestStation(IDAL.DO.Location locate)
             {
                 IDAL.DO.Station tempStation = new IDAL.DO.Station();
                 var stationList = dal.GetStations();
@@ -260,7 +260,7 @@ namespace IBL
             /// </summary>
             /// <param name="l"></param>
             /// returns station
-            public IDAL.DO.Station NearestChargeSlot(IDAL.DO.Location l)
+            internal IDAL.DO.Station NearestChargeSlot(IDAL.DO.Location l)
             {
                 IDAL.DO.Station tempStation = new IDAL.DO.Station();
                 var stationList = dal.GetStations();
@@ -282,7 +282,7 @@ namespace IBL
             /// returns a list of all customers who recieved a parcel
             /// </summary>
             /// returns list of customers
-            public List<IDAL.DO.Customer> RecieversList()
+            internal List<IDAL.DO.Customer> RecieversList()
             {
                 List<IDAL.DO.Customer> temp = new List<IDAL.DO.Customer>();
                 DateTime emptyDateTime = new DateTime();
@@ -309,7 +309,7 @@ namespace IBL
             /// </summary>
             /// <param name="myDroneId"></param>
             /// <returns></returns>
-            public int ChargingLevel(int myDroneId)
+            internal int ChargingLevel(int myDroneId)
             {
                 int b = 0;
                 var v = dronesList;
@@ -326,7 +326,7 @@ namespace IBL
             /// </summary>
             /// <param name="stationId"></param>
             /// <returns></returns>
-            public int NumofOccupiedChargeSlots(int stationId)
+            internal int NumofOccupiedChargeSlots(int stationId)
             {
                 var dalStationsList = dal.GetStations();
                 var myStationLocation = new Location();
@@ -347,12 +347,13 @@ namespace IBL
             }
 
             /// <summary>
-            /// 
+            /// giving a parcel and acustomer,
+            /// return the other side of the dekivery (sender/reciever)
             /// </summary>
             /// <param name="parcelId"></param>
             /// <param name="customerId"></param>
             /// <returns></returns>
-            public CustomerInParcel TheOtherSide(int parcelId, int customerId)
+            internal CustomerInParcel TheOtherSide(int parcelId, int customerId)
             {
                 var parcelsList = dal.GetParcels();
                 CustomerInParcel other = new CustomerInParcel();
@@ -386,7 +387,7 @@ namespace IBL
             /// <param name="l"></param>
             /// <param name="myDroneId"></param>
             /// <returns></returns>
-            public IDAL.DO.Station NearestReachableChargeSlot(IDAL.DO.Location l, int myDroneId)
+            internal IDAL.DO.Station NearestReachableChargeSlot(IDAL.DO.Location l, int myDroneId)
             {
                 IDAL.DO.Station tempStation = new IDAL.DO.Station();
                 var stationList = dal.GetStations();
@@ -405,7 +406,13 @@ namespace IBL
                 }
                 return tempStation;
             }
-            public int suitableParcel(int droneId)
+
+            /// <summary>
+            /// find next parcel to deliver
+            /// </summary>
+            /// <param name="droneId"></param>
+            /// <returns></returns>
+            internal int SuitableParcel(int droneId)
             {
                 var v = dronesList;
                 IDAL.DO.MyEnums.WeightCategory myDroneWeight = new IDAL.DO.MyEnums.WeightCategory();
@@ -424,83 +431,109 @@ namespace IBL
                 }
                 // start searching
                 List<IDAL.DO.Parcel> notSuitableParcels = new List<IDAL.DO.Parcel>();
-                var dalParcelsList = dal.getParcels();
+                var dalParcelsList = dal.GetParcels();
 
                 foreach (var item in dalParcelsList) // remove not suitable weight
                 {
-                    if(item.weight > myDroneWeight)
+                    if(item.Weight > myDroneWeight)
                     {
                         notSuitableParcels.Add(item);
                     }
                 }
                 foreach (var item in dalParcelsList)
                 {
-                    // in the high priority, and not at our list
-                    if(item.priority == HighPriority(dalParcelsList, notSuitableParcels) &&
-                        ISNotAt_NotSuitableParcels(notSuitableParcels, item))
+                    //in high priority, and not at our list
+                    if(item.Priority == HighestPriority(dalParcelsList, notSuitableParcels) &&
+                        IsSuitable(notSuitableParcels, item))
                     {
                         // the nearest parcel
-                        tempParcel = theNearestParcel(dalParcelsList, myDroneLocation, notSuitableParcels);
+                        tempParcel = TheNearestParcel(dalParcelsList, myDroneLocation, notSuitableParcels);
                         //if we have enough battery
-                        var senderLocation = SenderLocation(tempParcel.id);
-                        var reciverLocation = ReciverLocation(tempParcel.id);
-                        var chargeStation = theNearestAvailableChargeSlot(reciverLocation);
+                        var senderLocation = SenderLocation(tempParcel.Id);
+                        var reciverLocation = ReciverLocation(tempParcel.Id);
+                        var chargeStation = NearestChargeSlot(reciverLocation);
 
-                        var dis1 = dal.distance(myDroneLocation, senderLocation);
-                        var dis2 = dal.distance(senderLocation, reciverLocation);
-                        var dis3 = dal.distance(reciverLocation, chargeStation.location);
+                        var dis1 = dal.Distance(myDroneLocation, senderLocation);
+                        var dis2 = dal.Distance(senderLocation, reciverLocation);
+                        var dis3 = dal.Distance(reciverLocation, chargeStation.Location);
                         var fullDistance = dis1 + dis2 + dis3;
 
                         double Consumption = 0;
-                        if (tempParcel.weight == IDAL.DO.MyEnums.WeightCategory.light) Consumption = lightWeight;
-                        if (tempParcel.weight == IDAL.DO.MyEnums.WeightCategory.medium) Consumption = mediumWeight;
-                        if (tempParcel.weight == IDAL.DO.MyEnums.WeightCategory.heavy) Consumption = heavyWeight;
-                        //
+                        if (tempParcel.Weight == IDAL.DO.MyEnums.WeightCategory.light) Consumption = lightWeight;
+                        if (tempParcel.Weight == IDAL.DO.MyEnums.WeightCategory.medium) Consumption = mediumWeight;
+                        if (tempParcel.Weight == IDAL.DO.MyEnums.WeightCategory.heavy) Consumption = heavyWeight;
+                        
                         if (myDroneBattery < (fullDistance * Consumption))
                             notSuitableParcels.Add(item);
-                        else return tempParcel.id;
+                        else 
+                            return tempParcel.Id;
                     }
                 }
-                Console.WriteLine(" not suitable parcel\n");
+                Console.WriteLine("no suitable parcel\n");
                 return 0;
             }
-            public bool ISNotAt_NotSuitableParcels(List<IDAL.DO.Parcel> list, IDAL.DO.Parcel myParcel)
+
+            /// <summary>
+            /// giving a parcel, determines wether it is suitable for next delivery 
+            /// </summary>
+            /// <param name="list"></param>
+            /// <param name="myParcel"></param>
+            /// <returns></returns> a boolean type
+            internal bool IsSuitable(List<IDAL.DO.Parcel> list, IDAL.DO.Parcel myParcel)
             {
                 bool flag = true;
+                //search parcel in list of unsuitable parcels
                 foreach (var item in list)
                 {
-                    if (item.id == myParcel.id)
+                    if (item.Id == myParcel.Id)
                         flag = false;
                 }
                 return flag;
             }
-            public IDAL.DO.MyEnums.PriorityLevel HighPriority(IEnumerable<IDAL.DO.Parcel> dalParcelsList, List<IDAL.DO.Parcel> notSuatableList)
+
+            /// <summary>
+            /// returns the current highest priority on parcels list 
+            /// </summary>
+            /// <param name="dalParcelsList"></param>
+            /// <param name="notSuatableList"></param>
+            /// <returns></returns>
+            internal IDAL.DO.MyEnums.PriorityLevel HighestPriority(IEnumerable<IDAL.DO.Parcel> dalParcelsList, List<IDAL.DO.Parcel> notSuatableList)
             {
                 IDAL.DO.MyEnums.PriorityLevel max = IDAL.DO.MyEnums.PriorityLevel.regular;
                 foreach (var item in dalParcelsList)
                 {
-                    if(item.priority > max && ISNotAt_NotSuitableParcels(notSuatableList, item))
-                    {
-                        max = item.priority;
-                    }
+                    //if higher priority
+                    if(item.Priority > max && IsSuitable(notSuatableList, item))
+                        max = item.Priority;
                 }
                 return max;
             }
-            public IDAL.DO.Parcel theNearestParcel(IEnumerable<IDAL.DO.Parcel> dalParcelsList,IDAL.DO.Location myDroneLocation, List<IDAL.DO.Parcel> notSuatableList)
+
+            /// <summary>
+            /// returns the nearest parcel to current location
+            /// </summary>
+            /// <param name="dalParcelsList"></param>
+            /// <param name="myDroneLocation"></param>
+            /// <param name="notSuatableList"></param>
+            /// <returns></returns>
+            internal IDAL.DO.Parcel TheNearestParcel(IEnumerable<IDAL.DO.Parcel> dalParcelsList,IDAL.DO.Location myDroneLocation, List<IDAL.DO.Parcel> notSuatableList)
             {
                 IDAL.DO.Parcel temp = new IDAL.DO.Parcel();
                 var min = 9999999999;
+                //search for neartest parcel
                 foreach (var item in dalParcelsList)
                 {
-                    var dis =dal.distance(SenderLocation(item.id), myDroneLocation);
-                    if (dis < min && ISNotAt_NotSuitableParcels(notSuatableList, item))
+                    var dis = dal.Distance(SenderLocation(item.Id), myDroneLocation);
+                    if (dis < min && IsSuitable(notSuatableList, item))
                         min = dis;
                 }
+                //find chosen parcel
                 foreach (var item in dalParcelsList)
                 {
-                    if (min == dal.distance(SenderLocation(item.id), myDroneLocation))
+                    if (min == dal.Distance(SenderLocation(item.Id), myDroneLocation))
                         return item;
                 }
+                //return parcel
                 return temp;
             }
         }

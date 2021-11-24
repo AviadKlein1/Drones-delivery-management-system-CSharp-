@@ -16,6 +16,20 @@ namespace IBL
             public WrongIdException(int id, string message, Exception innerException) :
                 base(message, innerException) => ID = id;
             public override string ToString() => base.ToString() + $", wrong id: {ID}";
-        }
+        } 
+
+        /// <summary>
+        /// occupied drone exception
+        /// </summary>
+        [Serializable]
+        public class OccupiedDroneException : Exception
+        {
+            public int ID;
+            public OccupiedDroneException(int id) : base() => ID = id;
+            public OccupiedDroneException(int id, string message) : base(message) => ID = id;
+            public OccupiedDroneException(int id, string message, Exception innerException) :
+                base(message, innerException) => ID = id;
+            public override string ToString() => base.ToString() + $", drone id occupied, try another: {ID}";
+        } 
     }
 }

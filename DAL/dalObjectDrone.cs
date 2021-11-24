@@ -16,9 +16,9 @@ namespace IDAL
                 /// </summary>
                 public void AddDrone(Drone myDrone)
                 {
-                    for (int i = 0; i < IDAL.DO.DalObject.DataSource.drones.Count; i++)
+                    for(int i = 0; i < IDAL.DO.DalObject.DataSource.drones.Count; i++)
                         //if drone already exist
-                        if (IDAL.DO.DalObject.DataSource.drones[i].Id == myDrone.Id)
+                        if(IDAL.DO.DalObject.DataSource.drones[i].Id == myDrone.Id)
                             throw new ExcistingIdException(myDrone.Id, $"drone already exist: {myDrone.Id}");
                     //insert drone to list
                     IDAL.DO.DalObject.DataSource.drones.Add(myDrone);
@@ -72,14 +72,15 @@ namespace IDAL
                         }
                     }
                 }
+               
 
                 /// <summary>
                 /// send drone to charge slot
                 /// </summary>
                 /// <param name="droneId"></param>
                 /// <param name="stationId"></param>
-                public void sendToCharge(int droneId, int stationId)
-                {
+               public void sendToCharge(int droneId, int stationId)
+               {
                     //    //create a new item "drone charge"
                     //    IDAL.DO.DroneCharge myDroneCharge = new DroneCharge();
                     //    int j = 0;

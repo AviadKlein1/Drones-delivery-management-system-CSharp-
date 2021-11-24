@@ -78,11 +78,11 @@ namespace IDAL
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
                     {
                         //search parcel
-                        if (IDAL.DO.DalObject.DataSource.parcels[i].id == newParcelId)
+                        if (IDAL.DO.DalObject.DataSource.parcels[i].Id == newParcelId)
                         {
                             temp = IDAL.DO.DalObject.DataSource.parcels[i];
-                            temp.scheduled = DateTime.Now;
-                            temp.droneId = droneId;
+                            temp.Scheduled = DateTime.Now;
+                            temp.DroneId = droneId;
                             IDAL.DO.DalObject.DataSource.parcels[i] = temp;
                         }
                     }
@@ -94,10 +94,10 @@ namespace IDAL
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
                     {
                         //search parcel
-                        if (IDAL.DO.DalObject.DataSource.parcels[i].id == parcelId)
+                        if (IDAL.DO.DalObject.DataSource.parcels[i].Id == parcelId)
                         {
                             temp = IDAL.DO.DalObject.DataSource.parcels[i];
-                            temp.pickedUp = DateTime.Now;
+                            temp.PickedUp = DateTime.Now;
                             IDAL.DO.DalObject.DataSource.parcels[i] = temp;
                         }
                     }
@@ -108,10 +108,10 @@ namespace IDAL
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
                     {
                         //search parcel
-                        if (IDAL.DO.DalObject.DataSource.parcels[i].id == parcelId)
+                        if (IDAL.DO.DalObject.DataSource.parcels[i].Id == parcelId)
                         {
                             temp = IDAL.DO.DalObject.DataSource.parcels[i];
-                            temp.delivered = DateTime.Now;
+                            temp.Delivered = DateTime.Now;
                             IDAL.DO.DalObject.DataSource.parcels[i] = temp;
                         }
                     }

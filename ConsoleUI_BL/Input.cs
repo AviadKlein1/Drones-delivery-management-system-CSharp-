@@ -6,7 +6,7 @@ namespace ConsoleUI_BL
     /// <summary>
     /// recieves details of items from user, and returns item
     /// </summary>
-    public class InputOutput
+    public class Input
     {
         public Random rd = new Random();
 

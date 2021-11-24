@@ -14,7 +14,7 @@ namespace ConsoleUI_BL
         {
             IBL.BO.BL bl = new IBL.BO.BL();
 
-            ConsoleUI_BL.InputOutput myInputOutput = new ConsoleUI_BL.InputOutput();
+            ConsoleUI_BL.Input myInputOutput = new ConsoleUI_BL.Input();
 
             Console.WriteLine("\n-- Welcome to -- Delivery by Drones --  System management interface --\n\n");
 
@@ -70,17 +70,17 @@ namespace ConsoleUI_BL
                                 }
                             }
                             break;
-
+                        
+                        //updates
                         case 2:
-                            //update
                             while (choice2 != 0)
                             {
-                                Console.WriteLine("To update dorne's data enter 1" + 
-                                "\nTo update stations's data enter 2" +
+                                Console.WriteLine("To update drone's data enter 1" + 
+                                "\nTo update station's data enter 2" +
                                 "\nTo update customer's data enter 3" +
-                                "\nTo send drone to charge enter 4" +
+                                "\nTo charge drone enter 4" +
                                 "\nTo end drone charge enter 5" +
-                                "\nTo shedule parcel to drone enter 6" +
+                                "\nTo schedule a delivery enter 6" +
                                 "\nTo pick-up parcel enter 7" +
                                 "\nTo deliver parcel enter 8" +
                                 "\nTo return to main menu enter 0\n");
@@ -91,16 +91,17 @@ namespace ConsoleUI_BL
 
                                 switch (choice2)
                                 {
+                                    //update dron's data
                                     case 1:
                                         Console.WriteLine("enter drone id:\n");
                                         int.TryParse(Console.ReadLine(), out id);
                                         Console.WriteLine("enter new model:\n");
                                         string1 = Console.ReadLine();
-                                        var flag1 = bl.updatDrone(id, string1);
+                                        var flag1 = bl.UpdateDrone(id, string1);
                                         if (flag1)
                                             Console.WriteLine("successfully updated\n");
                                         else
-                                            Console.WriteLine("not successfully updated\n");
+                                            Console.WriteLine("update failed\n");
                                         break;
 
                                    case 2:
@@ -110,11 +111,11 @@ namespace ConsoleUI_BL
                                         string1 = Console.ReadLine();
                                         Console.WriteLine("enter amount of charge slots:\n");
                                         int.TryParse(Console.ReadLine(), out cin1);
-                                        var flag2 = bl.updatStation(id, string1, cin1);
+                                        var flag2 = bl.UpdateStation(id, string1, cin1);
                                         if (flag2)
                                             Console.WriteLine("successfully updated\n");
                                         else
-                                            Console.WriteLine("not successfully updated\n");
+                                            Console.WriteLine("update failed\n");
                                         break;
 
                                     case 3:
@@ -124,44 +125,44 @@ namespace ConsoleUI_BL
                                         string1 = Console.ReadLine();
                                         Console.WriteLine("enter new phone:\n");
                                         string2 = Console.ReadLine();
-                                        var flag3 = bl.updateCustomer(id, string1, string2);
+                                        var flag3 = bl.UpdateCustomer(id, string1, string2);
                                         if (flag3)
                                             Console.WriteLine("successfully updated\n");
                                         else
-                                            Console.WriteLine("not successfully updated\n");
+                                            Console.WriteLine("update failed failed\n");
                                         break;
 
                                     case 4:
                                         Console.WriteLine("enter drone id:\n");
                                         int.TryParse(Console.ReadLine(), out id);
                                        
-                                        var flag4 = bl.sendDroneToCharge(id);
+                                        var flag4 = bl.ChargeDrone(id);
                                         if (flag4)
                                             Console.WriteLine("successfully updated\n");
                                         else
-                                            Console.WriteLine("not successfully updated\n");
+                                            Console.WriteLine("update failed failed\n");
                                         break;
 
                                     case 5:
                                         Console.WriteLine("enter drone id:\n");
                                         int.TryParse(Console.ReadLine(), out id);
-                                        Console.WriteLine("enter charge - time (in minutes) id:\n");
+                                        Console.WriteLine("enter required charging duration (in minutes):\n");
                                         int.TryParse(Console.ReadLine(), out cin1);
                                         var flag5 = bl.ReleaseDroneFromCharge(id, cin1);
                                         if (flag5)
                                             Console.WriteLine("successfully updated\n");
                                         else
-                                            Console.WriteLine("not successfully updated\n");
+                                            Console.WriteLine("update failed\n");
                                         break;
 
                                     case 6:
                                         Console.WriteLine("enter drone id:\n");
                                         int.TryParse(Console.ReadLine(), out id);
-                                        var flag6 = bl.SheduleParcelToDrone(id);
+                                        var flag6 = bl.ScheduleParcelToDrone(id);
                                         if (flag6)
                                             Console.WriteLine("successfully updated\n");
                                         else
-                                            Console.WriteLine("not successfully updated\n");
+                                            Console.WriteLine("update failed\n");
                                         break;
                                     case 7:
                                         Console.WriteLine("enter drone id:\n");
@@ -170,7 +171,7 @@ namespace ConsoleUI_BL
                                         if (flag7)
                                             Console.WriteLine("successfully updated\n");
                                         else
-                                            Console.WriteLine("not successfully updated\n");
+                                            Console.WriteLine("update failed\n");
                                         break;
                                     case 8:
                                         Console.WriteLine("enter drone id:\n");
@@ -179,12 +180,14 @@ namespace ConsoleUI_BL
                                         if (flag8)
                                             Console.WriteLine("successfully updated\n");
                                         else
-                                            Console.WriteLine("not successfully updated\n");
+                                            Console.WriteLine("update failed\n");
                                         break;
                                 }
                             }
-                                break;
-                                    case 3:
+                        break;
+                        
+                        //display item
+                        case 3:
                             while (choice2 != 0)
                             {
                                 Console.WriteLine("To display a station enter 1" +
@@ -195,7 +198,7 @@ namespace ConsoleUI_BL
                                 int.TryParse(Console.ReadLine(), out choice2);
                                 switch (choice2)
                                 {
-                                    //dusplay station
+                                    //display station
                                     case 1:
                                         Console.WriteLine("enter station id\n");
                                         int.TryParse(Console.ReadLine(), out id);

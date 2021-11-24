@@ -4,7 +4,9 @@ namespace IDAL
 {
     namespace DO
     {
-        //wrong id exception
+        /// <summary>
+        /// wrong id exeption
+        /// </summary>
         [Serializable]
         public class WrongIdException : Exception
         {

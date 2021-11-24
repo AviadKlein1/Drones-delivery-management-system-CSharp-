@@ -111,7 +111,7 @@ namespace IDAL
                     temp = IDAL.DO.DalObject.DataSource.stations;
                     return temp;
                 }
-                public void UpdatStation(int stationId, string newName, int numOfChargeSlots)
+                public void UpdateStation(int stationId, string newName, int numOfChargeSlots)
                 {
                     Station temp = new Station();
                     for (int i = 0; i < DataSource.stations.Count; i++)
@@ -185,12 +185,12 @@ namespace IDAL
                     for (int i = 0; i < DataSource.stations.Count; i++)
                     {
                         Station item = IDAL.DO.DalObject.DataSource.stations[i];
-                        if (item.id == stationId)
+                        if (item.Id == stationId)
                         {
-                            temp.id = stationId;
-                            temp.location = item.location;
-                            temp.name = item.name;
-                            temp.numOfChargeSlots = item.numOfChargeSlots + 1;
+                            temp.Id = stationId;
+                            temp.Location = item.Location;
+                            temp.Name = item.Name;
+                            temp.NumOfChargeSlots = item.NumOfChargeSlots + 1;
                             IDAL.DO.DalObject.DataSource.stations[i] = temp;
                         }
                     }
