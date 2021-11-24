@@ -222,7 +222,6 @@ namespace ConsoleUI_BL
                                         int.TryParse(Console.ReadLine(), out id);
                                         Console.WriteLine(bl.DisplayParcel(id));
                                         break;
-
                                     default:
                                         break;
                                 }
