@@ -178,44 +178,44 @@ namespace IBL
                     Console.WriteLine("not such drone\n");
                     return false;
                 }
-                if (! ScheduledButNotPickedUp(idOfThisParcel))
+                if (ScheduledButNotPickedUp(idOfThisParcel))// exeption
                 {
-                    System.Console.WriteLine("this parcel is not in the right status\n");
-                }
-                var parcelsList = dal.getParcels();
-                foreach (var item in parcelsList)
-                {
-                    //find our parcel
-                    if(item.id == idOfThisParcel)
+
+                    var parcelsList = dal.getParcels();
+                    foreach (var item in parcelsList)
                     {
-                        // our parcel belong to our drone
-                        if (item.droneId == droneId)
+                        //find our parcel
+                        if (item.id == idOfThisParcel)
                         {
-                            ourSenderLocation = SenderLocation(item.id);
-                            //update parcel
-                            dal.PickUpParcelByDrone(droneId, item.id);
-                            flag = true;
-                            //update drone
-                            DroneToList temp = new DroneToList();
-                            for (int i = 0; i < v.Count; i++)
+                            // our parcel belong to our drone
+                            if (item.droneId == droneId)
                             {
-                                DroneToList dItem = v[i];
-                                if (dItem.id == droneId)
+                                ourSenderLocation = SenderLocation(item.id);
+                                //update parcel
+                                dal.PickUpParcelByDrone(droneId, item.id);
+                                flag = true;
+                                //update drone
+                                DroneToList temp = new DroneToList();
+                                for (int i = 0; i < v.Count; i++)
                                 {
-                                    temp.id = dItem.id;
-                                    temp.model = dItem.model;
-                                    temp.location = new Location(ourSenderLocation);
-                                    temp.status = dItem.status;
-                                    temp.weight = dItem.weight;
-                                    temp.deliveredParcelId = item.id;
-                                    IDAL.DO.Location earlyDroneLocation = new IDAL.DO.Location(dItem.location.longitude, dItem.location.lattitude);
-                                    // update battery
-                                    temp.battery = (temp.battery - (int)BatteryRequirementForVoyage(droneId, dal.distance(earlyDroneLocation, ourSenderLocation)));
-                                    v[i] = temp;
+                                    DroneToList dItem = v[i];
+                                    if (dItem.id == droneId)
+                                    {
+                                        temp.id = dItem.id;
+                                        temp.model = dItem.model;
+                                        temp.location = new Location(ourSenderLocation);
+                                        temp.status = dItem.status;
+                                        temp.weight = dItem.weight;
+                                        temp.deliveredParcelId = item.id;
+                                        IDAL.DO.Location earlyDroneLocation = new IDAL.DO.Location(dItem.location.longitude, dItem.location.lattitude);
+                                        // update battery
+                                        temp.battery = (temp.battery - (int)BatteryRequirementForVoyage(droneId, dal.distance(earlyDroneLocation, ourSenderLocation)));
+                                        v[i] = temp;
+                                    }
                                 }
                             }
+                            else System.Console.WriteLine("not our parcel");
                         }
-                        else System.Console.WriteLine("not our parcel");
                     }
                 }
                 return flag;
@@ -281,7 +281,6 @@ namespace IBL
                     }
                 }
                 return flag;
-
             }
         }
     }
