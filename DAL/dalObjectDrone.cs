@@ -49,7 +49,7 @@ namespace IDAL
                 }
 
                 /// <summary>
-                /// print all drones
+                /// return all drones
                 /// </summary>
                 public IEnumerable<Drone> GetDrones()
                 {
@@ -57,6 +57,11 @@ namespace IDAL
                     temp = IDAL.DO.DalObject.DataSource.drones;
                     return temp;
                 }
+                /// <summary>
+                /// update model in drone
+                /// <param name="droneId"></param>
+                /// <param name="newModel"></param>
+                /// </summary>
                 public void UpdateDrone(int droneId, string newModel)
                 {
                     Drone temp = new Drone();
@@ -72,70 +77,7 @@ namespace IDAL
                         }
                     }
                 }
-               
-
-                /// <summary>
-                /// send drone to charge slot
-                /// </summary>
-                /// <param name="droneId"></param>
-                /// <param name="stationId"></param>
-               public void sendToCharge(int droneId, int stationId)
-               {
-                    //    //create a new item "drone charge"
-                    //    IDAL.DO.DroneCharge myDroneCharge = new DroneCharge();
-                    //    int j = 0;
-                    //    while (IDAL.DO.DalObject.DataSource.drones[j].id != droneId)
-                    //        j++;
-                    //    //update drone status - maintenance
-                    //    IDAL.DO.DalObject.DataSource.drones[j].status = MyEnums.DroneStatus.maintenance;
-                    //    myDroneCharge.droneId = IDAL.DO.DalObject.DataSource.drones[j].id;
-
-                    //    //int k = 0;
-                    //    //while (IDAL.DO.DalObject.DataSource.stations[k].id != stationId)
-                    //    //    k++;
-
-                    //    //myDroneCharge.stationId = IDAL.DO.DalObject.DataSource.stations[k].id;
-                    //    for (int i = 0; i < IDAL.DO.DalObject.DataSource.stations.Count; i++)
-                    //    {
-                    //        if (IDAL.DO.DalObject.DataSource.stations[i].id == stationId)
-                    //        {
-                    //            IDAL.DO.Station temp = IDAL.DO.DalObject.DataSource.stations[i];
-                    //            temp.id = stationId;
-                    //            //update number of available charge slots in station
-                    //            temp.numOfAvailableChargeSlots--;
-                    //            IDAL.DO.DalObject.DataSource.stations[i] = temp;
-                    //        }
-                    //    }
-                    //    IDAL.DO.DalObject.DataSource.droneCharges.Add( myDroneCharge);
-                }
-                /// <summary>
-                /// report drone ended charging
-                /// </summary>
-                /// <param name="droneId"></param>
-                /// <param name="stationId"></param>
-                public void endCharge(int droneId, int stationId)
-                {
-                    //int j = 0;
-                    //while (IDAL.DO.DalObject.DataSource.drones[j].id != droneId)
-                    //    j++;
-                    ////update drone status to available
-                    //IDAL.DO.DalObject.DataSource.drones[j].status = MyEnums.DroneStatus.available;
-
-                    ////int k = 0;
-                    ////while (IDAL.DO.DalObject.DataSource.stations[k].id != stationId)
-                    ////    k++;
-                    //for (int i = 0; i < IDAL.DO.DalObject.DataSource.stations.Count; i++)
-                    //{
-                    //    if (IDAL.DO.DalObject.DataSource.stations[i].id == stationId)
-                    //    {
-                    //        IDAL.DO.Station temp = IDAL.DO.DalObject.DataSource.stations[i];
-                    //        //update number of available charge slots in station
-                    //        temp.numOfAvailableChargeSlots++;
-                    //        IDAL.DO.DalObject.DataSource.stations[i] = temp;
-                    //    }
-                    //}
-                }
-
+              
                 /// <summary>
                 /// returns an array contains electricity consumption data
                 /// </summary>

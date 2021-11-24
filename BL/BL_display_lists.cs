@@ -7,15 +7,15 @@ namespace IBL
         /// <summary>
         /// display list of items
         /// </summary>
-        public partial class BL
+        public partial class BL : IBl
         {
             /// <summary>
             /// display stations list
             /// </summary>
             /// <returns></returns> return list of stations
-            public List<StationToList> DisplayStations()
+            public List<IBL.BO.StationToList> DisplayStations()
             {
-                List<StationToList> tmp1 = new List<StationToList>();
+                List<IBL.BO.StationToList> tmp1 = new List<IBL.BO.StationToList>();
                 var v = dal.GetStations();
                 foreach (var element in v)
                 {
@@ -36,7 +36,7 @@ namespace IBL
             /// display drones list
             /// </summary>
             /// <returns></returns> reyurn list of drones
-            public List<DroneToList> DisplayDrones()
+            public List<IBL.BO.DroneToList> DisplayDrones()
             {
                 var v = dronesList;
                 return v;
@@ -46,9 +46,9 @@ namespace IBL
             /// display customers list
             /// </summary>
             /// <returns></returns> return list of customers
-            public List<CustomerToList> DisplayCustomers()
+            public List<IBL.BO.CustomerToList> DisplayCustomers()
             {
-                List<CustomerToList> tmp1 = new List<CustomerToList>();
+                List<IBL.BO.CustomerToList> tmp1 = new List<IBL.BO.CustomerToList>();
                 List<IDAL.DO.Customer> tmp2 = new List<IDAL.DO.Customer>();
                 var v = dal.GetCustomers();
                 foreach (var element in v)
@@ -66,9 +66,9 @@ namespace IBL
             /// display parcels list
             /// </summary>
             /// <returns></returns> return list of parcels
-            public List<ParcelToList> DisplayParcels()
+            public List<IBL.BO.ParcelToList> DisplayParcels()
             {
-                List<ParcelToList> tmp1 = new List<ParcelToList>();
+                List<IBL.BO.ParcelToList> tmp1 = new List<IBL.BO.ParcelToList>();
                 List<IDAL.DO.Parcel> tmp2 = new List<IDAL.DO.Parcel>();
                 var v = dal.GetParcels();
                 foreach (var element in v)
@@ -100,15 +100,15 @@ namespace IBL
             /// display unassociated parcels list
             /// </summary>
             /// <returns></returns> return list of parcels
-            public List<ParcelToList> DisplayUnassociatedParcels()
+            public List<IBL.BO.ParcelToList> DisplayUnassociatedParcels()
             {
-                List<ParcelToList> tmp1 = new List<ParcelToList>();
+                List<IBL.BO.ParcelToList> tmp1 = new();
                 var v = dal.GetParcels();
                 foreach (var element in v)
                 {
                     if (element.DroneId == 0)
                     {
-                        ParcelToList myParcel = new ParcelToList();
+                        ParcelToList myParcel = new();
                         myParcel.Id = element.Id;
                         myParcel.Weight = element.Weight;
                         myParcel.Priority = element.Priority;
@@ -134,10 +134,9 @@ namespace IBL
             /// display available for charge stations list
             /// </summary>
             /// <returns></returns> return list of stations
-            public List<StationToList> DisplayAvailableStations()
+            public List<IBL.BO.StationToList> DisplayAvailableStations()
             {
-                List<StationToList> tmp1 = new List<StationToList>();
-                List<IDAL.DO.Station> tmp2 = new List<IDAL.DO.Station>();
+                List<IBL.BO.StationToList> tmp1 = new();
                 var v = dal.GetStations();
                 foreach (var element in v)
                 {

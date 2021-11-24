@@ -7,10 +7,10 @@ namespace IBL
         /// <summary>
         /// add item to stock
         /// </summary>
-        public partial class BL
+        public partial class BL : IBl
         {
             //add station
-            public void addStation(Station myStation)
+            public void AddStation(Station myStation)
             {
                 //create new station
                 IDAL.DO.Station temp = new IDAL.DO.Station();
@@ -33,7 +33,7 @@ namespace IBL
             }
 
             //add drone
-            public void addDrone(Drone myDrone)
+            public void AddDrone(Drone myDrone)
             {
                 //create new drone
                 IDAL.DO.Drone temp = new IDAL.DO.Drone();
@@ -53,11 +53,11 @@ namespace IBL
                 }
 
                 //add new drone to list of drones (BL) 
-                dronesList.Add(addDroneToBLList(myDrone));
+                dronesList.Add(AddDroneToBLList(myDrone));
             }
 
             //add drone (BL)
-            public DroneToList addDroneToBLList(Drone myDrone)
+            public DroneToList AddDroneToBLList(Drone myDrone)
             {
                 //add drone to list (BL)
                 DroneToList myDronesToList = new DroneToList();
@@ -73,7 +73,7 @@ namespace IBL
             }
 
             //add customer
-            public void addcustomer(Customer myCustomer)
+            public void Addcustomer(Customer myCustomer)
             {
                 //create new customer
                 IDAL.DO.Customer temp = new IDAL.DO.Customer();
@@ -95,7 +95,7 @@ namespace IBL
             }
 
             //add parcel
-            public void addParcel(Parcel myParcel)
+            public void AddParcel(Parcel myParcel)
             {
                 IDAL.DO.Parcel temp = new IDAL.DO.Parcel();
 

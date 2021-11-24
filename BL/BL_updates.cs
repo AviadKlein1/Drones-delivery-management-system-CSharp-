@@ -30,7 +30,7 @@ namespace IBL
                 }
                 if (flag == true)
                 {
-                    dal.Update_Drone(droneId, newModel);
+                    dal.UpdateDrone(droneId, newModel);
                     foreach (var dItem in dronesList)
                     {
                         if (dItem.id == droneId)
@@ -66,7 +66,7 @@ namespace IBL
                     }
                 }
                 if(flag == true)
-                    dal.Update_Station(stationId, newName, numOfChargeSlots);
+                    dal.UpdateStation(stationId, newName, numOfChargeSlots);
                 else
                     throw new WrongIdException(stationId, $"wrong id: {stationId}");
             }
@@ -92,14 +92,14 @@ namespace IBL
                     }
                 }
                 if (flag == true)
-                    dal.Update_Customer(customerId, newName, newPhone);
+                    dal.UpdateCustomer(customerId, newName, newPhone);
                 else
                     throw new WrongIdException(customerId, $"wrong id: {customerId}");
                 return flag;
             }
 
             /// <summary>
-            /// 
+            /// get drone and ssend it to charge. if succsses return true
             /// </summary>
             /// <param name="droneId"></param>
             /// <returns></returns>
@@ -148,7 +148,7 @@ namespace IBL
             }
 
             /// <summary>
-            /// end drone charge
+            /// end drone charge. if succsses return true
             /// </summary>
             /// <param name="droneId"></param>
             /// <param name="chargeTime"></param>
@@ -170,7 +170,7 @@ namespace IBL
                         {
                             IDAL.DO.Location itemLocation = new IDAL.DO.Location(item.location.longitude, item.location.lattitude);
                             var tempStation = NearestStation(itemLocation);
-                            dal.increaseChargeSlot(tempStation.Id);
+                            dal.IncreaseChargeSlot(tempStation.Id);
 
                             foreach (var dItem in dronesList)
                             {
@@ -189,7 +189,7 @@ namespace IBL
                 return flag;
             }
             /// <summary>
-            /// associate drone with parcel
+            /// associate drone with parcel. if succsses return true
             /// </summary>
             /// <param name="droneId"></param>
             /// <returns></returns>
@@ -221,13 +221,13 @@ namespace IBL
                 }
                 return flag;
             }
-            
+
             /// <summary>
-            /// pick up parcel from sender
+            /// pick up parcel from sender. if succsses return true
             /// </summary>
             /// <param name="droneId"></param>
             /// <returns></returns>
-            public void PickUpParcelByDrone(int droneId)
+            public bool PickUpParcelByDrone(int droneId)
             {
                 var flag = false;
                 var droneExistFlag = false;
@@ -291,7 +291,7 @@ namespace IBL
             }
 
             /// <summary>
-            /// deliver parcel to reciever
+            /// deliver parcel to reciever. if succsses return true
             /// </summary>
             /// <param name="droneId"></param>
             /// <returns></returns>

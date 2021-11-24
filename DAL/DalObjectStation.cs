@@ -31,52 +31,6 @@ namespace IDAL
                 }
 
                 /// <summary>
-                /// associate parcel with specific drone
-                /// </summary>
-                public void paracelToDrone(int parcelId)
-                {
-                    //search and available drone 
-                    //int i;
-                    //bool flag = false;
-                    //for (i = 0; i < IDAL.DO.DalObject.DataSource.drones.Count; i++)
-                    //    if(IDAL.DO.DalObject.DataSource.drones[i].status == MyEnums.DroneStatus.available)
-                    //    {
-                    //        flag = true;
-                    //        break;
-                    //    }
-                    ////if available
-                    //if (flag)
-                    //{
-                    //    IDAL.DO.Drone temp = IDAL.DO.DalObject.DataSource.drones[i];
-                    //    temp.status = MyEnums.DroneStatus.delivery;
-                    //    IDAL.DO.DalObject.DataSource.drones[i] = temp;
-
-                    //    //change status to delivery
-                    //    //IDAL.DO.DalObject.DataSource.drones[i].status = MyEnums.DroneStatus.delivery;
-                    //    //search parcel
-                    //    //int j = 0;
-                    //    //while (IDAL.DO.DalObject.DataSource.parcels[j].id != parcelId)
-                    //    //    j++;
-                    //    ////belong parcel
-                    //    //IDAL.DO.DalObject.DataSource.parcels[j].droneId = IDAL.DO.DalObject.DataSource.drones[i].id;
-
-                    //    //drones at i
-                    //    //parcels at j
-                    //    for (int j = 0; j < IDAL.DO.DalObject.DataSource.parcels.Count; j++)
-                    //    {
-                    //        if (IDAL.DO.DalObject.DataSource.parcels[j].id == parcelId)
-                    //        {
-                    //            IDAL.DO.Parcel temp2 = IDAL.DO.DalObject.DataSource.parcels[i];
-                    //            temp2.droneId = IDAL.DO.DalObject.DataSource.drones[i].id;
-                    //            //update scheduled time
-                    //            temp2.scheduled = DateTime.Now;
-                    //            IDAL.DO.DalObject.DataSource.parcels[j] = temp2;
-                    //        }
-                    //    }
-                    //}
-                }
-
-                /// <summary>
                 /// return station by its id
                 /// </summary>
                 /// <param name="myId"></param>
@@ -111,6 +65,12 @@ namespace IDAL
                     temp = IDAL.DO.DalObject.DataSource.stations;
                     return temp;
                 }
+                /// <summary>
+                /// update name and number of charge slots in station
+                /// <param name="stationId"></param>
+                /// <param name="newName"></param>
+                /// <param name="numOfChargeSlots"></param>
+                /// </summary>
                 public void UpdateStation(int stationId, string newName, int numOfChargeSlots)
                 {
                     Station temp = new Station();
@@ -132,7 +92,7 @@ namespace IDAL
                 /// <summary>
                 /// return all available to charge stations
                 /// </summary>
-                public IEnumerable<Station> getAvailableToChargeStations()
+                public IEnumerable<Station> GetAvailableToChargeStations()
                 {
                     int size = IDAL.DO.DalObject.DataSource.stations.Count;
                     List<IDAL.DO.Station> temp = new List<IDAL.DO.Station>();
@@ -163,6 +123,10 @@ namespace IDAL
                     }
                     return temp;
                 }
+                /// <summary>
+                /// decrise num of available charge slots
+                /// <param name="stationId"></param>
+                /// </summary>
                 public void DecriseChargeSlot(int stationId)
                 {
                     Station temp = new Station();
@@ -179,7 +143,11 @@ namespace IDAL
                         }
                     }
                 }
-                public void increaseChargeSlot(int stationId)
+                /// <summary>
+                /// increase num of available charge slots
+                /// <param name="stationId"></param>
+                /// </summary>
+                public void IncreaseChargeSlot(int stationId)
                 {
                     Station temp = new Station();
                     for (int i = 0; i < DataSource.stations.Count; i++)

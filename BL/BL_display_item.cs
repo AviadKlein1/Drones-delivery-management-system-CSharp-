@@ -8,7 +8,7 @@ namespace IBL
         /// <summary>
         /// display item individually
         /// </summary>
-        public partial class BL
+        public partial class BL : IBl
         {
             //display station
             public Station DisplayStation(int stationId)

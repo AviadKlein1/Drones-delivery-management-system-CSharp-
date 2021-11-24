@@ -8,7 +8,7 @@ namespace IBL
         /// <summary>
         /// object constructor
         /// </summary>
-        public partial class BL
+        public partial class BL : IBl
         {
             public IDAL.IDal dal;
 
@@ -94,10 +94,10 @@ namespace IBL
                             else
                             {
                                 var customers = RecieversList();
-                                int index = 0;
+                                int index;
                                 if (customers.Count > 0)
                                 {
-                                    index = rd.Next(0, customers.Count());
+                                    index = rd.Next(0, customers.Count);
                                     element.location = new Location(customers.ElementAt(index).Location);
                                 }
                                 else

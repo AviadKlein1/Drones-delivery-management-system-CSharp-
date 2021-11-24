@@ -6,7 +6,7 @@ namespace IBL
     namespace BO
     {
         //contains diefferent auxiliary functions 
-        public partial class BL
+        public partial class BL : IBl
         {
             /// <summary>
             /// checks if there is any unassociated parcel left
@@ -25,7 +25,7 @@ namespace IBL
             }
 
             /// <summary>
-            /// 
+            /// check is the drone is associated
             /// </summary>
             /// <param name="droneId"></param>
             /// <returns></returns>

@@ -47,7 +47,7 @@ namespace IDAL
                 }
 
                 /// <summary>
-                /// print all customers
+                /// return all customers
                 /// </summary>
                 public IEnumerable<Customer> GetCustomers()
                 {
@@ -55,6 +55,12 @@ namespace IDAL
                     temp = IDAL.DO.DalObject.DataSource.customers;
                     return temp;
                 }
+                /// <summary>
+                /// update model in drone
+                /// <param name="customerId"></param>
+                /// <param name="newName"></param>
+                /// <param name="newPhone"></param>
+                /// </summary>
                 public void UpdateCustomer(int customerId, string newName, string newPhone)
                 {
                     Customer temp = new Customer();

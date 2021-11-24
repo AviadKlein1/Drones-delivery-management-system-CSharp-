@@ -63,7 +63,7 @@ namespace IDAL
                 }
 
                 /// <summary>
-                /// print all parcels
+                /// return all parcels
                 /// </summary>
                 public IEnumerable<Parcel> GetParcels()
                 {
@@ -71,7 +71,12 @@ namespace IDAL
                     temp = IDAL.DO.DalObject.DataSource.parcels;
                     return temp;
                 }
-
+                /// <summary>
+                /// Shedule Parcel To Drone in dal
+                /// </summary>
+                /// <param name="newParcelId"></param>
+                /// <param name="droneId"></param>
+                /// <returns></returns>
                 public void SheduleParcelToDrone(int newParcelId, int droneId)
                 {
                     Parcel temp = new Parcel();
@@ -87,7 +92,12 @@ namespace IDAL
                         }
                     }
                 }
-
+                /// <summary>
+                /// Pick Up Parcel By Drone in dal
+                /// </summary>
+                /// <param name="droneId"></param>
+                /// <param name="parcelId"></param>
+                /// <returns></returns>
                 public void PickUpParcelByDrone(int droneId, int parcelId)
                 {
                     Parcel temp = new Parcel();
@@ -102,6 +112,12 @@ namespace IDAL
                         }
                     }
                 }
+                /// <summary>
+                /// Deliver Parcel By Drone in dal
+                /// </summary>
+                /// <param name="droneId"></param>
+                /// <param name="parcelId"></param>
+                /// <returns></returns>
                 public void DeliverParcelByDrone(int droneId, int parcelId)
                 {
                     Parcel temp = new Parcel();
@@ -116,66 +132,6 @@ namespace IDAL
                         }
                     }
                 }
-
-
-                /// <summary>
-                /// print all parcels which are not associated with a drone
-                /// </summary>
-                //public IEnumerable<Parcel> getNotAssociatedParcels()
-                //{
-                //    //find size of new array for parcels
-                //    List<IDAL.DO.Parcel> temp = new List<IDAL.DO.Parcel>();
-                //    temp = IDAL.DO.DalObject.DataSource.parcels;
-                //    int size = IDAL.DO.DalObject.DataSource.parcels.Count;
-                //    return temp;
-                //}
-                ///// <summary>
-                ///// report pacel picked up
-                ///// </summary>
-                ///// <param name="myId"></param>
-                //public void pickUp(int myId)
-                //{
-                //    bool parcelExist = false;
-                //    //int j = 0;
-                //    //while (IDAL.DO.DalObject.DataSource.parcels[j].id != myId)
-                //    //    j++;
-                //    //IDAL.DO.DalObject.DataSource.parcels[j].pickedUp = DateTime.Now;
-                //    for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
-                //        if (IDAL.DO.DalObject.DataSource.parcels[i].id == myId)
-                //            parcelExist = true;
-                //    if (parcelExist == false)
-                //        throw new WrongIdException(myId, $"wrong parcel id: {myId}");
-                //    else
-                //    {
-                //        IDAL.DO.Parcel temp = IDAL.DO.DalObject.DataSource.parcels[i];
-                //        temp.pickedUp = DateTime.Now;
-                //        IDAL.DO.DalObject.DataSource.parcels[i] = temp;
-                //    }
-                //}
-
-                ///// <summary>
-                ///// report parcel delivered
-                ///// </summary>
-                ///// <param name="myId"></param>
-                //public void delivered(int myId)
-                //{
-                //    bool parcelExist = false;
-                //    //int j = 0;
-                //    //while (IDAL.DO.DalObject.DataSource.parcels[j].id != myId)
-                //    //    j++;
-                //    //IDAL.DO.DalObject.DataSource.parcels[j].delivered = DateTime.Now;
-                //    for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
-                //        if (IDAL.DO.DalObject.DataSource.parcels[i].id == myId)
-                //            parcelExist = true;
-                //    if (parcelExist == false)
-                //        throw new WrongIdException(myId, $"wrong parcel id: {myId}");
-                //    else
-                //    {
-                //        IDAL.DO.Parcel temp = IDAL.DO.DalObject.DataSource.parcels[i];
-                //        temp.delivered = DateTime.Now;
-                //        IDAL.DO.DalObject.DataSource.parcels[i] = temp;
-                //    }
-                //}
             }
         }
     }
