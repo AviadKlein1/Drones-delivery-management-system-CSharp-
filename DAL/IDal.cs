@@ -38,6 +38,7 @@ namespace IDAL
         public void updateCustomer(int customerId, string newName, string newPhone);
         public void decriseChargeSlot(int stationId);
         public void increaseChargeSlot(int stationId);
+        public void SheduleParcelToDrone(int newParcelId,int droneId);
         public void PickUpParcelByDrone(int droneId, int parcelId);
         public void DeliverParcelByDrone(int droneId, int parcelId);
 

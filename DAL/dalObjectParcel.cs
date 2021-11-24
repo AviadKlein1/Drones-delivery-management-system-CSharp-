@@ -71,6 +71,23 @@ namespace IDAL
                     temp = IDAL.DO.DalObject.DataSource.parcels;
                     return temp;
                 }
+
+                public void SheduleParcelToDrone(int newParcelId, int droneId)
+                {
+                    Parcel temp = new Parcel();
+                    for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
+                    {
+                        //search parcel
+                        if (IDAL.DO.DalObject.DataSource.parcels[i].id == newParcelId)
+                        {
+                            temp = IDAL.DO.DalObject.DataSource.parcels[i];
+                            temp.scheduled = DateTime.Now;
+                            temp.droneId = droneId;
+                            IDAL.DO.DalObject.DataSource.parcels[i] = temp;
+                        }
+                    }
+                }
+
                 public void PickUpParcelByDrone(int droneId, int parcelId)
                 {
                     Parcel temp = new Parcel();
@@ -81,6 +98,7 @@ namespace IDAL
                         {
                             temp = IDAL.DO.DalObject.DataSource.parcels[i];
                             temp.pickedUp = DateTime.Now;
+                            IDAL.DO.DalObject.DataSource.parcels[i] = temp;
                         }
                     }
                 }
@@ -94,6 +112,7 @@ namespace IDAL
                         {
                             temp = IDAL.DO.DalObject.DataSource.parcels[i];
                             temp.delivered = DateTime.Now;
+                            IDAL.DO.DalObject.DataSource.parcels[i] = temp;
                         }
                     }
                 }

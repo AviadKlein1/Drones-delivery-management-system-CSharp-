@@ -146,8 +146,12 @@ namespace IBL
                         }
                         else // is available 
                         {
-                            //int newParcelId = suitableParcel(dronId);
-
+                            int newParcelId = suitableParcel(droneId);
+                            if (newParcelId == 0)
+                                break;
+                            else flag = true;
+                            item.status = MyEnums.DroneStatus.delivery;
+                            dal.SheduleParcelToDrone(newParcelId, droneId);
 
 
                         }
