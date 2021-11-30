@@ -6,6 +6,8 @@
 
 using System;
 
+
+
 namespace ConsoleUI_BL
 {
     public class Program
@@ -292,7 +294,10 @@ namespace ConsoleUI_BL
                                         break;
                                     //display list of available to charge stations
                                     case 6:
-                                        var avilableToChargeStations = bl.DisplayAvailableStations();
+                                        static bool AvailableForCharge(IDAL.DO.Station s) { return (s.NumOfAvailableChargeSlots > 0); }
+                                        System.Predicate<IDAL.DO.Station> p = AvailableForCharge;
+                                            
+                                        var avilableToChargeStations = bl.GetNewStationsList(p);
                                         foreach (var element in avilableToChargeStations)
                                         {
                                             Console.WriteLine(element + "\n");

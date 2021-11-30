@@ -15,10 +15,10 @@ namespace IBL
             public IDAL.DO.MyEnums.WeightCategory Weight { get; set; }
             public IDAL.DO.MyEnums.PriorityLevel Priority { get; set; }
             public DroneInParcel DroneInParcel { get; set; }
-            public DateTime Requested { get; set; }
-            public DateTime Scheduled { get; set; }
-            public DateTime PickedUp { get; set; }
-            public DateTime Delivered { get; set; }
+            public DateTime? Requested { get; set; }
+            public DateTime? Scheduled { get; set; }
+            public DateTime? PickedUp { get; set; }
+            public DateTime? Delivered { get; set; }
 
             /// <summary>
             /// default constructor
@@ -28,10 +28,10 @@ namespace IBL
                 Sender = new CustomerInParcel();
                 Reciever = new CustomerInParcel();
                 DroneInParcel = new DroneInParcel();
-                Requested = DateTime.Now;
-                Scheduled = new DateTime();
-                PickedUp = new DateTime();
-                Delivered = new DateTime();
+                Requested = DateTime.Now; 
+                Scheduled = null;
+                PickedUp = null; ;
+                Delivered = null;
                 DroneInParcel = null;
             }
 

@@ -83,7 +83,7 @@ namespace IDAL
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public int Distance(IDAL.DO.Location a, IDAL.DO.Location b);
+        public double GetDistance(IDAL.DO.Location a, IDAL.DO.Location b);
         /// <summary>
         /// update name and number of charge slots in station
         /// <param name="stationId"></param>
@@ -135,6 +135,13 @@ namespace IDAL
         /// <param name="parcelId"></param>
         /// <returns></returns>
         public void DeliverParcelByDrone(int droneId, int parcelId);
+
+
+
+
+
+        public List<IDAL.DO.Station> GetNewList(System.Predicate<IDAL.DO.Station> match);
+
     }
 }
 

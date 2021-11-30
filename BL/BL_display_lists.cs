@@ -1,14 +1,18 @@
 ﻿using System.Collections.Generic;
 
+public delegate bool Predicate<in T>(T obj);
+
 namespace IBL
 {
     namespace BO
     {
+
         /// <summary>
         /// display list of items
         /// </summary>
         public partial class BL : IBl
         {
+
             /// <summary>
             /// display stations list
             /// </summary>
@@ -130,28 +134,49 @@ namespace IBL
                 return tmp1;
             }
 
+
+
+            
+            public IEnumerable<StationToList> GetNewStationsList(System.Predicate<IDAL.DO.Station> match)
+            {
+                List <StationToList> newList = new();
+                var v = dal.GetNewList(match);
+                foreach (var item in v)
+                {
+                    StationToList newStation = new();
+                    newStation.Id = item.Id;
+                    newStation.Name = item.Name;
+                    newStation.NumOfAvailableChargeSlots = item.NumOfAvailableChargeSlots;
+                    newStation.NumOfOccupiedChargeSlots = item.NumOfChargeSlots - item.NumOfAvailableChargeSlots;
+                    newList.Add(newStation);
+                }
+                return newList;
+            }
+
             /// <summary>
             /// display available for charge stations list
             /// </summary>
             /// <returns></returns> return list of stations
-            public List<IBL.BO.StationToList> DisplayAvailableStations()
-            {
-                List<IBL.BO.StationToList> tmp1 = new();
-                var v = dal.GetStations();
-                foreach (var element in v)
-                {
-                    if (element.NumOfAvailableChargeSlots > 0)
-                    {
-                        StationToList myStation = new StationToList();
-                        myStation.Id = element.Id;
-                        myStation.Name = element.Name;
-                        myStation.NumOfAvailableChargeSlots = element.NumOfAvailableChargeSlots;
-                        myStation.NumOfOccupiedChargeSlots = element.NumOfChargeSlots - element.NumOfAvailableChargeSlots;
-                        tmp1.Add(myStation);
-                    }
-                }
-                return tmp1;
-            }
+            //public List<IBL.BO.StationToList> DisplayAvailableStations()
+            //{
+            //    List<IBL.BO.StationToList> tmp1 = new();
+            //    var v = dal.GetStations();
+            //    //foreach (var element in v)
+            //    //{
+            //    //    if (element.NumOfAvailableChargeSlots > 0)
+            //    //    {
+            //    //        StationToList myStation = new StationToList();
+            //    //        myStation.Id = element.Id;
+            //    //        myStation.Name = element.Name;
+            //    //        myStation.NumOfAvailableChargeSlots = element.NumOfAvailableChargeSlots;
+            //    //        myStation.NumOfOccupiedChargeSlots = element.NumOfChargeSlots - element.NumOfAvailableChargeSlots;
+            //    //        tmp1.Add(myStation);
+            //    //    }
+            //    //}
+            //    //return tmp1;
+            //    return dal.GetNewList(v,)
+
+            //}
         }
     }
 }

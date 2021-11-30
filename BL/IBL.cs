@@ -74,11 +74,11 @@ namespace IBL
         /// </summary>
         /// <returns></returns> return list of parcels
         public List<IBL.BO.ParcelToList> DisplayUnassociatedParcels();
-        /// <summary>
-        /// display available for charge stations list
-        /// </summary>
-        /// <returns></returns> return list of stations
-        public List<IBL.BO.StationToList> DisplayAvailableStations();
+        ///// <summary>
+        ///// display available for charge stations list
+        ///// </summary>
+        ///// <returns></returns> return list of stations
+        //public List<IBL.BO.StationToList> DisplayAvailableStations();
         /// <summary>
         /// updates drone data
         /// </summary>
@@ -133,5 +133,11 @@ namespace IBL
         /// <param name="droneId"></param>
         /// <returns></returns>
         public bool DeliverParcelByDrone(int droneId);
+
+
+
+
+        public IEnumerable<IBL.BO.StationToList> GetNewStationsList(System.Predicate<IDAL.DO.Station> match);
+
     }
 }

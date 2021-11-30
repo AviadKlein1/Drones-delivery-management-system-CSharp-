@@ -107,10 +107,10 @@ namespace IBL
                 temp.SenderId = myParcel.Sender.id;
                 temp.ReciverId = myParcel.Reciever.id;
                 temp.DroneId = (myParcel.DroneInParcel == null ? 0 : myParcel.DroneInParcel.id);
-                temp.Requested = DateTime.Now; 
-                temp.Scheduled = new DateTime();
-                temp.PickedUp = new DateTime();
-                temp.Delivered = new DateTime();
+                temp.Requested = DateTime.Now;
+                temp.Scheduled = null;
+                temp.PickedUp = null;
+                temp.Delivered = null;
                 Console.WriteLine("your parcel ID is: " + temp.Id + "\n");
 
                 //add parcel to list of parcels

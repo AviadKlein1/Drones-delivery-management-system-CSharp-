@@ -17,8 +17,8 @@ namespace IBL
                 var dalParcelsList = dal.GetParcels();
                 foreach(var element in dalParcelsList)
                 {
-                    DateTime emptyDateTime = new DateTime();
-                    if (element.Delivered == emptyDateTime)
+                    DateTime? emptyDateTime = null;
+                    if (element.Scheduled == emptyDateTime)
                         return true;
                 }
                 return false;
@@ -103,7 +103,7 @@ namespace IBL
                 {
                     if(element.Id == parcelId)
                     {
-                        DateTime emptyDateTime = new DateTime();
+                        DateTime? emptyDateTime = null;
                         if(element.PickedUp == emptyDateTime && element.Scheduled != emptyDateTime) 
                            return true;
                     }
@@ -124,7 +124,7 @@ namespace IBL
                 {
                     if(element.Id == parcelId)
                     {
-                        DateTime emptyDateTime = new DateTime();
+                        DateTime? emptyDateTime = null;
                         if(element.Delivered == emptyDateTime && element.PickedUp != emptyDateTime)
                            return true;
                     }
@@ -241,10 +241,10 @@ namespace IBL
             {
                 IDAL.DO.Station tempStation = new IDAL.DO.Station();
                 var stationList = dal.GetStations();
-                double min = 99999999999;
+                double min = 99999999999.0;
                 foreach(var element in stationList)
                 {
-                    var dis = dal.Distance(locate, element.Location);
+                    var dis = dal.GetDistance(locate, element.Location);
                     //if distance is smaller, update min distance
                     if(dis < min)
                     {
@@ -267,7 +267,7 @@ namespace IBL
                 double min = 99999999999;
                 foreach(var element in stationList)
                 {
-                    var dis = dal.Distance(l, element.Location);
+                    var dis = dal.GetDistance(l, element.Location);
                     //if distance is smaller, update min distance
                     if(dis < min && element.NumOfAvailableChargeSlots > 0)
                     {
@@ -285,7 +285,7 @@ namespace IBL
             internal List<IDAL.DO.Customer> RecieversList()
             {
                 List<IDAL.DO.Customer> temp = new List<IDAL.DO.Customer>();
-                DateTime emptyDateTime = new DateTime();
+                DateTime? emptyDateTime = null;
                 var dalParcelsList = dal.GetParcels();
                 //search parcel
                 foreach(var pElement in dalParcelsList)
@@ -397,7 +397,7 @@ namespace IBL
                 //search for nearer stations
                 foreach (var element in stationList)
                 {
-                    var dis = dal.Distance(l, element.Location);
+                    var dis = dal.GetDistance(l, element.Location);
                     if (dis < min && element.NumOfAvailableChargeSlots > 0 && (requiredChargingLevel <= currentChargingLevel))
                     {
                         min = dis;
@@ -453,9 +453,9 @@ namespace IBL
                         var reciverLocation = ReciverLocation(tempParcel.Id);
                         var chargeStation = NearestChargeSlot(reciverLocation);
 
-                        var dis1 = dal.Distance(myDroneLocation, senderLocation);
-                        var dis2 = dal.Distance(senderLocation, reciverLocation);
-                        var dis3 = dal.Distance(reciverLocation, chargeStation.Location);
+                        var dis1 = dal.GetDistance(myDroneLocation, senderLocation);
+                        var dis2 = dal.GetDistance(senderLocation, reciverLocation);
+                        var dis3 = dal.GetDistance(reciverLocation, chargeStation.Location);
                         var fullDistance = dis1 + dis2 + dis3;
 
                         double Consumption = 0;
@@ -519,18 +519,18 @@ namespace IBL
             internal IDAL.DO.Parcel TheNearestParcel(IEnumerable<IDAL.DO.Parcel> dalParcelsList,IDAL.DO.Location myDroneLocation, List<IDAL.DO.Parcel> notSuatableList)
             {
                 IDAL.DO.Parcel temp = new IDAL.DO.Parcel();
-                var min = 9999999999;
+                var min = 9999999999.0;
                 //search for neartest parcel
                 foreach (var item in dalParcelsList)
                 {
-                    var dis = dal.Distance(SenderLocation(item.Id), myDroneLocation);
+                    var dis = dal.GetDistance(SenderLocation(item.Id), myDroneLocation);
                     if (dis < min && IsSuitable(notSuatableList, item))
                         min = dis;
                 }
                 //find chosen parcel
                 foreach (var item in dalParcelsList)
                 {
-                    if (min == dal.Distance(SenderLocation(item.Id), myDroneLocation))
+                    if (min == dal.GetDistance(SenderLocation(item.Id), myDroneLocation))
                         return item;
                 }
                 //return parcel

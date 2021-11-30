@@ -12,9 +12,9 @@ namespace IBL
         {
             public IDAL.IDal dal;
 
-            public Random rd = new Random();
+            public Random rd = new();
             
-            public List<DroneToList> dronesList = new List<DroneToList>();
+            public List<DroneToList> dronesList = new();
 
             //electricity consumption fields
             public static double free;
@@ -36,7 +36,7 @@ namespace IBL
 
                 //insert drones to list
                 var dalDrones = dal.GetDrones();
-                DroneToList temp = new DroneToList();
+                DroneToList temp = new();
                 foreach ( var element in dalDrones)
                 {
                     DroneToList temp1 = new DroneToList();
@@ -46,7 +46,7 @@ namespace IBL
                     dronesList.Add(temp1);
                 }
                 if(dronesList != null)
-                    {
+                {
                     //search for an associated drone
                     for (int i = 0; i < dronesList.Count; i++)
                     {
@@ -61,21 +61,37 @@ namespace IBL
                     //
                     foreach (var element in dronesList)
                     {
+                        DroneToList newDrone = new();
+                        newDrone.id = element.id;
+                        newDrone.model = element.model;
+                        newDrone.status = element.status;
+                        newDrone.weight = element.weight;
+                        newDrone.battery = element.battery;
+                        newDrone.deliveredParcelId = element.deliveredParcelId;
+
                         if (IsAssociatedDrone(element.id) && IsAnyUnassociatedParcel())
                         {
                             //drone status
-                            element.status = MyEnums.DroneStatus.delivery;
+                            newDrone.status = MyEnums.DroneStatus.delivery;
 
                             //drone location
-                            if (ScheduledButNotPickedUp(element.deliveredParcelId)) element.location = new Location(NearestToSenderStation(element.deliveredParcelId).Location);
-                            if (PickedUpButNotDeliverd(element.deliveredParcelId)) element.location = new Location(SenderLocation(element.deliveredParcelId));
+                            Location myLocation = new();
+                            if (ScheduledButNotPickedUp(element.deliveredParcelId))
+                            {
+                                myLocation = new Location(NearestToSenderStation(element.deliveredParcelId).Location);
+                            }
+                            if (PickedUpButNotDeliverd(element.deliveredParcelId))
+                            {
+                                myLocation = new Location(SenderLocation(element.deliveredParcelId));
+                            }
 
-                            IDAL.DO.Location myLocation = new IDAL.DO.Location(element.location.longitude, element.location.lattitude);
+                            newDrone.location = myLocation;
+                            IDAL.DO.Location myDalLocation = new IDAL.DO.Location(myLocation.longitude , myLocation.lattitude);
 
                             //drone electricity consumption 
-                            double lenghtOfDeliveryVoyage = dal.Distance(myLocation, SenderLocation(element.deliveredParcelId));
+                            double lenghtOfDeliveryVoyage = dal.GetDistance(myDalLocation, SenderLocation(element.deliveredParcelId));
                             IDAL.DO.Location locationOfNearestStation = (NearestToSenderStation(element.deliveredParcelId).Location);
-                            double distanceBetweenTargetToStation = dal.Distance(myLocation, locationOfNearestStation);
+                            double distanceBetweenTargetToStation = dal.GetDistance(myDalLocation, locationOfNearestStation);
 
                             int Battery = (int)(BatteryRequirementForVoyage(element.id, lenghtOfDeliveryVoyage + distanceBetweenTargetToStation));
                             element.battery = rd.Next(Battery, 101);
@@ -108,7 +124,7 @@ namespace IBL
 
                                 IDAL.DO.Location locationOfNearestChargeSlot = (NearestChargeSlot(myLocation).Location);
 
-                                double distanceBetweenTargetToStation = dal.Distance(myLocation, locationOfNearestChargeSlot);
+                                double distanceBetweenTargetToStation = dal.GetDistance(myLocation, locationOfNearestChargeSlot);
                                 int minBattery = (int)(BatteryRequirementForVoyage(element.id, distanceBetweenTargetToStation));
 
                                 element.battery = rd.Next(minBattery, 101);

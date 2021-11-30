@@ -15,10 +15,10 @@ namespace IDAL
             public int DroneId { get; set; }
             public IDAL.DO.MyEnums.WeightCategory Weight { get; set; }
             public IDAL.DO.MyEnums.PriorityLevel Priority { get; set; }
-            public DateTime Requested { get; set; }
-            public DateTime Scheduled { get; set; }
-            public DateTime PickedUp { get; set; }
-            public DateTime Delivered { get; set; }
+            public DateTime? Requested { get; set; }
+            public DateTime? Scheduled { get; set; }
+            public DateTime? PickedUp { get; set; }
+            public DateTime? Delivered { get; set; }
         }
     }
 }

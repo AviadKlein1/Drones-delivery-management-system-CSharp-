@@ -137,7 +137,7 @@ namespace IBL
                                     dItem.status = MyEnums.DroneStatus.maintenance;
                                     dItem.location = new Location(tempStation.Location);
                                     //battery
-                                    var dis = dal.Distance(itemLocation, tempStation.Location);
+                                    var dis = dal.GetDistance(itemLocation, tempStation.Location);
                                     var neededBattery = (int)BatteryRequirementForVoyage(droneId, dis);
                                     dItem.battery = (dItem.battery - neededBattery);
                                     flag = true;
@@ -280,7 +280,7 @@ namespace IBL
                                         temp.deliveredParcelId = item.Id;
                                         IDAL.DO.Location earlyDroneLocation = new IDAL.DO.Location(dItem.location.longitude, dItem.location.lattitude);
                                         // update battery
-                                        temp.battery = (temp.battery - (int)BatteryRequirementForVoyage(droneId, dal.Distance(earlyDroneLocation, ourSenderLocation)));
+                                        temp.battery = (temp.battery - (int)BatteryRequirementForVoyage(droneId, dal.GetDistance(earlyDroneLocation, ourSenderLocation)));
                                         v[i] = temp;
                                     }
                                 }
@@ -350,7 +350,7 @@ namespace IBL
                                     temp.deliveredParcelId = item.Id;
                                     IDAL.DO.Location earlyDroneLocation = new IDAL.DO.Location(dItem.location.longitude, dItem.location.lattitude);
                                     // update battery
-                                    temp.battery = (temp.battery - (int)BatteryRequirementForVoyage(droneId, dal.Distance(earlyDroneLocation, ourReciverLocation)));
+                                    temp.battery = (temp.battery - (int)BatteryRequirementForVoyage(droneId, dal.GetDistance(earlyDroneLocation, ourReciverLocation)));
                                     v[i] = temp;
                                 }
                             }

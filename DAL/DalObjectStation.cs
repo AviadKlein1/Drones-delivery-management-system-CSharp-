@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
 namespace IDAL
 {
     namespace DO
     {
         namespace DalObject
         {
+
             /// <summary>
             /// entity station
             /// </summary>
             public partial class DalObject : IDal
             {
-                public DalObject()
+                public DalObject() { IDAL.DO.DalObject.DataSource.Initialize(); }
+                public List<IDAL.DO.Station> GetNewList(System.Predicate<Station> match)
                 {
-                    IDAL.DO.DalObject.DataSource.Initialize();
+                    List<IDAL.DO.Station> newList = new();
+                    newList = IDAL.DO.DalObject.DataSource.stations.FindAll(match);
+                    return newList;
                 }
-
                 /// <summary>
                 /// add to list
                 /// </summary>
@@ -170,11 +174,17 @@ namespace IDAL
                 /// <param name="a"></param>
                 /// <param name="b"></param>
                 /// <returns></returns>
-                public int Distance(Location a, Location b)
+                public double GetDistance(Location a, Location b)
                 {
-                    return (int)Math.Sqrt(Math.Pow((b.Longitude - a.Longitude), 2) -
-                        Math.Pow((b.Lattitude - a.Lattitude), 2));
+                    var d1 = a.Lattitude * (Math.PI / 180.0);
+                    var num1 = a.Longitude * (Math.PI / 180.0);
+                    var d2 = b.Lattitude * (Math.PI / 180.0);
+                    var num2 = b.Longitude * (Math.PI / 180.0) - num1;
+                    var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
+
+                    return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)));
                 }
+
             }
         }
     }

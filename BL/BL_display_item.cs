@@ -83,7 +83,7 @@ namespace IBL
                 foreach (var item in parcelsList)
                 {
                     ParcelAtCustomer myParcel = new ParcelAtCustomer();
-                    DateTime empty = new DateTime();
+                    DateTime? empty = null;
                     if (item.SenderId == retTemp.id)
                     {
                         myParcel.Id = item.Id;
