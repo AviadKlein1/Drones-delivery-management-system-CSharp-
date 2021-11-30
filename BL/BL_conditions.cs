@@ -25,7 +25,10 @@ namespace IBL
             readonly System.Predicate<IDAL.DO.Parcel> allParcels = AllParcels;
             static bool UnassociatedParcels(IDAL.DO.Parcel p) { return (p.Scheduled == null); }
             System.Predicate<IDAL.DO.Parcel> unassociatedParcels = UnassociatedParcels;
-
+            static bool ScheduledButNotPickedUp(IDAL.DO.Parcel p) { return (p.Scheduled != null && p.PickedUp == null); }
+            System.Predicate<IDAL.DO.Parcel> scheduledButNotPickedUp = ScheduledButNotPickedUp;
+            static bool PickedUpButNotDeliverd(IDAL.DO.Parcel p) { return (p.Delivered == null && p.PickedUp != null); }
+            System.Predicate<IDAL.DO.Parcel> pickedUpButNotDeliverd = PickedUpButNotDeliverd;
 
             static bool AllCustomers(IDAL.DO.Customer c) { return true; }
             readonly System.Predicate<IDAL.DO.Customer> allCustomers = AllCustomers;

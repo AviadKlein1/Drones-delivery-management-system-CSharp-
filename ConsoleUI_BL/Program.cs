@@ -260,9 +260,7 @@ namespace ConsoleUI_BL
                                         System.Predicate<IDAL.DO.Station> allStations = AllStations;
                                         var stationsList = bl.GetStationsList(allStations);
                                         foreach (var element in stationsList)
-                                        {
                                             Console.WriteLine(element + "\n");
-                                        }
                                         break;
                                     //display list of drones
                                     case 2:
@@ -270,9 +268,7 @@ namespace ConsoleUI_BL
                                         System.Predicate<IBL.BO.DroneToList> allDrones = AllDrones;
                                         var dronesList = bl.GetDronesList(allDrones);
                                         foreach (var element in dronesList)
-                                        {
                                             Console.WriteLine(element + "\n");
-                                        }
                                         break;
                                     //display list of customers
                                     case 3:
@@ -280,42 +276,31 @@ namespace ConsoleUI_BL
                                         System.Predicate<IDAL.DO.Customer> allCustomers = AllCustomers;
                                         var customerList = bl.GetCustomersList(allCustomers);
                                         foreach (var element in customerList)
-                                        {
                                             Console.WriteLine(element + "\n");
-                                        }
                                         break;
                                     //display list of parcels
                                     case 4:
-                                        
                                         static bool AllParcels(IDAL.DO.Parcel p) { return true; }
                                         System.Predicate<IDAL.DO.Parcel> allParcels = AllParcels;
                                         var parcelsList = bl.GetParcelsList(allParcels);
                                         foreach (var element in parcelsList)
-                                        {
                                             Console.WriteLine(element + "\n");
-                                        }
                                         break;
                                     //display list of not associated parcels
                                     case 5:
                                         static bool UnassociatedParcels(IDAL.DO.Parcel p) { return (p.Scheduled == null); }
                                         System.Predicate<IDAL.DO.Parcel> unassociatedParcels = UnassociatedParcels;
-
                                         var notAssociatedParcelsList = bl.GetParcelsList(unassociatedParcels);
                                         foreach (var element in notAssociatedParcelsList)
-                                        {
                                             Console.WriteLine(element + "\n");
-                                        }
                                         break;
                                     //display list of available to charge stations
                                     case 6:
                                         static bool AvailableForCharge(IDAL.DO.Station s) { return (s.NumOfAvailableChargeSlots > 0); }
                                         System.Predicate<IDAL.DO.Station> availableForCharge = AvailableForCharge;
-                                            
                                         var avilableToChargeStations = bl.GetStationsList(availableForCharge);
                                         foreach (var element in avilableToChargeStations)
-                                        {
                                             Console.WriteLine(element + "\n");
-                                        }
                                         break;
 
                                     default:
@@ -323,14 +308,12 @@ namespace ConsoleUI_BL
                                 }
                             }
                             break;
-
                         //end
                         case 0:
                             Console.WriteLine("see you soon");
                             return;
 
                         default:
-
                             break;
 
                     }

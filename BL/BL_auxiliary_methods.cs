@@ -14,14 +14,9 @@ namespace IBL
             /// returns boollean expression
             internal bool IsAnyUnassociatedParcel()
             {
-                var dalParcelsList = dal.GetParcelsList(allParcels);
-                foreach(var element in dalParcelsList)
-                {
-                    DateTime? emptyDateTime = null;
-                    if (element.Scheduled == emptyDateTime)
-                        return true;
-                }
-                return false;
+                var v = dal.GetParcelsList(unassociatedParcels);
+                if(v == null) return false;
+                else return true;
             }
 
             /// <summary>
@@ -64,6 +59,7 @@ namespace IBL
             /// returns a number between 1 and 100
             internal double BatteryRequirementForVoyage(int myDroneId, double distance)
             {
+
                 var dalDronesList = dal.GetDrones();
                 foreach(var element in dalDronesList)
                 {
@@ -97,16 +93,12 @@ namespace IBL
             ///  returns boolean type
             internal bool ScheduledButNotPickedUp(int parcelId)
             {
-                var dalParcelsList = dal.GetParcelsList(allParcels);
+                var dalParcelsList = dal.GetParcelsList(scheduledButNotPickedUp);
                 //search parcel
                 foreach(var element in dalParcelsList)
                 {
                     if(element.Id == parcelId)
-                    {
-                        DateTime? emptyDateTime = null;
-                        if(element.PickedUp == emptyDateTime && element.Scheduled != emptyDateTime) 
                            return true;
-                    }
                 }
                 return false;
             }
@@ -118,16 +110,12 @@ namespace IBL
             /// returns boolean type
             internal bool PickedUpButNotDeliverd(int parcelId)
             {
-                var dalParcelsList = dal.GetParcelsList(allParcels);
+                var dalParcelsList = dal.GetParcelsList(pickedUpButNotDeliverd);
                 //search parcel
-                foreach(var element in dalParcelsList)
+                foreach (var element in dalParcelsList)
                 {
-                    if(element.Id == parcelId)
-                    {
-                        DateTime? emptyDateTime = null;
-                        if(element.Delivered == emptyDateTime && element.PickedUp != emptyDateTime)
-                           return true;
-                    }
+                    if (element.Id == parcelId)
+                        return true;
                 }
                 return false;
             }
@@ -239,7 +227,7 @@ namespace IBL
             /// returns station
             internal IDAL.DO.Station NearestStation(IDAL.DO.Location locate)
             {
-                IDAL.DO.Station tempStation = new IDAL.DO.Station();
+                IDAL.DO.Station tempStation = new();
                 var stationList = dal.GetStationsList(allStations);
                 double min = 99999999999.0;
                 foreach(var element in stationList)
@@ -320,32 +308,6 @@ namespace IBL
                 }
                 return b;
             }
-
-            /// <summary>
-            /// return number of frones charging currently at station  
-            /// </summary>
-            /// <param name="stationId"></param>
-            /// <returns></returns>
-            internal int NumOfOccupiedChargeSlots(int stationId)
-            {
-                var dalStationsList = dal.GetStationsList(allStations);
-                var myStationLocation = new Location();
-                int num = 0;
-                foreach (var item in dalStationsList)
-                {
-                    if (item.Id == stationId)
-                        num = item.NumOfChargeSlots - item.NumOfAvailableChargeSlots;
-                }
-                ////search for drones charging currently at station
-                //var dalDronesList = dronesList;
-                //foreach(var item in dalDronesList)
-                //{
-                //    if(item.status == MyEnums.DroneStatus.maintenance && item.location == myStationLocation)
-                //        num++;
-                //}
-                return num;
-            }
-
             /// <summary>
             /// giving a parcel and acustomer,
             /// return the other side of the dekivery (sender/reciever)
