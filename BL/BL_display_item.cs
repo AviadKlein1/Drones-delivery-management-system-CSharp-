@@ -28,11 +28,11 @@ namespace IBL
                 var dronesInCharge = new List<DroneInCharge>();
                 foreach (var element in dronesList)
                 {
-                    if (element.status == MyEnums.DroneStatus.maintenance && element.location == retTemp.Location)
+                    if (element.Status == MyEnums.DroneStatus.maintenance && element.Location == retTemp.Location)
                     {
                         DroneInCharge droneTemp = new DroneInCharge();
-                        droneTemp.id = element.id;
-                        droneTemp.battery = element.battery;
+                        droneTemp.Id = element.Id;
+                        droneTemp.Battery = element.Battery;
                         dronesInCharge.Add(droneTemp);
                     }
                 }
@@ -47,16 +47,16 @@ namespace IBL
                 Drone retDrone = new Drone();
                 foreach (var element in dronesList)
                 {
-                    if (element.id == droneId)
+                    if (element.Id == droneId)
                     {
                         exist = true;
-                        retDrone.id = element.id;
-                        retDrone.location = element.location;
-                        retDrone.weight = element.weight;
-                        retDrone.status = element.status;
-                        retDrone.model = element.model;
-                        retDrone.battery = element.battery;
-                        retDrone.location = element.location;
+                        retDrone.Id = element.Id;
+                        retDrone.Location = element.Location;
+                        retDrone.Weight = element.Weight;
+                        retDrone.Status = element.Status;
+                        retDrone.Model = element.Model;
+                        retDrone.Battery = element.Battery;
+                        retDrone.Location = element.Location;
                     }
                 }
                 if (exist == false)
@@ -79,7 +79,7 @@ namespace IBL
 
                 Customer retTemp = new Customer(temp);
                 // maybe duiplay parcels at this customer? 
-                var parcelsList = dal.GetParcels();
+                var parcelsList = dal.GetParcelsList(allParcels);
                 foreach (var item in parcelsList)
                 {
                     ParcelAtCustomer myParcel = new ParcelAtCustomer();

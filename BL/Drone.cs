@@ -21,25 +21,25 @@
             /// <param name="myDrone"></param>
             public Drone(IDAL.DO.Drone myDrone)
             {
-                id = myDrone.Id;
-                model = myDrone.Model;
-                weight = myDrone.weight;
+                Id = myDrone.Id;
+                Model = myDrone.Model;
+                Weight = myDrone.weight;
             }
 
-            public int id { get; set; }
-            public string model { get; set; }
-            public IDAL.DO.MyEnums.WeightCategory weight { get; set; }
-            public MyEnums.DroneStatus status { get; set; }
-            public int battery { get; set; }
-            public ParcelInDelivery deliveredParcel { get; set; }
-            public Location location { get; set; }
-            public int firstChargeStationId { get; set; }
+            public int Id { get; set; }
+            public string Model { get; set; }
+            public IDAL.DO.MyEnums.WeightCategory Weight { get; set; }
+            public MyEnums.DroneStatus Status { get; set; }
+            public int Battery { get; set; }
+            public ParcelInDelivery DeliveredParcel { get; set; }
+            public Location Location { get; set; }
+            public int FirstChargeStationId { get; set; }
             public override string ToString()
             {
                 //var delPar = deliverdParcel.id < 100 ? "" : string.Join(", ", deliverdParcel);
                 //var del = deliverdParcel.id < 100 ? "" : "deliverd Parcel: ";
-                return $"ID: {id}\nModel: {model}\nWeight Category: {weight}\nStatus: {status}\nBattery: " +
-                    $" {battery}\nLongitude: {location.longitude}\nLattitude: {location.lattitude}\n "/*+$"{del} \n{delPar}\n"*/;
+                return $"ID: {Id}\nModel: {Model}\nWeight Category: {Weight}\nStatus: {Status}\nBattery: " +
+                    $" {Battery}\nLongitude: {Location.longitude}\nLattitude: {Location.lattitude}\n "/*+$"{del} \n{delPar}\n"*/;
             }
         }
 
@@ -48,11 +48,11 @@
         /// </summary>
         public class DroneInCharge
         {
-            public int id { get; set; }
-            public int battery { get; set; }
+            public int Id { get; set; }
+            public int Battery { get; set; }
             public override string ToString()
             {
-                return $"ID: {id}\n battery: {battery}\n";
+                return $"ID: {Id}\n battery: {Battery}\n";
             }
         }
 
@@ -69,12 +69,12 @@
 
             }
 
-            public int id { get; set; }
-            public int battery { get; set; }
-            public Location location { get; set; }
+            public int Id { get; set; }
+            public int Battery { get; set; }
+            public Location Location { get; set; }
             public override string ToString()
             {
-                return $"ID: { id }\n battery: { battery }\n location: { location }";
+                return $"ID: { Id }\n battery: { Battery }\n location: { Location }";
             }
         }
 
@@ -83,18 +83,18 @@
         /// </summary>
         public class DroneToList
         {
-            public int id { get; set; }
-            public string model { get; set; }
-            public IDAL.DO.MyEnums.WeightCategory weight { get; set; }
-            public MyEnums.DroneStatus status { get; set; }
-            public int battery { get; set; }
-            public Location location { get; set; }
-            public int deliveredParcelId { get; set; }
+            public int Id { get; set; }
+            public string Model { get; set; }
+            public IDAL.DO.MyEnums.WeightCategory Weight { get; set; }
+            public MyEnums.DroneStatus Status { get; set; }
+            public int Battery { get; set; }
+            public Location Location { get; set; }
+            public int DeliveredParcelId { get; set; }
             public override string ToString()
             {
-                return $"ID: { id }\nModel: { model }\nWeight Category: { weight }\nStatus: { status }\nBattery: " +
-                   $" { battery} \nLongitude: { location.longitude }\nLattitude: " +
-                   $"{ location.lattitude }\nDeliverd parcel id: { deliveredParcelId }";
+                return $"ID: { Id }\nModel: { Model }\nWeight Category: { Weight }\nStatus: { Status }\nBattery: " +
+                   $" { Battery} \nLongitude: { Location.longitude }\nLattitude: " +
+                   $"{ Location.lattitude }\nDeliverd parcel id: { DeliveredParcelId }";
             }
         }
     }

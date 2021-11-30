@@ -51,21 +51,11 @@ namespace IDAL
         /// <returns></returns>
         public IDAL.DO.Parcel GetParcel(int id);
         /// <summary>
-        /// return all stations
-        /// </summary>
-        public IEnumerable<IDAL.DO.Station> GetStations();
-        /// <summary>
         /// return all drones
         /// </summary>
         public IEnumerable<IDAL.DO.Drone> GetDrones();
-        /// <summary>
-        /// return all customers
-        /// </summary>
-        public IEnumerable<IDAL.DO.Customer> GetCustomers();
-        /// <summary>
-        /// return all parcels
-        /// </summary>
-        public IEnumerable<IDAL.DO.Parcel> GetParcels();
+       
+     
         /// <summary>
         /// returns an array contains electricity consumption data
         /// </summary>
@@ -136,11 +126,9 @@ namespace IDAL
         /// <returns></returns>
         public void DeliverParcelByDrone(int droneId, int parcelId);
 
-
-
-
-
-        public List<IDAL.DO.Station> GetNewList(System.Predicate<IDAL.DO.Station> match);
+        public IEnumerable<IDAL.DO.Station> GetStationsList(System.Predicate<IDAL.DO.Station> match);
+        public IEnumerable<IDAL.DO.Customer> GetCustomersList(System.Predicate<IDAL.DO.Customer> match);
+        public IEnumerable<IDAL.DO.Parcel> GetParcelsList(System.Predicate<IDAL.DO.Parcel> match);
 
     }
 }

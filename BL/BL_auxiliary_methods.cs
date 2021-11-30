@@ -14,7 +14,7 @@ namespace IBL
             /// returns boollean expression
             internal bool IsAnyUnassociatedParcel()
             {
-                var dalParcelsList = dal.GetParcels();
+                var dalParcelsList = dal.GetParcelsList(allParcels);
                 foreach(var element in dalParcelsList)
                 {
                     DateTime? emptyDateTime = null;
@@ -31,7 +31,7 @@ namespace IBL
             /// <returns></returns>
             internal bool IsAssociatedDrone(int droneId)
             {
-                var dalParcelsList = dal.GetParcels();
+                var dalParcelsList = dal.GetParcelsList(allParcels);
                 foreach(var element in dalParcelsList)
                 {
                     if(element.DroneId == droneId)
@@ -47,7 +47,7 @@ namespace IBL
             /// returns parcel id
             internal int AssociatedParcelId(int droneId)
             {
-                var dalParcelsList = dal.GetParcels();
+                var dalParcelsList = dal.GetParcelsList(allParcels);
                 foreach(var element in dalParcelsList)
                 {
                     if (element.DroneId == droneId) 
@@ -70,7 +70,7 @@ namespace IBL
                     //search drone
                     if(element.Id == myDroneId)
                     {
-                        var dalParcelsList = dal.GetParcels();
+                        var dalParcelsList = dal.GetParcelsList(allParcels);
                         //search parcel
                         foreach(var Pelement in dalParcelsList)
                         {
@@ -97,7 +97,7 @@ namespace IBL
             ///  returns boolean type
             internal bool ScheduledButNotPickedUp(int parcelId)
             {
-                var dalParcelsList = dal.GetParcels();
+                var dalParcelsList = dal.GetParcelsList(allParcels);
                 //search parcel
                 foreach(var element in dalParcelsList)
                 {
@@ -118,7 +118,7 @@ namespace IBL
             /// returns boolean type
             internal bool PickedUpButNotDeliverd(int parcelId)
             {
-                var dalParcelsList = dal.GetParcels();
+                var dalParcelsList = dal.GetParcelsList(allParcels);
                 //search parcel
                 foreach(var element in dalParcelsList)
                 {
@@ -139,14 +139,14 @@ namespace IBL
             /// return location type (longitude, lattitude)
             internal IDAL.DO.Location SenderLocation(int parcelId)
             {
-                IDAL.DO.Location tempLocation = new IDAL.DO.Location();
-                var dalParcelsList = dal.GetParcels();
+                IDAL.DO.Location tempLocation = new();
+                var dalParcelsList = dal.GetParcelsList(allParcels);
                 //search parcel
                 foreach(var pElement in dalParcelsList)
                 {
                     if(pElement.Id == parcelId)
                     {
-                        var customersList = dal.GetCustomers();
+                        var customersList = dal.GetCustomersList(allCustomers);
                         //search parcel's sender
                         foreach(var cElement in customersList)
                         {
@@ -160,14 +160,14 @@ namespace IBL
 
             internal IDAL.DO.Location ReciverLocation(int parcelId)
             {
-                IDAL.DO.Location tempLocation = new IDAL.DO.Location();
-                var dalParcelsList = dal.GetParcels();
+                IDAL.DO.Location tempLocation = new();
+                var dalParcelsList = dal.GetParcelsList(allParcels);
                 //search parcel
                 foreach (var pElement in dalParcelsList)
                 {
                     if (pElement.Id == parcelId)
                     {
-                        var customersList = dal.GetCustomers();
+                        var customersList = dal.GetCustomersList(allCustomers);
                         //search parcel's reciver
                         foreach (var cElement in customersList)
                         {
@@ -187,14 +187,14 @@ namespace IBL
             /// returns station
             internal IDAL.DO.Station NearestToSenderStation(int parcelId)
             {
-                IDAL.DO.Station tempStation = new IDAL.DO.Station();
-                var dalParcelsList = dal.GetParcels();
+                IDAL.DO.Station tempStation = new();
+                var dalParcelsList = dal.GetParcelsList(allParcels);
                 //search parcel
                 foreach(var pElement in dalParcelsList)
                 {
                     if(pElement.Id == parcelId)
                     {
-                        var customersList = dal.GetCustomers();
+                        var customersList = dal.GetCustomersList(allCustomers);
                         //search sender of parcel
                         foreach(var cElement in customersList)
                         {
@@ -213,19 +213,19 @@ namespace IBL
             /// returns station
             internal IDAL.DO.Station NearestToSenderChargeSlot(int parcelId)
             {
-                IDAL.DO.Station tempStation = new IDAL.DO.Station();
-                var dalParcelsList = dal.GetParcels();
+                IDAL.DO.Station tempStation = new();
+                var dalParcelsList = dal.GetParcelsList(allParcels);
                 //search parcel
                 foreach(var pElement in dalParcelsList)
                 {
                     if(pElement.Id == parcelId)
                     {
-                        var customersList = dal.GetCustomers();
+                        var customersList = dal.GetCustomersList(allCustomers);
                         //search sender of parcel
                         foreach(var cElement in customersList)
                         {
                             if(cElement.Id == pElement.SenderId)
-                                tempStation = NearestChargeSlot(cElement.Location);
+                                tempStation = NearestAvailableChargeSlot(cElement.Location);
                         }
                     }
                 }
@@ -240,7 +240,7 @@ namespace IBL
             internal IDAL.DO.Station NearestStation(IDAL.DO.Location locate)
             {
                 IDAL.DO.Station tempStation = new IDAL.DO.Station();
-                var stationList = dal.GetStations();
+                var stationList = dal.GetStationsList(allStations);
                 double min = 99999999999.0;
                 foreach(var element in stationList)
                 {
@@ -260,11 +260,11 @@ namespace IBL
             /// </summary>
             /// <param name="l"></param>
             /// returns station
-            internal IDAL.DO.Station NearestChargeSlot(IDAL.DO.Location l)
+            internal IDAL.DO.Station NearestAvailableChargeSlot(IDAL.DO.Location l)
             {
-                IDAL.DO.Station tempStation = new IDAL.DO.Station();
-                var stationList = dal.GetStations();
-                double min = 99999999999;
+                IDAL.DO.Station tempStation = new();
+                var stationList = dal.GetStationsList(allStations);
+                double min = 99999999999.0;
                 foreach(var element in stationList)
                 {
                     var dis = dal.GetDistance(l, element.Location);
@@ -284,15 +284,15 @@ namespace IBL
             /// returns list of customers
             internal List<IDAL.DO.Customer> RecieversList()
             {
-                List<IDAL.DO.Customer> temp = new List<IDAL.DO.Customer>();
+                List<IDAL.DO.Customer> temp = new();
                 DateTime? emptyDateTime = null;
-                var dalParcelsList = dal.GetParcels();
+                var dalParcelsList = dal.GetParcelsList(allParcels);
                 //search parcel
                 foreach(var pElement in dalParcelsList)
                 {
                     if(pElement.Delivered != emptyDateTime)
                     {
-                        var customersList = dal.GetCustomers();
+                        var customersList = dal.GetCustomersList(allCustomers);
                         //search sender of parcel
                         foreach (var cElement in customersList)
                         {
@@ -315,8 +315,8 @@ namespace IBL
                 var v = dronesList;
                 foreach (var item in v)
                 {
-                    if (item.id == myDroneId)
-                        b = item.battery;
+                    if (item.Id == myDroneId)
+                        b = item.Battery;
                 }
                 return b;
             }
@@ -328,7 +328,7 @@ namespace IBL
             /// <returns></returns>
             internal int NumOfOccupiedChargeSlots(int stationId)
             {
-                var dalStationsList = dal.GetStations();
+                var dalStationsList = dal.GetStationsList(allStations);
                 var myStationLocation = new Location();
                 int num = 0;
                 foreach (var item in dalStationsList)
@@ -355,8 +355,8 @@ namespace IBL
             /// <returns></returns>
             internal CustomerInParcel TheOtherSide(int parcelId, int customerId)
             {
-                var parcelsList = dal.GetParcels();
-                CustomerInParcel other = new CustomerInParcel();
+                var parcelsList = dal.GetParcelsList(allParcels);
+                CustomerInParcel other = new();
                 int otherId = 0;
                 foreach (var item in parcelsList)
                 {
@@ -368,7 +368,7 @@ namespace IBL
                         if (item.ReciverId != customerId) otherId = item.SenderId;
                     }
                 }
-                var customersList = dal.GetCustomers();
+                var customersList = dal.GetCustomersList(allCustomers);
                 foreach (var item in customersList)
                 {
                     if (otherId == item.Id)
@@ -389,8 +389,8 @@ namespace IBL
             /// <returns></returns>
             internal IDAL.DO.Station NearestReachableChargeSlot(IDAL.DO.Location l, int myDroneId)
             {
-                IDAL.DO.Station tempStation = new IDAL.DO.Station();
-                var stationList = dal.GetStations();
+                IDAL.DO.Station tempStation = new();
+                var stationList = dal.GetStationsList(allStations);
                 double min = 99999999999;
                 var requiredChargingLevel = (int)BatteryRequirementForVoyage(myDroneId, min);
                 var currentChargingLevel = ChargingLevel(myDroneId);
@@ -415,23 +415,23 @@ namespace IBL
             internal int SuitableParcel(int droneId)
             {
                 var v = dronesList;
-                IDAL.DO.MyEnums.WeightCategory myDroneWeight = new IDAL.DO.MyEnums.WeightCategory();
-                IDAL.DO.Location myDroneLocation = new IDAL.DO.Location();
-                IDAL.DO.Parcel tempParcel = new IDAL.DO.Parcel();
+                IDAL.DO.MyEnums.WeightCategory myDroneWeight = new();
+                IDAL.DO.Location myDroneLocation = new();
+                IDAL.DO.Parcel tempParcel = new();
                 int myDroneBattery = 0;
 
                 foreach (var item in v) // my drone data
                 {
-                    if(item.id == droneId)
+                    if(item.Id == droneId)
                     {
-                        myDroneWeight = item.weight;
-                        myDroneLocation = new IDAL.DO.Location(item.location.longitude, item.location.lattitude);
-                        myDroneBattery = item.battery;
+                        myDroneWeight = item.Weight;
+                        myDroneLocation = new IDAL.DO.Location(item.Location.longitude, item.Location.lattitude);
+                        myDroneBattery = item.Battery;
                     }
                 }
                 // start searching
                 List<IDAL.DO.Parcel> notSuitableParcels = new List<IDAL.DO.Parcel>();
-                var dalParcelsList = dal.GetParcels();
+                var dalParcelsList = dal.GetParcelsList(allParcels);
 
                 foreach (var item in dalParcelsList) // remove not suitable weight
                 {
@@ -451,7 +451,7 @@ namespace IBL
                         //if we have enough battery
                         var senderLocation = SenderLocation(tempParcel.Id);
                         var reciverLocation = ReciverLocation(tempParcel.Id);
-                        var chargeStation = NearestChargeSlot(reciverLocation);
+                        var chargeStation = NearestAvailableChargeSlot(reciverLocation);
 
                         var dis1 = dal.GetDistance(myDroneLocation, senderLocation);
                         var dis2 = dal.GetDistance(senderLocation, reciverLocation);

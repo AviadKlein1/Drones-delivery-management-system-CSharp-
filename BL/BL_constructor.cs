@@ -40,9 +40,9 @@ namespace IBL
                 foreach ( var element in dalDrones)
                 {
                     DroneToList temp1 = new DroneToList();
-                    temp1.id = element.Id;
-                    temp1.model = element.Model;
-                    temp1.weight = element.weight;
+                    temp1.Id = element.Id;
+                    temp1.Model = element.Model;
+                    temp1.Weight = element.weight;
                     dronesList.Add(temp1);
                 }
                 if(dronesList != null)
@@ -50,63 +50,64 @@ namespace IBL
                     //search for an associated drone
                     for (int i = 0; i < dronesList.Count; i++)
                     {
-                        if (IsAssociatedDrone(dronesList[i].id))
+                        if (IsAssociatedDrone(dronesList[i].Id))
                         {
                             DroneToList Dtemp = dronesList[i];
-                            temp.deliveredParcelId = AssociatedParcelId(dronesList[i].id);
+                            temp.DeliveredParcelId = AssociatedParcelId(dronesList[i].Id);
                             dronesList[i] = temp;
                         }
                     }
 
                     //
-                    foreach (var element in dronesList)
+                    for (int i = 0; i < dronesList.Count; i++)
                     {
+                        DroneToList element = dronesList[i];
                         DroneToList newDrone = new();
-                        newDrone.id = element.id;
-                        newDrone.model = element.model;
-                        newDrone.status = element.status;
-                        newDrone.weight = element.weight;
-                        newDrone.battery = element.battery;
-                        newDrone.deliveredParcelId = element.deliveredParcelId;
+                        newDrone.Id = element.Id;
+                        newDrone.Model = element.Model;
+                        newDrone.Status = element.Status;
+                        newDrone.Weight = element.Weight;
+                        newDrone.Battery = element.Battery;
+                        newDrone.DeliveredParcelId = element.DeliveredParcelId;
 
-                        if (IsAssociatedDrone(element.id) && IsAnyUnassociatedParcel())
+                        if (IsAssociatedDrone(element.Id) && IsAnyUnassociatedParcel())
                         {
                             //drone status
-                            newDrone.status = MyEnums.DroneStatus.delivery;
+                            newDrone.Status = MyEnums.DroneStatus.delivery;
 
                             //drone location
                             Location myLocation = new();
-                            if (ScheduledButNotPickedUp(element.deliveredParcelId))
+                            if (ScheduledButNotPickedUp(element.DeliveredParcelId))
                             {
-                                myLocation = new Location(NearestToSenderStation(element.deliveredParcelId).Location);
+                                myLocation = new Location(NearestToSenderStation(element.DeliveredParcelId).Location);
                             }
-                            if (PickedUpButNotDeliverd(element.deliveredParcelId))
+                            if (PickedUpButNotDeliverd(element.DeliveredParcelId))
                             {
-                                myLocation = new Location(SenderLocation(element.deliveredParcelId));
+                                myLocation = new Location(SenderLocation(element.DeliveredParcelId));
                             }
 
-                            newDrone.location = myLocation;
+                            newDrone.Location = myLocation;
                             IDAL.DO.Location myDalLocation = new IDAL.DO.Location(myLocation.longitude , myLocation.lattitude);
 
                             //drone electricity consumption 
-                            double lenghtOfDeliveryVoyage = dal.GetDistance(myDalLocation, SenderLocation(element.deliveredParcelId));
-                            IDAL.DO.Location locationOfNearestStation = (NearestToSenderStation(element.deliveredParcelId).Location);
+                            double lenghtOfDeliveryVoyage = dal.GetDistance(myDalLocation, SenderLocation(element.DeliveredParcelId));
+                            IDAL.DO.Location locationOfNearestStation = (NearestToSenderStation(element.DeliveredParcelId).Location);
                             double distanceBetweenTargetToStation = dal.GetDistance(myDalLocation, locationOfNearestStation);
 
-                            int Battery = (int)(BatteryRequirementForVoyage(element.id, lenghtOfDeliveryVoyage + distanceBetweenTargetToStation));
-                            element.battery = rd.Next(Battery, 101);
+                            int Battery = (int)(BatteryRequirementForVoyage(element.Id, lenghtOfDeliveryVoyage + distanceBetweenTargetToStation));
+                            newDrone.Battery = rd.Next(Battery, 101);
                         }
-                        else
+                        else // not in deliver
                         {
-                            element.status = (MyEnums.DroneStatus)rd.Next(0, 2);
-                            if (element.status == MyEnums.DroneStatus.maintenance)
+                            newDrone.Status = (MyEnums.DroneStatus)rd.Next(0, 2);
+                            if (newDrone.Status == MyEnums.DroneStatus.maintenance)
                             {
-                                var dalStationsList = dal.GetStations();
+                                var dalStationsList = dal.GetStationsList(allStations);
                                 int index = rd.Next(0, dalStationsList.Count());
-                                element.location = new Location(dalStationsList.ElementAt(index).Location);
-                                element.battery = rd.Next(0, 21);
+                                newDrone.Location = new Location(dalStationsList.ElementAt(index).Location);
+                                newDrone.Battery = rd.Next(0, 21);
                             }
-                            //no cargo
+                            // free drone
                             else
                             {
                                 var customers = RecieversList();
@@ -114,22 +115,23 @@ namespace IBL
                                 if (customers.Count > 0)
                                 {
                                     index = rd.Next(0, customers.Count);
-                                    element.location = new Location(customers.ElementAt(index).Location);
+                                    newDrone.Location = new Location(customers.ElementAt(index).Location);
                                 }
                                 else
                                 {
-                                    element.location = new Location();
+                                    newDrone.Location = new Location();
                                 }
-                                IDAL.DO.Location myLocation = new IDAL.DO.Location(element.location.longitude, element.location.lattitude);
 
-                                IDAL.DO.Location locationOfNearestChargeSlot = (NearestChargeSlot(myLocation).Location);
+                                IDAL.DO.Location myLocation = new(newDrone.Location.longitude, newDrone.Location.lattitude);
+                                IDAL.DO.Location locationOfNearestChargeSlot = (NearestAvailableChargeSlot(myLocation).Location);
 
                                 double distanceBetweenTargetToStation = dal.GetDistance(myLocation, locationOfNearestChargeSlot);
-                                int minBattery = (int)(BatteryRequirementForVoyage(element.id, distanceBetweenTargetToStation));
+                                int minBattery = (int)(BatteryRequirementForVoyage(newDrone.Id, distanceBetweenTargetToStation));
 
-                                element.battery = rd.Next(minBattery, 101);
+                                newDrone.Battery = rd.Next(minBattery, 101);
                             }
                         }
+                        dronesList[i] = newDrone;
                     }
                 }
             }

@@ -13,7 +13,7 @@ namespace IBL
             public void AddStation(Station myStation)
             {
                 //create new station
-                IDAL.DO.Station temp = new IDAL.DO.Station();
+                IDAL.DO.Station temp = new();
 
                 temp.Id = myStation.Id;
                 temp.Location = new IDAL.DO.Location(myStation.Location.longitude, myStation.Location.lattitude);
@@ -36,16 +36,16 @@ namespace IBL
             public void AddDrone(Drone myDrone)
             {
                 //create new drone
-                IDAL.DO.Drone temp = new IDAL.DO.Drone();
+                IDAL.DO.Drone temp = new();
 
-                temp.Id = myDrone.id;
-                temp.Model = myDrone.model;
-                temp.weight = myDrone.weight;
+                temp.Id = myDrone.Id;
+                temp.Model = myDrone.Model;
+                temp.weight = myDrone.Weight;
 
                 //add new drone to list of drones
                 try
                 {
-                    dal.AddDrone(temp, myDrone.firstChargeStationId);
+                    dal.AddDrone(temp, myDrone.FirstChargeStationId);
                 }
                 catch (IDAL.DO.ExcistingIdException ex)
                 {
@@ -61,14 +61,14 @@ namespace IBL
             public DroneToList AddDroneToBLList(Drone myDrone)
             {
                 //add drone to list (BL)
-                DroneToList myDronesToList = new DroneToList();
+                DroneToList myDronesToList = new();
 
-                myDronesToList.id = myDrone.id;
-                myDronesToList.model = myDrone.model;
-                myDronesToList.weight = myDrone.weight;
-                myDronesToList.battery = rd.Next(20, 41);
-                myDronesToList.status = MyEnums.DroneStatus.maintenance;
-                myDronesToList.location = new Location(dal.StationLocate(myDrone.firstChargeStationId));
+                myDronesToList.Id = myDrone.Id;
+                myDronesToList.Model = myDrone.Model;
+                myDronesToList.Weight = myDrone.Weight;
+                myDronesToList.Battery = rd.Next(20, 41);
+                myDronesToList.Status = MyEnums.DroneStatus.maintenance;
+                myDronesToList.Location = new Location(dal.StationLocate(myDrone.FirstChargeStationId));
 
                 return myDronesToList;
             }
@@ -77,7 +77,7 @@ namespace IBL
             public void Addcustomer(Customer myCustomer)
             {
                 //create new customer
-                IDAL.DO.Customer temp = new IDAL.DO.Customer();
+                IDAL.DO.Customer temp = new();
 
                 temp.Id = myCustomer.id;
                 temp.Name = myCustomer.name;
@@ -99,14 +99,14 @@ namespace IBL
             //add parcel
             public void AddParcel(Parcel myParcel)
             {
-                IDAL.DO.Parcel temp = new IDAL.DO.Parcel();
+                IDAL.DO.Parcel temp = new();
 
                 temp.Id = dal.ParcelRunId();
                 temp.Weight = myParcel.Weight;
                 temp.Priority = myParcel.Priority;
                 temp.SenderId = myParcel.Sender.id;
                 temp.ReciverId = myParcel.Reciever.id;
-                temp.DroneId = (myParcel.DroneInParcel == null ? 0 : myParcel.DroneInParcel.id);
+                temp.DroneId = (myParcel.DroneInParcel == null ? 0 : myParcel.DroneInParcel.Id);
                 temp.Requested = DateTime.Now;
                 temp.Scheduled = null;
                 temp.PickedUp = null;

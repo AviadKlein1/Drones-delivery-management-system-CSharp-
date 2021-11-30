@@ -11,6 +11,7 @@ using System;
 namespace ConsoleUI_BL
 {
     public class Program
+
     {
         static void Main(string[] args)
         {
@@ -35,6 +36,7 @@ namespace ConsoleUI_BL
                     "4: Display a list of items\n" +
                     "0: exit\n");
                     int.TryParse(Console.ReadLine(), out choice1);
+                   
                     switch (choice1)
                     {
                         //add items
@@ -254,7 +256,9 @@ namespace ConsoleUI_BL
                                 {
                                     //display list of stations
                                     case 1:
-                                        var stationsList = bl.DisplayStations();
+                                        static bool AllStations(IDAL.DO.Station s) { return true; }
+                                        System.Predicate<IDAL.DO.Station> allStations = AllStations;
+                                        var stationsList = bl.GetStationsList(allStations);
                                         foreach (var element in stationsList)
                                         {
                                             Console.WriteLine(element + "\n");
@@ -262,7 +266,9 @@ namespace ConsoleUI_BL
                                         break;
                                     //display list of drones
                                     case 2:
-                                        var dronesList = bl.DisplayDrones();
+                                        static bool AllDrones(IBL.BO.DroneToList d) { return true; }
+                                        System.Predicate<IBL.BO.DroneToList> allDrones = AllDrones;
+                                        var dronesList = bl.GetDronesList(allDrones);
                                         foreach (var element in dronesList)
                                         {
                                             Console.WriteLine(element + "\n");
@@ -270,7 +276,9 @@ namespace ConsoleUI_BL
                                         break;
                                     //display list of customers
                                     case 3:
-                                        var customerList = bl.DisplayCustomers();
+                                        static bool AllCustomers(IDAL.DO.Customer c) { return true; }
+                                        System.Predicate<IDAL.DO.Customer> allCustomers = AllCustomers;
+                                        var customerList = bl.GetCustomersList(allCustomers);
                                         foreach (var element in customerList)
                                         {
                                             Console.WriteLine(element + "\n");
@@ -278,7 +286,10 @@ namespace ConsoleUI_BL
                                         break;
                                     //display list of parcels
                                     case 4:
-                                        var parcelsList = bl.DisplayParcels();
+                                        
+                                        static bool AllParcels(IDAL.DO.Parcel p) { return true; }
+                                        System.Predicate<IDAL.DO.Parcel> allParcels = AllParcels;
+                                        var parcelsList = bl.GetParcelsList(allParcels);
                                         foreach (var element in parcelsList)
                                         {
                                             Console.WriteLine(element + "\n");
@@ -286,7 +297,10 @@ namespace ConsoleUI_BL
                                         break;
                                     //display list of not associated parcels
                                     case 5:
-                                        var notAssociatedParcelsList = bl.DisplayUnassociatedParcels();
+                                        static bool UnassociatedParcels(IDAL.DO.Parcel p) { return (p.Scheduled == null); }
+                                        System.Predicate<IDAL.DO.Parcel> unassociatedParcels = UnassociatedParcels;
+
+                                        var notAssociatedParcelsList = bl.GetParcelsList(unassociatedParcels);
                                         foreach (var element in notAssociatedParcelsList)
                                         {
                                             Console.WriteLine(element + "\n");
@@ -295,9 +309,9 @@ namespace ConsoleUI_BL
                                     //display list of available to charge stations
                                     case 6:
                                         static bool AvailableForCharge(IDAL.DO.Station s) { return (s.NumOfAvailableChargeSlots > 0); }
-                                        System.Predicate<IDAL.DO.Station> p = AvailableForCharge;
+                                        System.Predicate<IDAL.DO.Station> availableForCharge = AvailableForCharge;
                                             
-                                        var avilableToChargeStations = bl.GetNewStationsList(p);
+                                        var avilableToChargeStations = bl.GetStationsList(availableForCharge);
                                         foreach (var element in avilableToChargeStations)
                                         {
                                             Console.WriteLine(element + "\n");

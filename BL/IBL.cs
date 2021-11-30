@@ -49,36 +49,7 @@ namespace IBL
         /// </summary>
         /// <returns></returns>
         public IBL.BO.Parcel DisplayParcel(int parcelId);
-        /// <summary>
-        /// display stations list
-        /// </summary>
-        /// <returns></returns> return list of stations
-        public List<IBL.BO.StationToList> DisplayStations();
-        /// <summary>
-        /// display drones list
-        /// </summary>
-        /// <returns></returns> return list of drones
-        public List<IBL.BO.DroneToList> DisplayDrones();
-        /// <summary>
-        /// display customers list
-        /// </summary>
-        /// <returns></returns> return list of customers
-        public List<IBL.BO.CustomerToList> DisplayCustomers();
-        /// <summary>
-        /// display parcels list
-        /// </summary>
-        /// <returns></returns> return list of parcels
-        public List<IBL.BO.ParcelToList> DisplayParcels();
-        /// <summary>
-        /// display unassociated parcels list
-        /// </summary>
-        /// <returns></returns> return list of parcels
-        public List<IBL.BO.ParcelToList> DisplayUnassociatedParcels();
-        ///// <summary>
-        ///// display available for charge stations list
-        ///// </summary>
-        ///// <returns></returns> return list of stations
-        //public List<IBL.BO.StationToList> DisplayAvailableStations();
+        
         /// <summary>
         /// updates drone data
         /// </summary>
@@ -136,8 +107,15 @@ namespace IBL
 
 
 
+        /// <summary>
+        /// display stations list in condition
+        /// </summary>
+        /// <returns></returns> return list of stations accured to conditions
+        public IEnumerable<IBL.BO.StationToList> GetStationsList(System.Predicate<IDAL.DO.Station> match);
+        public IEnumerable<IBL.BO.DroneToList> GetDronesList(System.Predicate<IBL.BO.DroneToList> match);
+        public IEnumerable<IBL.BO.CustomerToList> GetCustomersList(System.Predicate<IDAL.DO.Customer> match);
+        public IEnumerable<IBL.BO.ParcelToList> GetParcelsList(System.Predicate<IDAL.DO.Parcel> match);
 
-        public IEnumerable<IBL.BO.StationToList> GetNewStationsList(System.Predicate<IDAL.DO.Station> match);
 
     }
 }

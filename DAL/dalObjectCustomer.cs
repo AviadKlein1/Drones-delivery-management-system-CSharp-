@@ -47,14 +47,15 @@ namespace IDAL
                 }
 
                 /// <summary>
-                /// return all customers
+                /// return customers by conditions
                 /// </summary>
-                public IEnumerable<Customer> GetCustomers()
+                public IEnumerable<IDAL.DO.Customer> GetCustomersList(System.Predicate<IDAL.DO.Customer> match)
                 {
-                    List<IDAL.DO.Customer> temp = new List<IDAL.DO.Customer>();
-                    temp = IDAL.DO.DalObject.DataSource.customers;
-                    return temp;
+                    List<IDAL.DO.Customer> newList = new();
+                    newList = IDAL.DO.DalObject.DataSource.customers.FindAll(match);
+                    return newList;
                 }
+               
                 /// <summary>
                 /// update model in drone
                 /// <param name="customerId"></param>

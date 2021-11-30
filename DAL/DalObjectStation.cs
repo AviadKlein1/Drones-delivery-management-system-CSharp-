@@ -15,12 +15,7 @@ namespace IDAL
             public partial class DalObject : IDal
             {
                 public DalObject() { IDAL.DO.DalObject.DataSource.Initialize(); }
-                public List<IDAL.DO.Station> GetNewList(System.Predicate<Station> match)
-                {
-                    List<IDAL.DO.Station> newList = new();
-                    newList = IDAL.DO.DalObject.DataSource.stations.FindAll(match);
-                    return newList;
-                }
+                
                 /// <summary>
                 /// add to list
                 /// </summary>
@@ -61,14 +56,15 @@ namespace IDAL
                 }
 
                 /// <summary>
-                /// return all stations
+                /// return stations by conditions
                 /// </summary>
-                public IEnumerable<Station> GetStations()
+                public IEnumerable<Station> GetStationsList(System.Predicate<Station> match)
                 {
-                    List<IDAL.DO.Station> temp = new List<IDAL.DO.Station>();
-                    temp = IDAL.DO.DalObject.DataSource.stations;
-                    return temp;
+                    List<IDAL.DO.Station> newList = new();
+                    newList = IDAL.DO.DalObject.DataSource.stations.FindAll(match);
+                    return newList;
                 }
+                
                 /// <summary>
                 /// update name and number of charge slots in station
                 /// <param name="stationId"></param>
@@ -99,8 +95,7 @@ namespace IDAL
                 public IEnumerable<Station> GetAvailableToChargeStations()
                 {
                     int size = IDAL.DO.DalObject.DataSource.stations.Count;
-                    List<IDAL.DO.Station> temp = new List<IDAL.DO.Station>();
-                    temp = IDAL.DO.DalObject.DataSource.stations;
+                    List<IDAL.DO.Station> temp = IDAL.DO.DalObject.DataSource.stations;
                     for (int i = 0; i < size; i++)
                         //if available for charge
                         if (IDAL.DO.DalObject.DataSource.stations[i].NumOfAvailableChargeSlots > 0)
@@ -115,14 +110,13 @@ namespace IDAL
                 /// <returns></returns>
                 public IDAL.DO.Location StationLocate(int StationId)
                 {
-                    Location temp = new Location();
+                    Location temp = new();
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.stations.Count; i++)
                     {
                         if (IDAL.DO.DalObject.DataSource.stations[i].Id == StationId)
                         {
                             temp.Lattitude = IDAL.DO.DalObject.DataSource.stations[i].Location.Lattitude;
                             temp.Longitude = IDAL.DO.DalObject.DataSource.stations[i].Location.Longitude;
-
                         }
                     }
                     return temp;

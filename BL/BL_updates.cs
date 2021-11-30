@@ -33,9 +33,9 @@ namespace IBL
                     dal.UpdateDrone(droneId, newModel);
                     foreach (var dItem in dronesList)
                     {
-                        if (dItem.id == droneId)
+                        if (dItem.Id == droneId)
                         {
-                            dItem.model = newModel;
+                            dItem.Model = newModel;
                             break;
                         }
                     }
@@ -56,7 +56,7 @@ namespace IBL
             public bool UpdateStation(int stationId, string newName, int numOfChargeSlots)
             {
                 var flag = false;
-                var dalStationsList = dal.GetStations();
+                var dalStationsList = dal.GetStationsList(allStations);
                 //search station
                 foreach (var item in dalStationsList)
                 {
@@ -83,7 +83,7 @@ namespace IBL
             public bool UpdateCustomer(int customerId, string newName, string newPhone)
             {
                 var flag = false;
-                var dalCustomersList = dal.GetCustomers();
+                var dalCustomersList = dal.GetCustomersList(allCustomers);
                 //search customer
                 foreach (var item in dalCustomersList)
                 {
@@ -112,16 +112,16 @@ namespace IBL
                 //search drone
                 foreach (var item in v)
                 {
-                    if (item.id == droneId)
+                    if (item.Id == droneId)
                     {
-                        if (item.status != MyEnums.DroneStatus.available)
+                        if (item.Status != MyEnums.DroneStatus.available)
                         {
                             System.Console.WriteLine("not available drone\n");
                             break;
                         }
                         else // is available 
                         {
-                            IDAL.DO.Location itemLocation = new IDAL.DO.Location(item.location.longitude, item.location.lattitude);
+                            IDAL.DO.Location itemLocation = new IDAL.DO.Location(item.Location.longitude, item.Location.lattitude);
                             var tempStation = NearestReachableChargeSlot(itemLocation, droneId);
                             if (tempStation.Id == 0)
                             {
@@ -132,14 +132,14 @@ namespace IBL
                             dal.DecriseChargeSlot(tempStation.Id);
                             foreach (var dItem in dronesList)
                             {
-                                if (dItem.id == droneId)
+                                if (dItem.Id == droneId)
                                 {
-                                    dItem.status = MyEnums.DroneStatus.maintenance;
-                                    dItem.location = new Location(tempStation.Location);
+                                    dItem.Status = MyEnums.DroneStatus.maintenance;
+                                    dItem.Location = new Location(tempStation.Location);
                                     //battery
                                     var dis = dal.GetDistance(itemLocation, tempStation.Location);
                                     var neededBattery = (int)BatteryRequirementForVoyage(droneId, dis);
-                                    dItem.battery = (dItem.battery - neededBattery);
+                                    dItem.Battery = (dItem.Battery - neededBattery);
                                     flag = true;
                                 }
                             }
@@ -162,26 +162,26 @@ namespace IBL
                 //search drone
                 foreach (var item in v)
                 {
-                    if (item.id == droneId)
+                    if (item.Id == droneId)
                     {
-                        if (item.status != MyEnums.DroneStatus.maintenance)
+                        if (item.Status != MyEnums.DroneStatus.maintenance)
                         {
                             throw new WrongIdException(droneId, $"wrong id, drone is not charging currently: {droneId}");
                         }
                         else // is maintenance 
                         {
-                            IDAL.DO.Location itemLocation = new IDAL.DO.Location(item.location.longitude, item.location.lattitude);
+                            IDAL.DO.Location itemLocation = new IDAL.DO.Location(item.Location.longitude, item.Location.lattitude);
                             var tempStation = NearestStation(itemLocation);
                             dal.IncreaseChargeSlot(tempStation.Id);
 
                             foreach (var dItem in dronesList)
                             {
-                                if (dItem.id == droneId)
+                                if (dItem.Id == droneId)
                                 {
-                                    dItem.status = MyEnums.DroneStatus.available;
+                                    dItem.Status = MyEnums.DroneStatus.available;
                                     //battery
-                                    int newBattery = dItem.battery += (int)(DroneLoadRate * chargeTime);
-                                    dItem.battery = (newBattery > 100 ? 100 : newBattery);
+                                    int newBattery = dItem.Battery += (int)(DroneLoadRate * chargeTime);
+                                    dItem.Battery = (newBattery > 100 ? 100 : newBattery);
                                     flag = true;
                                 }
                             }
@@ -202,9 +202,9 @@ namespace IBL
                 //search drone
                 foreach (var item in v)
                 {
-                    if (item.id == droneId)
+                    if (item.Id == droneId)
                     {
-                        if (item.status != MyEnums.DroneStatus.available)
+                        if (item.Status != MyEnums.DroneStatus.available)
                         {
                             throw new OccupiedDroneException(droneId, $"drone is occupied, try another: {droneId}");
                         }
@@ -214,7 +214,7 @@ namespace IBL
                             if (newParcelId == 0)
                                 break;
                             else flag = true;
-                            item.status = MyEnums.DroneStatus.delivery;
+                            item.Status = MyEnums.DroneStatus.delivery;
                             dal.SheduleParcelToDrone(newParcelId, droneId);
 
 
@@ -239,9 +239,9 @@ namespace IBL
                 //search drone
                 foreach (var item in v)
                 {
-                    if (item.id == droneId)
+                    if (item.Id == droneId)
                     {
-                        idOfThisParcel = item.deliveredParcelId;
+                        idOfThisParcel = item.DeliveredParcelId;
                         droneExistFlag = true;
                     }
                 }
@@ -252,7 +252,7 @@ namespace IBL
                 }
                 if (ScheduledButNotPickedUp(idOfThisParcel))// exeption
                 {
-                    var parcelsList = dal.GetParcels();
+                    var parcelsList = dal.GetParcelsList(allParcels);
                     foreach (var item in parcelsList)
                     {
                         //find our parcel
@@ -270,17 +270,17 @@ namespace IBL
                                 for (int i = 0; i < v.Count; i++)
                                 {
                                     DroneToList dItem = v[i];
-                                    if (dItem.id == droneId)
+                                    if (dItem.Id == droneId)
                                     {
-                                        temp.id = dItem.id;
-                                        temp.model = dItem.model;
-                                        temp.location = new Location(ourSenderLocation);
-                                        temp.status = dItem.status;
-                                        temp.weight = dItem.weight;
-                                        temp.deliveredParcelId = item.Id;
-                                        IDAL.DO.Location earlyDroneLocation = new IDAL.DO.Location(dItem.location.longitude, dItem.location.lattitude);
+                                        temp.Id = dItem.Id;
+                                        temp.Model = dItem.Model;
+                                        temp.Location = new Location(ourSenderLocation);
+                                        temp.Status = dItem.Status;
+                                        temp.Weight = dItem.Weight;
+                                        temp.DeliveredParcelId = item.Id;
+                                        IDAL.DO.Location earlyDroneLocation = new IDAL.DO.Location(dItem.Location.longitude, dItem.Location.lattitude);
                                         // update battery
-                                        temp.battery = (temp.battery - (int)BatteryRequirementForVoyage(droneId, dal.GetDistance(earlyDroneLocation, ourSenderLocation)));
+                                        temp.Battery = (temp.Battery - (int)BatteryRequirementForVoyage(droneId, dal.GetDistance(earlyDroneLocation, ourSenderLocation)));
                                         v[i] = temp;
                                     }
                                 }
@@ -307,9 +307,9 @@ namespace IBL
                 //search drone
                 foreach (var item in v)
                 {
-                    if (item.id == droneId)
+                    if (item.Id == droneId)
                     {
-                        idOfThisParcel = item.deliveredParcelId;
+                        idOfThisParcel = item.DeliveredParcelId;
                         droneExistFlag = true;
                     }
                 }
@@ -322,7 +322,7 @@ namespace IBL
                 {
                     System.Console.WriteLine("this parcel is not in the right status\n");
                 }
-                var parcelsList = dal.GetParcels();
+                var parcelsList = dal.GetParcelsList(allParcels);
                 foreach (var item in parcelsList)
                 {
                     //find our parcel
@@ -340,17 +340,17 @@ namespace IBL
                             for (int i = 0; i < v.Count; i++)
                             {
                                 DroneToList dItem = v[i];
-                                if (dItem.id == droneId)
+                                if (dItem.Id == droneId)
                                 {
-                                    temp.id = dItem.id;
-                                    temp.model = dItem.model;
-                                    temp.location = new Location(ourReciverLocation);
-                                    temp.status = MyEnums.DroneStatus.available;
-                                    temp.weight = dItem.weight;
-                                    temp.deliveredParcelId = item.Id;
-                                    IDAL.DO.Location earlyDroneLocation = new IDAL.DO.Location(dItem.location.longitude, dItem.location.lattitude);
+                                    temp.Id = dItem.Id;
+                                    temp.Model = dItem.Model;
+                                    temp.Location = new Location(ourReciverLocation);
+                                    temp.Status = MyEnums.DroneStatus.available;
+                                    temp.Weight = dItem.Weight;
+                                    temp.DeliveredParcelId = item.Id;
+                                    IDAL.DO.Location earlyDroneLocation = new IDAL.DO.Location(dItem.Location.longitude, dItem.Location.lattitude);
                                     // update battery
-                                    temp.battery = (temp.battery - (int)BatteryRequirementForVoyage(droneId, dal.GetDistance(earlyDroneLocation, ourReciverLocation)));
+                                    temp.Battery = (temp.Battery - (int)BatteryRequirementForVoyage(droneId, dal.GetDistance(earlyDroneLocation, ourReciverLocation)));
                                     v[i] = temp;
                                 }
                             }

@@ -63,14 +63,15 @@ namespace IDAL
                 }
 
                 /// <summary>
-                /// return all parcels
+                /// return list of parcels by conditions
                 /// </summary>
-                public IEnumerable<Parcel> GetParcels()
+                public IEnumerable<Parcel> GetParcelsList(System.Predicate<Parcel> match)
                 {
-                    List<IDAL.DO.Parcel> temp = new List<IDAL.DO.Parcel>();
-                    temp = IDAL.DO.DalObject.DataSource.parcels;
-                    return temp;
+                    List<IDAL.DO.Parcel> newList = new();
+                    newList = IDAL.DO.DalObject.DataSource.parcels.FindAll(match);
+                    return newList;
                 }
+                
                 /// <summary>
                 /// Shedule Parcel To Drone in dal
                 /// </summary>

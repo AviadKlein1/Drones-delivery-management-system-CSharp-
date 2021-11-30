@@ -54,24 +54,24 @@ namespace ConsoleUI_BL
             int id;
             Console.WriteLine("enter id");
             int.TryParse(Console.ReadLine(), out id);
-            myDrone.id = id;
+            myDrone.Id = id;
 
             //model
             Console.WriteLine("enter model");
-            myDrone.model = (Console.ReadLine());
+            myDrone.Model = (Console.ReadLine());
 
             //weight categoty
             int choice = 0;
             Console.WriteLine("enter max weight (light = 1, medium = 2, heavy = 3)");
             int.TryParse(Console.ReadLine(), out choice);
-            if (choice == 1) myDrone.weight = IDAL.DO.MyEnums.WeightCategory.light;
-            if (choice == 2) myDrone.weight = IDAL.DO.MyEnums.WeightCategory.medium;
-            if (choice == 3) myDrone.weight = IDAL.DO.MyEnums.WeightCategory.heavy;
+            if (choice == 1) myDrone.Weight = IDAL.DO.MyEnums.WeightCategory.light;
+            if (choice == 2) myDrone.Weight = IDAL.DO.MyEnums.WeightCategory.medium;
+            if (choice == 3) myDrone.Weight = IDAL.DO.MyEnums.WeightCategory.heavy;
 
             //id of station for first charge
             Console.WriteLine("enter id of station for first charge");
             int.TryParse(Console.ReadLine(), out choice);
-            myDrone.firstChargeStationId = choice;
+            myDrone.FirstChargeStationId = choice;
 
             return myDrone;
         }
