@@ -14,7 +14,7 @@ namespace IDAL
                 /// <summary>
                 /// add drone to list of drones
                 /// </summary>
-                public void AddDrone(Drone myDrone)
+                public void AddDrone(Drone myDrone, int firstChargeStationId)
                 {
                     for(int i = 0; i < IDAL.DO.DalObject.DataSource.drones.Count; i++)
                         //if drone already exist
@@ -22,6 +22,8 @@ namespace IDAL
                             throw new ExcistingIdException(myDrone.Id, $"drone already exist: {myDrone.Id}");
                     //insert drone to list
                     IDAL.DO.DalObject.DataSource.drones.Add(myDrone);
+                    // find charge slot
+                    DecriseChargeSlot(firstChargeStationId);
                 }
 
                 /// <summary>

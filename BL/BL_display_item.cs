@@ -18,9 +18,9 @@ namespace IBL
                 {
                     temp = dal.GetStation(stationId);
                 }
-                catch (IDAL.DO.WrongIdException ex)
+                catch (Exception)
                 {
-                    Console.WriteLine(ex.Message);
+                    throw;
                 }
                 //return new Station(temp);
                 Station retTemp = new Station(temp);
@@ -72,9 +72,9 @@ namespace IBL
                 {
                     temp = dal.GetCustomer(customerId);
                 }
-                catch (IDAL.DO.WrongIdException ex)
+                catch (Exception)
                 {
-                    Console.WriteLine(ex.Message);
+                    throw;
                 }
 
                 Customer retTemp = new Customer(temp);
@@ -124,9 +124,9 @@ namespace IBL
                 {
                     temp = dal.GetParcel(parcelId);
                 }
-                catch (IDAL.DO.WrongIdException ex)
+                catch (Exception)
                 {
-                    Console.WriteLine(ex.Message);
+                    throw;
                 }
                 Parcel retTemp = new Parcel(temp);
                 return retTemp;

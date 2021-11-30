@@ -326,23 +326,23 @@ namespace IBL
             /// </summary>
             /// <param name="stationId"></param>
             /// <returns></returns>
-            internal int NumofOccupiedChargeSlots(int stationId)
+            internal int NumOfOccupiedChargeSlots(int stationId)
             {
                 var dalStationsList = dal.GetStations();
                 var myStationLocation = new Location();
                 int num = 0;
                 foreach (var item in dalStationsList)
                 {
-                    if(item.Id == stationId) 
-                        myStationLocation = new Location(item.Location);
+                    if (item.Id == stationId)
+                        num = item.NumOfChargeSlots - item.NumOfAvailableChargeSlots;
                 }
-                //search for drones charging currently at station
-                var dalDronesList = dronesList;
-                foreach(var item in dalDronesList)
-                {
-                    if(item.status == MyEnums.DroneStatus.maintenance && item.location == myStationLocation)
-                        num++;
-                }
+                ////search for drones charging currently at station
+                //var dalDronesList = dronesList;
+                //foreach(var item in dalDronesList)
+                //{
+                //    if(item.status == MyEnums.DroneStatus.maintenance && item.location == myStationLocation)
+                //        num++;
+                //}
                 return num;
             }
 

@@ -16,7 +16,7 @@ namespace IDAL
         /// <summary>
         /// add drone to list of drones
         /// </summary>
-        public void AddDrone(IDAL.DO.Drone drone);
+        public void AddDrone(IDAL.DO.Drone drone , int firstChargeStationId);
         /// <summary>
         /// add costumer to list of costimers
         /// </summary>

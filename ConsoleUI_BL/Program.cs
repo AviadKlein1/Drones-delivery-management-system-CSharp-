@@ -48,9 +48,17 @@ namespace ConsoleUI_BL
                                 int.TryParse(Console.ReadLine(), out choice2);
                                 switch (choice2)
                                 {
+                                    
                                     //add station
                                     case 1:
-                                        bl.AddStation(myInputOutput.AddStation());
+                                        try
+                                        {
+                                            bl.AddStation(myInputOutput.AddStation());
+                                        }
+                                        catch(Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
                                         break;
                                     //add drone
                                     case 2:
@@ -70,12 +78,12 @@ namespace ConsoleUI_BL
                                 }
                             }
                             break;
-                        
+
                         //updates
                         case 2:
                             while (choice2 != 0)
                             {
-                                Console.WriteLine("To update drone's data enter 1" + 
+                                Console.WriteLine("To update drone's data enter 1" +
                                 "\nTo update station's data enter 2" +
                                 "\nTo update customer's data enter 3" +
                                 "\nTo charge drone enter 4" +
@@ -104,7 +112,7 @@ namespace ConsoleUI_BL
                                             Console.WriteLine("update failed\n");
                                         break;
 
-                                   case 2:
+                                    case 2:
                                         Console.WriteLine("enter station id:\n");
                                         int.TryParse(Console.ReadLine(), out id);
                                         Console.WriteLine("enter new station name:\n");
@@ -135,7 +143,7 @@ namespace ConsoleUI_BL
                                     case 4:
                                         Console.WriteLine("enter drone id:\n");
                                         int.TryParse(Console.ReadLine(), out id);
-                                       
+
                                         var flag4 = bl.ChargeDrone(id);
                                         if (flag4)
                                             Console.WriteLine("successfully updated\n");
@@ -184,8 +192,8 @@ namespace ConsoleUI_BL
                                         break;
                                 }
                             }
-                        break;
-                        
+                            break;
+
                         //display item
                         case 3:
                             while (choice2 != 0)
@@ -303,7 +311,9 @@ namespace ConsoleUI_BL
                             return;
 
                         default:
+
                             break;
+
                     }
                 }
             }

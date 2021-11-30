@@ -22,8 +22,8 @@ namespace IBL
                     StationToList myStation = new StationToList();
                     myStation.Id = element.Id;
                     myStation.Name = element.Name;
-                    myStation.NumOfAvailableChargeSlots = element.NumOfChargeSlots - NumofOccupiedChargeSlots(element.Id);
-                    myStation.NumOfOccupiedChargeSlots = NumofOccupiedChargeSlots(element.Id);
+                    myStation.NumOfAvailableChargeSlots = element.NumOfAvailableChargeSlots;
+                    myStation.NumOfOccupiedChargeSlots = NumOfOccupiedChargeSlots(element.Id);
                     tmp1.Add(myStation);
                 }
                 //if empty list

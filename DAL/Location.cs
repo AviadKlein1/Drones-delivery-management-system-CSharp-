@@ -1,11 +1,12 @@
-﻿namespace IDAL
+﻿using System;
+namespace IDAL
 {
     namespace DO
     {
         /// <summary>
         /// location - fields, ctor and ToString function
         /// </summary>
-        public struct Location
+        public struct  Location
         {
             /// <summary>
             /// params ctor

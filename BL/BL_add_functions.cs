@@ -28,7 +28,7 @@ namespace IBL
                 }
                 catch (IDAL.DO.ExcistingIdException ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    throw ex;
                 }
             }
 
@@ -45,11 +45,12 @@ namespace IBL
                 //add new drone to list of drones
                 try
                 {
-                    dal.AddDrone(temp);
+                    dal.AddDrone(temp, myDrone.firstChargeStationId);
                 }
                 catch (IDAL.DO.ExcistingIdException ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    throw ex;
+
                 }
 
                 //add new drone to list of drones (BL) 
@@ -90,7 +91,8 @@ namespace IBL
                 }
                 catch (IDAL.DO.ExcistingIdException ex)
                 {
-                    Console.WriteLine(ex.Message);
+
+                    throw ex;
                 }
             }
 
@@ -105,8 +107,8 @@ namespace IBL
                 temp.SenderId = myParcel.Sender.id;
                 temp.ReciverId = myParcel.Reciever.id;
                 temp.DroneId = (myParcel.DroneInParcel == null ? 0 : myParcel.DroneInParcel.id);
-                temp.Scheduled = DateTime.Now;
-                temp.Requested = new DateTime();
+                temp.Requested = DateTime.Now; 
+                temp.Scheduled = new DateTime();
                 temp.PickedUp = new DateTime();
                 temp.Delivered = new DateTime();
                 Console.WriteLine("your parcel ID is: " + temp.Id + "\n");
@@ -118,7 +120,8 @@ namespace IBL
                 }
                 catch (IDAL.DO.ExcistingIdException ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    throw ex;
+
                 }
             }
         }

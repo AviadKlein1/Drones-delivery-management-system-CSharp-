@@ -138,7 +138,8 @@ namespace IDAL
                             temp.Id = stationId;
                             temp.Location = item.Location;
                             temp.Name = item.Name;
-                            temp.NumOfChargeSlots = item.NumOfChargeSlots - 1;
+                            temp.NumOfChargeSlots = item.NumOfChargeSlots;
+                            temp.NumOfAvailableChargeSlots = item.NumOfAvailableChargeSlots - 1;
                             IDAL.DO.DalObject.DataSource.stations[i] = temp;
                         }
                     }

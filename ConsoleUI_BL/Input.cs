@@ -26,13 +26,13 @@ namespace ConsoleUI_BL
             myStation.Name = (Console.ReadLine());
 
             //location - longitude and lattitude
-            double locat;
+            double locat1;
+            double locat2;
             Console.WriteLine("enter longitude");
-            double.TryParse(Console.ReadLine(), out locat);
-            myStation.Location = new IBL.BO.Location(0, locat);
+            double.TryParse(Console.ReadLine(), out locat1);
             Console.WriteLine("enter lattitude");
-            double.TryParse(Console.ReadLine(), out locat);
-            myStation.Location.lattitude = locat;
+            double.TryParse(Console.ReadLine(), out locat2);
+            myStation.Location = new IBL.BO.Location(locat1, locat2);
 
             //number of charge slots
             int numOfChargeSlots;
