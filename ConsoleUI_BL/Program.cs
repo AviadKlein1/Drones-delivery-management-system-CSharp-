@@ -15,7 +15,7 @@ namespace ConsoleUI_BL
     {
         static void Main(string[] args)
         {
-            IBL.BO.BL bl = new IBL.BO.BL();
+            IBL.BO.BL bl = new();
 
             ConsoleUI_BL.Input myInputOutput = new ConsoleUI_BL.Input();
 

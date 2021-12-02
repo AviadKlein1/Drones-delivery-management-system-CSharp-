@@ -108,12 +108,24 @@ namespace IBL
 
 
         /// <summary>
-        /// display stations list in condition
+        /// get stations list in condition
         /// </summary>
         /// <returns></returns> return list of stations accured to conditions
         public IEnumerable<IBL.BO.StationToList> GetStationsList(System.Predicate<IDAL.DO.Station> match);
-        public IEnumerable<IBL.BO.DroneToList> GetDronesList(System.Predicate<IBL.BO.DroneToList> match);
+        /// <summary>
+        /// get drones list in condition
+        /// </summary>
+        /// <returns></returns> return list of drones accured to conditions
+        public List<IBL.BO.DroneToList> GetDronesList(System.Predicate<IBL.BO.DroneToList> match);
+        /// <summary>
+        /// get customers list in condition
+        /// </summary>
+        /// <returns></returns> return list of customers accured to conditions
         public IEnumerable<IBL.BO.CustomerToList> GetCustomersList(System.Predicate<IDAL.DO.Customer> match);
+        /// <summary>
+        /// get parcels list in condition
+        /// </summary>
+        /// <returns></returns> return list of parcels accured to conditions
         public IEnumerable<IBL.BO.ParcelToList> GetParcelsList(System.Predicate<IDAL.DO.Parcel> match);
 
 

@@ -40,7 +40,7 @@ namespace IBL
             /// </summary>
             /// <returns></returns> reyurn list of drones
             /// 
-            public IEnumerable<IBL.BO.DroneToList> GetDronesList(System.Predicate<IBL.BO.DroneToList> match)
+            public List<IBL.BO.DroneToList> GetDronesList(System.Predicate<IBL.BO.DroneToList> match)
             {
                 var v = dronesList.FindAll(match);
                 if (v == null)

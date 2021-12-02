@@ -129,7 +129,6 @@ namespace IDAL
         public IEnumerable<IDAL.DO.Station> GetStationsList(System.Predicate<IDAL.DO.Station> match);
         public IEnumerable<IDAL.DO.Customer> GetCustomersList(System.Predicate<IDAL.DO.Customer> match);
         public IEnumerable<IDAL.DO.Parcel> GetParcelsList(System.Predicate<IDAL.DO.Parcel> match);
-
     }
 }
 
