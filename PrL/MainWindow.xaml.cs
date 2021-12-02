@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PL
+namespace PrL
 {
     /// <summary>
-    /// Interaction logic for droneWindow.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class droneWindow : Window
+    public partial class MainWindow : Window
     {
-        public droneWindow()
+        public MainWindow()
         {
             InitializeComponent();
         }

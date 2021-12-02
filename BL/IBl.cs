@@ -116,7 +116,7 @@ namespace IBL
         /// get drones list in condition
         /// </summary>
         /// <returns></returns> return list of drones accured to conditions
-        public IEnumerable<IBL.BO.DroneToList> GetDronesList(System.Predicate<IBL.BO.DroneToList> match);
+        public List<IBL.BO.DroneToList> GetDronesList(System.Predicate<IBL.BO.DroneToList> match);
         /// <summary>
         /// get customers list in condition
         /// </summary>

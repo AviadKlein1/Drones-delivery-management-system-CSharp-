@@ -12,20 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL
+namespace PrL
 {
     /// <summary>
-    /// Interaction logic for dronesListWindow1.xaml
+    /// Interaction logic for dronesList.xaml
     /// </summary>
-    public partial class dronesListWindow : Window
+    public partial class dronesList : Window
     {
-        IBL.BO.BL dlw_bl;
-        public dronesListWindow(IBL.BO.BL bl)
+        public dronesList()
         {
-            static bool AllDrones(IBL.BO.DroneToList d) { return true; }
-            System.Predicate<IBL.BO.DroneToList> allDrones = AllDrones;
-            dlw_bl = bl;
-            dlw_bl.GetDronesList(allDrones);
+            InitializeComponent();
         }
     }
 }
