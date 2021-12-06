@@ -6,7 +6,36 @@
         xmlns:local="clr-namespace:PrL"
         mc:Ignorable="d"
         Title="dronesList" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Name="Main_Grid">
+        <ListView x:Name="dronesListView" Grid.Row="1" Background="AntiqueWhite"  />
+
+        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
+        VerticalAlignment="Stretch" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+            <ComboBox Name="StatusSelector" Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged" BorderBrush="#FF8F4444"   >
+                <ComboBox.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFF0F0F0"/>
+                        <GradientStop Color="#FF8F2525" Offset="1"/>
+                    </LinearGradientBrush>
+                </ComboBox.Background>
+            </ComboBox>
+            <Label Name="StatusSelectorLabel" Content="Select Status" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button x:Name="AddDrone" Click="AddDrone_Click" Grid.Column="2" />
+            <Label Name="Label" Content="Add New Drone" Grid.Column="2"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            
+            
+
+        </Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="400*"/>
+        </Grid.RowDefinitions>
     </Grid>
 </Window>

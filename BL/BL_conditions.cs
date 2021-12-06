@@ -35,6 +35,13 @@ namespace IBL
             //drones
             static bool AllDrones(IDAL.DO.Drone d) { return true; }
             readonly System.Predicate<IDAL.DO.Drone> allDrones = AllDrones;
+            public static bool AllDronesInMaintenance(IBL.BO.DroneToList d) { return(d.Status == MyEnums.DroneStatus.maintenance); }
+            public System.Predicate<IBL.BO.DroneToList> allDronesInMaintenance = AllDronesInMaintenance;
+            public static bool AllDronesInDelivery(IBL.BO.DroneToList d) { return (d.Status == MyEnums.DroneStatus.delivery); }
+            public System.Predicate<IBL.BO.DroneToList> allDronesInDelivery = AllDronesInDelivery;
+            public static bool AllDronesInAvailable(IBL.BO.DroneToList d) { return (d.Status == MyEnums.DroneStatus.available); }
+            public System.Predicate<IBL.BO.DroneToList> allDronesInAvailable = AllDronesInAvailable;
+
 
         }
     }

@@ -47,6 +47,20 @@ namespace IBL
                     System.Console.WriteLine("empty list\n");
                 return v;
             }
+            public List<IBL.BO.DroneToList> GetDrones()
+            {
+                var v = dronesList;
+                return v;
+
+                //var v = dronesList;
+                //int i = 1;
+                //foreach (var item in v)
+                //{
+                //    System.Console.WriteLine("Drone #",i++, ": ");
+                //    System.Console.WriteLine(item);
+
+                //}
+            }
 
             /// <summary>
             /// display customers list

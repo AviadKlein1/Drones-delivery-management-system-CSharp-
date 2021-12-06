@@ -19,9 +19,26 @@ namespace PrL
     /// </summary>
     public partial class dronesList : Window
     {
-        public dronesList()
+        IBL.BO.BL bl = new();
+        public dronesList(IBL.BO.BL main_bl)
         {
             InitializeComponent();
+            bl = main_bl;
+            dronesListView.ItemsSource = bl.GetDrones();
+            StatusSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.MyEnums.DroneStatus));
+        }
+        private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Contains(IBL.BO.MyEnums.DroneStatus.maintenance)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInMaintenance);
+            if (e.AddedItems.Contains(IBL.BO.MyEnums.DroneStatus.available)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInAvailable);
+            if (e.AddedItems.Contains(IBL.BO.MyEnums.DroneStatus.delivery)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInDelivery);
+        }
+
+        private void AddDrone_Click(object sender, RoutedEventArgs e)
+        {
+            var v = new AddDrone(bl);
+            
+
         }
     }
 }
