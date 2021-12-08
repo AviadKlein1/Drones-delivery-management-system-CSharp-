@@ -18,7 +18,6 @@ namespace IBL
                 if(v == null) return false;
                 else return true;
             }
-
             /// <summary>
             /// check is the drone is associated
             /// </summary>
