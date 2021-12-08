@@ -23,7 +23,6 @@ namespace PrL
         IBL.BO.BL bl = new();
         public MainWindow()
         {
-
             InitializeComponent();
         }
 

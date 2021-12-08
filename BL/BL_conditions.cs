@@ -32,6 +32,7 @@ namespace IBL
             //customers
             static bool AllCustomers(IDAL.DO.Customer c) { return true; }
             readonly System.Predicate<IDAL.DO.Customer> allCustomers = AllCustomers;
+
             //drones
             static bool AllDrones(IDAL.DO.Drone d) { return true; }
             readonly System.Predicate<IDAL.DO.Drone> allDrones = AllDrones;
@@ -41,6 +42,12 @@ namespace IBL
             public System.Predicate<IBL.BO.DroneToList> allDronesInDelivery = AllDronesInDelivery;
             public static bool AllDronesInAvailable(IBL.BO.DroneToList d) { return (d.Status == MyEnums.DroneStatus.available); }
             public System.Predicate<IBL.BO.DroneToList> allDronesInAvailable = AllDronesInAvailable;
+            public static bool AllDronesInHeavy(IBL.BO.DroneToList d) { return (d.Weight == IDAL.DO.MyEnums.WeightCategory.heavy); }
+            public System.Predicate<IBL.BO.DroneToList> allDronesInHeavy = AllDronesInHeavy;
+            public static bool AllDronesInMedium(IBL.BO.DroneToList d) { return (d.Weight == IDAL.DO.MyEnums.WeightCategory.medium); }
+            public System.Predicate<IBL.BO.DroneToList> allDronesInMedium = AllDronesInMedium;
+            public static bool AllDronesInLight(IBL.BO.DroneToList d) { return (d.Weight == IDAL.DO.MyEnums.WeightCategory.light); }
+            public System.Predicate<IBL.BO.DroneToList> allDronesInLight = AllDronesInLight;
 
 
         }

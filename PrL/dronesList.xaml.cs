@@ -20,12 +20,14 @@ namespace PrL
     public partial class dronesList : Window
     {
         IBL.BO.BL bl = new();
-        public dronesList(IBL.BO.BL main_bl)
+        public dronesList(IBL.BO.BL mainBl)
         {
             InitializeComponent();
-            bl = main_bl;
+            bl = mainBl;
             dronesListView.ItemsSource = bl.GetDrones();
+            weightSelector.ItemsSource = Enum.GetValues(typeof(IDAL.DO.MyEnums.WeightCategory));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.MyEnums.DroneStatus));
+
         }
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -34,11 +36,26 @@ namespace PrL
             if (e.AddedItems.Contains(IBL.BO.MyEnums.DroneStatus.delivery)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInDelivery);
         }
 
-        private void AddDrone_Click(object sender, RoutedEventArgs e)
+        private void weightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var v = new AddDrone(bl);
-            
 
+            if (e.AddedItems.Contains(IDAL.DO.MyEnums.WeightCategory.heavy)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInHeavy);
+            if (e.AddedItems.Contains(IDAL.DO.MyEnums.WeightCategory.medium)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInMedium);
+            if (e.AddedItems.Contains(IDAL.DO.MyEnums.WeightCategory.light)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInLight);
         }
+
+
+
+        private void dclick(object sender, MouseButtonEventArgs e)
+        {
+           
+            new AddDrone(bl, (IBL.BO.DroneToList)dronesListView.SelectedItem).Show();
+        }
+
+        private void AddNewDrone_Click(object sender, RoutedEventArgs e)
+        {
+            new AddDrone(bl).Show();
+        }
+
     }
 }
