@@ -18,7 +18,8 @@
         </Style>
     </Window.Resources>
     <Grid Name="Main_Grid">
-        <ListView x:Name="dronesListView" Grid.Row="1" Background="AntiqueWhite" MouseDoubleClick="dclick"  />
+        <ListView x:Name="dronesListView" Grid.Row="1" Background="AntiqueWhite" MouseDoubleClick="dclick" >
+        </ListView>
 
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
         VerticalAlignment="Stretch" Width="auto">
