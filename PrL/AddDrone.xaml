@@ -64,7 +64,7 @@
 
             <StackPanel x:Name="ScheduleParcelToDronePanel" Visibility="Collapsed">
                 <Button x:Name="ScheduleParcelToDrone" BorderBrush="Bisque" BorderThickness="2" Width="224" Click="ScheduleParcelToDrone_Click" >
-                    <TextBlock Text="SendDroneToDlivery" TextWrapping="Wrap" Cursor="Hand" />
+                    <TextBlock Text="ScheduleParcelToDrone" TextWrapping="Wrap" Cursor="Hand" />
                 </Button>
             </StackPanel>
 

@@ -101,7 +101,7 @@ namespace IDAL
                 /// <returns></returns>
                 public void PickUpParcelByDrone(int droneId, int parcelId)
                 {
-                    Parcel temp = new Parcel();
+                    Parcel temp = new();
                     for (int i = 0; i < IDAL.DO.DalObject.DataSource.parcels.Count; i++)
                     {
                         //search parcel

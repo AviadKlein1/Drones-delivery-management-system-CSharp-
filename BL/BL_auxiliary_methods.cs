@@ -379,7 +379,6 @@ namespace IBL
                 var v = dronesList;
                 IDAL.DO.MyEnums.WeightCategory myDroneWeight = new();
                 IDAL.DO.Location myDroneLocation = new();
-                IDAL.DO.Parcel tempParcel = new();
                 int myDroneBattery = 0;
 
                 foreach (var item in v) // my drone data
@@ -392,47 +391,76 @@ namespace IBL
                     }
                 }
                 // start searching
-                List<IDAL.DO.Parcel> notSuitableParcels = new List<IDAL.DO.Parcel>();
+
+                List<IDAL.DO.Parcel> SuitableParcels = new List<IDAL.DO.Parcel>();
                 var dalParcelsList = dal.GetParcelsList(allParcels);
+                var priorityArray = new int[1000];
+                double max = 0;
+                var sortByDIstanceParcels = new List<IDAL.DO.Parcel>();
+                var tempP = new IDAL.DO.Parcel();
 
                 foreach (var item in dalParcelsList) // remove not suitable weight
                 {
-                    if(item.Weight > myDroneWeight)
+                    if (item.Weight <= myDroneWeight && IsPossibleVoyage(item, myDroneLocation, myDroneBattery))
                     {
-                        notSuitableParcels.Add(item);
+                        SuitableParcels.Add(item);
                     }
                 }
-                foreach (var item in dalParcelsList)
+                var distanceSortToErase = SuitableParcels;
+                //score parcels
+                for (int j = SuitableParcels.Count; j > 0; j--)// sort parcels list by distance - the min dis is in last index
                 {
-                    //in high priority, and not at our list
-                    if(item.Priority == HighestPriority(dalParcelsList, notSuitableParcels) &&
-                        IsSuitable(notSuitableParcels, item))
+                    for (int i = 0; i < distanceSortToErase.Count; i++)//search the max
                     {
-                        // the nearest parcel
-                        tempParcel = TheNearestParcel(dalParcelsList, myDroneLocation, notSuitableParcels);
-                        //if we have enough battery
-                        var senderLocation = SenderLocation(tempParcel.Id);
-                        var reciverLocation = ReciverLocation(tempParcel.Id);
-                        var chargeStation = NearestAvailableChargeSlot(reciverLocation);
-
-                        var dis1 = dal.GetDistance(myDroneLocation, senderLocation);
-                        var dis2 = dal.GetDistance(senderLocation, reciverLocation);
-                        var dis3 = dal.GetDistance(reciverLocation, chargeStation.Location);
-                        var fullDistance = dis1 + dis2 + dis3;
-
-                        double Consumption = 0;
-                        if (tempParcel.Weight == IDAL.DO.MyEnums.WeightCategory.light) Consumption = lightWeight;
-                        if (tempParcel.Weight == IDAL.DO.MyEnums.WeightCategory.medium) Consumption = mediumWeight;
-                        if (tempParcel.Weight == IDAL.DO.MyEnums.WeightCategory.heavy) Consumption = heavyWeight;
-                        
-                        if (myDroneBattery < (fullDistance * Consumption))
-                            notSuitableParcels.Add(item);
-                        else 
-                            return tempParcel.Id;
+                        IDAL.DO.Parcel item = distanceSortToErase[i];
+                        var dis = dal.GetDistance(myDroneLocation, SenderLocation(item.Id));
+                        if (dis > max)
+                        {
+                            max = dis;
+                            tempP = item;
+                        }
+                    }
+                    sortByDIstanceParcels.Add(tempP);
+                    for (int i = 0; i < distanceSortToErase.Count; i++)// erase the max distance parcel from list
+                    {
+                        IDAL.DO.Parcel item = distanceSortToErase[i];
+                        if (max == dal.GetDistance(SenderLocation(item.Id), myDroneLocation))
+                        {
+                            distanceSortToErase.Remove(item);
+                        }
                     }
                 }
-                Console.WriteLine("no suitable parcel\n");
-                return 0;
+                for (int i = 0; i < sortByDIstanceParcels.Count; i++)// score by priority
+                {
+                    IDAL.DO.Parcel item = sortByDIstanceParcels[i];
+                    if (item.Priority == IDAL.DO.MyEnums.PriorityLevel.ergent) priorityArray[i] +=100000;
+                    if (item.Priority == IDAL.DO.MyEnums.PriorityLevel.quickly) priorityArray[i] += 50000;
+                    if (item.Priority == IDAL.DO.MyEnums.PriorityLevel.regular) priorityArray[i] += 20000;
+                }
+                for (int i = 0; i < sortByDIstanceParcels.Count; i++)// score by weight
+                {
+                    IDAL.DO.Parcel item = sortByDIstanceParcels[i];
+                    if ((myDroneWeight - item.Weight) == 0) priorityArray[i] += 10000;
+                    if ((myDroneWeight - item.Weight) == 1) priorityArray[i] += 5000;
+                    if ((myDroneWeight - item.Weight) == 2) priorityArray[i] += 2000;
+                }
+                for (int i = 0; i < sortByDIstanceParcels.Count; i++)// score by distance
+                {
+                    priorityArray[i] += (i+1);
+                }
+                if(sortByDIstanceParcels.Count == 0) throw new Exception( $"no suitable parcel {droneId}");
+                max = 0;
+                int index = -1;
+                for (int i = 0; i < sortByDIstanceParcels.Count; i++)// find the index in the
+                {
+                    if (priorityArray[i] > max)
+                    {
+                        max = priorityArray[i];
+                        index = i;
+                    }
+                }
+                var parcelTemp = sortByDIstanceParcels[index];
+                return parcelTemp.Id;
             }
 
             /// <summary>
@@ -459,16 +487,27 @@ namespace IBL
             /// <param name="dalParcelsList"></param>
             /// <param name="notSuatableList"></param>
             /// <returns></returns>
-            internal IDAL.DO.MyEnums.PriorityLevel HighestPriority(IEnumerable<IDAL.DO.Parcel> dalParcelsList, List<IDAL.DO.Parcel> notSuatableList)
+            internal bool IsPossibleVoyage(IDAL.DO.Parcel tempParcel,IDAL.DO.Location myDroneLocation, int myDroneBattery)
             {
-                IDAL.DO.MyEnums.PriorityLevel max = IDAL.DO.MyEnums.PriorityLevel.regular;
-                foreach (var item in dalParcelsList)
-                {
-                    //if higher priority
-                    if(item.Priority > max && IsSuitable(notSuatableList, item))
-                        max = item.Priority;
-                }
-                return max;
+                bool flag = false;
+
+                var senderLocation = SenderLocation(tempParcel.Id);
+                var reciverLocation = ReciverLocation(tempParcel.Id);
+                var chargeStation = NearestAvailableChargeSlot(reciverLocation);
+
+                var dis1 = dal.GetDistance(myDroneLocation, senderLocation);
+                var dis2 = dal.GetDistance(senderLocation, reciverLocation);
+                var dis3 = dal.GetDistance(reciverLocation, chargeStation.Location);
+                var fullDistance = (dis1 + dis2 + dis3)/100000;
+
+                double Consumption = 0;
+                if (tempParcel.Weight == IDAL.DO.MyEnums.WeightCategory.light) Consumption = lightWeight;
+                if (tempParcel.Weight == IDAL.DO.MyEnums.WeightCategory.medium) Consumption = mediumWeight;
+                if (tempParcel.Weight == IDAL.DO.MyEnums.WeightCategory.heavy) Consumption = heavyWeight;
+
+                if (myDroneBattery < (fullDistance * Consumption)) flag = false;
+                else flag = true;
+                return flag;
             }
 
             /// <summary>

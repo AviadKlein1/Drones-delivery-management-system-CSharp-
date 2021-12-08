@@ -47,10 +47,9 @@ namespace IBL
                 {
                     dal.AddDrone(temp, myDrone.FirstChargeStationId);
                 }
-                catch (IDAL.DO.ExcistingIdException ex)
+                catch (Exception ex)
                 {
-                    throw ex;
-
+                    throw(ex); 
                 }
 
                 //add new drone to list of drones (BL) 

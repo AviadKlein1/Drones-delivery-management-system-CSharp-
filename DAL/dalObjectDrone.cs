@@ -16,7 +16,16 @@ namespace IDAL
                 /// </summary>
                 public void AddDrone(Drone myDrone, int firstChargeStationId)
                 {
-                    for(int i = 0; i < IDAL.DO.DalObject.DataSource.drones.Count; i++)
+                    bool flag = false;
+                    for (int i = 0; i < IDAL.DO.DalObject.DataSource.stations.Count; i++)
+                        //if not such station exist
+                        if (IDAL.DO.DalObject.DataSource.stations[i].Id == firstChargeStationId)
+                        {
+                            flag = true;
+                        }
+                    if(flag == false) throw new WrongIdException(firstChargeStationId, $"no such station: {firstChargeStationId}");
+
+                    for (int i = 0; i < IDAL.DO.DalObject.DataSource.drones.Count; i++)
                         //if drone already exist
                         if(IDAL.DO.DalObject.DataSource.drones[i].Id == myDrone.Id)
                             throw new ExcistingIdException(myDrone.Id, $"drone already exist: {myDrone.Id}");

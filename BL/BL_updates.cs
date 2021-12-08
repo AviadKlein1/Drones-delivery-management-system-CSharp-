@@ -215,6 +215,7 @@ namespace IBL
                                 break;
                             else flag = true;
                             item.Status = MyEnums.DroneStatus.delivery;
+                            item.DeliveredParcelId = newParcelId;
                             dal.SheduleParcelToDrone(newParcelId, droneId);
 
 
@@ -248,7 +249,6 @@ namespace IBL
                 if(droneExistFlag == false)// exeption
                 {
                     throw new WrongIdException(droneId, $"wrong id: {droneId}");
-
                 }
                 if (ScheduledButNotPickedUp(idOfThisParcel))// exeption
                 {
@@ -281,6 +281,7 @@ namespace IBL
                                         IDAL.DO.Location earlyDroneLocation = new IDAL.DO.Location(dItem.Location.longitude, dItem.Location.lattitude);
                                         // update battery
                                         temp.Battery = (temp.Battery - (int)BatteryRequirementForVoyage(droneId, dal.GetDistance(earlyDroneLocation, ourSenderLocation)));
+                                        if (temp.Battery < 0) temp.Battery = 0;
                                         v[i] = temp;
                                     }
                                 }
@@ -351,6 +352,7 @@ namespace IBL
                                     IDAL.DO.Location earlyDroneLocation = new IDAL.DO.Location(dItem.Location.longitude, dItem.Location.lattitude);
                                     // update battery
                                     temp.Battery = (temp.Battery - (int)BatteryRequirementForVoyage(droneId, dal.GetDistance(earlyDroneLocation, ourReciverLocation)));
+                                    if (temp.Battery < 0) temp.Battery = 0;
                                     v[i] = temp;
                                 }
                             }
@@ -358,6 +360,7 @@ namespace IBL
                         else System.Console.WriteLine("not our parcel");
                     }
                 }
+                var g = ChargeDrone(droneId);
                 return flag;
             }
         }

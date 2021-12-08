@@ -53,8 +53,8 @@ namespace IBL
                         if (IsAssociatedDrone(dronesList[i].Id))
                         {
                             DroneToList Dtemp = dronesList[i];
-                            temp.DeliveredParcelId = AssociatedParcelId(dronesList[i].Id);
-                            dronesList[i] = temp;
+                            Dtemp.DeliveredParcelId = AssociatedParcelId(dronesList[i].Id);
+                            dronesList[i] = Dtemp;
                         }
                     }
 
@@ -100,6 +100,7 @@ namespace IBL
                         else // not in deliver
                         {
                             newDrone.Status = (MyEnums.DroneStatus)rd.Next(0, 2);
+
                             if (newDrone.Status == MyEnums.DroneStatus.maintenance)
                             {
                                 var dalStationsList = dal.GetStationsList(allStations);
@@ -107,7 +108,7 @@ namespace IBL
                                 newDrone.Location = new Location(dalStationsList.ElementAt(index).Location);
                                 newDrone.Battery = rd.Next(0, 21);
                             }
-                            // free drone
+                            // Avilable drone
                             else
                             {
                                 var customers = RecieversList();
@@ -119,7 +120,9 @@ namespace IBL
                                 }
                                 else
                                 {
-                                    newDrone.Location = new Location();
+                                    var dalStationsList = dal.GetStationsList(allStations);
+                                    //newDrone.Location = new Location(31.783333,35.216667);
+                                    newDrone.Location = new Location(dalStationsList.ElementAt(0).Location);
                                 }
 
                                 IDAL.DO.Location myLocation = new(newDrone.Location.longitude, newDrone.Location.lattitude);

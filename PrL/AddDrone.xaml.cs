@@ -54,22 +54,21 @@ namespace PrL
 
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
-            drone.Id = int.Parse(AddDroneIdBox.Text);
-            drone.Model = (string)AddDroneModelBox.Text;
-            drone.Weight = (IDAL.DO.MyEnums.WeightCategory)AddWeightselectorCombo.SelectedItem;
-            drone.FirstChargeStationId = int.Parse(AddIdOfFirstChargeSlotBox.Text);
             try
             {
+                drone.Id = int.Parse(AddDroneIdBox.Text);
+                drone.Model = (string)AddDroneModelBox.Text;
+                drone.Weight = (IDAL.DO.MyEnums.WeightCategory)AddWeightselectorCombo.SelectedItem;
+                drone.FirstChargeStationId = int.Parse(AddIdOfFirstChargeSlotBox.Text);
                 bl.AddDrone(drone);
             }
-              
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 return;
             }
         
-            MessageBox.Show("succsses!");
+            MessageBox.Show("success!");
             Close();
         }
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -81,37 +80,45 @@ namespace PrL
         {
             droneToList.Model = (string)DroneModelBox.Text;
             bl.UpdateDrone(droneToList.Id, droneToList.Model);
-            MessageBox.Show("succsses!");
+            MessageBox.Show("success!");
         }
 
         private void SendDroneToCharge_Click(object sender, RoutedEventArgs e)
         {
-            if (bl.ChargeDrone(droneToList.Id)) MessageBox.Show("succsses!");
+            if (bl.ChargeDrone(droneToList.Id)) MessageBox.Show("success!");
             else MessageBox.Show("Faild!");
         }
 
         private void EndCharge_Click(object sender, RoutedEventArgs e)
         {
             int chargeTime = int.Parse(ChrgeTimeBox.Text);
-            if (bl.ReleaseDroneFromCharge(droneToList.Id, chargeTime)) MessageBox.Show("succsses!");
-            else MessageBox.Show("Faild!");
+            if (bl.ReleaseDroneFromCharge(droneToList.Id, chargeTime)) MessageBox.Show("success!");
+            else MessageBox.Show("failed!");
         }
 
         private void ScheduleParcelToDrone_Click(object sender, RoutedEventArgs e)
         {
-            if (bl.ScheduleParcelToDrone(droneToList.Id)) MessageBox.Show("succsses!");
-            else MessageBox.Show("Faild!");
+            try
+            {
+                if (bl.ScheduleParcelToDrone(droneToList.Id)) ;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            MessageBox.Show("success!");
         }
 
         private void PickUpParcel_Click(object sender, RoutedEventArgs e)
         {
-            if (bl.PickUpParcelByDrone(droneToList.Id)) MessageBox.Show("succsses!");
-            else MessageBox.Show("Faild!");
+            if (bl.PickUpParcelByDrone(droneToList.Id)) MessageBox.Show("success!");
+            else MessageBox.Show("failed!");
         }
 
         private void DeliverParcel_Click(object sender, RoutedEventArgs e)
         {
-            if (bl.DeliverParcelByDrone(droneToList.Id)) MessageBox.Show("succsses!");
+            if (bl.DeliverParcelByDrone(droneToList.Id)) MessageBox.Show("success!");
             else MessageBox.Show("Faild!");
         }
     }
