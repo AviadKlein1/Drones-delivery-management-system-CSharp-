@@ -91,7 +91,7 @@ namespace IBL
             /// </summary>
             /// <param name="parcelId"></param>
             ///  returns boolean type
-            internal bool ScheduledButNotPickedUp(int parcelId)
+            public bool ScheduledButNotPickedUp(int parcelId)
             {
                 var dalParcelsList = dal.GetParcelsList(scheduledButNotPickedUp);
                 //search parcel
@@ -108,7 +108,7 @@ namespace IBL
             /// </summary>
             /// <param name="parcelId"></param>
             /// returns boolean type
-            internal bool PickedUpButNotDeliverd(int parcelId)
+            public bool PickedUpButNotDeliverd(int parcelId)
             {
                 var dalParcelsList = dal.GetParcelsList(pickedUpButNotDeliverd);
                 //search parcel

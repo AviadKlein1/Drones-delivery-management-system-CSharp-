@@ -30,10 +30,25 @@ namespace PrL
         public AddDrone(IBL.BO.BL mainBl, IBL.BO.DroneToList mainDrone)
         {
             InitializeComponent();
+
             bl = mainBl;
             droneToList = mainDrone;
             DisplayDrone.DataContext = droneToList;
             DisplayDrone.Visibility = Visibility.Visible;
+            if(droneToList.Status == IBL.BO.MyEnums.DroneStatus.available)
+            {
+                SendDroneToChargePanel.Visibility = Visibility.Visible;
+                ScheduleParcelToDronePanel.Visibility = Visibility.Visible;
+            }
+            if (droneToList.Status == IBL.BO.MyEnums.DroneStatus.maintenance)
+            {
+                EndChargePanel.Visibility = Visibility.Visible;
+            }
+            if (droneToList.Status == IBL.BO.MyEnums.DroneStatus.delivery)
+            {
+                if(bl.ScheduledButNotPickedUp(droneToList.DeliveredParcelId)) PickUpParcelPanel.Visibility = Visibility.Visible;
+                if (bl.PickedUpButNotDeliverd(droneToList.DeliveredParcelId)) DeliverParcelPanel.Visibility = Visibility.Visible;
+            }
         }
 
 
@@ -43,7 +58,17 @@ namespace PrL
             drone.Model = (string)AddDroneModelBox.Text;
             drone.Weight = (IDAL.DO.MyEnums.WeightCategory)AddWeightselectorCombo.SelectedItem;
             drone.FirstChargeStationId = int.Parse(AddIdOfFirstChargeSlotBox.Text);
-            bl.AddDrone(drone);
+            try
+            {
+                bl.AddDrone(drone);
+            }
+              
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+        
             MessageBox.Show("succsses!");
             Close();
         }
@@ -57,6 +82,37 @@ namespace PrL
             droneToList.Model = (string)DroneModelBox.Text;
             bl.UpdateDrone(droneToList.Id, droneToList.Model);
             MessageBox.Show("succsses!");
+        }
+
+        private void SendDroneToCharge_Click(object sender, RoutedEventArgs e)
+        {
+            if (bl.ChargeDrone(droneToList.Id)) MessageBox.Show("succsses!");
+            else MessageBox.Show("Faild!");
+        }
+
+        private void EndCharge_Click(object sender, RoutedEventArgs e)
+        {
+            int chargeTime = int.Parse(ChrgeTimeBox.Text);
+            if (bl.ReleaseDroneFromCharge(droneToList.Id, chargeTime)) MessageBox.Show("succsses!");
+            else MessageBox.Show("Faild!");
+        }
+
+        private void ScheduleParcelToDrone_Click(object sender, RoutedEventArgs e)
+        {
+            if (bl.ScheduleParcelToDrone(droneToList.Id)) MessageBox.Show("succsses!");
+            else MessageBox.Show("Faild!");
+        }
+
+        private void PickUpParcel_Click(object sender, RoutedEventArgs e)
+        {
+            if (bl.PickUpParcelByDrone(droneToList.Id)) MessageBox.Show("succsses!");
+            else MessageBox.Show("Faild!");
+        }
+
+        private void DeliverParcel_Click(object sender, RoutedEventArgs e)
+        {
+            if (bl.DeliverParcelByDrone(droneToList.Id)) MessageBox.Show("succsses!");
+            else MessageBox.Show("Faild!");
         }
     }
 }
