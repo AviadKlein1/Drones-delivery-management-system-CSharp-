@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 
-namespace IBL
+namespace BlApi
 {
     namespace BO
     {
@@ -33,7 +33,7 @@ namespace IBL
             /// param constructor (initialize fields)
             /// </summary>
             /// <param name="customer"></param>
-            public Customer(IDAL.DO.Customer customer)
+            public Customer(DalApi.DO.Customer customer)
             {
                 id = customer.Id;
                 name = customer.Name;

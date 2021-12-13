@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-
-namespace IDAL
+using DalApi;
+namespace DalApi
 {
     public interface IDal
     {
@@ -12,48 +12,48 @@ namespace IDAL
         /// <summary>
         /// add to list
         /// </summary>
-        public void AddStation(IDAL.DO.Station station);
+        public void AddStation(DalApi.DO.Station station);
         /// <summary>
         /// add drone to list of drones
         /// </summary>
-        public void AddDrone(IDAL.DO.Drone drone , int firstChargeStationId);
+        public void AddDrone(DalApi.DO.Drone drone , int firstChargeStationId);
         /// <summary>
         /// add costumer to list of costimers
         /// </summary>
         /// <param name="myCustomer"></param>
-        public void Addcustomer(IDAL.DO.Customer customer);
+        public void Addcustomer(DalApi.DO.Customer customer);
         /// <summary>
         /// add parcel to list
         /// </summary>
         /// returns new parcel's id
-        public void AddParcel(IDAL.DO.Parcel parcel);
+        public void AddParcel(DalApi.DO.Parcel parcel);
         /// <summary>
         /// return station by its id
         /// </summary>
         /// <param name="myId"></param>
-        public IDAL.DO.Station GetStation(int id);
+        public DalApi.DO.Station GetStation(int id);
         /// <summary>
         /// returns a drone by its id
         /// </summary>
         /// <param name="myId"></param>
         /// <returns></returns>
-        public IDAL.DO.Drone GetDrone(int id);
+        public DalApi.DO.Drone GetDrone(int id);
         /// <summary>
         /// returns a costumer by its id
         /// </summary>
         /// <param name="myId"></param>
         /// <returns></returns>
-        public IDAL.DO.Customer GetCustomer(int id);
+        public DalApi.DO.Customer GetCustomer(int id);
         /// <summary>
         /// return a parcel by its id
         /// </summary>
         /// <param name="myId"></param>
         /// <returns></returns>
-        public IDAL.DO.Parcel GetParcel(int id);
+        public DalApi.DO.Parcel GetParcel(int id);
         /// <summary>
         /// return all drones
         /// </summary>
-        public IEnumerable<IDAL.DO.Drone> GetDrones();
+        public IEnumerable<DalApi.DO.Drone> GetDrones();
        
      
         /// <summary>
@@ -66,14 +66,14 @@ namespace IDAL
         /// </summary>
         /// <param name="StationId"></param>
         /// <returns></returns>
-        public IDAL.DO.Location StationLocate(int StationId);
+        public DalApi.DO.Location StationLocate(int StationId);
         /// <summary>
         /// return the distance between two coordinates
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public double GetDistance(IDAL.DO.Location a, IDAL.DO.Location b);
+        public double GetDistance(DalApi.DO.Location a, DalApi.DO.Location b);
         /// <summary>
         /// update name and number of charge slots in station
         /// <param name="stationId"></param>
@@ -126,9 +126,9 @@ namespace IDAL
         /// <returns></returns>
         public void DeliverParcelByDrone(int droneId, int parcelId);
 
-        public IEnumerable<IDAL.DO.Station> GetStationsList(System.Predicate<IDAL.DO.Station> match);
-        public IEnumerable<IDAL.DO.Customer> GetCustomersList(System.Predicate<IDAL.DO.Customer> match);
-        public IEnumerable<IDAL.DO.Parcel> GetParcelsList(System.Predicate<IDAL.DO.Parcel> match);
+        public IEnumerable<DalApi.DO.Station> GetStationsList(System.Predicate<DalApi.DO.Station> match);
+        public IEnumerable<DalApi.DO.Customer> GetCustomersList(System.Predicate<DalApi.DO.Customer> match);
+        public IEnumerable<DalApi.DO.Parcel> GetParcelsList(System.Predicate<DalApi.DO.Parcel> match);
     }
 }
 

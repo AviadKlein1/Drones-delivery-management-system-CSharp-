@@ -1,4 +1,4 @@
-﻿namespace IBL
+﻿namespace BlApi
 {
     namespace BO
     {
@@ -19,7 +19,7 @@
             /// params constructor - initialize fields
             /// </summary>
             /// <param name="myDrone"></param>
-            public Drone(IDAL.DO.Drone myDrone)
+            public Drone(DalApi.DO.Drone myDrone)
             {
                 Id = myDrone.Id;
                 Model = myDrone.Model;
@@ -28,7 +28,7 @@
 
             public int Id { get; set; }
             public string Model { get; set; }
-            public IDAL.DO.MyEnums.WeightCategory Weight { get; set; }
+            public DalApi.DO.MyEnums.WeightCategory Weight { get; set; }
             public MyEnums.DroneStatus Status { get; set; }
             public int Battery { get; set; }
             public ParcelInDelivery DeliveredParcel { get; set; }
@@ -85,7 +85,7 @@
         {
             public int Id { get; set; }
             public string Model { get; set; }
-            public IDAL.DO.MyEnums.WeightCategory Weight { get; set; }
+            public DalApi.DO.MyEnums.WeightCategory Weight { get; set; }
             public MyEnums.DroneStatus Status { get; set; }
             public int Battery { get; set; }
             public Location Location { get; set; }

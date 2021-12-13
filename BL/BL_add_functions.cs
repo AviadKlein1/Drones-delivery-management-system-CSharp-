@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IBL
+namespace BlApi
 {
     namespace BO
     {
@@ -13,10 +13,10 @@ namespace IBL
             public void AddStation(Station myStation)
             {
                 //create new station
-                IDAL.DO.Station temp = new();
+                DalApi.DO.Station temp = new();
 
                 temp.Id = myStation.Id;
-                temp.Location = new IDAL.DO.Location(myStation.Location.longitude, myStation.Location.lattitude);
+                temp.Location = new DalApi.DO.Location(myStation.Location.longitude, myStation.Location.lattitude);
                 temp.Name = myStation.Name;
                 temp.NumOfAvailableChargeSlots = myStation.NumOfAvailableChargeSlots;
                 temp.NumOfChargeSlots = myStation.NumOfChargeSlots;
@@ -26,9 +26,9 @@ namespace IBL
                 {
                     dal.AddStation(temp);
                 }
-                catch (IDAL.DO.ExcistingIdException ex)
+                catch (DalApi.DO.ExcistingIdException ex)
                 {
-                    throw ex;
+                    throw new DalApi.DO.ExcistingIdException(myStation.Id, ex.Message);
                 }
             }
 
@@ -36,7 +36,7 @@ namespace IBL
             public void AddDrone(Drone myDrone)
             {
                 //create new drone
-                IDAL.DO.Drone temp = new();
+                DalApi.DO.Drone temp = new();
 
                 temp.Id = myDrone.Id;
                 temp.Model = myDrone.Model;
@@ -76,19 +76,19 @@ namespace IBL
             public void Addcustomer(Customer myCustomer)
             {
                 //create new customer
-                IDAL.DO.Customer temp = new();
+                DalApi.DO.Customer temp = new();
 
                 temp.Id = myCustomer.id;
                 temp.Name = myCustomer.name;
                 temp.PhoneNumber = myCustomer.phoneNumber;
-                temp.Location = new IDAL.DO.Location(myCustomer.location.longitude, myCustomer.location.lattitude);
+                temp.Location = new DalApi.DO.Location(myCustomer.location.longitude, myCustomer.location.lattitude);
 
                 //add customer to list of customers
                 try
                 {
                     dal.Addcustomer(temp);
                 }
-                catch (IDAL.DO.ExcistingIdException ex)
+                catch (DalApi.DO.ExcistingIdException ex)
                 {
 
                     throw ex;
@@ -98,7 +98,7 @@ namespace IBL
             //add parcel
             public void AddParcel(Parcel myParcel)
             {
-                IDAL.DO.Parcel temp = new();
+                DalApi.DO.Parcel temp = new();
 
                 temp.Id = dal.ParcelRunId();
                 temp.Weight = myParcel.Weight;
@@ -117,7 +117,7 @@ namespace IBL
                 {
                     dal.AddParcel(temp);
                 }
-                catch (IDAL.DO.ExcistingIdException ex)
+                catch (DalApi.DO.ExcistingIdException ex)
                 {
                     throw ex;
 

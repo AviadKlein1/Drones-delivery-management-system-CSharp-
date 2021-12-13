@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-
-namespace IDAL
+using DalApi;
+namespace DalApi
 {
     namespace DO
     {
         namespace DalObject
         {
-            public partial class DalObject : IDal
+            partial class DalObject : IDal
             {
                 /// <summary>
                 /// add costumer to list of costimers
@@ -14,11 +14,11 @@ namespace IDAL
                 /// <param name="myCustomer"></param>
                 public void Addcustomer(Customer myCustomer)
                 {
-                    for (int i = 0; i < IDAL.DO.DalObject.DataSource.customers.Count; i++)
-                        if (IDAL.DO.DalObject.DataSource.customers[i].Id == myCustomer.Id)
+                    for (int i = 0; i < DalApi.DO.DalObject.DataSource.customers.Count; i++)
+                        if (DalApi.DO.DalObject.DataSource.customers[i].Id == myCustomer.Id)
                             throw new ExcistingIdException(myCustomer.Id, $"customer already exist: {myCustomer.Id}");
                     //insert customer to list
-                    IDAL.DO.DalObject.DataSource.customers.Add(myCustomer);
+                    DalApi.DO.DalObject.DataSource.customers.Add(myCustomer);
                 }
 
                 /// <summary>
@@ -26,17 +26,17 @@ namespace IDAL
                 /// </summary>
                 /// <param name="myId"></param>
                 /// <returns></returns>
-                public IDAL.DO.Customer GetCustomer(int myId)
+                public DalApi.DO.Customer GetCustomer(int myId)
                 {
                     bool isDouble = false;
                     Customer temp = new Customer();
                     //search costumer
-                    for (int i = 0; i < IDAL.DO.DalObject.DataSource.customers.Count; i++)
+                    for (int i = 0; i < DalApi.DO.DalObject.DataSource.customers.Count; i++)
                     {
-                        if (IDAL.DO.DalObject.DataSource.customers[i].Id == myId)
+                        if (DalApi.DO.DalObject.DataSource.customers[i].Id == myId)
                         {
                             isDouble = true;
-                            temp = IDAL.DO.DalObject.DataSource.customers[i];
+                            temp = DalApi.DO.DalObject.DataSource.customers[i];
                         }
                     }
                     if (isDouble == true)
@@ -49,10 +49,10 @@ namespace IDAL
                 /// <summary>
                 /// return customers by conditions
                 /// </summary>
-                public IEnumerable<IDAL.DO.Customer> GetCustomersList(System.Predicate<IDAL.DO.Customer> match)
+                public IEnumerable<DalApi.DO.Customer> GetCustomersList(System.Predicate<DalApi.DO.Customer> match)
                 {
-                    List<IDAL.DO.Customer> newList = new();
-                    newList = IDAL.DO.DalObject.DataSource.customers.FindAll(match);
+                    List<DalApi.DO.Customer> newList = new();
+                    newList = DalApi.DO.DalObject.DataSource.customers.FindAll(match);
                     return newList;
                 }
                
@@ -67,7 +67,7 @@ namespace IDAL
                     Customer temp = new Customer();
                     for (int i = 0; i < DataSource.customers.Count; i++)
                     {
-                        Customer item = IDAL.DO.DalObject.DataSource.customers[i];
+                        Customer item = DalApi.DO.DalObject.DataSource.customers[i];
                         if (item.Id == customerId)
                         {
                             temp.Id = customerId;
@@ -77,7 +77,7 @@ namespace IDAL
                             if (newPhone != null) temp.PhoneNumber = newPhone;
                             else temp.PhoneNumber = item.PhoneNumber;
                             temp.Location = item.Location;
-                            IDAL.DO.DalObject.DataSource.customers[i] = temp;
+                            DalApi.DO.DalObject.DataSource.customers[i] = temp;
                         }
                     }
 

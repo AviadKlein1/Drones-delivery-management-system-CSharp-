@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace IBL
+namespace BlApi
 {
     namespace BO
     {
@@ -13,7 +13,7 @@ namespace IBL
             //display station
             public Station DisplayStation(int stationId)
             {
-                IDAL.DO.Station temp = new IDAL.DO.Station();
+                DalApi.DO.Station temp = new DalApi.DO.Station();
                 try
                 {
                     temp = dal.GetStation(stationId);
@@ -67,7 +67,7 @@ namespace IBL
             //display customer
             public Customer DisplayCustomer(int customerId)
             {
-                IDAL.DO.Customer temp = new IDAL.DO.Customer();
+                DalApi.DO.Customer temp = new DalApi.DO.Customer();
                 try
                 {
                     temp = dal.GetCustomer(customerId);
@@ -90,10 +90,10 @@ namespace IBL
                         myParcel.Weight = item.Weight;
                         myParcel.Priority = item.Priority;
 
-                        if (item.Requested != empty && item.Scheduled == empty) myParcel.ParcelStatus = IDAL.DO.MyEnums.ParcelStatus.requested;
-                        if (item.Scheduled != empty && item.PickedUp == empty) myParcel.ParcelStatus = IDAL.DO.MyEnums.ParcelStatus.scheduled;
-                        if (item.PickedUp != empty && item.Delivered == empty) myParcel.ParcelStatus = IDAL.DO.MyEnums.ParcelStatus.pickedUp;
-                        if (item.Delivered != empty) myParcel.ParcelStatus = IDAL.DO.MyEnums.ParcelStatus.delivered;
+                        if (item.Requested != empty && item.Scheduled == empty) myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.requested;
+                        if (item.Scheduled != empty && item.PickedUp == empty) myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.scheduled;
+                        if (item.PickedUp != empty && item.Delivered == empty) myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.pickedUp;
+                        if (item.Delivered != empty) myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.delivered;
                        
                         myParcel.TheSecondSide = TheOtherSide(myParcel.Id, retTemp.id);
                         retTemp.parcelsSent.Add(myParcel);
@@ -104,10 +104,10 @@ namespace IBL
                         myParcel.Weight = item.Weight;
                         myParcel.Priority = item.Priority;
 
-                        if (item.Requested != empty && item.Scheduled == empty) myParcel.ParcelStatus = IDAL.DO.MyEnums.ParcelStatus.requested;
-                        if (item.Scheduled != empty && item.PickedUp == empty) myParcel.ParcelStatus = IDAL.DO.MyEnums.ParcelStatus.scheduled;
-                        if (item.PickedUp != empty && item.Delivered == empty) myParcel.ParcelStatus = IDAL.DO.MyEnums.ParcelStatus.pickedUp;
-                        if (item.Delivered != empty) myParcel.ParcelStatus = IDAL.DO.MyEnums.ParcelStatus.delivered;
+                        if (item.Requested != empty && item.Scheduled == empty) myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.requested;
+                        if (item.Scheduled != empty && item.PickedUp == empty) myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.scheduled;
+                        if (item.PickedUp != empty && item.Delivered == empty) myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.pickedUp;
+                        if (item.Delivered != empty) myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.delivered;
 
                         myParcel.TheSecondSide = TheOtherSide(myParcel.Id, retTemp.id);
                         retTemp.parcelsRecieved.Add(myParcel);
@@ -119,7 +119,7 @@ namespace IBL
             //display parcel
             public Parcel DisplayParcel(int parcelId)
             {
-                IDAL.DO.Parcel temp = new IDAL.DO.Parcel();
+                DalApi.DO.Parcel temp = new DalApi.DO.Parcel();
                 try
                 {
                     temp = dal.GetParcel(parcelId);

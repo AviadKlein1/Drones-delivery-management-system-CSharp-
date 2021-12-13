@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace IBL
+namespace BlApi
 {
     namespace BO
     {
@@ -21,7 +21,7 @@ namespace IBL
             /// copy ctor
             /// </summary>
             /// <param name="temp"></param>
-            public Station(IDAL.DO.Station temp)
+            public Station(DalApi.DO.Station temp)
             {
                 Id = temp.Id;
                 Name = temp.Name;

@@ -11,9 +11,9 @@ namespace ConsoleUI_BL
         public Random rd = new();
 
         //station details
-        public IBL.BO.Station AddStation()
+        public BlApi.BO.Station AddStation()
         {
-            IBL.BO.Station myStation = new();
+            BlApi.BO.Station myStation = new();
 
             //id
             int id;
@@ -32,7 +32,7 @@ namespace ConsoleUI_BL
             double.TryParse(Console.ReadLine(), out locat1);
             Console.WriteLine("enter lattitude");
             double.TryParse(Console.ReadLine(), out locat2);
-            myStation.Location = new IBL.BO.Location(locat1, locat2);
+            myStation.Location = new BlApi.BO.Location(locat1, locat2);
 
             //number of charge slots
             int numOfChargeSlots;
@@ -40,15 +40,15 @@ namespace ConsoleUI_BL
             int.TryParse(Console.ReadLine(), out numOfChargeSlots);
             myStation.NumOfAvailableChargeSlots = numOfChargeSlots;
             myStation.NumOfChargeSlots = numOfChargeSlots;
-            myStation.DronesInCharge = new List<IBL.BO.DroneInCharge>();
+            myStation.DronesInCharge = new List<BlApi.BO.DroneInCharge>();
 
             return myStation;
         }
 
         //drone details
-        public IBL.BO.Drone AddDrone()
+        public BlApi.BO.Drone AddDrone()
         {
-            IBL.BO.Drone myDrone = new();
+            BlApi.BO.Drone myDrone = new();
 
             //id
             int id;
@@ -64,9 +64,9 @@ namespace ConsoleUI_BL
             int choice = 0;
             Console.WriteLine("enter max weight (light = 1, medium = 2, heavy = 3)");
             int.TryParse(Console.ReadLine(), out choice);
-            if (choice == 1) myDrone.Weight = IDAL.DO.MyEnums.WeightCategory.light;
-            if (choice == 2) myDrone.Weight = IDAL.DO.MyEnums.WeightCategory.medium;
-            if (choice == 3) myDrone.Weight = IDAL.DO.MyEnums.WeightCategory.heavy;
+            if (choice == 1) myDrone.Weight = DalApi.DO.MyEnums.WeightCategory.light;
+            if (choice == 2) myDrone.Weight = DalApi.DO.MyEnums.WeightCategory.medium;
+            if (choice == 3) myDrone.Weight = DalApi.DO.MyEnums.WeightCategory.heavy;
 
             //id of station for first charge
             Console.WriteLine("enter id of station for first charge");
@@ -77,9 +77,9 @@ namespace ConsoleUI_BL
         }
 
         //customer details
-        public IBL.BO.Customer AddCustomer()
+        public BlApi.BO.Customer AddCustomer()
         {
-            IBL.BO.Customer myCustomer = new();
+            BlApi.BO.Customer myCustomer = new();
 
             //id
             int id;
@@ -108,9 +108,9 @@ namespace ConsoleUI_BL
         }
 
         //parcel details
-        public IBL.BO.Parcel AddParcel()
+        public BlApi.BO.Parcel AddParcel()
         {
-            IBL.BO.Parcel myParcel = new();
+            BlApi.BO.Parcel myParcel = new();
 
             //sender id
             int senderId;
@@ -128,16 +128,16 @@ namespace ConsoleUI_BL
             int choice;
             Console.WriteLine("enter weight (light = 1, medium = 2, heavy = 3)");
             int.TryParse(Console.ReadLine(), out choice);
-            if (choice == 1) myParcel.Weight = IDAL.DO.MyEnums.WeightCategory.light;
-            if (choice == 2) myParcel.Weight = IDAL.DO.MyEnums.WeightCategory.medium;
-            if (choice == 3) myParcel.Weight = IDAL.DO.MyEnums.WeightCategory.heavy;
+            if (choice == 1) myParcel.Weight = DalApi.DO.MyEnums.WeightCategory.light;
+            if (choice == 2) myParcel.Weight = DalApi.DO.MyEnums.WeightCategory.medium;
+            if (choice == 3) myParcel.Weight = DalApi.DO.MyEnums.WeightCategory.heavy;
 
             //priority
             Console.WriteLine("enter priority (regular = 1, quickly = 2, ergent = 3)");
             int.TryParse(Console.ReadLine(), out choice);
-            if (choice == 1) myParcel.Priority = IDAL.DO.MyEnums.PriorityLevel.regular;
-            if (choice == 2) myParcel.Priority = IDAL.DO.MyEnums.PriorityLevel.quickly;
-            if (choice == 3) myParcel.Priority = IDAL.DO.MyEnums.PriorityLevel.ergent;
+            if (choice == 1) myParcel.Priority = DalApi.DO.MyEnums.PriorityLevel.regular;
+            if (choice == 2) myParcel.Priority = DalApi.DO.MyEnums.PriorityLevel.quickly;
+            if (choice == 3) myParcel.Priority = DalApi.DO.MyEnums.PriorityLevel.ergent;
             
             return myParcel;
         }

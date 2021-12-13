@@ -1,4 +1,4 @@
-﻿namespace IDAL
+﻿namespace DalApi
 {
     namespace DO
     {
@@ -9,7 +9,7 @@
         {
             public int Id { get; set; }
             public string Model { get; set; }
-            public IDAL.DO.MyEnums.WeightCategory weight { get; set; }
+            public DalApi.DO.MyEnums.WeightCategory weight { get; set; }
         }
     }
 }

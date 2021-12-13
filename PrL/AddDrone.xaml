@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PrL"
-        xmlns:BO="clr-namespace:IBL.BO;assembly=BL" x:Class="PrL.AddDrone"
+        xmlns:BO="clr-namespace:BlApi.BO;assembly=BL" x:Class="PrL.AddDrone"
         mc:Ignorable="d"
     
         Title="Add new drone" Background="#FF517391" Height="500" Width="300">

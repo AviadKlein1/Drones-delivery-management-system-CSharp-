@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace IBL
+namespace BlApi
 {
     public interface IBl
     {
@@ -8,47 +8,47 @@ namespace IBL
         /// add station to dal
         /// </summary>
         /// <returns></returns>
-        public void AddStation(IBL.BO.Station myStation);
+        public void AddStation(BlApi.BO.Station myStation);
         /// <summary>
         /// add drone to dal
         /// </summary>
         /// <returns></returns>
-        public void AddDrone(IBL.BO.Drone myDrone);
+        public void AddDrone(BlApi.BO.Drone myDrone);
         /// <summary>
         /// add drone to bl list
         /// </summary>
         /// <returns></returns>
-        public IBL.BO.DroneToList AddDroneToBLList(IBL.BO.Drone myDrone);
+        public BlApi.BO.DroneToList AddDroneToBLList(BlApi.BO.Drone myDrone);
         /// <summary>
         /// add customer
         /// </summary>
         /// <returns></returns>
-        public void Addcustomer(IBL.BO.Customer myCustomer);
+        public void Addcustomer(BlApi.BO.Customer myCustomer);
         /// <summary>
         /// add parcel
         /// </summary>
         /// <returns></returns>
-        public void AddParcel(IBL.BO.Parcel myParcel);
+        public void AddParcel(BlApi.BO.Parcel myParcel);
         /// <summary>
         /// display station
         /// </summary>
         /// <returns></returns>
-        public IBL.BO.Station DisplayStation(int stationId);
+        public BlApi.BO.Station DisplayStation(int stationId);
         /// <summary>
         /// display drone
         /// </summary>
         /// <returns></returns>
-        public IBL.BO.Drone DisplayDrone(int droneId);
+        public BlApi.BO.Drone DisplayDrone(int droneId);
         /// <summary>
         /// display customer
         /// </summary>
         /// <returns></returns>
-        public IBL.BO.Customer DisplayCustomer(int customerId);
+        public BlApi.BO.Customer DisplayCustomer(int customerId);
         /// <summary>
         /// display parcel
         /// </summary>
         /// <returns></returns>
-        public IBL.BO.Parcel DisplayParcel(int parcelId);
+        public BlApi.BO.Parcel DisplayParcel(int parcelId);
         
         /// <summary>
         /// updates drone data
@@ -111,22 +111,22 @@ namespace IBL
         /// get stations list in condition
         /// </summary>
         /// <returns></returns> return list of stations accured to conditions
-        public IEnumerable<IBL.BO.StationToList> GetStationsList(System.Predicate<IDAL.DO.Station> match);
+        public IEnumerable<BlApi.BO.StationToList> GetStationsList(System.Predicate<DalApi.DO.Station> match);
         /// <summary>
         /// get drones list in condition
         /// </summary>
         /// <returns></returns> return list of drones accured to conditions
-        public List<IBL.BO.DroneToList> GetDronesList(System.Predicate<IBL.BO.DroneToList> match);
+        public List<BlApi.BO.DroneToList> GetDronesList(System.Predicate<BlApi.BO.DroneToList> match);
         /// <summary>
         /// get customers list in condition
         /// </summary>
         /// <returns></returns> return list of customers accured to conditions
-        public IEnumerable<IBL.BO.CustomerToList> GetCustomersList(System.Predicate<IDAL.DO.Customer> match);
+        public IEnumerable<BlApi.BO.CustomerToList> GetCustomersList(System.Predicate<DalApi.DO.Customer> match);
         /// <summary>
         /// get parcels list in condition
         /// </summary>
         /// <returns></returns> return list of parcels accured to conditions
-        public IEnumerable<IBL.BO.ParcelToList> GetParcelsList(System.Predicate<IDAL.DO.Parcel> match);
+        public IEnumerable<BlApi.BO.ParcelToList> GetParcelsList(System.Predicate<DalApi.DO.Parcel> match);
 
 
     }

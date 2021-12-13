@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IBL
+namespace BlApi
 {
     namespace BO
     {
@@ -121,7 +121,7 @@ namespace IBL
                         }
                         else // is available 
                         {
-                            IDAL.DO.Location itemLocation = new IDAL.DO.Location(item.Location.longitude, item.Location.lattitude);
+                            DalApi.DO.Location itemLocation = new DalApi.DO.Location(item.Location.longitude, item.Location.lattitude);
                             var tempStation = NearestReachableChargeSlot(itemLocation, droneId);
                             if (tempStation.Id == 0)
                             {
@@ -170,7 +170,7 @@ namespace IBL
                         }
                         else // is maintenance 
                         {
-                            IDAL.DO.Location itemLocation = new IDAL.DO.Location(item.Location.longitude, item.Location.lattitude);
+                            DalApi.DO.Location itemLocation = new DalApi.DO.Location(item.Location.longitude, item.Location.lattitude);
                             var tempStation = NearestStation(itemLocation);
                             dal.IncreaseChargeSlot(tempStation.Id);
 
@@ -236,7 +236,7 @@ namespace IBL
                 var droneExistFlag = false;
                 var v = dronesList;
                 int idOfThisParcel = 0;
-                IDAL.DO.Location ourSenderLocation = new IDAL.DO.Location();
+                DalApi.DO.Location ourSenderLocation = new DalApi.DO.Location();
                 //search drone
                 foreach (var item in v)
                 {
@@ -278,7 +278,7 @@ namespace IBL
                                         temp.Status = dItem.Status;
                                         temp.Weight = dItem.Weight;
                                         temp.DeliveredParcelId = item.Id;
-                                        IDAL.DO.Location earlyDroneLocation = new IDAL.DO.Location(dItem.Location.longitude, dItem.Location.lattitude);
+                                        DalApi.DO.Location earlyDroneLocation = new DalApi.DO.Location(dItem.Location.longitude, dItem.Location.lattitude);
                                         // update battery
                                         temp.Battery = (temp.Battery - (int)BatteryRequirementForVoyage(droneId, dal.GetDistance(earlyDroneLocation, ourSenderLocation)));
                                         if (temp.Battery < 0) temp.Battery = 0;
@@ -304,7 +304,7 @@ namespace IBL
                 var droneExistFlag = false;
                 var v = dronesList;
                 int idOfThisParcel = 0;
-                IDAL.DO.Location ourReciverLocation = new IDAL.DO.Location();
+                DalApi.DO.Location ourReciverLocation = new DalApi.DO.Location();
                 //search drone
                 foreach (var item in v)
                 {
@@ -349,7 +349,7 @@ namespace IBL
                                     temp.Status = MyEnums.DroneStatus.available;
                                     temp.Weight = dItem.Weight;
                                     temp.DeliveredParcelId = item.Id;
-                                    IDAL.DO.Location earlyDroneLocation = new IDAL.DO.Location(dItem.Location.longitude, dItem.Location.lattitude);
+                                    DalApi.DO.Location earlyDroneLocation = new DalApi.DO.Location(dItem.Location.longitude, dItem.Location.lattitude);
                                     // update battery
                                     temp.Battery = (temp.Battery - (int)BatteryRequirementForVoyage(droneId, dal.GetDistance(earlyDroneLocation, ourReciverLocation)));
                                     if (temp.Battery < 0) temp.Battery = 0;

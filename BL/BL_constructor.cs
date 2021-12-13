@@ -1,20 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-namespace IBL
+using BlApi;
+using DalApi;
+namespace BlApi
 {
     namespace BO
     {
         /// <summary>
         /// object constructor
         /// </summary>
-        public partial class BL : IBl
+        sealed partial class BL : IBl
         {
-            public IDAL.IDal dal;
 
-            public Random rd = new();
+            static readonly IBl instance = new BL();
+            public static IBl GetInstance() { return instance; } 
+
+            IDal dal;
+
+            Random rd = new();
             
-            public List<DroneToList> dronesList = new();
+            List<DroneToList> dronesList = new();
 
             //electricity consumption fields
             public static double free;
@@ -24,10 +30,9 @@ namespace IBL
             public static double DroneLoadRate;
 
             //initializing
-            public BL()
+            private BL()
             {
-                dal = new IDAL.DO.DalObject.DalObject();
-
+                dal = DalApi.DalFactory.GetDal();
                 free = dal.DroneElectricityConsumption()[0];
                 lightWeight = dal.DroneElectricityConsumption()[1];
                 mediumWeight = dal.DroneElectricityConsumption()[2];
@@ -87,14 +92,16 @@ namespace IBL
                             }
 
                             newDrone.Location = myLocation;
-                            IDAL.DO.Location myDalLocation = new IDAL.DO.Location(myLocation.longitude , myLocation.lattitude);
+                            DalApi.DO.Location myDalLocation = new DalApi.DO.Location(myLocation.longitude , myLocation.lattitude);
 
                             //drone electricity consumption 
                             double lenghtOfDeliveryVoyage = dal.GetDistance(myDalLocation, SenderLocation(element.DeliveredParcelId));
-                            IDAL.DO.Location locationOfNearestStation = (NearestToSenderStation(element.DeliveredParcelId).Location);
+                            DalApi.DO.Location locationOfNearestStation = (NearestToSenderStation(element.DeliveredParcelId).Location);
                             double distanceBetweenTargetToStation = dal.GetDistance(myDalLocation, locationOfNearestStation);
 
                             int Battery = (int)(BatteryRequirementForVoyage(element.Id, lenghtOfDeliveryVoyage + distanceBetweenTargetToStation));
+                            if (Battery > 100) Battery = 100;
+                            if (Battery < 0) Battery = 0;
                             newDrone.Battery = rd.Next(Battery, 101);
                         }
                         else // not in deliver
@@ -125,8 +132,8 @@ namespace IBL
                                     newDrone.Location = new Location(dalStationsList.ElementAt(0).Location);
                                 }
 
-                                IDAL.DO.Location myLocation = new(newDrone.Location.longitude, newDrone.Location.lattitude);
-                                IDAL.DO.Location locationOfNearestChargeSlot = (NearestAvailableChargeSlot(myLocation).Location);
+                                DalApi.DO.Location myLocation = new(newDrone.Location.longitude, newDrone.Location.lattitude);
+                                DalApi.DO.Location locationOfNearestChargeSlot = (NearestAvailableChargeSlot(myLocation).Location);
 
                                 double distanceBetweenTargetToStation = dal.GetDistance(myLocation, locationOfNearestChargeSlot);
                                 int minBattery = (int)(BatteryRequirementForVoyage(newDrone.Id, distanceBetweenTargetToStation));

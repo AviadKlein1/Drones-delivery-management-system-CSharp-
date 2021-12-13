@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using DalApi;
 
-
-namespace IDAL
+namespace DalApi
 {
     namespace DO
     {
@@ -12,21 +12,23 @@ namespace IDAL
             /// <summary>
             /// entity station
             /// </summary>
-            public partial class DalObject : IDal
+            sealed partial class DalObject : IDal
             {
-                public DalObject() { IDAL.DO.DalObject.DataSource.Initialize(); }
+                static readonly IDal instance = new DalObject();
+                public static IDal GetInstance() {return instance; }
+                private DalObject() { DataSource.Initialize(); }
                 
                 /// <summary>
                 /// add to list
                 /// </summary>
                 public void AddStation(Station myStation)
                 {
-                    for (int i = 0; i < IDAL.DO.DalObject.DataSource.stations.Count; i++)
+                    for (int i = 0; i < DalApi.DO.DalObject.DataSource.stations.Count; i++)
                         //if already exist
-                        if (IDAL.DO.DalObject.DataSource.stations[i].Id == myStation.Id)
+                        if (DalApi.DO.DalObject.DataSource.stations[i].Id == myStation.Id)
                             throw new ExcistingIdException(myStation.Id, $"station already exist: {myStation.Id}");
                     //insert station to list
-                    IDAL.DO.DalObject.DataSource.stations.Add(myStation);
+                    DalApi.DO.DalObject.DataSource.stations.Add(myStation);
                 }
 
                 /// <summary>
@@ -37,13 +39,13 @@ namespace IDAL
                 {
                     bool isDouble = false;
                     Station temp = new Station();
-                    for (int i = 0; i < IDAL.DO.DalObject.DataSource.stations.Count; i++)
+                    for (int i = 0; i < DalApi.DO.DalObject.DataSource.stations.Count; i++)
                     {
                         //search station
-                        if (IDAL.DO.DalObject.DataSource.stations[i].Id == myId)
+                        if (DalApi.DO.DalObject.DataSource.stations[i].Id == myId)
                         {
                             isDouble = true;
-                            temp = IDAL.DO.DalObject.DataSource.stations[i];
+                            temp = DalApi.DO.DalObject.DataSource.stations[i];
                         }
                     }
                     if (isDouble == true)
@@ -60,8 +62,8 @@ namespace IDAL
                 /// </summary>
                 public IEnumerable<Station> GetStationsList(System.Predicate<Station> match)
                 {
-                    List<IDAL.DO.Station> newList = new();
-                    newList = IDAL.DO.DalObject.DataSource.stations.FindAll(match);
+                    List<DalApi.DO.Station> newList = new();
+                    newList = DalApi.DO.DalObject.DataSource.stations.FindAll(match);
                     return newList;
                 }
                 
@@ -76,7 +78,7 @@ namespace IDAL
                     Station temp = new Station();
                     for (int i = 0; i < DataSource.stations.Count; i++)
                     {
-                        Station item = IDAL.DO.DalObject.DataSource.stations[i];
+                        Station item = DalApi.DO.DalObject.DataSource.stations[i];
                         if (item.Id == stationId)
                         {
                             temp.Id = stationId;
@@ -85,7 +87,7 @@ namespace IDAL
                             else temp.Name = item.Name;
                             if (numOfChargeSlots != 0) temp.NumOfChargeSlots = numOfChargeSlots;
                             else temp.NumOfChargeSlots = item.NumOfChargeSlots;
-                            IDAL.DO.DalObject.DataSource.stations[i] = temp;
+                            DalApi.DO.DalObject.DataSource.stations[i] = temp;
                         }
                     }
                 }
@@ -94,12 +96,12 @@ namespace IDAL
                 /// </summary>
                 public IEnumerable<Station> GetAvailableToChargeStations()
                 {
-                    int size = IDAL.DO.DalObject.DataSource.stations.Count;
-                    List<IDAL.DO.Station> temp = IDAL.DO.DalObject.DataSource.stations;
+                    int size = DalApi.DO.DalObject.DataSource.stations.Count;
+                    List<DalApi.DO.Station> temp = DalApi.DO.DalObject.DataSource.stations;
                     for (int i = 0; i < size; i++)
                         //if available for charge
-                        if (IDAL.DO.DalObject.DataSource.stations[i].NumOfAvailableChargeSlots > 0)
-                            temp.Add(IDAL.DO.DalObject.DataSource.stations[i]);
+                        if (DalApi.DO.DalObject.DataSource.stations[i].NumOfAvailableChargeSlots > 0)
+                            temp.Add(DalApi.DO.DalObject.DataSource.stations[i]);
                     return temp;
                 }
 
@@ -108,15 +110,15 @@ namespace IDAL
                 /// </summary>
                 /// <param name="StationId"></param>
                 /// <returns></returns>
-                public IDAL.DO.Location StationLocate(int StationId)
+                public DalApi.DO.Location StationLocate(int StationId)
                 {
                     Location temp = new();
-                    for (int i = 0; i < IDAL.DO.DalObject.DataSource.stations.Count; i++)
+                    for (int i = 0; i < DalApi.DO.DalObject.DataSource.stations.Count; i++)
                     {
-                        if (IDAL.DO.DalObject.DataSource.stations[i].Id == StationId)
+                        if (DalApi.DO.DalObject.DataSource.stations[i].Id == StationId)
                         {
-                            temp.Lattitude = IDAL.DO.DalObject.DataSource.stations[i].Location.Lattitude;
-                            temp.Longitude = IDAL.DO.DalObject.DataSource.stations[i].Location.Longitude;
+                            temp.Lattitude = DalApi.DO.DalObject.DataSource.stations[i].Location.Lattitude;
+                            temp.Longitude = DalApi.DO.DalObject.DataSource.stations[i].Location.Longitude;
                         }
                     }
                     return temp;
@@ -130,7 +132,7 @@ namespace IDAL
                     Station temp = new Station();
                     for (int i = 0; i < DataSource.stations.Count; i++)
                     {
-                        Station item = IDAL.DO.DalObject.DataSource.stations[i];
+                        Station item = DalApi.DO.DalObject.DataSource.stations[i];
                         if (item.Id == stationId)
                         {
                             temp.Id = stationId;
@@ -138,7 +140,7 @@ namespace IDAL
                             temp.Name = item.Name;
                             temp.NumOfChargeSlots = item.NumOfChargeSlots;
                             temp.NumOfAvailableChargeSlots = item.NumOfAvailableChargeSlots - 1;
-                            IDAL.DO.DalObject.DataSource.stations[i] = temp;
+                            DalApi.DO.DalObject.DataSource.stations[i] = temp;
                         }
                     }
                 }
@@ -151,14 +153,14 @@ namespace IDAL
                     Station temp = new Station();
                     for (int i = 0; i < DataSource.stations.Count; i++)
                     {
-                        Station item = IDAL.DO.DalObject.DataSource.stations[i];
+                        Station item = DalApi.DO.DalObject.DataSource.stations[i];
                         if (item.Id == stationId)
                         {
                             temp.Id = stationId;
                             temp.Location = item.Location;
                             temp.Name = item.Name;
                             temp.NumOfChargeSlots = item.NumOfChargeSlots + 1;
-                            IDAL.DO.DalObject.DataSource.stations[i] = temp;
+                            DalApi.DO.DalObject.DataSource.stations[i] = temp;
                         }
                     }
                 }

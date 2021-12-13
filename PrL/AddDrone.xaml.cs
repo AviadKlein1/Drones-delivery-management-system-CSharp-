@@ -11,23 +11,23 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+            
 namespace PrL
 {
     public partial class AddDrone : Window
     {
-        IBL.BO.BL bl = new();
-        IBL.BO.Drone drone = new();
-        IBL.BO.DroneToList droneToList = new();
+        BlApi.BO.BL bl;
+        BlApi.BO.Drone drone = new();
+        BlApi.BO.DroneToList droneToList = new();
 
-        public AddDrone(IBL.BO.BL mainBl)
+        public AddDrone(BlApi.BO.BL mainBl)
         {
             InitializeComponent();
             bl = mainBl;
-            AddWeightselectorCombo.ItemsSource = Enum.GetValues(typeof(IDAL.DO.MyEnums.WeightCategory));
+            AddWeightselectorCombo.ItemsSource = Enum.GetValues(typeof(DalApi.DO.MyEnums.WeightCategory));
             AddNewDrone.Visibility = Visibility.Visible;
         }
-        public AddDrone(IBL.BO.BL mainBl, IBL.BO.DroneToList mainDrone)
+        public AddDrone(BlApi.BO.BL mainBl, BlApi.BO.DroneToList mainDrone)
         {
             InitializeComponent();
 
@@ -35,16 +35,16 @@ namespace PrL
             droneToList = mainDrone;
             DisplayDrone.DataContext = droneToList;
             DisplayDrone.Visibility = Visibility.Visible;
-            if(droneToList.Status == IBL.BO.MyEnums.DroneStatus.available)
+            if(droneToList.Status == BlApi.BO.MyEnums.DroneStatus.available)
             {
                 SendDroneToChargePanel.Visibility = Visibility.Visible;
                 ScheduleParcelToDronePanel.Visibility = Visibility.Visible;
             }
-            if (droneToList.Status == IBL.BO.MyEnums.DroneStatus.maintenance)
+            if (droneToList.Status == BlApi.BO.MyEnums.DroneStatus.maintenance)
             {
                 EndChargePanel.Visibility = Visibility.Visible;
             }
-            if (droneToList.Status == IBL.BO.MyEnums.DroneStatus.delivery)
+            if (droneToList.Status == BlApi.BO.MyEnums.DroneStatus.delivery)
             {
                 if(bl.ScheduledButNotPickedUp(droneToList.DeliveredParcelId)) PickUpParcelPanel.Visibility = Visibility.Visible;
                 if (bl.PickedUpButNotDeliverd(droneToList.DeliveredParcelId)) DeliverParcelPanel.Visibility = Visibility.Visible;
@@ -58,7 +58,7 @@ namespace PrL
             {
                 drone.Id = int.Parse(AddDroneIdBox.Text);
                 drone.Model = (string)AddDroneModelBox.Text;
-                drone.Weight = (IDAL.DO.MyEnums.WeightCategory)AddWeightselectorCombo.SelectedItem;
+                drone.Weight = (DalApi.DO.MyEnums.WeightCategory)AddWeightselectorCombo.SelectedItem;
                 drone.FirstChargeStationId = int.Parse(AddIdOfFirstChargeSlotBox.Text);
                 bl.AddDrone(drone);
             }
@@ -100,11 +100,11 @@ namespace PrL
         {
             try
             {
-                if (bl.ScheduleParcelToDrone(droneToList.Id)) ;
+                bl.ScheduleParcelToDrone(droneToList.Id);
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                _ = MessageBox.Show(ex.Message);
                 return;
             }
             MessageBox.Show("success!");

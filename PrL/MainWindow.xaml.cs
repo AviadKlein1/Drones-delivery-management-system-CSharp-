@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BlApi;
+using DalApi;
+
 
 namespace PrL
 {
@@ -20,10 +23,20 @@ namespace PrL
     /// </summary>
     public partial class MainWindow : Window
     {
-        IBL.BO.BL bl = new();
+
+        internal IBl bl;
         public MainWindow()
         {
             InitializeComponent();
+            try
+            {
+                bl = (BlApi.BO.BL)BlFactory.GetBl();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                
+            }
         }
 
         private void ShowDronesButton_Click(object sender, RoutedEventArgs e)

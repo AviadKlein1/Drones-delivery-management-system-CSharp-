@@ -5,6 +5,7 @@
 //The program handles and monitors the ongoing management and activity of a courier company using drones  
 
 using System;
+using BlApi;
 
 
 
@@ -15,7 +16,9 @@ namespace ConsoleUI_BL
     {
         static void Main(string[] args)
         {
-            IBL.BO.BL bl = new();
+            BlApi.BO.BL bl;
+
+            bl = (BlApi.BO.BL)BlFactory.GetBl();
 
             ConsoleUI_BL.Input myInputOutput = new ConsoleUI_BL.Input();
 
@@ -256,48 +259,48 @@ namespace ConsoleUI_BL
                                 {
                                     //display list of stations
                                     case 1:
-                                        static bool AllStations(IDAL.DO.Station s) { return true; }
-                                        System.Predicate<IDAL.DO.Station> allStations = AllStations;
+                                        static bool AllStations(DalApi.DO.Station s) { return true; }
+                                        System.Predicate<DalApi.DO.Station> allStations = AllStations;
                                         var stationsList = bl.GetStationsList(allStations);
                                         foreach (var element in stationsList)
                                             Console.WriteLine(element + "\n");
                                         break;
                                     //display list of drones
                                     case 2:
-                                        static bool AllDrones(IBL.BO.DroneToList d) { return true; }
-                                        System.Predicate<IBL.BO.DroneToList> allDrones = AllDrones;
+                                        static bool AllDrones(BlApi.BO.DroneToList d) { return true; }
+                                        System.Predicate<BlApi.BO.DroneToList> allDrones = AllDrones;
                                         var dronesList = bl.GetDronesList(allDrones);
                                         foreach (var element in dronesList)
                                             Console.WriteLine(element + "\n");
                                         break;
                                     //display list of customers
                                     case 3:
-                                        static bool AllCustomers(IDAL.DO.Customer c) { return true; }
-                                        System.Predicate<IDAL.DO.Customer> allCustomers = AllCustomers;
+                                        static bool AllCustomers(DalApi.DO.Customer c) { return true; }
+                                        System.Predicate<DalApi.DO.Customer> allCustomers = AllCustomers;
                                         var customerList = bl.GetCustomersList(allCustomers);
                                         foreach (var element in customerList)
                                             Console.WriteLine(element + "\n");
                                         break;
                                     //display list of parcels
                                     case 4:
-                                        static bool AllParcels(IDAL.DO.Parcel p) { return true; }
-                                        System.Predicate<IDAL.DO.Parcel> allParcels = AllParcels;
+                                        static bool AllParcels(DalApi.DO.Parcel p) { return true; }
+                                        System.Predicate<DalApi.DO.Parcel> allParcels = AllParcels;
                                         var parcelsList = bl.GetParcelsList(allParcels);
                                         foreach (var element in parcelsList)
                                             Console.WriteLine(element + "\n");
                                         break;
                                     //display list of not associated parcels
                                     case 5:
-                                        static bool UnassociatedParcels(IDAL.DO.Parcel p) { return (p.Scheduled == null); }
-                                        System.Predicate<IDAL.DO.Parcel> unassociatedParcels = UnassociatedParcels;
+                                        static bool UnassociatedParcels(DalApi.DO.Parcel p) { return (p.Scheduled == null); }
+                                        System.Predicate<DalApi.DO.Parcel> unassociatedParcels = UnassociatedParcels;
                                         var notAssociatedParcelsList = bl.GetParcelsList(unassociatedParcels);
                                         foreach (var element in notAssociatedParcelsList)
                                             Console.WriteLine(element + "\n");
                                         break;
                                     //display list of available to charge stations
                                     case 6:
-                                        static bool AvailableForCharge(IDAL.DO.Station s) { return (s.NumOfAvailableChargeSlots > 0); }
-                                        System.Predicate<IDAL.DO.Station> availableForCharge = AvailableForCharge;
+                                        static bool AvailableForCharge(DalApi.DO.Station s) { return (s.NumOfAvailableChargeSlots > 0); }
+                                        System.Predicate<DalApi.DO.Station> availableForCharge = AvailableForCharge;
                                         var avilableToChargeStations = bl.GetStationsList(availableForCharge);
                                         foreach (var element in avilableToChargeStations)
                                             Console.WriteLine(element + "\n");

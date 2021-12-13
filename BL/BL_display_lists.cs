@@ -2,7 +2,7 @@
 
 public delegate bool Predicate<in T>(T obj);
 
-namespace IBL
+namespace BlApi
 {
     namespace BO
     {
@@ -18,7 +18,7 @@ namespace IBL
             /// display stations list in condition
             /// </summary>
             /// <returns></returns> return list of stations accured to conditions
-            public IEnumerable<StationToList> GetStationsList(System.Predicate<IDAL.DO.Station> match)
+            public IEnumerable<StationToList> GetStationsList(System.Predicate<DalApi.DO.Station> match)
             {
                 List<StationToList> newList = new();
                 var v = dal.GetStationsList(match);
@@ -40,14 +40,14 @@ namespace IBL
             /// </summary>
             /// <returns></returns> reyurn list of drones
             /// 
-            public List<IBL.BO.DroneToList> GetDronesList(System.Predicate<IBL.BO.DroneToList> match)
+            public List<BlApi.BO.DroneToList> GetDronesList(System.Predicate<BlApi.BO.DroneToList> match)
             {
                 var v = dronesList.FindAll(match);
                 if (v == null)
                     System.Console.WriteLine("empty list\n");
                 return v;
             }
-            public List<IBL.BO.DroneToList> GetDrones()
+            public List<BlApi.BO.DroneToList> GetDrones()
             {
                 var v = dronesList;
                 return v;
@@ -66,9 +66,9 @@ namespace IBL
             /// display customers list
             /// </summary>
             /// <returns></returns> return list of customers
-            public IEnumerable<IBL.BO.CustomerToList> GetCustomersList(System.Predicate<IDAL.DO.Customer> match)
+            public IEnumerable<BlApi.BO.CustomerToList> GetCustomersList(System.Predicate<DalApi.DO.Customer> match)
             {
-                List<IBL.BO.CustomerToList> tmp1 = new();
+                List<BlApi.BO.CustomerToList> tmp1 = new();
                 var v = dal.GetCustomersList(match);
                 foreach (var element in v)
                 {
@@ -76,6 +76,20 @@ namespace IBL
                     myCustomer.id = element.Id;
                     myCustomer.name = element.Name;
                     myCustomer.phoneNumber = element.PhoneNumber;
+                    var parcelsList = dal.GetParcelsList(allParcels);
+                    foreach (var item in parcelsList)
+                    {
+                        if (item.SenderId == element.Id)
+                        {
+                            if (item.Delivered != null) myCustomer.parcelsDelivered++;
+                            if (PickedUpButNotDeliverd(item.Id)) myCustomer.parcelsSentButNotDelivered++;
+                            if (ScheduledButNotPickedUp(item.Id)) myCustomer.ScheduledParcels++;
+                        }
+                    }
+                    foreach (var item in parcelsList)
+                        if (item.ReciverId == element.Id)
+                            if (item.Delivered != null) myCustomer.recievedParcels++;
+
                     tmp1.Add(myCustomer);
                 }
                 return tmp1;
@@ -85,9 +99,9 @@ namespace IBL
             /// display parcels list
             /// </summary>
             /// <returns></returns> return list of parcels
-            public IEnumerable<IBL.BO.ParcelToList> GetParcelsList(System.Predicate<IDAL.DO.Parcel> match)
+            public IEnumerable<BlApi.BO.ParcelToList> GetParcelsList(System.Predicate<DalApi.DO.Parcel> match)
             {
-                List<IBL.BO.ParcelToList> tmp1 = new();
+                List<BlApi.BO.ParcelToList> tmp1 = new();
                 var v = dal.GetParcelsList(match);
                 foreach (var element in v)
                 {
@@ -107,7 +121,7 @@ namespace IBL
                             reciverName = cElement.Name;
                     }
                     myParcel.SenderName = senderName;
-                    myParcel.SenderName = reciverName;
+                    myParcel.RecieverName = reciverName;
 
                     tmp1.Add(myParcel);
                 }

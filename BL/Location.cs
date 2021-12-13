@@ -1,4 +1,4 @@
-﻿namespace IBL
+﻿namespace BlApi
 {
     namespace BO
     {
@@ -30,7 +30,7 @@
             /// copy constructor
             /// </summary>
             /// <param name="l"></param>
-            public Location(IDAL.DO.Location l)
+            public Location(DalApi.DO.Location l)
             {
                 this.longitude = l.Longitude;
                 this.lattitude = l.Lattitude;

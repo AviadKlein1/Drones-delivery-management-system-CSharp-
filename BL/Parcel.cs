@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IBL
+namespace BlApi
 {
     namespace BO
     {
@@ -12,8 +12,8 @@ namespace IBL
             public int id { get; set; }
             public CustomerInParcel Sender { get; set; }
             public CustomerInParcel Reciever { get; set; }
-            public IDAL.DO.MyEnums.WeightCategory Weight { get; set; }
-            public IDAL.DO.MyEnums.PriorityLevel Priority { get; set; }
+            public DalApi.DO.MyEnums.WeightCategory Weight { get; set; }
+            public DalApi.DO.MyEnums.PriorityLevel Priority { get; set; }
             public DroneInParcel DroneInParcel { get; set; }
             public DateTime? Requested { get; set; }
             public DateTime? Scheduled { get; set; }
@@ -39,7 +39,7 @@ namespace IBL
             /// copy constructor
             /// </summary>
             /// <param name="temp"></param>
-            public Parcel(IDAL.DO.Parcel temp)
+            public Parcel(DalApi.DO.Parcel temp)
             {
                 id = temp.Id;
                 Sender = new CustomerInParcel();
@@ -67,9 +67,9 @@ namespace IBL
         public class ParcelAtCustomer
         {
             public int Id { get; set; }
-            public IDAL.DO.MyEnums.WeightCategory Weight { get; set; }
-            public IDAL.DO.MyEnums.PriorityLevel Priority { get; set; }
-            public IDAL.DO.MyEnums.ParcelStatus ParcelStatus { get; set; }
+            public DalApi.DO.MyEnums.WeightCategory Weight { get; set; }
+            public DalApi.DO.MyEnums.PriorityLevel Priority { get; set; }
+            public DalApi.DO.MyEnums.ParcelStatus ParcelStatus { get; set; }
             public CustomerInParcel TheSecondSide { get; set; }
 
             /// <summary>
@@ -89,8 +89,8 @@ namespace IBL
         public class ParcelInDelivery
         {
             public int Id { get; set; }
-            public IDAL.DO.MyEnums.WeightCategory Weight { get; set; }
-            public IDAL.DO.MyEnums.PriorityLevel Priority { get; set; }
+            public DalApi.DO.MyEnums.WeightCategory Weight { get; set; }
+            public DalApi.DO.MyEnums.PriorityLevel Priority { get; set; }
             public bool BoolParcelStatus { get; set; }
             public CustomerInParcel Sender { get; set; }
             public CustomerInParcel Reciever { get; set; }
@@ -110,9 +110,9 @@ namespace IBL
             public int Id { get; set; }
             public string SenderName { get; set; }
             public string RecieverName { get; set; }
-            public IDAL.DO.MyEnums.WeightCategory Weight { get; set; }
-            public IDAL.DO.MyEnums.PriorityLevel Priority { get; set; }
-            public IDAL.DO.MyEnums.ParcelStatus ParcelStatus { get; set; }
+            public DalApi.DO.MyEnums.WeightCategory Weight { get; set; }
+            public DalApi.DO.MyEnums.PriorityLevel Priority { get; set; }
+            public DalApi.DO.MyEnums.ParcelStatus ParcelStatus { get; set; }
 
             public override string ToString()
             {

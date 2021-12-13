@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BlApi;
 namespace PrL
 {
     /// <summary>
@@ -19,29 +19,29 @@ namespace PrL
     /// </summary>
     public partial class dronesList : Window
     {
-        IBL.BO.BL bl = new();
-        public dronesList(IBL.BO.BL mainBl)
+        BlApi.BO.BL bl;
+        public dronesList(IBl mainBl)
         {
             InitializeComponent();
-            bl = mainBl;
+            bl = (BlApi.BO.BL)mainBl;
             dronesListView.ItemsSource = bl.GetDrones();
-            weightSelector.ItemsSource = Enum.GetValues(typeof(IDAL.DO.MyEnums.WeightCategory));
-            StatusSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.MyEnums.DroneStatus));
+            weightSelector.ItemsSource = Enum.GetValues(typeof(DalApi.DO.MyEnums.WeightCategory));
+            StatusSelector.ItemsSource = Enum.GetValues(typeof(BlApi.BO.MyEnums.DroneStatus));
 
         }
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Contains(IBL.BO.MyEnums.DroneStatus.maintenance)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInMaintenance);
-            if (e.AddedItems.Contains(IBL.BO.MyEnums.DroneStatus.available)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInAvailable);
-            if (e.AddedItems.Contains(IBL.BO.MyEnums.DroneStatus.delivery)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInDelivery);
+            if (e.AddedItems.Contains(BlApi.BO.MyEnums.DroneStatus.maintenance)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInMaintenance);
+            if (e.AddedItems.Contains(BlApi.BO.MyEnums.DroneStatus.available)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInAvailable);
+            if (e.AddedItems.Contains(BlApi.BO.MyEnums.DroneStatus.delivery)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInDelivery);
         }
 
         private void weightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-            if (e.AddedItems.Contains(IDAL.DO.MyEnums.WeightCategory.heavy)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInHeavy);
-            if (e.AddedItems.Contains(IDAL.DO.MyEnums.WeightCategory.medium)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInMedium);
-            if (e.AddedItems.Contains(IDAL.DO.MyEnums.WeightCategory.light)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInLight);
+            if (e.AddedItems.Contains(DalApi.DO.MyEnums.WeightCategory.heavy)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInHeavy);
+            if (e.AddedItems.Contains(DalApi.DO.MyEnums.WeightCategory.medium)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInMedium);
+            if (e.AddedItems.Contains(DalApi.DO.MyEnums.WeightCategory.light)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInLight);
         }
 
 
@@ -49,7 +49,7 @@ namespace PrL
         private void dclick(object sender, MouseButtonEventArgs e)
         {
            
-            new AddDrone(bl, (IBL.BO.DroneToList)dronesListView.SelectedItem).Show();
+            new AddDrone(bl, (BlApi.BO.DroneToList)dronesListView.SelectedItem).Show();
         }
 
         private void AddNewDrone_Click(object sender, RoutedEventArgs e)

@@ -1,4 +1,4 @@
-﻿namespace IBL
+﻿namespace BlApi
 {
     namespace BO
     {

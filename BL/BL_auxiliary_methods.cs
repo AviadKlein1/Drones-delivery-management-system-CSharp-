@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace IBL
+namespace BlApi
 {
     namespace BO
     {
@@ -50,6 +50,28 @@ namespace IBL
                 }
                 return 0;
             }
+            internal Parcel GetParcelBySendeId (int MySenderId)
+            {
+                Parcel myParcel = new();
+                var dalParcelsList = dal.GetParcelsList(allParcels);
+                foreach (var element in dalParcelsList)
+                {
+                    if (element.SenderId == MySenderId)
+                        myParcel = new Parcel(element);
+                }
+                return myParcel;
+            }
+            internal Parcel GetParcelByReciverId(int MyReciverId)
+            {
+                Parcel myParcel = new();
+                var dalParcelsList = dal.GetParcelsList(allParcels);
+                foreach (var element in dalParcelsList)
+                {
+                    if (element.ReciverId == MyReciverId)
+                        myParcel = new Parcel(element);
+                }
+                return myParcel;
+            }
 
             /// <summary>
             /// checks for minimum charge of battery required to make a certain distance
@@ -73,11 +95,11 @@ namespace IBL
                             if (Pelement.DroneId == element.Id)
                             {
                                 //calculate requirement
-                                if(Pelement.Weight == IDAL.DO.MyEnums.WeightCategory.light)
+                                if(Pelement.Weight == DalApi.DO.MyEnums.WeightCategory.light)
                                     return lightWeight * distance;
-                                if(Pelement.Weight == IDAL.DO.MyEnums.WeightCategory.medium)
+                                if(Pelement.Weight == DalApi.DO.MyEnums.WeightCategory.medium)
                                     return mediumWeight * distance;
-                                if(Pelement.Weight == IDAL.DO.MyEnums.WeightCategory.heavy)
+                                if(Pelement.Weight == DalApi.DO.MyEnums.WeightCategory.heavy)
                                         return heavyWeight * distance;
                             }
                         }
@@ -125,9 +147,9 @@ namespace IBL
             /// </summary>
             /// <param name="parcelId"></param>
             /// return location type (longitude, lattitude)
-            internal IDAL.DO.Location SenderLocation(int parcelId)
+            internal DalApi.DO.Location SenderLocation(int parcelId)
             {
-                IDAL.DO.Location tempLocation = new();
+                DalApi.DO.Location tempLocation = new();
                 var dalParcelsList = dal.GetParcelsList(allParcels);
                 //search parcel
                 foreach(var pElement in dalParcelsList)
@@ -146,9 +168,9 @@ namespace IBL
                 return tempLocation;
             }
 
-            internal IDAL.DO.Location ReciverLocation(int parcelId)
+            internal DalApi.DO.Location ReciverLocation(int parcelId)
             {
-                IDAL.DO.Location tempLocation = new();
+                DalApi.DO.Location tempLocation = new();
                 var dalParcelsList = dal.GetParcelsList(allParcels);
                 //search parcel
                 foreach (var pElement in dalParcelsList)
@@ -173,9 +195,9 @@ namespace IBL
             /// </summary>
             /// <param name="parcelId"></param>
             /// returns station
-            internal IDAL.DO.Station NearestToSenderStation(int parcelId)
+            internal DalApi.DO.Station NearestToSenderStation(int parcelId)
             {
-                IDAL.DO.Station tempStation = new();
+                DalApi.DO.Station tempStation = new();
                 var dalParcelsList = dal.GetParcelsList(allParcels);
                 //search parcel
                 foreach(var pElement in dalParcelsList)
@@ -199,9 +221,9 @@ namespace IBL
             /// </summary>
             /// <param name="parcelId"></param>
             /// returns station
-            internal IDAL.DO.Station NearestToSenderChargeSlot(int parcelId)
+            internal DalApi.DO.Station NearestToSenderChargeSlot(int parcelId)
             {
-                IDAL.DO.Station tempStation = new();
+                DalApi.DO.Station tempStation = new();
                 var dalParcelsList = dal.GetParcelsList(allParcels);
                 //search parcel
                 foreach(var pElement in dalParcelsList)
@@ -225,9 +247,9 @@ namespace IBL
             /// </summary>
             /// <param name="locate"></param>
             /// returns station
-            internal IDAL.DO.Station NearestStation(IDAL.DO.Location locate)
+            internal DalApi.DO.Station NearestStation(DalApi.DO.Location locate)
             {
-                IDAL.DO.Station tempStation = new();
+                DalApi.DO.Station tempStation = new();
                 var stationList = dal.GetStationsList(allStations);
                 double min = 99999999999.0;
                 foreach(var element in stationList)
@@ -248,9 +270,9 @@ namespace IBL
             /// </summary>
             /// <param name="l"></param>
             /// returns station
-            internal IDAL.DO.Station NearestAvailableChargeSlot(IDAL.DO.Location l)
+            internal DalApi.DO.Station NearestAvailableChargeSlot(DalApi.DO.Location l)
             {
-                IDAL.DO.Station tempStation = new();
+                DalApi.DO.Station tempStation = new();
                 var stationList = dal.GetStationsList(allStations);
                 double min = 99999999999.0;
                 foreach(var element in stationList)
@@ -270,9 +292,9 @@ namespace IBL
             /// returns a list of all customers who recieved a parcel
             /// </summary>
             /// returns list of customers
-            internal List<IDAL.DO.Customer> RecieversList()
+            internal List<DalApi.DO.Customer> RecieversList()
             {
-                List<IDAL.DO.Customer> temp = new();
+                List<DalApi.DO.Customer> temp = new();
                 DateTime? emptyDateTime = null;
                 var dalParcelsList = dal.GetParcelsList(allParcels);
                 //search parcel
@@ -349,9 +371,9 @@ namespace IBL
             /// <param name="l"></param>
             /// <param name="myDroneId"></param>
             /// <returns></returns>
-            internal IDAL.DO.Station NearestReachableChargeSlot(IDAL.DO.Location l, int myDroneId)
+            internal DalApi.DO.Station NearestReachableChargeSlot(DalApi.DO.Location l, int myDroneId)
             {
-                IDAL.DO.Station tempStation = new();
+                DalApi.DO.Station tempStation = new();
                 var stationList = dal.GetStationsList(allStations);
                 double min = 99999999999;
                 var requiredChargingLevel = (int)BatteryRequirementForVoyage(myDroneId, min);
@@ -377,8 +399,8 @@ namespace IBL
             internal int SuitableParcel(int droneId)
             {
                 var v = dronesList;
-                IDAL.DO.MyEnums.WeightCategory myDroneWeight = new();
-                IDAL.DO.Location myDroneLocation = new();
+                DalApi.DO.MyEnums.WeightCategory myDroneWeight = new();
+                DalApi.DO.Location myDroneLocation = new();
                 int myDroneBattery = 0;
 
                 foreach (var item in v) // my drone data
@@ -386,18 +408,18 @@ namespace IBL
                     if(item.Id == droneId)
                     {
                         myDroneWeight = item.Weight;
-                        myDroneLocation = new IDAL.DO.Location(item.Location.longitude, item.Location.lattitude);
+                        myDroneLocation = new DalApi.DO.Location(item.Location.longitude, item.Location.lattitude);
                         myDroneBattery = item.Battery;
                     }
                 }
                 // start searching
 
-                List<IDAL.DO.Parcel> SuitableParcels = new List<IDAL.DO.Parcel>();
+                List<DalApi.DO.Parcel> SuitableParcels = new List<DalApi.DO.Parcel>();
                 var dalParcelsList = dal.GetParcelsList(allParcels);
                 var priorityArray = new int[1000];
                 double max = 0;
-                var sortByDIstanceParcels = new List<IDAL.DO.Parcel>();
-                var tempP = new IDAL.DO.Parcel();
+                var sortByDIstanceParcels = new List<DalApi.DO.Parcel>();
+                var tempP = new DalApi.DO.Parcel();
 
                 foreach (var item in dalParcelsList) // remove not suitable weight
                 {
@@ -412,7 +434,7 @@ namespace IBL
                 {
                     for (int i = 0; i < distanceSortToErase.Count; i++)//search the max
                     {
-                        IDAL.DO.Parcel item = distanceSortToErase[i];
+                        DalApi.DO.Parcel item = distanceSortToErase[i];
                         var dis = dal.GetDistance(myDroneLocation, SenderLocation(item.Id));
                         if (dis > max)
                         {
@@ -423,7 +445,7 @@ namespace IBL
                     sortByDIstanceParcels.Add(tempP);
                     for (int i = 0; i < distanceSortToErase.Count; i++)// erase the max distance parcel from list
                     {
-                        IDAL.DO.Parcel item = distanceSortToErase[i];
+                        DalApi.DO.Parcel item = distanceSortToErase[i];
                         if (max == dal.GetDistance(SenderLocation(item.Id), myDroneLocation))
                         {
                             distanceSortToErase.Remove(item);
@@ -432,14 +454,14 @@ namespace IBL
                 }
                 for (int i = 0; i < sortByDIstanceParcels.Count; i++)// score by priority
                 {
-                    IDAL.DO.Parcel item = sortByDIstanceParcels[i];
-                    if (item.Priority == IDAL.DO.MyEnums.PriorityLevel.ergent) priorityArray[i] +=100000;
-                    if (item.Priority == IDAL.DO.MyEnums.PriorityLevel.quickly) priorityArray[i] += 50000;
-                    if (item.Priority == IDAL.DO.MyEnums.PriorityLevel.regular) priorityArray[i] += 20000;
+                    DalApi.DO.Parcel item = sortByDIstanceParcels[i];
+                    if (item.Priority == DalApi.DO.MyEnums.PriorityLevel.ergent) priorityArray[i] +=100000;
+                    if (item.Priority == DalApi.DO.MyEnums.PriorityLevel.quickly) priorityArray[i] += 50000;
+                    if (item.Priority == DalApi.DO.MyEnums.PriorityLevel.regular) priorityArray[i] += 20000;
                 }
                 for (int i = 0; i < sortByDIstanceParcels.Count; i++)// score by weight
                 {
-                    IDAL.DO.Parcel item = sortByDIstanceParcels[i];
+                    DalApi.DO.Parcel item = sortByDIstanceParcels[i];
                     if ((myDroneWeight - item.Weight) == 0) priorityArray[i] += 10000;
                     if ((myDroneWeight - item.Weight) == 1) priorityArray[i] += 5000;
                     if ((myDroneWeight - item.Weight) == 2) priorityArray[i] += 2000;
@@ -469,7 +491,7 @@ namespace IBL
             /// <param name="list"></param>
             /// <param name="myParcel"></param>
             /// <returns></returns> a boolean type
-            internal bool IsSuitable(List<IDAL.DO.Parcel> list, IDAL.DO.Parcel myParcel)
+            internal bool IsSuitable(List<DalApi.DO.Parcel> list, DalApi.DO.Parcel myParcel)
             {
                 bool flag = true;
                 //search parcel in list of unsuitable parcels
@@ -487,7 +509,7 @@ namespace IBL
             /// <param name="dalParcelsList"></param>
             /// <param name="notSuatableList"></param>
             /// <returns></returns>
-            internal bool IsPossibleVoyage(IDAL.DO.Parcel tempParcel,IDAL.DO.Location myDroneLocation, int myDroneBattery)
+            internal bool IsPossibleVoyage(DalApi.DO.Parcel tempParcel,DalApi.DO.Location myDroneLocation, int myDroneBattery)
             {
                 bool flag = false;
 
@@ -501,9 +523,9 @@ namespace IBL
                 var fullDistance = (dis1 + dis2 + dis3)/100000;
 
                 double Consumption = 0;
-                if (tempParcel.Weight == IDAL.DO.MyEnums.WeightCategory.light) Consumption = lightWeight;
-                if (tempParcel.Weight == IDAL.DO.MyEnums.WeightCategory.medium) Consumption = mediumWeight;
-                if (tempParcel.Weight == IDAL.DO.MyEnums.WeightCategory.heavy) Consumption = heavyWeight;
+                if (tempParcel.Weight == DalApi.DO.MyEnums.WeightCategory.light) Consumption = lightWeight;
+                if (tempParcel.Weight == DalApi.DO.MyEnums.WeightCategory.medium) Consumption = mediumWeight;
+                if (tempParcel.Weight == DalApi.DO.MyEnums.WeightCategory.heavy) Consumption = heavyWeight;
 
                 if (myDroneBattery < (fullDistance * Consumption)) flag = false;
                 else flag = true;
@@ -517,9 +539,9 @@ namespace IBL
             /// <param name="myDroneLocation"></param>
             /// <param name="notSuatableList"></param>
             /// <returns></returns>
-            internal IDAL.DO.Parcel TheNearestParcel(IEnumerable<IDAL.DO.Parcel> dalParcelsList,IDAL.DO.Location myDroneLocation, List<IDAL.DO.Parcel> notSuatableList)
+            internal DalApi.DO.Parcel TheNearestParcel(IEnumerable<DalApi.DO.Parcel> dalParcelsList,DalApi.DO.Location myDroneLocation, List<DalApi.DO.Parcel> notSuatableList)
             {
-                IDAL.DO.Parcel temp = new IDAL.DO.Parcel();
+                DalApi.DO.Parcel temp = new DalApi.DO.Parcel();
                 var min = 9999999999.0;
                 //search for neartest parcel
                 foreach (var item in dalParcelsList)
