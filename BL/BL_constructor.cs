@@ -114,11 +114,6 @@ namespace BlApi
                                 int index = rd.Next(0, dalStationsList.Count());
                                 newDrone.Location = new Location(dalStationsList.ElementAt(index).Location);
                                 newDrone.Battery = rd.Next(0, 21);
-                                foreach (var item in dalStationsList)
-                                {
-                                    if (item.Location.Lattitude == newDrone.Location.lattitude && item.Location.Longitude == newDrone.Location.longitude)
-                                        dal.DecriseChargeSlot(item.Id);
-                                }
                             }
                             // Avilable drone
                             else
