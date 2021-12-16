@@ -21,7 +21,7 @@ namespace PrL
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+     public partial class MainWindow : Window
     {
 
         internal IBl bl;
@@ -37,8 +37,13 @@ namespace PrL
                 MessageBox.Show(ex.Message);
                 
             }
+            //this.Closing += new System.ComponentModel.CancelEventHandler(MyWindow_Closing);
         }
 
+        //void MyWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+        //    e.Cancel = true;
+        //}
         private void ShowDronesButton_Click(object sender, RoutedEventArgs e)
         {
             new dronesList(bl).Show();

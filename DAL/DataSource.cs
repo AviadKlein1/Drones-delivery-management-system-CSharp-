@@ -96,7 +96,7 @@ namespace DalApi
                         }
                         parcels.Add(myParcel);
                     }
-                    //drone charges
+                    //drone charges --
                     for (int i = 0; i < 2; i++)
                     {
                         DalApi.DO.DroneCharge myDroneCharge = new DalApi.DO.DroneCharge();

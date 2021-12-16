@@ -73,6 +73,7 @@ namespace BlApi
                 foreach (var element in v)
                 {
                     CustomerToList myCustomer = new();
+                    CustomerToList reciver = new();
                     myCustomer.id = element.Id;
                     myCustomer.name = element.Name;
                     myCustomer.phoneNumber = element.PhoneNumber;
@@ -85,11 +86,9 @@ namespace BlApi
                             if (PickedUpButNotDeliverd(item.Id)) myCustomer.parcelsSentButNotDelivered++;
                             if (ScheduledButNotPickedUp(item.Id)) myCustomer.ScheduledParcels++;
                         }
-                    }
-                    foreach (var item in parcelsList)
                         if (item.ReciverId == element.Id)
                             if (item.Delivered != null) myCustomer.recievedParcels++;
-
+                    }
                     tmp1.Add(myCustomer);
                 }
                 return tmp1;

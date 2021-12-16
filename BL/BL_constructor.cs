@@ -111,8 +111,10 @@ namespace BlApi
                             if (newDrone.Status == MyEnums.DroneStatus.maintenance)
                             {
                                 var dalStationsList = dal.GetStationsList(allStations);
+
                                 int index = rd.Next(0, dalStationsList.Count());
                                 newDrone.Location = new Location(dalStationsList.ElementAt(index).Location);
+                                dal.DecriseChargeSlot(dalStationsList.ElementAt(index).Id);
                                 newDrone.Battery = rd.Next(0, 21);
                             }
                             // Avilable drone

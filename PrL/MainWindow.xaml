@@ -3,10 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:local="clr-namespace:PrL"
         mc:Ignorable="d"
         Title="MainWindow" Height="640" Width="800">
     <Grid>
-        <Button Content="Drones List" FontSize="48" Background="#FF3A277A" Click="ShowDronesButton_Click" />
+        <Image
+               gif:ImageBehavior.AutoStart="True"
+                gif:ImageBehavior.AnimatedSource="C:\Users\Aviad\source\repos\AviadKlein1\dotNet5782_2679_3080\PrL/resources/images/tumblr_mx85z3CkjP1ru5h8co1_500.gif" >
+
+        </Image>
+        <Button x:Name="EnterButton" Content="To Enter The System Click " Cursor="Hand" Click="ShowDronesButton_Click" FontFamily="Blackadder ITC" FontSize="72" FontWeight="Bold" Background="{x:Null}">
+            <Button.OpacityMask>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.OpacityMask>
+
+        </Button>
     </Grid>
 </Window>
