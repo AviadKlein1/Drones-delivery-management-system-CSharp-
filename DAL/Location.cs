@@ -16,15 +16,18 @@ namespace DalApi
             public Location(double longitude, double latitude)
             {
                 this.Longitude = longitude;
-                this.latitude = latitude;
+                this.Latitude = latitude;
             }
 
             public double Longitude { get; set; }
-            public double latitude { get; set; }
+            public double Latitude { get; set; }
 
             public override string ToString()
             {
-                return "longitude: " + Longitude + "latitude: " + latitude + "\n";
+                return $"latitude: { (int)Latitude } ° { (int)(Latitude - (int)Latitude) * 60 }'" +
+                   $" {Latitude - ((int)Latitude * 60) - ((int)(Latitude - (int)Latitude) * 60)} \" N" +
+                   $"longitude:  { (int)Longitude } ° { (int)(Longitude - (int)Longitude) * 60 }'" +
+                   $" {Longitude - ((int)Longitude * 60) - ((int)(Longitude - (int)Longitude) * 60)} \" S\n";
             }
         }
     }

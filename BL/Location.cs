@@ -33,7 +33,7 @@
             public Location(DalApi.DO.Location l)
             {
                 Longitude = l.Longitude;
-                Latitude = l.latitude;
+                Latitude = l.Latitude;
             }
             public double Longitude { get; set; }
             public double Latitude { get; set; }

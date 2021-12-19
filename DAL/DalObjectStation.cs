@@ -117,7 +117,7 @@ namespace DalApi
                     {
                         if (DalApi.DO.DalObject.DataSource.stations[i].Id == StationId)
                         {
-                            temp.latitude = DalApi.DO.DalObject.DataSource.stations[i].Location.latitude;
+                            temp.Latitude = DalApi.DO.DalObject.DataSource.stations[i].Location.Latitude;
                             temp.Longitude = DalApi.DO.DalObject.DataSource.stations[i].Location.Longitude;
                         }
                     }
@@ -172,9 +172,9 @@ namespace DalApi
                 /// <returns></returns>
                 public double GetDistance(Location a, Location b)
                 {
-                    var d1 = a.latitude * (Math.PI / 180.0);
+                    var d1 = a.Latitude * (Math.PI / 180.0);
                     var num1 = a.Longitude * (Math.PI / 180.0);
-                    var d2 = b.latitude * (Math.PI / 180.0);
+                    var d2 = b.Latitude * (Math.PI / 180.0);
                     var num2 = b.Longitude * (Math.PI / 180.0) - num1;
                     var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
 

@@ -93,8 +93,7 @@
             public override string ToString()
             {
                 return $"ID: { Id }\nModel: { Model }\nWeight Category: { Weight }\nStatus: { Status }\nBattery: " +
-                   $" { Battery} \nLongitude: { Location.Longitude }\nLatitude: " +
-                   $"{ Location.Latitude }\nCurrent parcel's id: { DeliveredParcelId }";
+                   $" { Battery} \n{Location}\nCurrent parcel's id: { DeliveredParcelId }";
             }
         }
     }
