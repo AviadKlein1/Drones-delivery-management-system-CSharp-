@@ -121,7 +121,7 @@ namespace BlApi
                         }
                         else // is available 
                         {
-                            DalApi.DO.Location itemLocation = new DalApi.DO.Location(item.Location.longitude, item.Location.lattitude);
+                            DalApi.DO.Location itemLocation = new DalApi.DO.Location(item.Location.Longitude, item.Location.Latitude);
                             var tempStation = NearestReachableChargeSlot(itemLocation, droneId);
                             if (tempStation.Id == 0)
                             {
@@ -170,7 +170,7 @@ namespace BlApi
                         }
                         else // is maintenance 
                         {
-                            DalApi.DO.Location itemLocation = new DalApi.DO.Location(item.Location.longitude, item.Location.lattitude);
+                            DalApi.DO.Location itemLocation = new DalApi.DO.Location(item.Location.Longitude, item.Location.Latitude);
                             var tempStation = NearestStation(itemLocation);
                             dal.IncreaseChargeSlot(tempStation.Id);
 
@@ -278,7 +278,7 @@ namespace BlApi
                                         temp.Status = dItem.Status;
                                         temp.Weight = dItem.Weight;
                                         temp.DeliveredParcelId = item.Id;
-                                        DalApi.DO.Location earlyDroneLocation = new DalApi.DO.Location(dItem.Location.longitude, dItem.Location.lattitude);
+                                        DalApi.DO.Location earlyDroneLocation = new DalApi.DO.Location(dItem.Location.Longitude, dItem.Location.Latitude);
                                         // update battery
                                         temp.Battery = (temp.Battery - (int)BatteryRequirementForVoyage(droneId, dal.GetDistance(earlyDroneLocation, ourSenderLocation)));
                                         if (temp.Battery < 0) temp.Battery = 0;
@@ -319,7 +319,7 @@ namespace BlApi
                     Console.WriteLine("not such drone\n");
                     return false;
                 }
-                if ( ! PickedUpButNotDeliverd(idOfThisParcel))
+                if ( ! PickedUpButNotDelivered(idOfThisParcel))
                 {
                     System.Console.WriteLine("this parcel is not in the right status\n");
                 }
@@ -349,7 +349,7 @@ namespace BlApi
                                     temp.Status = MyEnums.DroneStatus.available;
                                     temp.Weight = dItem.Weight;
                                     temp.DeliveredParcelId = item.Id;
-                                    DalApi.DO.Location earlyDroneLocation = new DalApi.DO.Location(dItem.Location.longitude, dItem.Location.lattitude);
+                                    DalApi.DO.Location earlyDroneLocation = new DalApi.DO.Location(dItem.Location.Longitude, dItem.Location.Latitude);
                                     // update battery
                                     temp.Battery = (temp.Battery - (int)BatteryRequirementForVoyage(droneId, dal.GetDistance(earlyDroneLocation, ourReciverLocation)));
                                     if (temp.Battery < 0) temp.Battery = 0;

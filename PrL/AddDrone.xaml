@@ -38,7 +38,7 @@
             <TextBox  x:Name="BatteryBox" Text="{Binding Path = Battery}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
             <TextBlock x:Name="LocationBlock" Text="The location: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox  x:Name="LocationLongBox" Text="{Binding Path = Location.longitude}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
-            <TextBox  x:Name="LocationLattBox" Text="{Binding Path = Location.lattitude }"  HorizontalAlignment="Center" Width="150" IsEnabled="False" />
+            <TextBox  x:Name="LocationLattBox" Text="{Binding Path = Location.latitude }"  HorizontalAlignment="Center" Width="150" IsEnabled="False" />
             <TextBlock x:Name="DeliveredParcelIdBlock" Text="Id of the deliverd parcel: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox  x:Name="DeliveredParcelIdBox" Text="{Binding Path = DeliveredParcelId}" HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
             <Label x:Name="Options" Content="Update options"  HorizontalAlignment="Center"  Margin="0,20,0,2" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>

@@ -12,21 +12,21 @@ namespace DalApi
         /// <summary>
         /// add to list
         /// </summary>
-        public void AddStation(DalApi.DO.Station station);
+        public void AddStation(DO.Station station);
         /// <summary>
         /// add drone to list of drones
         /// </summary>
-        public void AddDrone(DalApi.DO.Drone drone , int firstChargeStationId);
+        public void AddDrone(DO.Drone drone, int firstChargeStationId);
         /// <summary>
         /// add costumer to list of costimers
         /// </summary>
         /// <param name="myCustomer"></param>
-        public void Addcustomer(DalApi.DO.Customer customer);
+        public void Addcustomer(DO.Customer customer);
         /// <summary>
         /// add parcel to list
         /// </summary>
         /// returns new parcel's id
-        public void AddParcel(DalApi.DO.Parcel parcel);
+        public void AddParcel(DO.Parcel parcel);
         /// <summary>
         /// return station by its id
         /// </summary>
@@ -66,14 +66,14 @@ namespace DalApi
         /// </summary>
         /// <param name="StationId"></param>
         /// <returns></returns>
-        public DalApi.DO.Location StationLocate(int StationId);
+        public DO.Location StationLocate(int StationId);
         /// <summary>
         /// return the distance between two coordinates
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public double GetDistance(DalApi.DO.Location a, DalApi.DO.Location b);
+        public double GetDistance(DO.Location a, DO.Location b);
         /// <summary>
         /// update name and number of charge slots in station
         /// <param name="stationId"></param>
@@ -126,11 +126,8 @@ namespace DalApi
         /// <returns></returns>
         public void DeliverParcelByDrone(int droneId, int parcelId);
 
-        public IEnumerable<DalApi.DO.Station> GetStationsList(System.Predicate<DalApi.DO.Station> match);
-        public IEnumerable<DalApi.DO.Customer> GetCustomersList(System.Predicate<DalApi.DO.Customer> match);
-        public IEnumerable<DalApi.DO.Parcel> GetParcelsList(System.Predicate<DalApi.DO.Parcel> match);
+        public IEnumerable<DO.Station> GetStationsList(System.Predicate<DO.Station> match);
+        public IEnumerable<DO.Customer> GetCustomersList(System.Predicate<DO.Customer> match);
+        public IEnumerable<DO.Parcel> GetParcelsList(System.Predicate<DO.Parcel> match);
     }
 }
-
-
-            

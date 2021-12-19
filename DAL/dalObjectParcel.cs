@@ -24,7 +24,7 @@ namespace DalApi
                     for (int i = 0; i < DalApi.DO.DalObject.DataSource.parcels.Count; i++)
                         //if already exist
                         if (DalApi.DO.DalObject.DataSource.parcels[i].Id == myParcel.Id)
-                            throw new ExcistingIdException(myParcel.Id, $"parcel already exist: {myParcel.Id}");
+                            throw new ExistingIdException(myParcel.Id, $"parcel already exist: {myParcel.Id}");
                     DalApi.DO.DalObject.DataSource.parcels.Add(myParcel);
                 }
 

@@ -35,7 +35,6 @@ namespace DalApi
                 /// </summary>
                 internal static void Initialize()
                 {
-
                     //stations
                     for (int i = 0; i < 10; i++)
                     {
@@ -61,22 +60,23 @@ namespace DalApi
                     {
                         DalApi.DO.Customer myCustomer = new DalApi.DO.Customer();
                         myCustomer.Id = rd.Next(100000000, 1000000000);
-                        myCustomer.Name = MyEnums.NamesForCustomers[i];
-                        myCustomer.Location = MyEnums.stationTos[rd.Next(0,10)].Location; 
-                        string phoneNumber = "05" + rd.Next(9) + "-";
+                        myCustomer.Name = MyEnums.NamesOfCustomers[i];
+                        myCustomer.Location = MyEnums.stationTos[rd.Next(0,10)].Location;
+                        int[] areaCode = new int[] { 0, 2, 4, 8};
+                        string phoneNumber = "05" + areaCode[rd.Next(4)] + "-";
                         for (int j = 0; j < 7; j++)
                             phoneNumber += rd.Next(10);
                         myCustomer.PhoneNumber = phoneNumber;
                         customers.Add(myCustomer);
                     }
-                    int existReciver = 0;
+                    int existReceiver = 0;
                     //parcels
                     for (int i = 0; i < 10; i++)
                     {
                         DalApi.DO.Parcel myParcel = new DalApi.DO.Parcel();
                         myParcel.Id = DalApi.DO.DalObject.DataSource.Config.ParcelRunId++;
                         myParcel.Weight = (MyEnums.WeightCategory)rd.Next(3);
-                        myParcel.Requested = DateTime.Now;
+                        myParcel.Requested = null;
                         myParcel.Priority = (MyEnums.PriorityLevel)rd.Next(3);
                         if (MyEnums.ForRd[i] == 1)
                         {
@@ -86,10 +86,10 @@ namespace DalApi
 
                             foreach (var item in customers)
                             {
-                                if (item.Id != myParcel.SenderId && item.Id != existReciver)
+                                if (item.Id != myParcel.SenderId && item.Id != existReceiver)
                                 {
-                                    myParcel.ReciverId = item.Id;
-                                    existReciver = item.Id;
+                                    myParcel.ReceiverId = item.Id;
+                                    existReceiver = item.Id;
                                     break;
                                 }
                             }

@@ -66,7 +66,7 @@ namespace BlApi
                 var dalParcelsList = dal.GetParcelsList(allParcels);
                 foreach (var element in dalParcelsList)
                 {
-                    if (element.ReciverId == MyReciverId)
+                    if (element.ReceiverId == MyReciverId)
                         myParcel = new Parcel(element);
                 }
                 return myParcel;
@@ -129,7 +129,7 @@ namespace BlApi
             /// </summary>
             /// <param name="parcelId"></param>
             /// returns boolean type
-            public bool PickedUpButNotDeliverd(int parcelId)
+            public bool PickedUpButNotDelivered(int parcelId)
             {
                 var dalParcelsList = dal.GetParcelsList(pickedUpButNotDeliverd);
                 //search parcel
@@ -145,7 +145,7 @@ namespace BlApi
             /// search for parcel's sender location
             /// </summary>
             /// <param name="parcelId"></param>
-            /// return location type (longitude, lattitude)
+            /// return location type (longitude, latitude)
             internal DalApi.DO.Location SenderLocation(int parcelId)
             {
                 DalApi.DO.Location tempLocation = new();
@@ -180,7 +180,7 @@ namespace BlApi
                         //search parcel's reciver
                         foreach (var cElement in customersList)
                         {
-                            if (cElement.Id == pElement.ReciverId)
+                            if (cElement.Id == pElement.ReceiverId)
                                 tempLocation = cElement.Location;
                         }
                     }
@@ -305,7 +305,7 @@ namespace BlApi
                         //search sender of parcel
                         foreach (var cElement in customersList)
                         {
-                            if(cElement.Id == pElement.ReciverId)
+                            if(cElement.Id == pElement.ReceiverId)
                                 temp.Add(cElement);
                         }
                     }
@@ -347,8 +347,8 @@ namespace BlApi
                     if (item.Id == parcelId)
                     {
                         // our customer is the sender, so the other side would be the reciver
-                        if (item.SenderId != customerId) otherId = item.ReciverId;
-                        if (item.ReciverId != customerId) otherId = item.SenderId;
+                        if (item.SenderId != customerId) otherId = item.ReceiverId;
+                        if (item.ReceiverId != customerId) otherId = item.SenderId;
                     }
                 }
                 var customersList = dal.GetCustomersList(allCustomers);
@@ -356,8 +356,8 @@ namespace BlApi
                 {
                     if (otherId == item.Id)
                     {
-                        other.id = item.Id;
-                        other.name = item.Name;
+                        other.Id = item.Id;
+                        other.Name = item.Name;
                     }
                 }
                 return other;
@@ -407,7 +407,7 @@ namespace BlApi
                     if(item.Id == droneId)
                     {
                         myDroneWeight = item.Weight;
-                        myDroneLocation = new DalApi.DO.Location(item.Location.longitude, item.Location.lattitude);
+                        myDroneLocation = new DalApi.DO.Location(item.Location.Longitude, item.Location.Latitude);
                         myDroneBattery = item.Battery;
                     }
                 }
@@ -454,7 +454,7 @@ namespace BlApi
                 for (int i = 0; i < sortByDIstanceParcels.Count; i++)// score by priority
                 {
                     DalApi.DO.Parcel item = sortByDIstanceParcels[i];
-                    if (item.Priority == DalApi.DO.MyEnums.PriorityLevel.ergent) priorityArray[i] +=100000;
+                    if (item.Priority == DalApi.DO.MyEnums.PriorityLevel.urgent) priorityArray[i] +=100000;
                     if (item.Priority == DalApi.DO.MyEnums.PriorityLevel.quickly) priorityArray[i] += 50000;
                     if (item.Priority == DalApi.DO.MyEnums.PriorityLevel.regular) priorityArray[i] += 20000;
                 }

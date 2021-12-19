@@ -47,7 +47,7 @@ namespace PrL
             if (droneToList.Status == BlApi.BO.MyEnums.DroneStatus.delivery)
             {
                 if(bl.ScheduledButNotPickedUp(droneToList.DeliveredParcelId)) PickUpParcelPanel.Visibility = Visibility.Visible;
-                if (bl.PickedUpButNotDeliverd(droneToList.DeliveredParcelId)) DeliverParcelPanel.Visibility = Visibility.Visible;
+                if (bl.PickedUpButNotDelivered(droneToList.DeliveredParcelId)) DeliverParcelPanel.Visibility = Visibility.Visible;
             }
         }
 

@@ -86,13 +86,13 @@ namespace BlApi
                             {
                                 myLocation = new Location(NearestToSenderStation(element.DeliveredParcelId).Location);
                             }
-                            if (PickedUpButNotDeliverd(element.DeliveredParcelId))
+                            if (PickedUpButNotDelivered(element.DeliveredParcelId))
                             {
                                 myLocation = new Location(SenderLocation(element.DeliveredParcelId));
                             }
 
                             newDrone.Location = myLocation;
-                            DalApi.DO.Location myDalLocation = new DalApi.DO.Location(myLocation.longitude , myLocation.lattitude);
+                            DalApi.DO.Location myDalLocation = new DalApi.DO.Location(myLocation.Longitude , myLocation.Latitude);
 
                             //drone electricity consumption 
                             double lenghtOfDeliveryVoyage = dal.GetDistance(myDalLocation, SenderLocation(element.DeliveredParcelId));
@@ -134,7 +134,7 @@ namespace BlApi
                                     newDrone.Location = new Location(dalStationsList.ElementAt(0).Location);
                                 }
 
-                                DalApi.DO.Location myLocation = new(newDrone.Location.longitude, newDrone.Location.lattitude);
+                                DalApi.DO.Location myLocation = new(newDrone.Location.Longitude, newDrone.Location.Latitude);
                                 DalApi.DO.Location locationOfNearestChargeSlot = (NearestAvailableChargeSlot(myLocation).Location);
 
                                 double distanceBetweenTargetToStation = dal.GetDistance(myLocation, locationOfNearestChargeSlot);

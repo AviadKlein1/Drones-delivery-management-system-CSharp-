@@ -5,6 +5,7 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DBC9BED6-E0A4-4860-A3B4-9CD537621364}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -14,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{481B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI_BL", "ConsoleUI_BL\ConsoleUI_BL.csproj", "{808986C1-9650-42CD-BE40-AD27CC339E28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrL", "PrL\PrL.csproj", "{D9407006-21F7-4298-9BE3-2EEC45015488}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrL", "PrL\PrL.csproj", "{D9407006-21F7-4298-9BE3-2EEC45015488}"
 	ProjectSection(ProjectDependencies) = postProject
 		{481BBF5C-59CF-4430-9871-531A121A1868} = {481BBF5C-59CF-4430-9871-531A121A1868}
 	EndProjectSection

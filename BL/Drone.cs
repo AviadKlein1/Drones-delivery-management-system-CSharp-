@@ -39,7 +39,7 @@
                 //var delPar = deliverdParcel.id < 100 ? "" : string.Join(", ", deliverdParcel);
                 //var del = deliverdParcel.id < 100 ? "" : "deliverd Parcel: ";
                 return $"ID: {Id}\nModel: {Model}\nWeight Category: {Weight}\nStatus: {Status}\nBattery: " +
-                    $" {Battery}\nLongitude: {Location.longitude}\nLattitude: {Location.lattitude}\n "/*+$"{del} \n{delPar}\n"*/;
+                    $" {Battery}\nLongitude: {Location.Longitude}\nLatitude: {Location.Latitude}\n "/*+$"{del} \n{delPar}\n"*/;
             }
         }
 
@@ -52,7 +52,7 @@
             public int Battery { get; set; }
             public override string ToString()
             {
-                return $"ID: {Id}\n battery: {Battery}\n";
+                return $"ID: {Id}\n Battery: {Battery}\n";
             }
         }
 
@@ -74,7 +74,7 @@
             public Location Location { get; set; }
             public override string ToString()
             {
-                return $"ID: { Id }\n battery: { Battery }\n location: { Location }";
+                return $"ID: { Id }\n Battery: { Battery }\n Location: { Location }";
             }
         }
 
@@ -93,8 +93,8 @@
             public override string ToString()
             {
                 return $"ID: { Id }\nModel: { Model }\nWeight Category: { Weight }\nStatus: { Status }\nBattery: " +
-                   $" { Battery} \nLongitude: { Location.longitude }\nLattitude: " +
-                   $"{ Location.lattitude }\nDeliverd parcel id: { DeliveredParcelId }";
+                   $" { Battery} \nLongitude: { Location.Longitude }\nLatitude: " +
+                   $"{ Location.Latitude }\nCurrent parcel's id: { DeliveredParcelId }";
             }
         }
     }

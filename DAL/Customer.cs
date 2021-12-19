@@ -3,7 +3,7 @@
     namespace DO
     {
         /// <summary>
-        /// entity customer = fields
+        /// entity customer - fields
         /// </summary>
         public struct Customer
         {

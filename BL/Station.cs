@@ -37,8 +37,8 @@ namespace BlApi
             public override string ToString()
             {
                 var listOut = DronesInCharge == null ? "" : string.Join(", ", DronesInCharge);
-                return $"ID: { Id }\nName: { Name }\nLongitude: { Location.longitude }\nLattitude: " +
-                    $"{ Location.lattitude }\n" +
+                return $"ID: { Id }\nName: { Name }\nLongitude: { Location.Longitude }\nlatitude: " +
+                    $"{ Location.Latitude }\n" +
                     $"Available Charge Slots: {NumOfAvailableChargeSlots}\n" +
                     $"\nDrones in charge: {listOut}\n";
             }

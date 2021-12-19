@@ -28,10 +28,10 @@ namespace DalApi
                     for (int i = 0; i < DalApi.DO.DalObject.DataSource.drones.Count; i++)
                         //if drone already exist
                         if(DalApi.DO.DalObject.DataSource.drones[i].Id == myDrone.Id)
-                            throw new ExcistingIdException(myDrone.Id, $"drone already exist: {myDrone.Id}");
+                            throw new ExistingIdException(myDrone.Id, $"drone already exist: {myDrone.Id}");
                     //insert drone to list
                     DalApi.DO.DalObject.DataSource.drones.Add(myDrone);
-                    // find charge slot
+                    //find charge slot
                     DecriseChargeSlot(firstChargeStationId);
                 }
 

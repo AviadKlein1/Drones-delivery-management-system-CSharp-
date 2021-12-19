@@ -54,10 +54,9 @@ namespace BlApi
             }
             public override string ToString()
             {
-                //\n sender: {sender}\n reciever: {reciever}\n drone: {DroneInParcel}
-                return $"ID: {id}\n" +
-                    $"Weight Category: {Weight}\nPriority: {Priority}\nrequested: {Requested}\n" +
-                    $"scheduled: {Scheduled}\npicked up: {PickedUp}\ndelivered: {Delivered}\n";
+                return $"ID: {id}\nWeight Category: {Weight}\nPriority: {Priority}" +
+                    $"\nrequested: {Requested}\nscheduled: {Scheduled}" +
+                    $"\npicked up: {PickedUp}\ndelivered: {Delivered}\n";
             }
         }
 
@@ -116,7 +115,7 @@ namespace BlApi
 
             public override string ToString()
             {
-                return $"ID: {Id}\n sender name: {SenderName}\n reciever name: {RecieverName}\n" +
+                return $"ID: {Id}\n Sender name: {SenderName}\n Receiver name: {RecieverName}\n" +
                     $" Weight Category: {Weight}\n Priority: {Priority}\n Parcel Status: {ParcelStatus}";
             }
         }

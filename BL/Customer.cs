@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 
-
 namespace BlApi
 {
     namespace BO
@@ -10,23 +9,23 @@ namespace BlApi
         /// </summary>
         public class Customer
         {
-            public int id { get; set; }
-            public string name { get; set; }
-            public string phoneNumber { get; set; }
-            public Location location { get; set; }
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string PhoneNumber { get; set; }
+            public Location Location { get; set; }
             //list of parcels sent by customer
-            public List<ParcelAtCustomer> parcelsSent { get; set; }
+            public List<ParcelAtCustomer> ParcelsSent { get; set; }
             //list of parcels sent to customer
-            public List<ParcelAtCustomer> parcelsRecieved { get; set; }
+            public List<ParcelAtCustomer> ParcelsRecieved { get; set; }
 
             /// <summary>
             /// default constructor
             /// </summary>
             public Customer()
             {
-                location = new Location();
-                parcelsSent = new List<ParcelAtCustomer>();
-                parcelsRecieved = new List<ParcelAtCustomer>();
+                Location = new Location();
+                ParcelsSent = new List<ParcelAtCustomer>();
+                ParcelsRecieved = new List<ParcelAtCustomer>();
             }
 
             /// <summary>
@@ -35,12 +34,12 @@ namespace BlApi
             /// <param name="customer"></param>
             public Customer(DalApi.DO.Customer customer)
             {
-                id = customer.Id;
-                name = customer.Name;
-                phoneNumber = customer.PhoneNumber;
-                location = new Location(customer.Location);
-                parcelsSent = new List<ParcelAtCustomer>();
-                parcelsRecieved = new List<ParcelAtCustomer>();
+                Id = customer.Id;
+                Name = customer.Name;
+                PhoneNumber = customer.PhoneNumber;
+                Location = new Location(customer.Location);
+                ParcelsSent = new List<ParcelAtCustomer>();
+                ParcelsRecieved = new List<ParcelAtCustomer>();
             }
 
             /// <summary>
@@ -48,11 +47,11 @@ namespace BlApi
             /// </summary>
             public override string ToString()
             {
-                var parcelsSent = this.parcelsSent == null ? "" : string.Join(", ", this.parcelsSent);
-                var parcelsDelivered = parcelsRecieved == null ? "" : string.Join(", ", parcelsRecieved);
+                var parcelsSent = ParcelsSent == null ? "" : string.Join(", ", this.ParcelsSent);
+                var parcelsDelivered = ParcelsRecieved == null ? "" : string.Join(", ", ParcelsRecieved);
 
-                return $"ID: {id}\nName: { name }\nLongitude: { location.longitude }\nLattitude: { location.lattitude }" +
-                    $"\nphone number: { phoneNumber }\nparcels To Customer: { parcelsDelivered }" +
+                return $"ID: {Id}\nName: { Name }\nLongitude: { Location.Longitude }\nlatitude: { Location.Latitude }" +
+                    $"\nphone number: { PhoneNumber }\nparcels To Customer: { parcelsDelivered }" +
                     $"\nparcels from Customer: { parcelsSent }\n";
             }
         }
@@ -63,11 +62,11 @@ namespace BlApi
         public class CustomerInParcel
         {
             public CustomerInParcel() { }
-            public int id { get; set; }
-            public string name { get; set; }
+            public int Id { get; set; }
+            public string Name { get; set; }
             public override string ToString()
             {
-                return "ID: " + id + "\nName: " + name + "\n";
+                return "ID: " + Id + "\nName: " + Name + "\n";
             }
         }
 
@@ -76,21 +75,20 @@ namespace BlApi
         /// </summary>
         public class CustomerToList
         {
-            public int id { get; set; }
-            public string name { get; set; }
-            public string phoneNumber { get; set; }
-            public int parcelsDelivered { get; set; }
-            public int parcelsSentButNotDelivered { get; set; }
-            public int recievedParcels { get; set; }
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string PhoneNumber { get; set; }
+            public int ParcelsDelivered { get; set; }
+            public int ParcelsSentButNotDelivered { get; set; }
+            public int ReceivedParcels { get; set; }
             public int ScheduledParcels { get; set; }
 
             public override string ToString()
             {
-
-                return $"ID: {id}\nname: {name}\nphone number: {phoneNumber}\n" +
-                $"parcels Send And Deliverd: {parcelsDelivered}\nparcels Send And Not Deliverd: " +
-                $"{ parcelsSentButNotDelivered}\nparcels Recived: { recievedParcels}\n" +
-                $"parcels In The Way To Me: {ScheduledParcels}";
+                return $"ID: {Id}\nName: {Name}\nPhone number: {PhoneNumber}\n" +
+                $"Parcels sent and delivered: {ParcelsDelivered}\nParcels sent but not delivered: " +
+                $"{ ParcelsSentButNotDelivered}\nParcels recieved: { ReceivedParcels}\n" +
+                $"Parcels to be arrived: {ScheduledParcels}";
             }
         }
     }

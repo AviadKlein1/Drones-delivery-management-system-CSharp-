@@ -10,20 +10,20 @@
             /// <summary>
             /// default constructor
             /// </summary>
-            public Location() 
+            public Location()
             {
-                
+
             }
 
             /// <summary>
             /// params constructor (initialize fields)
             /// </summary>
             /// <param name="longitude"></param>
-            /// <param name="lattitude"></param>
-            public Location(double longitude, double lattitude)
+            /// <param name="latitude"></param>
+            public Location(double longitude, double latitude)
             {
-                this.longitude = longitude;
-                this.lattitude = lattitude;
+                this.Longitude = longitude;
+                this.Latitude = latitude;
             }
 
             /// <summary>
@@ -32,15 +32,18 @@
             /// <param name="l"></param>
             public Location(DalApi.DO.Location l)
             {
-                this.longitude = l.Longitude;
-                this.lattitude = l.Lattitude;
+                Longitude = l.Longitude;
+                Latitude = l.latitude;
             }
-            public double longitude { get; set; }
-            public double lattitude { get; set; }
+            public double Longitude { get; set; }
+            public double Latitude { get; set; }
 
             public override string ToString()
             {
-                return "longitude: " + longitude + "lattitude: " + lattitude + "\n";
+                return $"latitude: { (int)Latitude } ° { (int)(Latitude - (int)Latitude) * 60 }'" +
+                    $" {Latitude - ((int)Latitude * 60) - ((int)(Latitude - (int)Latitude) * 60)} \" N" +
+                    $"longitude:  { (int)Longitude } ° { (int)(Longitude - (int)Longitude) * 60 }'" +
+                    $" {Longitude - ((int)Longitude * 60) - ((int)(Longitude - (int)Longitude) * 60)} \" S\n";
             }
         }
     }

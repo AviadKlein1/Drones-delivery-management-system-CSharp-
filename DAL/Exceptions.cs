@@ -22,12 +22,12 @@ namespace DalApi
         /// item already exist exception
         /// </summary>
         [Serializable]
-        public class ExcistingIdException : Exception
+        public class ExistingIdException : Exception
         {
             public int ID;
-            public ExcistingIdException(int id) : base() => ID = id;
-            public ExcistingIdException(int id, string message) : base(message) => ID = id;
-            public ExcistingIdException(int id, string message, Exception innerException) :
+            public ExistingIdException(int id) : base() => ID = id;
+            public ExistingIdException(int id, string message) : base(message) => ID = id;
+            public ExistingIdException(int id, string message, Exception innerException) :
                 base(message, innerException) => ID = id;
             public override string ToString() => base.ToString() + $", id already exists: {ID}";
         }

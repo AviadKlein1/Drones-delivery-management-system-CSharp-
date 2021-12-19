@@ -16,7 +16,7 @@ namespace BlApi
                 DalApi.DO.Station temp = new();
 
                 temp.Id = myStation.Id;
-                temp.Location = new DalApi.DO.Location(myStation.Location.longitude, myStation.Location.lattitude);
+                temp.Location = new DalApi.DO.Location(myStation.Location.Longitude, myStation.Location.Latitude);
                 temp.Name = myStation.Name;
                 temp.NumOfAvailableChargeSlots = myStation.NumOfAvailableChargeSlots;
                 temp.NumOfChargeSlots = myStation.NumOfChargeSlots;
@@ -26,9 +26,9 @@ namespace BlApi
                 {
                     dal.AddStation(temp);
                 }
-                catch (DalApi.DO.ExcistingIdException ex)
+                catch (DalApi.DO.ExistingIdException ex)
                 {
-                    throw new DalApi.DO.ExcistingIdException(myStation.Id, ex.Message);
+                    throw new DalApi.DO.ExistingIdException(myStation.Id, ex.Message);
                 }
             }
 
@@ -78,17 +78,17 @@ namespace BlApi
                 //create new customer
                 DalApi.DO.Customer temp = new();
 
-                temp.Id = myCustomer.id;
-                temp.Name = myCustomer.name;
-                temp.PhoneNumber = myCustomer.phoneNumber;
-                temp.Location = new DalApi.DO.Location(myCustomer.location.longitude, myCustomer.location.lattitude);
+                temp.Id = myCustomer.Id;
+                temp.Name = myCustomer.Name;
+                temp.PhoneNumber = myCustomer.PhoneNumber;
+                temp.Location = new DalApi.DO.Location(myCustomer.Location.Longitude, myCustomer.Location.Latitude);
 
                 //add customer to list of customers
                 try
                 {
                     dal.Addcustomer(temp);
                 }
-                catch (DalApi.DO.ExcistingIdException ex)
+                catch (DalApi.DO.ExistingIdException ex)
                 {
 
                     throw ex;
@@ -103,8 +103,8 @@ namespace BlApi
                 temp.Id = dal.ParcelRunId();
                 temp.Weight = myParcel.Weight;
                 temp.Priority = myParcel.Priority;
-                temp.SenderId = myParcel.Sender.id;
-                temp.ReciverId = myParcel.Reciever.id;
+                temp.SenderId = myParcel.Sender.Id;
+                temp.ReceiverId = myParcel.Reciever.Id;
                 temp.DroneId = (myParcel.DroneInParcel == null ? 0 : myParcel.DroneInParcel.Id);
                 temp.Requested = DateTime.Now;
                 temp.Scheduled = null;
@@ -117,7 +117,7 @@ namespace BlApi
                 {
                     dal.AddParcel(temp);
                 }
-                catch (DalApi.DO.ExcistingIdException ex)
+                catch (DalApi.DO.ExistingIdException ex)
                 {
                     throw ex;
 

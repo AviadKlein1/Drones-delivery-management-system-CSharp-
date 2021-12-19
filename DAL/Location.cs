@@ -12,19 +12,19 @@ namespace DalApi
             /// params ctor
             /// </summary>
             /// <param name="longitude"></param>
-            /// <param name="lattitude"></param>
-            public Location(double longitude, double lattitude)
+            /// <param name="latitude"></param>
+            public Location(double longitude, double latitude)
             {
                 this.Longitude = longitude;
-                this.Lattitude = lattitude;
+                this.latitude = latitude;
             }
 
             public double Longitude { get; set; }
-            public double Lattitude { get; set; }
+            public double latitude { get; set; }
 
             public override string ToString()
             {
-                return "longitude: " + Longitude + "lattitude: " + Lattitude + "\n";
+                return "longitude: " + Longitude + "latitude: " + latitude + "\n";
             }
         }
     }

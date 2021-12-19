@@ -11,33 +11,29 @@ namespace ConsoleUI_BL
         public Random rd = new();
 
         //station details
-        public BlApi.BO.Station AddStation()
+        public static BlApi.BO.Station AddStation()
         {
             BlApi.BO.Station myStation = new();
 
             //id
-            int id;
             Console.WriteLine("enter id");
-            int.TryParse(Console.ReadLine(), out id);
+            int.TryParse(Console.ReadLine(), out int id);
             myStation.Id = id;
 
             //name
             Console.WriteLine("enter name");
-            myStation.Name = (Console.ReadLine());
+            myStation.Name = Console.ReadLine();
 
-            //location - longitude and lattitude
-            double locat1;
-            double locat2;
+            //location - longitude and latitude
             Console.WriteLine("enter longitude");
-            double.TryParse(Console.ReadLine(), out locat1);
-            Console.WriteLine("enter lattitude");
-            double.TryParse(Console.ReadLine(), out locat2);
+            double.TryParse(Console.ReadLine(), out double locat1);
+            Console.WriteLine("enter latitude");
+            double.TryParse(Console.ReadLine(), out double locat2);
             myStation.Location = new BlApi.BO.Location(locat1, locat2);
 
             //number of charge slots
-            int numOfChargeSlots;
             Console.WriteLine("enter number of charge slots");
-            int.TryParse(Console.ReadLine(), out numOfChargeSlots);
+            int.TryParse(Console.ReadLine(), out int numOfChargeSlots);
             myStation.NumOfAvailableChargeSlots = numOfChargeSlots;
             myStation.NumOfChargeSlots = numOfChargeSlots;
             myStation.DronesInCharge = new List<BlApi.BO.DroneInCharge>();
@@ -46,14 +42,13 @@ namespace ConsoleUI_BL
         }
 
         //drone details
-        public BlApi.BO.Drone AddDrone()
+        public static BlApi.BO.Drone AddDrone()
         {
             BlApi.BO.Drone myDrone = new();
 
             //id
-            int id;
             Console.WriteLine("enter id");
-            int.TryParse(Console.ReadLine(), out id);
+            int.TryParse(Console.ReadLine(), out int id);
             myDrone.Id = id;
 
             //model
@@ -61,9 +56,8 @@ namespace ConsoleUI_BL
             myDrone.Model = (Console.ReadLine());
 
             //weight categoty
-            int choice = 0;
             Console.WriteLine("enter max weight (light = 1, medium = 2, heavy = 3)");
-            int.TryParse(Console.ReadLine(), out choice);
+            int.TryParse(Console.ReadLine(), out int choice);
             if (choice == 1) myDrone.Weight = DalApi.DO.MyEnums.WeightCategory.light;
             if (choice == 2) myDrone.Weight = DalApi.DO.MyEnums.WeightCategory.medium;
             if (choice == 3) myDrone.Weight = DalApi.DO.MyEnums.WeightCategory.heavy;
@@ -77,32 +71,31 @@ namespace ConsoleUI_BL
         }
 
         //customer details
-        public BlApi.BO.Customer AddCustomer()
+        public static BlApi.BO.Customer AddCustomer()
         {
             BlApi.BO.Customer myCustomer = new();
 
             //id
-            int id;
             Console.WriteLine("enter id");
-            int.TryParse(Console.ReadLine(), out id);
-            myCustomer.id = id;
+            int.TryParse(Console.ReadLine(), out int id);
+            myCustomer.Id = id;
 
             //name
             Console.WriteLine("enter name");
-            myCustomer.name = (Console.ReadLine());
+            myCustomer.Name = Console.ReadLine(
+                );
 
             //phone
             Console.WriteLine("enter phone number");
-            myCustomer.phoneNumber = (Console.ReadLine());
+            myCustomer.PhoneNumber = Console.ReadLine();
 
             //location
-            double locat;
             Console.WriteLine("enter longitude");
+            double.TryParse(Console.ReadLine(), out double locat);
+            myCustomer.Location.Longitude = locat;
+            Console.WriteLine("enter latitude");
             double.TryParse(Console.ReadLine(), out locat);
-            myCustomer.location.longitude = locat;
-            Console.WriteLine("enter lattitude");
-            double.TryParse(Console.ReadLine(), out locat);
-            myCustomer.location.lattitude = locat;
+            myCustomer.Location.Latitude = locat;
 
             return myCustomer;
         }
@@ -113,31 +106,28 @@ namespace ConsoleUI_BL
             BlApi.BO.Parcel myParcel = new();
 
             //sender id
-            int senderId;
             Console.WriteLine("enter sender id");
-            int.TryParse(Console.ReadLine(), out senderId);
-            myParcel.Sender.id = senderId;
+            int.TryParse(Console.ReadLine(), out int senderId);
+            myParcel.Sender.Id = senderId;
 
             //reciever id
-            int targetId;
             Console.WriteLine("enter reciever id");
-            int.TryParse(Console.ReadLine(), out targetId);
-            myParcel.Reciever.id = targetId;
+            int.TryParse(Console.ReadLine(), out int targetId);
+            myParcel.Reciever.Id = targetId;
 
             //parcel weight
-            int choice;
             Console.WriteLine("enter weight (light = 1, medium = 2, heavy = 3)");
-            int.TryParse(Console.ReadLine(), out choice);
+            int.TryParse(Console.ReadLine(), out int choice);
             if (choice == 1) myParcel.Weight = DalApi.DO.MyEnums.WeightCategory.light;
             if (choice == 2) myParcel.Weight = DalApi.DO.MyEnums.WeightCategory.medium;
             if (choice == 3) myParcel.Weight = DalApi.DO.MyEnums.WeightCategory.heavy;
 
             //priority
-            Console.WriteLine("enter priority (regular = 1, quickly = 2, ergent = 3)");
+            Console.WriteLine("enter priority (regular = 1, quickly = 2, urgent = 3)");
             int.TryParse(Console.ReadLine(), out choice);
             if (choice == 1) myParcel.Priority = DalApi.DO.MyEnums.PriorityLevel.regular;
             if (choice == 2) myParcel.Priority = DalApi.DO.MyEnums.PriorityLevel.quickly;
-            if (choice == 3) myParcel.Priority = DalApi.DO.MyEnums.PriorityLevel.ergent;
+            if (choice == 3) myParcel.Priority = DalApi.DO.MyEnums.PriorityLevel.urgent;
             
             return myParcel;
         }

@@ -12,7 +12,6 @@ using BlApi;
 namespace ConsoleUI_BL
 {
     public class Program
-
     {
         static void Main(string[] args)
         {
@@ -20,7 +19,7 @@ namespace ConsoleUI_BL
 
             bl = (BlApi.BO.BL)BlFactory.GetBl();
 
-            ConsoleUI_BL.Input myInputOutput = new ConsoleUI_BL.Input();
+            Input myInputOutput = new();
 
             Console.WriteLine("\n-- Welcome to -- Delivery by Drones --  System management interface --\n\n");
 
@@ -60,7 +59,7 @@ namespace ConsoleUI_BL
                                     case 1:
                                         try
                                         {
-                                            bl.AddStation(myInputOutput.AddStation());
+                                            bl.AddStation(Input.AddStation());
                                         }
                                         catch(Exception ex)
                                         {
@@ -69,11 +68,11 @@ namespace ConsoleUI_BL
                                         break;
                                     //add drone
                                     case 2:
-                                        bl.AddDrone(myInputOutput.AddDrone());
+                                        bl.AddDrone(Input.AddDrone());
                                         break;
                                     //add customer
                                     case 3:
-                                        bl.Addcustomer(myInputOutput.AddCustomer());
+                                        bl.Addcustomer(Input.AddCustomer());
                                         break;
                                     //add parcel
                                     case 4:
@@ -196,6 +195,8 @@ namespace ConsoleUI_BL
                                             Console.WriteLine("successfully updated\n");
                                         else
                                             Console.WriteLine("update failed\n");
+                                        break;
+                                    default:
                                         break;
                                 }
                             }

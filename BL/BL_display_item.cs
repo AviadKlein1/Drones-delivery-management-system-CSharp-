@@ -13,7 +13,7 @@ namespace BlApi
             //display station
             public Station DisplayStation(int stationId)
             {
-                DalApi.DO.Station temp = new DalApi.DO.Station();
+                DalApi.DO.Station temp = new();
                 try
                 {
                     temp = dal.GetStation(stationId);
@@ -23,16 +23,19 @@ namespace BlApi
                     throw;
                 }
                 //return new Station(temp);
-                Station retTemp = new Station(temp);
+                Station retTemp = new(temp);
 
                 var dronesInCharge = new List<DroneInCharge>();
                 foreach (var element in dronesList)
                 {
-                    if (element.Status == MyEnums.DroneStatus.maintenance && element.Location == retTemp.Location)
+                    if (element.Status == MyEnums.DroneStatus.maintenance &&
+                        element.Location == retTemp.Location)
                     {
-                        DroneInCharge droneTemp = new DroneInCharge();
-                        droneTemp.Id = element.Id;
-                        droneTemp.Battery = element.Battery;
+                        DroneInCharge droneTemp = new()
+                        {
+                            Id = element.Id,
+                            Battery = element.Battery
+                        };
                         dronesInCharge.Add(droneTemp);
                     }
                 }
@@ -44,7 +47,7 @@ namespace BlApi
             public Drone DisplayDrone(int droneId)
             {
                 bool exist = false;
-                Drone retDrone = new Drone();
+                Drone retDrone = new();
                 foreach (var element in dronesList)
                 {
                     if (element.Id == droneId)
@@ -67,7 +70,7 @@ namespace BlApi
             //display customer
             public Customer DisplayCustomer(int customerId)
             {
-                DalApi.DO.Customer temp = new DalApi.DO.Customer();
+                DalApi.DO.Customer temp = new();
                 try
                 {
                     temp = dal.GetCustomer(customerId);
@@ -77,40 +80,51 @@ namespace BlApi
                     throw;
                 }
 
-                Customer retTemp = new Customer(temp);
+                Customer retTemp = new(temp);
                 // maybe duiplay parcels at this customer? 
                 var parcelsList = dal.GetParcelsList(allParcels);
                 foreach (var item in parcelsList)
                 {
-                    ParcelAtCustomer myParcel = new ParcelAtCustomer();
+                    ParcelAtCustomer myParcel = new();
                     DateTime? empty = null;
-                    if (item.SenderId == retTemp.id)
+                    if (item.SenderId == retTemp.Id)
                     {
                         myParcel.Id = item.Id;
                         myParcel.Weight = item.Weight;
                         myParcel.Priority = item.Priority;
 
-                        if (item.Requested != empty && item.Scheduled == empty) myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.requested;
-                        if (item.Scheduled != empty && item.PickedUp == empty) myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.scheduled;
-                        if (item.PickedUp != empty && item.Delivered == empty) myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.pickedUp;
-                        if (item.Delivered != empty) myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.delivered;
+                        if (item.Requested != empty && item.Scheduled == empty)
+                        {
+                            myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.requested;
+                        }
+
+                        if (item.Scheduled != empty && item.PickedUp == empty)
+                            myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.scheduled;
+                        if (item.PickedUp != empty && item.Delivered == empty)
+                            myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.pickedUp;
+                        if (item.Delivered != empty)
+                            myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.delivered;
                        
-                        myParcel.TheSecondSide = TheOtherSide(myParcel.Id, retTemp.id);
-                        retTemp.parcelsSent.Add(myParcel);
+                        myParcel.TheSecondSide = TheOtherSide(myParcel.Id, retTemp.Id);
+                        retTemp.ParcelsSent.Add(myParcel);
                     }
-                    if (item.ReciverId == retTemp.id)
+                    if (item.ReceiverId == retTemp.Id)
                     {
                         myParcel.Id = item.Id;
                         myParcel.Weight = item.Weight;
                         myParcel.Priority = item.Priority;
 
-                        if (item.Requested != empty && item.Scheduled == empty) myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.requested;
-                        if (item.Scheduled != empty && item.PickedUp == empty) myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.scheduled;
-                        if (item.PickedUp != empty && item.Delivered == empty) myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.pickedUp;
-                        if (item.Delivered != empty) myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.delivered;
+                        if (item.Requested != null && item.Scheduled == null)
+                            myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.requested;
+                        if (item.Scheduled != empty && item.PickedUp == empty)
+                            myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.scheduled;
+                        if (item.PickedUp != empty && item.Delivered == empty)
+                            myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.pickedUp;
+                        if (item.Delivered != empty)
+                            myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.delivered;
 
-                        myParcel.TheSecondSide = TheOtherSide(myParcel.Id, retTemp.id);
-                        retTemp.parcelsRecieved.Add(myParcel);
+                        myParcel.TheSecondSide = TheOtherSide(myParcel.Id, retTemp.Id);
+                        retTemp.ParcelsRecieved.Add(myParcel);
                     }
                 }
                 return retTemp;
@@ -119,7 +133,7 @@ namespace BlApi
             //display parcel
             public Parcel DisplayParcel(int parcelId)
             {
-                DalApi.DO.Parcel temp = new DalApi.DO.Parcel();
+                DalApi.DO.Parcel temp = new();
                 try
                 {
                     temp = dal.GetParcel(parcelId);
@@ -128,7 +142,7 @@ namespace BlApi
                 {
                     throw;
                 }
-                Parcel retTemp = new Parcel(temp);
+                Parcel retTemp = new(temp);
                 return retTemp;
             }
         }
