@@ -28,9 +28,9 @@ namespace BlApi
                 Sender = new CustomerInParcel();
                 Reciever = new CustomerInParcel();
                 DroneInParcel = new DroneInParcel();
-                Requested = DateTime.Now; 
+                Requested = DateTime.Now;
                 Scheduled = null;
-                PickedUp = null; ;
+                PickedUp = null;
                 Delivered = null;
                 DroneInParcel = null;
             }

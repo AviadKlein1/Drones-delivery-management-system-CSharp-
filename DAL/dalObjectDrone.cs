@@ -9,7 +9,7 @@ namespace DalApi
             /// <summary>
             /// entity drone
             /// </summary>
-            partial class DalObject : IDal
+            internal partial class DalObject : IDal
             {
                 /// <summary>
                 /// add drone to list of drones
@@ -17,20 +17,19 @@ namespace DalApi
                 public void AddDrone(Drone myDrone, int firstChargeStationId)
                 {
                     bool flag = false;
-                    for (int i = 0; i < DalApi.DO.DalObject.DataSource.stations.Count; i++)
+                    for (int i = 0; i < DataSource.stations.Count; i++)
                         //if not such station exist
-                        if (DalApi.DO.DalObject.DataSource.stations[i].Id == firstChargeStationId)
-                        {
+                        if (DataSource.stations[i].Id == firstChargeStationId)
                             flag = true;
-                        }
-                    if(flag == false) throw new WrongIdException(firstChargeStationId, $"no such station: {firstChargeStationId}");
+                    if(flag == false)
+                        throw new WrongIdException(firstChargeStationId, $"no such station: {firstChargeStationId}");
 
-                    for (int i = 0; i < DalApi.DO.DalObject.DataSource.drones.Count; i++)
+                    for (int i = 0; i < DataSource.drones.Count; i++)
                         //if drone already exist
-                        if(DalApi.DO.DalObject.DataSource.drones[i].Id == myDrone.Id)
+                        if (DataSource.drones[i].Id == myDrone.Id)
                             throw new ExistingIdException(myDrone.Id, $"drone already exist: {myDrone.Id}");
                     //insert drone to list
-                    DalApi.DO.DalObject.DataSource.drones.Add(myDrone);
+                    DataSource.drones.Add(myDrone);
                     //find charge slot
                     DecriseChargeSlot(firstChargeStationId);
                 }
@@ -40,16 +39,16 @@ namespace DalApi
                 /// </summary>
                 /// <param name="myId"></param>
                 /// <returns></returns>
-                public DalApi.DO.Drone GetDrone(int myId)
+                public Drone GetDrone(int myId)
                 {
                     bool isDouble = false;
-                    Drone temp = new Drone();
-                    for (int i = 0; i < DalApi.DO.DalObject.DataSource.drones.Count; i++)
+                    Drone temp = new();
+                    for (int i = 0; i < DataSource.drones.Count; i++)
                     {
-                        if (DalApi.DO.DalObject.DataSource.drones[i].Id == myId)
+                        if (DataSource.drones[i].Id == myId)
                         {
                             isDouble = true;
-                            temp = DalApi.DO.DalObject.DataSource.drones[i];
+                            temp = DataSource.drones[i];
                         }
                     }
                     if (isDouble == false)
@@ -64,8 +63,8 @@ namespace DalApi
                 /// </summary>
                 public IEnumerable<Drone> GetDrones()
                 {
-                    List<DalApi.DO.Drone> temp = new List<DalApi.DO.Drone>();
-                    temp = DalApi.DO.DalObject.DataSource.drones;
+                    List<Drone> temp = new();
+                    temp = DataSource.drones;
                     return temp;
                 }
                 /// <summary>
@@ -75,20 +74,20 @@ namespace DalApi
                 /// </summary>
                 public void UpdateDrone(int droneId, string newModel)
                 {
-                    Drone temp = new Drone();
+                    Drone temp = new();
                     for (int i = 0; i < DataSource.drones.Count; i++)
                     {
-                        Drone item = DalApi.DO.DalObject.DataSource.drones[i];
+                        Drone item = DataSource.drones[i];
                         if (item.Id == droneId)
                         {
                             temp.Id = droneId;
                             temp.Model = newModel;
-                            temp.weight = item.weight;
-                            DalApi.DO.DalObject.DataSource.drones[i] = temp;
+                            temp.Weight = item.Weight;
+                            DataSource.drones[i] = temp;
                         }
                     }
                 }
-              
+
                 /// <summary>
                 /// returns an array contains electricity consumption data
                 /// </summary>
@@ -96,11 +95,11 @@ namespace DalApi
                 public double[] DroneElectricityConsumption()
                 {
                     double[] droneElectricityConsumption = new double[5];
-                    droneElectricityConsumption[0] = DalApi.DO.DalObject.DataSource.Config.free;
-                    droneElectricityConsumption[1] = DalApi.DO.DalObject.DataSource.Config.lightWeight;
-                    droneElectricityConsumption[2] = DalApi.DO.DalObject.DataSource.Config.mediumWeight;
-                    droneElectricityConsumption[3] = DalApi.DO.DalObject.DataSource.Config.heavyWeight;
-                    droneElectricityConsumption[4] = DalApi.DO.DalObject.DataSource.Config.DroneLoadRate;
+                    droneElectricityConsumption[0] = DataSource.Config.free;
+                    droneElectricityConsumption[1] = DataSource.Config.lightWeight;
+                    droneElectricityConsumption[2] = DataSource.Config.mediumWeight;
+                    droneElectricityConsumption[3] = DataSource.Config.heavyWeight;
+                    droneElectricityConsumption[4] = DataSource.Config.DroneLoadRate;
 
                     return droneElectricityConsumption;
                 }

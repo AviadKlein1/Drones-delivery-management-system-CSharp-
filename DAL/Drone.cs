@@ -9,7 +9,7 @@
         {
             public int Id { get; set; }
             public string Model { get; set; }
-            public DalApi.DO.MyEnums.WeightCategory weight { get; set; }
+            public MyEnums.WeightCategory Weight { get; set; }
         }
     }
 }

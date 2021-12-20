@@ -10,7 +10,7 @@
             /// <summary>
             /// default constructor
             /// </summary>
-            public Drone() 
+            public Drone()
             {
 
             }
@@ -23,7 +23,7 @@
             {
                 Id = myDrone.Id;
                 Model = myDrone.Model;
-                Weight = myDrone.weight;
+                Weight = myDrone.Weight;
             }
 
             public int Id { get; set; }
@@ -64,7 +64,7 @@
             /// <summary>
             /// default constructor
             /// </summary>
-            public DroneInParcel() 
+            public DroneInParcel()
             {
 
             }

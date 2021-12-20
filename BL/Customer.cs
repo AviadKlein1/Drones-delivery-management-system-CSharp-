@@ -50,7 +50,7 @@ namespace BlApi
                 var parcelsSent = ParcelsSent == null ? "" : string.Join(", ", this.ParcelsSent);
                 var parcelsDelivered = ParcelsRecieved == null ? "" : string.Join(", ", ParcelsRecieved);
 
-                return $"ID: {Id}\nName: { Name }\nLongitude: { Location.Longitude }\nlatitude: { Location.Latitude }" +
+                return $"ID: { Id }\nName: { Name }\nLongitude: { Location.Longitude }\nlatitude: { Location.Latitude }" +
                     $"\nphone number: { PhoneNumber }\nparcels To Customer: { parcelsDelivered }" +
                     $"\nparcels from Customer: { parcelsSent }\n";
             }

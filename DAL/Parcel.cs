@@ -13,8 +13,8 @@ namespace DalApi
             public int SenderId { get; set; }
             public int ReceiverId { get; set; }
             public int DroneId { get; set; }
-            public DalApi.DO.MyEnums.WeightCategory Weight { get; set; }
-            public DalApi.DO.MyEnums.PriorityLevel Priority { get; set; }
+            public MyEnums.WeightCategory Weight { get; set; }
+            public MyEnums.PriorityLevel Priority { get; set; }
             public DateTime? Requested { get; set; }
             public DateTime? Scheduled { get; set; }
             public DateTime? PickedUp { get; set; }

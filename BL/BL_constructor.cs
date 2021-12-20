@@ -12,15 +12,12 @@ namespace BlApi
         /// </summary>
         sealed partial class BL : IBl
         {
+            private static readonly IBl instance = new BL();
+            public static IBl GetInstance() { return instance; }
 
-            static readonly IBl instance = new BL();
-            public static IBl GetInstance() { return instance; } 
-
-            IDal dal;
-
-            Random rd = new();
-            
-            List<DroneToList> dronesList = new();
+            private readonly IDal dal;
+            private Random rd = new();
+            private readonly List<DroneToList> dronesList = new();
 
             //electricity consumption fields
             public static double free;
@@ -32,7 +29,7 @@ namespace BlApi
             //initializing
             private BL()
             {
-                dal = DalApi.DalFactory.GetDal();
+                dal = DalFactory.GetDal();
                 free = dal.DroneElectricityConsumption()[0];
                 lightWeight = dal.DroneElectricityConsumption()[1];
                 mediumWeight = dal.DroneElectricityConsumption()[2];
@@ -42,15 +39,15 @@ namespace BlApi
                 //insert drones to list
                 var dalDrones = dal.GetDrones();
                 DroneToList temp = new();
-                foreach ( var element in dalDrones)
+                foreach (var element in dalDrones)
                 {
-                    DroneToList temp1 = new DroneToList();
+                    DroneToList temp1 = new();
                     temp1.Id = element.Id;
                     temp1.Model = element.Model;
-                    temp1.Weight = element.weight;
+                    temp1.Weight = element.Weight;
                     dronesList.Add(temp1);
                 }
-                if(dronesList != null)
+                if (dronesList != null)
                 {
                     //search for an associated drone
                     for (int i = 0; i < dronesList.Count; i++)
@@ -96,15 +93,15 @@ namespace BlApi
 
                             //drone electricity consumption 
                             double lenghtOfDeliveryVoyage = dal.GetDistance(myDalLocation, SenderLocation(element.DeliveredParcelId));
-                            DalApi.DO.Location locationOfNearestStation = (NearestToSenderStation(element.DeliveredParcelId).Location);
+                            DalApi.DO.Location locationOfNearestStation = NearestToSenderStation(element.DeliveredParcelId).Location;
                             double distanceBetweenTargetToStation = dal.GetDistance(myDalLocation, locationOfNearestStation);
 
-                            int Battery = (int)(BatteryRequirementForVoyage(element.Id, lenghtOfDeliveryVoyage + distanceBetweenTargetToStation));
+                            int Battery = (int)BatteryRequirementForVoyage(element.Id, lenghtOfDeliveryVoyage + distanceBetweenTargetToStation);
                             if (Battery > 100) Battery = 100;
                             if (Battery < 0) Battery = 0;
                             newDrone.Battery = rd.Next(Battery, 101);
                         }
-                        else // not in deliver
+                        else // not in delivery
                         {
                             newDrone.Status = (MyEnums.DroneStatus)rd.Next(0, 2);
 
@@ -135,10 +132,10 @@ namespace BlApi
                                 }
 
                                 DalApi.DO.Location myLocation = new(newDrone.Location.Longitude, newDrone.Location.Latitude);
-                                DalApi.DO.Location locationOfNearestChargeSlot = (NearestAvailableChargeSlot(myLocation).Location);
+                                DalApi.DO.Location locationOfNearestChargeSlot = NearestAvailableChargeSlot(myLocation).Location;
 
                                 double distanceBetweenTargetToStation = dal.GetDistance(myLocation, locationOfNearestChargeSlot);
-                                int minBattery = (int)(BatteryRequirementForVoyage(newDrone.Id, distanceBetweenTargetToStation));
+                                int minBattery = (int)BatteryRequirementForVoyage(newDrone.Id, distanceBetweenTargetToStation);
 
                                 newDrone.Battery = rd.Next(minBattery, 101);
                             }

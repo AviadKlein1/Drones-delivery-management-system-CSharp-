@@ -12,7 +12,7 @@ namespace BlApi
             //add station
             public void AddStation(Station myStation)
             {
-                //create new station
+                //create a new station
                 DalApi.DO.Station temp = new();
 
                 temp.Id = myStation.Id;
@@ -40,7 +40,7 @@ namespace BlApi
 
                 temp.Id = myDrone.Id;
                 temp.Model = myDrone.Model;
-                temp.weight = myDrone.Weight;
+                temp.Weight = myDrone.Weight;
 
                 //add new drone to list of drones
                 try

@@ -8,47 +8,55 @@ namespace BlApi
         /// add station to dal
         /// </summary>
         /// <returns></returns>
-        public void AddStation(BlApi.BO.Station myStation);
+        public void AddStation(BO.Station myStation);
+
         /// <summary>
         /// add drone to dal
         /// </summary>
         /// <returns></returns>
-        public void AddDrone(BlApi.BO.Drone myDrone);
+        public void AddDrone(BO.Drone myDrone);
+
         /// <summary>
         /// add drone to bl list
         /// </summary>
         /// <returns></returns>
-        public BlApi.BO.DroneToList AddDroneToBLList(BlApi.BO.Drone myDrone);
+        public BO.DroneToList AddDroneToBLList(BO.Drone myDrone);
+
         /// <summary>
         /// add customer
         /// </summary>
         /// <returns></returns>
-        public void Addcustomer(BlApi.BO.Customer myCustomer);
+        public void Addcustomer(BO.Customer myCustomer);
+
         /// <summary>
         /// add parcel
         /// </summary>
         /// <returns></returns>
-        public void AddParcel(BlApi.BO.Parcel myParcel);
+        public void AddParcel(BO.Parcel myParcel);
+
         /// <summary>
         /// display station
         /// </summary>
         /// <returns></returns>
-        public BlApi.BO.Station DisplayStation(int stationId);
+        public BO.Station DisplayStation(int stationId);
+
         /// <summary>
         /// display drone
         /// </summary>
         /// <returns></returns>
-        public BlApi.BO.Drone DisplayDrone(int droneId);
+        public BO.Drone DisplayDrone(int droneId);
+
         /// <summary>
         /// display customer
         /// </summary>
         /// <returns></returns>
-        public BlApi.BO.Customer DisplayCustomer(int customerId);
+        public BO.Customer DisplayCustomer(int customerId);
+
         /// <summary>
         /// display parcel
         /// </summary>
         /// <returns></returns>
-        public BlApi.BO.Parcel DisplayParcel(int parcelId);
+        public BO.Parcel DisplayParcel(int parcelId);
         
         /// <summary>
         /// updates drone data
@@ -57,6 +65,7 @@ namespace BlApi
         /// <param name="newModel"></param>
         /// <returns></returns>
         public bool UpdateDrone(int droneId, string newModel);
+
         /// <summary>
         /// update station details
         /// </summary>
@@ -65,6 +74,7 @@ namespace BlApi
         /// <param name="numOfChargeSlots"></param>
         /// <returns></returns>
         public bool UpdateStation(int stationId, string newName, int numOfChargeSlots);
+
         /// <summary>
         /// update customer details
         /// </summary>
@@ -73,12 +83,14 @@ namespace BlApi
         /// <param name="newPhone"></param>
         /// <returns></returns>
         public bool UpdateCustomer(int customerId, string newName, string newPhone);
+
         /// <summary>
         /// get drone and ssend it to charge. if succsses return true
         /// </summary>
         /// <param name="droneId"></param>
         /// <returns></returns>
         public bool ChargeDrone(int droneId);
+
         /// <summary>
         /// end drone charge. if succsses return true
         /// </summary>
@@ -86,18 +98,21 @@ namespace BlApi
         /// <param name="chargeTime"></param>
         /// <returns></returns>
         public bool ReleaseDroneFromCharge(int droneId, int chargeTime);
+
         /// <summary>
         /// associate drone with parcel. if succsses return true
         /// </summary>
         /// <param name="droneId"></param>
         /// <returns></returns>
         public bool ScheduleParcelToDrone(int droneId);
+
         /// <summary>
         /// pick up parcel from sender. if succsses return true
         /// </summary>
         /// <param name="droneId"></param>
         /// <returns></returns>
         public bool PickUpParcelByDrone(int droneId);
+
         /// <summary>
         /// deliver parcel to reciever. if succsses return true
         /// </summary>
@@ -105,29 +120,29 @@ namespace BlApi
         /// <returns></returns>
         public bool DeliverParcelByDrone(int droneId);
 
-
-
         /// <summary>
         /// get stations list in condition
         /// </summary>
         /// <returns></returns> return list of stations accured to conditions
-        public IEnumerable<BlApi.BO.StationToList> GetStationsList(System.Predicate<DalApi.DO.Station> match);
+        public IEnumerable<BO.StationToList> GetStationsList(System.Predicate<DalApi.DO.Station> match);
+
         /// <summary>
         /// get drones list in condition
         /// </summary>
         /// <returns></returns> return list of drones accured to conditions
-        public List<BlApi.BO.DroneToList> GetDronesList(System.Predicate<BlApi.BO.DroneToList> match);
+        public List<BO.DroneToList> GetDronesList(System.Predicate<BO.DroneToList> match);
+
         /// <summary>
         /// get customers list in condition
         /// </summary>
         /// <returns></returns> return list of customers accured to conditions
-        public IEnumerable<BlApi.BO.CustomerToList> GetCustomersList(System.Predicate<DalApi.DO.Customer> match);
+        public IEnumerable<BO.CustomerToList> GetCustomersList(System.Predicate<DalApi.DO.Customer> match);
+
         /// <summary>
         /// get parcels list in condition
         /// </summary>
         /// <returns></returns> return list of parcels accured to conditions
-        public IEnumerable<BlApi.BO.ParcelToList> GetParcelsList(System.Predicate<DalApi.DO.Parcel> match);
-
-
+        public IEnumerable<BO.ParcelToList> GetParcelsList(System.Predicate<DalApi.DO.Parcel> match);
+        //public IEnumerable<BO.ParcelToList> GetParcelsList(System.Predicate<DalApi.DO.Parcel> match);
     }
 }
