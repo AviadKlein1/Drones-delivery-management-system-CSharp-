@@ -198,13 +198,14 @@ namespace BlApi
             public bool ScheduleParcelToDrone(int droneId)
             {
                 var flag = false;
-                var v = dronesList;
+           
+                    var v = dronesList;
                 //search drone
                 foreach (var item in v)
                 {
                     if (item.Id == droneId)
                     {
-                        if (item.Status != MyEnums.DroneStatus.available)
+                        if (item.Status == MyEnums.DroneStatus.delivery)
                         {
                             throw new OccupiedDroneException(droneId, $"drone is occupied, try another: {droneId}");
                         }
@@ -219,7 +220,9 @@ namespace BlApi
                             dal.SheduleParcelToDrone(newParcelId, droneId);
                         }
                     }
+
                 }
+               
                 return flag;
             }
 

@@ -62,12 +62,18 @@ namespace PrL
                 drone.FirstChargeStationId = int.Parse(AddIdOfFirstChargeSlotBox.Text);
                 bl.AddDrone(drone);
             }
-            catch(Exception ex)
+            catch (System.NullReferenceException ex)
             {
                 MessageBox.Show(ex.Message);
                 return;
             }
-        
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+          
+
             MessageBox.Show("success!");
             Close();
         }
