@@ -52,7 +52,7 @@ namespace DalApi
                         DalApi.DO.Drone myDrone = new DalApi.DO.Drone();
                         myDrone.Id = rd.Next(100, 1000);
                         myDrone.Model = "drone" + (i + 1);
-                        myDrone.weight = (DalApi.DO.MyEnums.WeightCategory)rd.Next(3);
+                        myDrone.Weight = (DalApi.DO.MyEnums.WeightCategory)rd.Next(3);
                         drones.Add(myDrone);
                     }
                     //customers
