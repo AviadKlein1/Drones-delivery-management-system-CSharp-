@@ -22,8 +22,8 @@
             /// <param name="latitude"></param>
             public Location(double longitude, double latitude)
             {
-                this.Longitude = longitude;
-                this.Latitude = latitude;
+                Longitude = longitude;
+                Latitude = latitude;
             }
 
             /// <summary>
@@ -38,6 +38,10 @@
             public double Longitude { get; set; }
             public double Latitude { get; set; }
 
+            /// <summary>
+            /// display geographic coordinate by DMS display
+            /// </summary>
+            /// <returns></returns>
             public override string ToString()
             {
                 return $"latitude: { (int)Latitude } ° { (int)(Latitude - (int)Latitude) * 60 }'" +

@@ -14,7 +14,7 @@ namespace BlApi
             /// </summary>
             public Station()
             {
-                
+
             }
 
             /// <summary>

@@ -11,7 +11,7 @@ namespace DalApi
             /// <summary>
             /// entity parcel
             /// </summary>
-            partial class DalObject : IDal
+            internal partial class DalObject : IDal
             {
                 /// <summary>
                 /// add parcel to list
@@ -21,11 +21,11 @@ namespace DalApi
                 {
                     //insert parcel to array
                     //IDAL.DO.DalObject.DataSource.parcels[IDAL.DO.DalObject.DataSource.Config.parcelIndex] = myParcel;
-                    for (int i = 0; i < DalApi.DO.DalObject.DataSource.parcels.Count; i++)
+                    for (int i = 0; i < DataSource.parcels.Count; i++)
                         //if already exist
-                        if (DalApi.DO.DalObject.DataSource.parcels[i].Id == myParcel.Id)
-                            throw new ExistingIdException(myParcel.Id, $"parcel already exist: {myParcel.Id}");
-                    DalApi.DO.DalObject.DataSource.parcels.Add(myParcel);
+                        if (DataSource.parcels[i].Id == myParcel.Id)
+                            throw new ExistingIdException(myParcel.Id, $"parcel already exist: { myParcel.Id }");
+                    DataSource.parcels.Add(myParcel);
                 }
 
                 /// <summary>
@@ -34,7 +34,7 @@ namespace DalApi
                 /// <returns></returns>
                 public int ParcelRunId()
                 {
-                    return DalApi.DO.DalObject.DataSource.Config.ParcelRunId++;
+                    return DataSource.Config.ParcelRunId++;
                 }
 
                 /// <summary>
@@ -42,20 +42,20 @@ namespace DalApi
                 /// </summary>
                 /// <param name="myId"></param>
                 /// <returns></returns>
-                public DalApi.DO.Parcel GetParcel(int myId)
+                public Parcel GetParcel(int myId)
                 {
                     bool isDouble = false;
-                    Parcel temp = new Parcel();
-                    for (int i = 0; i < DalApi.DO.DalObject.DataSource.parcels.Count; i++)
+                    Parcel temp = new();
+                    for (int i = 0; i < DataSource.parcels.Count; i++)
                     {
                         //search parcel
-                        if (DalApi.DO.DalObject.DataSource.parcels[i].Id == myId)
+                        if (DataSource.parcels[i].Id == myId)
                         {
                             isDouble = true;
-                            temp = DalApi.DO.DalObject.DataSource.parcels[i];
+                            temp = DataSource.parcels[i];
                         }
                     }
-                    if (isDouble == true)
+                    if (isDouble)
                         return temp;
                     //if not found
                     else
@@ -67,8 +67,8 @@ namespace DalApi
                 /// </summary>
                 public IEnumerable<Parcel> GetParcelsList(System.Predicate<Parcel> match)
                 {
-                    List<DalApi.DO.Parcel> newList = new();
-                    newList = DalApi.DO.DalObject.DataSource.parcels.FindAll(match);
+                    List<Parcel> newList = new();
+                    newList = DataSource.parcels.FindAll(match);
                     return newList;
                 }
                 
@@ -80,16 +80,16 @@ namespace DalApi
                 /// <returns></returns>
                 public void SheduleParcelToDrone(int newParcelId, int droneId)
                 {
-                    Parcel temp = new Parcel();
-                    for (int i = 0; i < DalApi.DO.DalObject.DataSource.parcels.Count; i++)
+                    Parcel temp = new();
+                    for (int i = 0; i < DataSource.parcels.Count; i++)
                     {
                         //search parcel
-                        if (DalApi.DO.DalObject.DataSource.parcels[i].Id == newParcelId)
+                        if (DataSource.parcels[i].Id == newParcelId)
                         {
-                            temp = DalApi.DO.DalObject.DataSource.parcels[i];
+                            temp = DataSource.parcels[i];
                             temp.Scheduled = DateTime.Now;
                             temp.DroneId = droneId;
-                            DalApi.DO.DalObject.DataSource.parcels[i] = temp;
+                            DataSource.parcels[i] = temp;
                         }
                     }
                 }
@@ -102,14 +102,14 @@ namespace DalApi
                 public void PickUpParcelByDrone(int droneId, int parcelId)
                 {
                     Parcel temp = new();
-                    for (int i = 0; i < DalApi.DO.DalObject.DataSource.parcels.Count; i++)
+                    for (int i = 0; i < DataSource.parcels.Count; i++)
                     {
                         //search parcel
-                        if (DalApi.DO.DalObject.DataSource.parcels[i].Id == parcelId)
+                        if (DataSource.parcels[i].Id == parcelId)
                         {
-                            temp = DalApi.DO.DalObject.DataSource.parcels[i];
+                            temp = DataSource.parcels[i];
                             temp.PickedUp = DateTime.Now;
-                            DalApi.DO.DalObject.DataSource.parcels[i] = temp;
+                            DataSource.parcels[i] = temp;
                         }
                     }
                 }
@@ -121,15 +121,15 @@ namespace DalApi
                 /// <returns></returns>
                 public void DeliverParcelByDrone(int droneId, int parcelId)
                 {
-                    Parcel temp = new Parcel();
-                    for (int i = 0; i < DalApi.DO.DalObject.DataSource.parcels.Count; i++)
+                    Parcel temp = new();
+                    for (int i = 0; i < DataSource.parcels.Count; i++)
                     {
                         //search parcel
-                        if (DalApi.DO.DalObject.DataSource.parcels[i].Id == parcelId)
+                        if (DataSource.parcels[i].Id == parcelId)
                         {
-                            temp = DalApi.DO.DalObject.DataSource.parcels[i];
+                            temp = DataSource.parcels[i];
                             temp.Delivered = DateTime.Now;
-                            DalApi.DO.DalObject.DataSource.parcels[i] = temp;
+                            DataSource.parcels[i] = temp;
                         }
                     }
                 }

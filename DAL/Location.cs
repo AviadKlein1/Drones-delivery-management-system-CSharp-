@@ -1,12 +1,11 @@
-﻿using System;
-namespace DalApi
+﻿namespace DalApi
 {
     namespace DO
     {
         /// <summary>
         /// location - fields, ctor and ToString function
         /// </summary>
-        public struct  Location
+        public struct Location
         {
             /// <summary>
             /// params ctor
@@ -15,8 +14,8 @@ namespace DalApi
             /// <param name="latitude"></param>
             public Location(double longitude, double latitude)
             {
-                this.Longitude = longitude;
-                this.Latitude = latitude;
+                Longitude = longitude;
+                Latitude = latitude;
             }
 
             public double Longitude { get; set; }

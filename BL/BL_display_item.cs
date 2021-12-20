@@ -94,10 +94,7 @@ namespace BlApi
                         myParcel.Priority = item.Priority;
 
                         if (item.Requested != empty && item.Scheduled == empty)
-                        {
                             myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.requested;
-                        }
-
                         if (item.Scheduled != empty && item.PickedUp == empty)
                             myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.scheduled;
                         if (item.PickedUp != empty && item.Delivered == empty)
