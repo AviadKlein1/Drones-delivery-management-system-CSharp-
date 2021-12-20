@@ -28,7 +28,7 @@ namespace BlApi
                 }
                 catch (DalApi.DO.ExistingIdException ex)
                 {
-                    throw new DalApi.DO.ExistingIdException(myStation.Id, ex.Message);
+                    throw new ExistingIdException(myStation.Id, ex.Message);
                 }
             }
 
@@ -47,10 +47,15 @@ namespace BlApi
                 {
                     dal.AddDrone(temp, myDrone.FirstChargeStationId);
                 }
-                catch (Exception ex)
+                catch (DalApi.DO.ExistingIdException ex)
                 {
-                    throw(ex); 
+                    throw new ExistingIdException(myDrone.Id, ex.Message);
                 }
+                catch (DalApi.DO.WrongIdException ex)
+                {
+                    throw new WrongIdException(myDrone.Id, ex.Message);
+                }
+               
 
                 //add new drone to list of drones (BL) 
                 dronesList.Add(AddDroneToBLList(myDrone));
@@ -91,7 +96,7 @@ namespace BlApi
                 catch (DalApi.DO.ExistingIdException ex)
                 {
 
-                    throw ex;
+                    throw new ExistingIdException(myCustomer.Id, ex.Message);
                 }
             }
 
@@ -119,8 +124,7 @@ namespace BlApi
                 }
                 catch (DalApi.DO.ExistingIdException ex)
                 {
-                    throw ex;
-
+                    throw new ExistingIdException(temp.Id, ex.Message);
                 }
             }
         }

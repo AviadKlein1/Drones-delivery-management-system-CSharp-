@@ -115,8 +115,8 @@ namespace BlApi
 
             public override string ToString()
             {
-                return $"ID: {Id}\n Sender name: {SenderName}\n Receiver name: {RecieverName}\n" +
-                    $" Weight Category: {Weight}\n Priority: {Priority}\n Parcel Status: {ParcelStatus}";
+                return $"ID: {Id}\nSender name: {SenderName}\nReceiver name: {RecieverName}\n" +
+                    $"Weight Category: {Weight}\nPriority: {Priority}\nParcel Status: {ParcelStatus}";
             }
         }
     }

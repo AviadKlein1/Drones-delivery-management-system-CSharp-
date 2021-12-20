@@ -16,7 +16,17 @@ namespace BlApi
             public WrongIdException(int id, string message, Exception innerException) :
                 base(message, innerException) => ID = id;
             public override string ToString() => base.ToString() + $", wrong id: {ID}";
-        } 
+        }
+        [Serializable]
+        public class ExistingIdException : Exception
+        {
+            public int ID;
+            public ExistingIdException(int id) : base() => ID = id;
+            public ExistingIdException(int id, string message) : base(message) => ID = id;
+            public ExistingIdException(int id, string message, Exception innerException) :
+                base(message, innerException) => ID = id;
+            public override string ToString() => base.ToString() + $", id already exists: {ID}";
+        }
 
         /// <summary>
         /// occupied drone exception

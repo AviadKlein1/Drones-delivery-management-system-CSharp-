@@ -46,8 +46,8 @@
                   new StationToInit("Netanya", 32.332, 34.855),
                   new StationToInit("Nahariya", 33.008629, 35.097535),
                   new StationToInit("Ra'anana", 32.185769, 34.870202),
-                  new StationToInit("Ramat Gan", 32.069038, 34.824135) };
-
+                  new StationToInit("Ramat Gan", 32.069038, 34.824135) 
+                };
         }
     }
 }

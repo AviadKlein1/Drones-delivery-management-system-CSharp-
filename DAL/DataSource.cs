@@ -99,7 +99,7 @@ namespace DalApi
                     //drone charges --
                     for (int i = 0; i < 2; i++)
                     {
-                        DalApi.DO.DroneCharge myDroneCharge = new DalApi.DO.DroneCharge();
+                        DroneCharge myDroneCharge = new DalApi.DO.DroneCharge();
                         myDroneCharge.DroneId = drones[i].Id;
                         myDroneCharge.StationId = stations[i].Id;
                         droneCharges.Add(myDroneCharge);

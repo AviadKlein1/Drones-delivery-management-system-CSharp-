@@ -68,17 +68,37 @@ namespace ConsoleUI_BL
                                         break;
                                     //add drone
                                     case 2:
-                                        bl.AddDrone(Input.AddDrone());
+                                        try
+                                        {
+                                            bl.AddDrone(Input.AddDrone());
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
                                         break;
                                     //add customer
                                     case 3:
-                                        bl.Addcustomer(Input.AddCustomer());
+                                        try
+                                        {
+                                            bl.Addcustomer(Input.AddCustomer());
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
                                         break;
                                     //add parcel
                                     case 4:
-                                        bl.AddParcel(myInputOutput.AddParcel());
+                                        try
+                                        {
+                                            bl.AddParcel(myInputOutput.AddParcel());
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
                                         break;
-
                                     default:
                                         break;
                                 }
@@ -107,11 +127,20 @@ namespace ConsoleUI_BL
                                 {
                                     //update dron's data
                                     case 1:
+
                                         Console.WriteLine("enter drone id:\n");
                                         int.TryParse(Console.ReadLine(), out id);
                                         Console.WriteLine("enter new model:\n");
                                         string1 = Console.ReadLine();
-                                        var flag1 = bl.UpdateDrone(id, string1);
+                                        var flag1 = false;
+                                        try
+                                        {
+                                            flag1 = bl.UpdateDrone(id, string1);
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
                                         if (flag1)
                                             Console.WriteLine("successfully updated\n");
                                         else
@@ -125,7 +154,16 @@ namespace ConsoleUI_BL
                                         string1 = Console.ReadLine();
                                         Console.WriteLine("enter amount of charge slots:\n");
                                         int.TryParse(Console.ReadLine(), out cin1);
-                                        var flag2 = bl.UpdateStation(id, string1, cin1);
+                                        var flag2 = false;
+                                        try
+                                        {
+                                            flag2 = bl.UpdateStation(id, string1, cin1);
+
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
                                         if (flag2)
                                             Console.WriteLine("successfully updated\n");
                                         else
@@ -139,7 +177,15 @@ namespace ConsoleUI_BL
                                         string1 = Console.ReadLine();
                                         Console.WriteLine("enter new phone:\n");
                                         string2 = Console.ReadLine();
-                                        var flag3 = bl.UpdateCustomer(id, string1, string2);
+                                        var flag3 = false;
+                                        try
+                                        {
+                                            flag3 = bl.UpdateCustomer(id, string1, string2);
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
                                         if (flag3)
                                             Console.WriteLine("successfully updated\n");
                                         else
@@ -149,8 +195,15 @@ namespace ConsoleUI_BL
                                     case 4:
                                         Console.WriteLine("enter drone id:\n");
                                         int.TryParse(Console.ReadLine(), out id);
-
-                                        var flag4 = bl.ChargeDrone(id);
+                                        var flag4 = false;
+                                        try
+                                        {
+                                            flag4 = bl.ChargeDrone(id);
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
                                         if (flag4)
                                             Console.WriteLine("successfully updated\n");
                                         else
@@ -162,7 +215,15 @@ namespace ConsoleUI_BL
                                         int.TryParse(Console.ReadLine(), out id);
                                         Console.WriteLine("enter required charging duration (in minutes):\n");
                                         int.TryParse(Console.ReadLine(), out cin1);
-                                        var flag5 = bl.ReleaseDroneFromCharge(id, cin1);
+                                        var flag5 = false;
+                                        try
+                                        {
+                                            flag5 = bl.ReleaseDroneFromCharge(id, cin1);
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
                                         if (flag5)
                                             Console.WriteLine("successfully updated\n");
                                         else
@@ -170,18 +231,36 @@ namespace ConsoleUI_BL
                                         break;
 
                                     case 6:
+                                        
                                         Console.WriteLine("enter drone id:\n");
                                         int.TryParse(Console.ReadLine(), out id);
-                                        var flag6 = bl.ScheduleParcelToDrone(id);
+                                        var flag6 = false;
+                                        try
+                                        {
+                                            flag6 = bl.ScheduleParcelToDrone(id);
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
                                         if (flag6)
                                             Console.WriteLine("successfully updated\n");
                                         else
                                             Console.WriteLine("update failed\n");
                                         break;
+
                                     case 7:
                                         Console.WriteLine("enter drone id:\n");
                                         int.TryParse(Console.ReadLine(), out id);
-                                        var flag7 = bl.PickUpParcelByDrone(id);
+                                        var flag7 = false;
+                                        try
+                                        {
+                                            flag7 = bl.PickUpParcelByDrone(id);
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
                                         if (flag7)
                                             Console.WriteLine("successfully updated\n");
                                         else
@@ -190,7 +269,15 @@ namespace ConsoleUI_BL
                                     case 8:
                                         Console.WriteLine("enter drone id:\n");
                                         int.TryParse(Console.ReadLine(), out id);
-                                        var flag8 = bl.DeliverParcelByDrone(id);
+                                        var flag8 = false;
+                                        try
+                                        {
+                                            flag8 = bl.DeliverParcelByDrone(id);
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
                                         if (flag8)
                                             Console.WriteLine("successfully updated\n");
                                         else
@@ -218,25 +305,53 @@ namespace ConsoleUI_BL
                                     case 1:
                                         Console.WriteLine("enter station id\n");
                                         int.TryParse(Console.ReadLine(), out id);
-                                        Console.WriteLine(bl.DisplayStation(id));
+                                        try
+                                        {
+                                            Console.WriteLine(bl.DisplayStation(id));
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
                                         break;
                                     //display drone
                                     case 2:
                                         Console.WriteLine("enter drone id\n");
                                         int.TryParse(Console.ReadLine(), out id);
-                                        Console.WriteLine(bl.DisplayDrone(id));
+                                        try
+                                        {
+                                            Console.WriteLine(bl.DisplayDrone(id));
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
                                         break;
                                     //display customer
                                     case 3:
                                         Console.WriteLine("enter customer id\n");
                                         int.TryParse(Console.ReadLine(), out id);
-                                        Console.WriteLine(bl.DisplayCustomer(id));
+                                        try
+                                        {
+                                            Console.WriteLine(bl.DisplayCustomer(id));
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
                                         break;
                                     //display parcel
                                     case 4:
                                         Console.WriteLine("enter parcel id\n");
                                         int.TryParse(Console.ReadLine(), out id);
-                                        Console.WriteLine(bl.DisplayParcel(id));
+                                        try
+                                        {
+                                            Console.WriteLine(bl.DisplayParcel(id));
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
                                         break;
                                     default:
                                         break;
@@ -322,11 +437,14 @@ namespace ConsoleUI_BL
 
                     }
                 }
+
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                return;
             }
         }
+
     }
 }
