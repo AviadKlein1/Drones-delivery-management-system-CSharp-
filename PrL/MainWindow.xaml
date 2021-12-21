@@ -1,26 +1,58 @@
-﻿<Window x:Class="PrL.MainWindow"
+﻿<mah:MetroWindow x:Class="PrL.MainWindow"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:local="clr-namespace:PrL"
+
         mc:Ignorable="d"
-        Title="MainWindow" Height="640" Width="800">
+        GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
+        ResizeMode="CanResizeWithGrip"
+        WindowStartupLocation="CenterScreen"
+        Title="Main Window" Height="350" Width="350">
+
+    <mah:MetroWindow.LeftWindowCommands>
+
+        <mah:WindowCommands>
+            <Button x:Name="Exit" Click="Exit_Click" ToolTip="Exit from the program">
+                <iconPacks:PackIconModern Width="22"
+                                  Height="22"
+                                  Kind="Alert" />
+            </Button>
+            <Button x:Name="GitHub" Click="GitHub_Click" ToolTip="Open up the GitHub site">
+                <iconPacks:PackIconModern Width="22"
+                                  Height="22"
+                                  Kind="SocialGithubOctocat" />
+            </Button>
+            <Button x:Name="MailUs" Click=" MailUs_Click" ToolTip="Send us an Email">
+                <iconPacks:PackIconModern Width="22"
+                                  Height="22"
+                                  Kind="EmailHardedge" />
+            </Button>
+        </mah:WindowCommands>
+    </mah:MetroWindow.LeftWindowCommands>
     <Grid>
-        <Image
-               gif:ImageBehavior.AutoStart="True"
-                gif:ImageBehavior.AnimatedSource="C:\Users\Aviad\source\repos\AviadKlein1\dotNet5782_2679_3080\PrL/resources/images/tumblr_mx85z3CkjP1ru5h8co1_500.gif" >
-
-        </Image>
-        <Button x:Name="EnterButton" Content="To Enter The System Click " Cursor="Hand" Click="ShowDronesButton_Click" FontFamily="Blackadder ITC" FontSize="72" FontWeight="Bold" Background="{x:Null}">
-            <Button.OpacityMask>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="White" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.OpacityMask>
-
-        </Button>
+        
+        <Image Source="C:\Users\Aviad\Source\Repos\AviadKlein1\dotNet5782_2679_3080\PrL\resources\images\main.jpg" Stretch="Fill" />
+        
+        <Button
+            x:Name="CustomerEnterButton"
+            Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
+            Content="User"
+            Background="Transparent"
+            ToolTip="User Interface"
+            Click="CustomerEnterButton_Click" Height="80" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"
+            />
+        <Button
+            x:Name="AdminAccssesButton"
+            Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
+            Content="Admin"
+            Background="Transparent"
+            ToolTip="Administrator API"
+            Click="AdminAccssesButton_Click" Width="80" Height="80" HorizontalAlignment="Right" VerticalAlignment="Top"
+            />
     </Grid>
-</Window>
+</mah:MetroWindow>

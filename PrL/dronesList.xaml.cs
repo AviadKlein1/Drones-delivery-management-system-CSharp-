@@ -9,6 +9,8 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using MahApps.Metro.Controls;
+
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
@@ -17,7 +19,7 @@ namespace PrL
     /// <summary>
     /// Interaction logic for dronesList.xaml
     /// </summary>
-    public partial class dronesList : Window
+    public partial class dronesList : MetroWindow
     {
         BlApi.BO.BL bl;
         public dronesList(IBl mainBl)
@@ -25,6 +27,7 @@ namespace PrL
             InitializeComponent();
             bl = (BlApi.BO.BL)mainBl;
             dronesListView.ItemsSource = bl.GetDrones();
+
             weightSelector.ItemsSource = Enum.GetValues(typeof(DalApi.DO.MyEnums.WeightCategory));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(BlApi.BO.MyEnums.DroneStatus));
 
@@ -57,5 +60,10 @@ namespace PrL
             new AddDrone(bl).Show();
         }
 
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            dronesListView.Items.Refresh();
+           
+        }
     }
 }
