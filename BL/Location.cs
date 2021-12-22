@@ -50,7 +50,7 @@
                 double secLon = ((double)(minLon - (int)minLon) * 60);
 
 
-                return $"Location: { (int)Latitude }° { (int)minLat }' { (int)minLon}\" N  " +
+                return $"{ (int)Latitude }° { (int)minLat }' { (int)secLat}\" N  " +
                     $"{ (int)Longitude }° {(int)minLon}' {(int)secLon}\" S";
             }
         }
