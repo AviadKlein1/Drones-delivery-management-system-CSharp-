@@ -12,10 +12,7 @@ namespace BlApi
             /// <summary>
             /// default ctor
             /// </summary>
-            public Station()
-            {
-
-            }
+            public Station(){}
 
             /// <summary>
             /// copy ctor

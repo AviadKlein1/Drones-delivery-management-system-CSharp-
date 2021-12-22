@@ -27,14 +27,24 @@ namespace PrL
     /// </summary>
      public partial class MainWindow : MetroWindow
     {
+        System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
+        private void Timer_Click(object sender, EventArgs e)
+        {
+            DateTime d;
+            d = DateTime.Now;
+            dateTimeBlock.Text =d.Day+"/"+ d.Month+"/"+ d.Year+"  "+ d.Hour + " : " + d.Minute + " : " + d.Second;
+        }
 
         internal IBl bl;
         public MainWindow()
         {
             ShowCloseButton = false;
-                
-            InitializeComponent();
+            Timer.Tick += new EventHandler(Timer_Click);
+            Timer.Interval = new TimeSpan(0, 0, 1);
+            Timer.Start();
             ThemeManager.Current.ChangeTheme(this, "Light.blue");
+            InitializeComponent();
+
             try
             {
                 bl = (BlApi.BO.BL)BlFactory.GetBl();

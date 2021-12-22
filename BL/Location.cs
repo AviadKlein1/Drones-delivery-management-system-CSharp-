@@ -51,7 +51,7 @@
 
 
                 return $"{ (int)Latitude }° { (int)minLat }' { (int)secLat}\" N  " +
-                    $"{ (int)Longitude }° {(int)minLon}' {(int)secLon}\" S";
+                    $"{ (int)Longitude }° {(int)minLon}' {(int)secLon}\" E";
             }
         }
     }

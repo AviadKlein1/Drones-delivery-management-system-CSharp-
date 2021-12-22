@@ -38,8 +38,7 @@ namespace PrL
             double secLat = ((double)(minLat - (int)minLat) * 60);
             double secLon = ((double)(minLon - (int)minLon) * 60);
 
-            LocationLattBox.Text = $"{ (int)droneToList.Location.Latitude }° { (int)minLat }' { (int)secLat}\" N  ";
-            LocationLongBox.Text = $"{ (int)droneToList.Location.Longitude }° {(int)minLon}' {(int)secLon}\" S";
+            LocationBox.Text = $"{ (int)droneToList.Location.Latitude }° { (int)minLat }' { (int)secLat}\" N { (int)droneToList.Location.Longitude }° {(int)minLon}' {(int)secLon}\" E";
             if (droneToList.Status == BlApi.BO.MyEnums.DroneStatus.available)
             {
                 SendDroneToChargePanel.Visibility = Visibility.Visible;
