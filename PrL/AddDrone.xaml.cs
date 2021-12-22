@@ -123,13 +123,13 @@ namespace PrL
 
         private void PickUpParcel_Click(object sender, RoutedEventArgs e)
         {
-            if (bl.PickUpParcelByDrone(droneToList.Id)) MessageBox.Show("success!");
+            if (bl.PickUpParcel(droneToList.Id)) MessageBox.Show("success!");
             else MessageBox.Show("failed!");
         }
 
         private void DeliverParcel_Click(object sender, RoutedEventArgs e)
         {
-            if (bl.DeliverParcelByDrone(droneToList.Id)) MessageBox.Show("success!");
+            if (bl.DeliverParcel(droneToList.Id)) MessageBox.Show("success!");
             else MessageBox.Show("Faild!");
         }
     }

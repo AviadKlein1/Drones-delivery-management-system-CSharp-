@@ -324,7 +324,7 @@ namespace PrL
                                         var flag7 = false;
                                         try
                                         {
-                                            flag7 = bl.PickUpParcelByDrone(id);
+                                            flag7 = bl.PickUpParcel(id);
                                         }
                                         catch (Exception ex)
                                         {
@@ -341,7 +341,7 @@ namespace PrL
                                         var flag8 = false;
                                         try
                                         {
-                                            flag8 = bl.DeliverParcelByDrone(id);
+                                            flag8 = bl.DeliverParcel(id);
                                         }
                                         catch (Exception ex)
                                         {

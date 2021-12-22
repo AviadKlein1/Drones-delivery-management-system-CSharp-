@@ -36,10 +36,9 @@
             public int FirstChargeStationId { get; set; }
             public override string ToString()
             {
-                //var delPar = deliverdParcel.id < 100 ? "" : string.Join(", ", deliverdParcel);
-                //var del = deliverdParcel.id < 100 ? "" : "deliverd Parcel: ";
-                return $"ID: {Id}\nModel: {Model}\nWeight Category: {Weight}\nStatus: {Status}\nBattery: " +
-                    $" {Battery}\nLongitude: {Location.Longitude}\nLatitude: {Location.Latitude}\n "/*+$"{del} \n{delPar}\n"*/;
+                return $"ID: {Id}\nModel: {Model}\nWeight Category: {Weight}\nStatus:" +
+                    $"{Status}\nBattery: {Battery}\nLongitude: {Location.Longitude}\n" +
+                    $"Latitude:{Location.Latitude}\n "/*+$"{del} \n{delPar}\n"*/;
             }
         }
 

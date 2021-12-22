@@ -5,7 +5,7 @@ namespace BlApi
     namespace BO
     {
         /// <summary>
-        /// exeptions for BL - captured in ConsuleUI_BL
+        /// exceptions for BL - captured in ConsuleUI_BL
         /// </summary>
         [Serializable]
         public class WrongIdException : Exception

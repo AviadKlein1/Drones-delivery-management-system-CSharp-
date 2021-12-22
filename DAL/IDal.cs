@@ -124,7 +124,7 @@ namespace DalApi
         /// <param name="newParcelId"></param>
         /// <param name="droneId"></param>
         /// <returns></returns>
-        public void SheduleParcelToDrone(int newParcelId,int droneId);
+        public void ScheduleParcelToDrone(int newParcelId,int droneId);
         /// <summary>
         /// Pick Up Parcel By Drone in dal
         /// </summary>

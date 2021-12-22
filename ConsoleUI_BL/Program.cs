@@ -1,13 +1,10 @@
 ﻿//Aviad Klein 315552679
 //Tomer Peretz 314083080
 //C# Mini Project
-//Exercise 2
 //The program handles and monitors the ongoing management and activity of a courier company using drones  
 
 using System;
 using BlApi;
-
-
 
 namespace ConsoleUI_BL
 {
@@ -38,7 +35,7 @@ namespace ConsoleUI_BL
                     "4: Display a list of items\n" +
                     "0: exit\n");
                     int.TryParse(Console.ReadLine(), out choice1);
-                   
+
                     switch (choice1)
                     {
                         //add items
@@ -54,14 +51,14 @@ namespace ConsoleUI_BL
                                 int.TryParse(Console.ReadLine(), out choice2);
                                 switch (choice2)
                                 {
-                                    
+
                                     //add station
                                     case 1:
                                         try
                                         {
                                             bl.AddStation(Input.AddStation());
                                         }
-                                        catch(Exception ex)
+                                        catch (Exception ex)
                                         {
                                             Console.WriteLine(ex.Message);
                                         }
@@ -231,7 +228,7 @@ namespace ConsoleUI_BL
                                         break;
 
                                     case 6:
-                                        
+
                                         Console.WriteLine("enter drone id:\n");
                                         int.TryParse(Console.ReadLine(), out id);
                                         var flag6 = false;
@@ -255,7 +252,7 @@ namespace ConsoleUI_BL
                                         var flag7 = false;
                                         try
                                         {
-                                            flag7 = bl.PickUpParcelByDrone(id);
+                                            flag7 = bl.PickUpParcel(id);
                                         }
                                         catch (Exception ex)
                                         {
@@ -272,7 +269,7 @@ namespace ConsoleUI_BL
                                         var flag8 = false;
                                         try
                                         {
-                                            flag8 = bl.DeliverParcelByDrone(id);
+                                            flag8 = bl.DeliverParcel(id);
                                         }
                                         catch (Exception ex)
                                         {
@@ -434,10 +431,8 @@ namespace ConsoleUI_BL
 
                         default:
                             break;
-
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -445,6 +440,5 @@ namespace ConsoleUI_BL
                 return;
             }
         }
-
     }
 }

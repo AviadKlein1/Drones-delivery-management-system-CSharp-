@@ -13,7 +13,9 @@ namespace BlApi
             public string Name { get; set; }
             public string PhoneNumber { get; set; }
             public Location Location { get; set; }
-            //list of parcels sent by customer
+            /// <summary>
+            /// list of parcels sent by customer
+            /// </summary>
             public List<ParcelAtCustomer> ParcelsSent { get; set; }
             //list of parcels sent to customer
             public List<ParcelAtCustomer> ParcelsRecieved { get; set; }
@@ -50,9 +52,9 @@ namespace BlApi
                 var parcelsSent = ParcelsSent == null ? "" : string.Join(", ", this.ParcelsSent);
                 var parcelsDelivered = ParcelsRecieved == null ? "" : string.Join(", ", ParcelsRecieved);
 
-                return $"ID: { Id }\nName: { Name }\nLongitude: { Location.Longitude }\nlatitude: { Location.Latitude }" +
-                    $"\nphone number: { PhoneNumber }\nparcels To Customer: { parcelsDelivered }" +
-                    $"\nparcels from Customer: { parcelsSent }\n";
+                return $"ID: { Id }\nName: { Name }\nLongitude: { Location.Longitude }\nlatitude:" +
+                    $"{ Location.Latitude }\nphone number: { PhoneNumber }\nparcels To Customer:" +
+                    $"{ parcelsDelivered }\nparcels from Customer: { parcelsSent }\n";
             }
         }
 

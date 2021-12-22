@@ -116,7 +116,7 @@ namespace ConsoleUI_BL
             //reciever id
             Console.WriteLine("enter receiever id");
             int.TryParse(Console.ReadLine(), out int targetId);
-            myParcel.Reciever.Id = targetId;
+            myParcel.Receiver.Id = targetId;
 
             //parcel weight
             Console.WriteLine("enter weight (light = 1, medium = 2, heavy = 3)");

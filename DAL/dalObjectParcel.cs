@@ -77,7 +77,7 @@ namespace DalApi
                 /// <param name="newParcelId"></param>
                 /// <param name="droneId"></param>
                 /// <returns></returns>
-                public void SheduleParcelToDrone(int newParcelId, int droneId)
+                public void ScheduleParcelToDrone(int newParcelId, int droneId)
                 {
                     Parcel temp = new();
                     for (int i = 0; i < DataSource.parcels.Count; i++)

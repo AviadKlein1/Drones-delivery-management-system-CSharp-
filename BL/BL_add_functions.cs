@@ -109,7 +109,7 @@ namespace BlApi
                 temp.Weight = myParcel.Weight;
                 temp.Priority = myParcel.Priority;
                 temp.SenderId = myParcel.Sender.Id;
-                temp.ReceiverId = myParcel.Reciever.Id;
+                temp.ReceiverId = myParcel.Receiver.Id;
                 temp.DroneId = (myParcel.DroneInParcel == null ? 0 : myParcel.DroneInParcel.Id);
                 temp.Requested = DateTime.Now;
                 temp.Scheduled = null;
