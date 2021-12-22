@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using MahApps.Metro.Controls;
+using ControlzEx.Theming;
 
 namespace PrL
 {
@@ -24,6 +16,7 @@ namespace PrL
         public AddDrone(BlApi.BO.BL mainBl)
         {
             InitializeComponent();
+            Title = "Add new drone";
             bl = mainBl;
             AddWeightselectorCombo.ItemsSource = Enum.GetValues(typeof(DalApi.DO.MyEnums.WeightCategory));
             var StationsNameId = bl.GetStationsList(BlApi.BO.BL.AllStations).Select(item => item.Id + " " + item.Name);
@@ -32,8 +25,9 @@ namespace PrL
         }
         public AddDrone(BlApi.BO.BL mainBl, BlApi.BO.DroneToList mainDrone)
         {
+            ThemeManager.Current.ChangeTheme(this, "Dark.blue");
             InitializeComponent();
-
+            Title = "Drone Diatels";
             bl = mainBl;
             droneToList = mainDrone;
             DisplayDrone.DataContext = droneToList;

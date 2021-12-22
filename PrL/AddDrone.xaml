@@ -8,7 +8,7 @@
         xmlns:BO="clr-namespace:BlApi.BO;assembly=BL" x:Class="PrL.AddDrone"
         mc:Ignorable="d"
     
-        Title="Add new drone" Background="#FF517391" Height="550" Width="300">
+       Background="#FF517391" Height="570" Width="300">
     <Grid>
         <StackPanel x:Name="AddNewDrone" Visibility="Collapsed">
             <Label x:Name="InsertLabel" Content="Insert ditales" HorizontalAlignment="Center"  Margin="0,20,0,10" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
@@ -44,13 +44,13 @@
             <Label x:Name="Options" Content="Update options"  HorizontalAlignment="Center"  Margin="0,20,0,2" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
             
             <StackPanel x:Name="UpdatePanel" Visibility="Visible">
-                <Button x:Name="UpdateModel" Grid.Column="0" BorderBrush="AliceBlue" BorderThickness="2" Click="UpdateModel_Click" Width="224">
+                <Button x:Name="UpdateModel" Grid.Column="0" BorderBrush="Bisque" BorderThickness="2" Click="UpdateModel_Click" Width="224">
                     <TextBlock Text="Update Drone Model" TextWrapping="Wrap" Cursor="Hand" />
                 </Button>
             </StackPanel>
 
             <StackPanel x:Name="SendDroneToChargePanel" Visibility="Collapsed">
-                <Button x:Name="SendDroneToCharge"  BorderBrush="Crimson" BorderThickness="2" Width="224" Click="SendDroneToCharge_Click">
+                <Button x:Name="SendDroneToCharge"  BorderBrush="Bisque" BorderThickness="2" Width="224" Click="SendDroneToCharge_Click">
                     <TextBlock Text="SendDroneToCharge" TextWrapping="Wrap" Cursor="Hand" />
                 </Button>
             </StackPanel>
@@ -63,7 +63,7 @@
             </StackPanel>
 
             <StackPanel x:Name="ScheduleParcelToDronePanel" Visibility="Collapsed">
-                <Button x:Name="ScheduleParcelToDrone" BorderBrush="Bisque" BorderThickness="2" Width="224" Click="ScheduleParcelToDrone_Click" >
+                <Button x:Name="ScheduleParcelToDrone" BorderBrush="Bisque"  BorderThickness="2" Width="224" Click="ScheduleParcelToDrone_Click" >
                     <TextBlock Text="ScheduleParcelToDrone" TextWrapping="Wrap" Cursor="Hand" />
                 </Button>
             </StackPanel>

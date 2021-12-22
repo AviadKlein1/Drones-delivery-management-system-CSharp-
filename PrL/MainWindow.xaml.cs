@@ -33,7 +33,7 @@ namespace PrL
             ShowCloseButton = false;
                 
             InitializeComponent();
-            ThemeManager.Current.ChangeTheme(this, "Dark.blue");
+            ThemeManager.Current.ChangeTheme(this, "Light.blue");
             try
             {
                 bl = (BlApi.BO.BL)BlFactory.GetBl();

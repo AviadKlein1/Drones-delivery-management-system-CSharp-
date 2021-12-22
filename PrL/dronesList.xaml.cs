@@ -10,7 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
-
+using ControlzEx.Theming;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
@@ -21,10 +21,13 @@ namespace PrL
     /// </summary>
     public partial class dronesList : MetroWindow
     {
+
         BlApi.BO.BL bl;
         public dronesList(IBl mainBl)
         {
             InitializeComponent();
+            ThemeManager.Current.ChangeTheme(this, "Light.blue");
+
             bl = (BlApi.BO.BL)mainBl;
             dronesListView.ItemsSource = bl.GetDrones();
 
