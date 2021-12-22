@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BlApi;
 using DalApi;
 namespace BlApi
 {
@@ -10,13 +9,13 @@ namespace BlApi
         /// <summary>
         /// object constructor
         /// </summary>
-        sealed partial class BL : IBl
+        public sealed partial class BL : IBl
         {
             private static readonly IBl instance = new BL();
             public static IBl GetInstance() { return instance; }
 
             private readonly IDal dal;
-            private Random rd = new();
+            private readonly Random rd = new();
             private readonly List<DroneToList> dronesList = new();
 
             //electricity consumption fields
@@ -80,13 +79,9 @@ namespace BlApi
                             //drone location
                             Location myLocation = new();
                             if (ScheduledButNotPickedUp(element.DeliveredParcelId))
-                            {
                                 myLocation = new Location(NearestToSenderStation(element.DeliveredParcelId).Location);
-                            }
                             if (PickedUpButNotDelivered(element.DeliveredParcelId))
-                            {
                                 myLocation = new Location(SenderLocation(element.DeliveredParcelId));
-                            }
 
                             newDrone.Location = myLocation;
                             DalApi.DO.Location myDalLocation = new DalApi.DO.Location(myLocation.Longitude , myLocation.Latitude);
@@ -97,8 +92,10 @@ namespace BlApi
                             double distanceBetweenTargetToStation = dal.GetDistance(myDalLocation, locationOfNearestStation);
 
                             int Battery = (int)BatteryRequirementForVoyage(element.Id, lenghtOfDeliveryVoyage + distanceBetweenTargetToStation);
-                            if (Battery > 100) Battery = 100;
-                            if (Battery < 0) Battery = 0;
+                            if (Battery > 100)
+                                Battery = 100;
+                            if (Battery < 0)
+                                Battery = 0;
                             newDrone.Battery = rd.Next(Battery, 101);
                         }
                         else // not in delivery
@@ -111,10 +108,10 @@ namespace BlApi
 
                                 int index = rd.Next(0, dalStationsList.Count());
                                 newDrone.Location = new Location(dalStationsList.ElementAt(index).Location);
-                                dal.DecriseChargeSlot(dalStationsList.ElementAt(index).Id);
+                                dal.DecreaseChargeSlot(dalStationsList.ElementAt(index).Id);
                                 newDrone.Battery = rd.Next(0, 21);
                             }
-                            // Avilable drone
+                            //available drone
                             else
                             {
                                 var customers = RecieversList();

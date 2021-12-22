@@ -36,7 +36,7 @@
     </mah:MetroWindow.LeftWindowCommands>
     <Grid>
         
-        <Image Source="C:\Users\Aviad\Source\Repos\AviadKlein1\dotNet5782_2679_3080\PrL\resources\images\main.jpg" Stretch="Fill" />
+        <Image Source="\resources\images\main.jpg" Stretch="Fill" />
         
         <Button
             x:Name="CustomerEnterButton"

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace ConsoleUI_BL
 {
     /// <summary>
+    /// auxiliary class:
     /// recieves details of items from user, and returns item
     /// </summary>
     public class Input
@@ -58,9 +59,12 @@ namespace ConsoleUI_BL
             //weight categoty
             Console.WriteLine("enter max weight (light = 1, medium = 2, heavy = 3)");
             int.TryParse(Console.ReadLine(), out int choice);
-            if (choice == 1) myDrone.Weight = DalApi.DO.MyEnums.WeightCategory.light;
-            if (choice == 2) myDrone.Weight = DalApi.DO.MyEnums.WeightCategory.medium;
-            if (choice == 3) myDrone.Weight = DalApi.DO.MyEnums.WeightCategory.heavy;
+            if (choice == 1) 
+                myDrone.Weight = DalApi.DO.MyEnums.WeightCategory.light;
+            if (choice == 2)
+                myDrone.Weight = DalApi.DO.MyEnums.WeightCategory.medium;
+            if (choice == 3) 
+                myDrone.Weight = DalApi.DO.MyEnums.WeightCategory.heavy;
 
             //id of station for first charge
             Console.WriteLine("enter id of station for first charge");
@@ -82,8 +86,7 @@ namespace ConsoleUI_BL
 
             //name
             Console.WriteLine("enter name");
-            myCustomer.Name = Console.ReadLine(
-                );
+            myCustomer.Name = Console.ReadLine();
 
             //phone
             Console.WriteLine("enter phone number");
@@ -111,23 +114,29 @@ namespace ConsoleUI_BL
             myParcel.Sender.Id = senderId;
 
             //reciever id
-            Console.WriteLine("enter reciever id");
+            Console.WriteLine("enter receiever id");
             int.TryParse(Console.ReadLine(), out int targetId);
             myParcel.Reciever.Id = targetId;
 
             //parcel weight
             Console.WriteLine("enter weight (light = 1, medium = 2, heavy = 3)");
             int.TryParse(Console.ReadLine(), out int choice);
-            if (choice == 1) myParcel.Weight = DalApi.DO.MyEnums.WeightCategory.light;
-            if (choice == 2) myParcel.Weight = DalApi.DO.MyEnums.WeightCategory.medium;
-            if (choice == 3) myParcel.Weight = DalApi.DO.MyEnums.WeightCategory.heavy;
+            if (choice == 1)
+                myParcel.Weight = DalApi.DO.MyEnums.WeightCategory.light;
+            if (choice == 2)
+                myParcel.Weight = DalApi.DO.MyEnums.WeightCategory.medium;
+            if (choice == 3)
+                myParcel.Weight = DalApi.DO.MyEnums.WeightCategory.heavy;
 
             //priority
             Console.WriteLine("enter priority (regular = 1, quickly = 2, urgent = 3)");
             int.TryParse(Console.ReadLine(), out choice);
-            if (choice == 1) myParcel.Priority = DalApi.DO.MyEnums.PriorityLevel.regular;
-            if (choice == 2) myParcel.Priority = DalApi.DO.MyEnums.PriorityLevel.quickly;
-            if (choice == 3) myParcel.Priority = DalApi.DO.MyEnums.PriorityLevel.urgent;
+            if (choice == 1)
+                myParcel.Priority = DalApi.DO.MyEnums.PriorityLevel.regular;
+            if (choice == 2)
+                myParcel.Priority = DalApi.DO.MyEnums.PriorityLevel.quickly;
+            if (choice == 3)
+                myParcel.Priority = DalApi.DO.MyEnums.PriorityLevel.urgent;
             
             return myParcel;
         }

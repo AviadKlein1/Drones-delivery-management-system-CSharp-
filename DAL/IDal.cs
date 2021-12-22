@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using DalApi;
+
 namespace DalApi
 {
     public interface IDal
@@ -110,7 +110,7 @@ namespace DalApi
         /// decrise num of available charge slots
         /// <param name="stationId"></param>
         /// </summary>
-        public void DecriseChargeSlot(int stationId);
+        public void DecreaseChargeSlot(int stationId);
 
         /// <summary>
         /// increase num of available charge slots
@@ -131,17 +131,34 @@ namespace DalApi
         /// <param name="droneId"></param>
         /// <param name="parcelId"></param>
         /// <returns></returns>
-        public void PickUpParcelByDrone(int droneId, int parcelId);
+        public void PickUpParcel(int droneId, int parcelId);
         /// <summary>
         /// Deliver Parcel By Drone in dal
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="parcelId"></param>
         /// <returns></returns>
-        public void DeliverParcelByDrone(int droneId, int parcelId);
-
+        public void DeliverParcel(int droneId, int parcelId);
+        
+        /// <summary>
+        /// get filtered stations list (by condition)
+        /// </summary>
+        /// <param name="match"></param>
+        /// <returns></returns>
         public IEnumerable<DO.Station> GetStationsList(System.Predicate<DO.Station> match);
+
+        /// <summary>
+        /// get filtered customers list (by condition)
+        /// </summary>
+        /// <param name="match"></param>
+        /// <returns></returns>
         public IEnumerable<DO.Customer> GetCustomersList(System.Predicate<DO.Customer> match);
+
+        /// <summary>
+        /// get filtered parcels list (by condition)
+        /// </summary>
+        /// <param name="match"></param>
+        /// <returns></returns>
         public IEnumerable<DO.Parcel> GetParcelsList(System.Predicate<DO.Parcel> match);
     }
 }
