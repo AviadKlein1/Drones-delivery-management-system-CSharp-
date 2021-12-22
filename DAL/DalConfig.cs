@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace DalApi
 {
+    /// <summary>
+    /// 
+    /// </summary>
     internal class DalConfig
     {
         internal static string DalName;
@@ -13,8 +16,8 @@ namespace DalApi
         {
             XElement dalConfig = XElement.Load(@"xml\dal-config.xml");
             DalName = dalConfig.Element("dal").Value;
-            DalPackages = (from pkg in dalConfig.Element("dal-packages").Elements()
-                           select pkg).ToDictionary(p => "" + p.Name, p => p.Value);
+            DalPackages = (from pkg in dalConfig.Element("dal-packages").Elements() select pkg).
+                ToDictionary(p => "" + p.Name, p => p.Value);
         }
     }
     public class DalConfigException : Exception

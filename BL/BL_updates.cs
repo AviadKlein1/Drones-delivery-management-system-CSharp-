@@ -128,7 +128,7 @@ namespace BlApi
                                 break;
                             }
                             // send drone to charge
-                            dal.DecriseChargeSlot(tempStation.Id);
+                            dal.DecreaseChargeSlot(tempStation.Id);
                             foreach (var dItem in dronesList)
                             {
                                 if (dItem.Id == droneId)
@@ -264,7 +264,7 @@ namespace BlApi
                             {
                                 ourSenderLocation = SenderLocation(item.Id);
                                 //update parcel
-                                dal.PickUpParcelByDrone(droneId, item.Id);
+                                dal.PickUpParcel(droneId, item.Id);
                                 flag = true;
                                 //update drone
                                 DroneToList temp = new();
@@ -337,7 +337,7 @@ namespace BlApi
                         {
                             ourReciverLocation = ReciverLocation(item.Id);
                             //update parcel
-                            dal.DeliverParcelByDrone(droneId, item.Id);
+                            dal.DeliverParcel(droneId, item.Id);
                             flag = true;
                             //update drone
                             DroneToList temp = new();
@@ -351,7 +351,7 @@ namespace BlApi
                                     temp.Location = new Location(ourReciverLocation);
                                     temp.Status = MyEnums.DroneStatus.available;
                                     temp.Weight = dItem.Weight;
-                                    temp.DeliveredParcelId = item.Id;
+                                    temp.DeliveredParcelId = 0;
                                     DalApi.DO.Location earlyDroneLocation = new(dItem.Location.Longitude, dItem.Location.Latitude);
                                     // update battery
                                     temp.Battery -= (int)BatteryRequirementForVoyage

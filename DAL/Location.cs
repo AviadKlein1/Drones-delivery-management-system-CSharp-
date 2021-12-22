@@ -18,9 +18,20 @@
                 Latitude = latitude;
             }
 
+            /// <summary>
+            /// 
+            /// </summary>
             public double Longitude { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
             public double Latitude { get; set; }
 
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
             public override string ToString()
             {
                 return $"latitude: { (int)Latitude } ° { (int)(Latitude - (int)Latitude) * 60 }'" +

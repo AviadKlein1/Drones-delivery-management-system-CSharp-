@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using DalApi;
+
 namespace DalApi
 {
     namespace DO
@@ -7,7 +7,7 @@ namespace DalApi
         namespace DalObject
         {
             /// <summary>
-            /// entity drone
+            /// contains all functions regards entity drone
             /// </summary>
             internal partial class DalObject : IDal
             {
@@ -16,12 +16,12 @@ namespace DalApi
                 /// </summary>
                 public void AddDrone(Drone myDrone, int firstChargeStationId)
                 {
-                    bool flag = false;
+                    bool found = false;
                     for (int i = 0; i < DataSource.stations.Count; i++)
-                        //if not such station exist
                         if (DataSource.stations[i].Id == firstChargeStationId)
-                            flag = true;
-                    if(flag == false)
+                            found = true;
+                    //if not such station exist
+                    if (found == false)
                         throw new WrongIdException(firstChargeStationId, $"no such station: {firstChargeStationId}");
 
                     for (int i = 0; i < DataSource.drones.Count; i++)
@@ -31,7 +31,7 @@ namespace DalApi
                     //insert drone to list
                     DataSource.drones.Add(myDrone);
                     //find charge slot
-                    DecriseChargeSlot(firstChargeStationId);
+                    DecreaseChargeSlot(firstChargeStationId);
                 }
 
                 /// <summary>
@@ -41,17 +41,15 @@ namespace DalApi
                 /// <returns></returns>
                 public Drone GetDrone(int myId)
                 {
-                    bool isDouble = false;
+                    bool found = false;
                     Drone temp = new();
                     for (int i = 0; i < DataSource.drones.Count; i++)
-                    {
                         if (DataSource.drones[i].Id == myId)
                         {
-                            isDouble = true;
+                            found = true;
                             temp = DataSource.drones[i];
                         }
-                    }
-                    if (isDouble == false)
+                    if (found == false)
                         return temp;
                     //if not found
                     else
@@ -67,6 +65,7 @@ namespace DalApi
                     temp = DataSource.drones;
                     return temp;
                 }
+
                 /// <summary>
                 /// update model in drone
                 /// <param name="droneId"></param>

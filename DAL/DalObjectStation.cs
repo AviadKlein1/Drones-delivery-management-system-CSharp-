@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using DalApi;
 
 namespace DalApi
 {
@@ -8,16 +7,20 @@ namespace DalApi
     {
         namespace DalObject
         {
-
             /// <summary>
-            /// entity station
+            /// contains all functions regards entity STATION
             /// </summary>
             internal sealed partial class DalObject : IDal
             {
+                #region singleton
+                /// <summary>
+                /// create a single instance of dal object
+                /// </summary>
                 private static readonly IDal instance = new DalObject();
                 public static IDal GetInstance() { return instance; }
                 private DalObject() { DataSource.Initialize(); }
-                
+                #endregion
+
                 /// <summary>
                 /// add to list
                 /// </summary>
@@ -37,18 +40,16 @@ namespace DalApi
                 /// <param name="myId"></param>
                 public Station GetStation(int myId)
                 {
-                    bool isDouble = false;
+                    bool found = false;
                     Station temp = new();
                     for (int i = 0; i < DataSource.stations.Count; i++)
-                    {
                         //search station
                         if (DataSource.stations[i].Id == myId)
                         {
-                            isDouble = true;
+                            found = true;
                             temp = DataSource.stations[i];
                         }
-                    }
-                    if (isDouble)
+                    if (found == true)
                         return temp;
                     //if not found
                     else
@@ -108,7 +109,7 @@ namespace DalApi
                 }
 
                 /// <summary>
-                /// return stations location by its id
+                /// return station location by its id
                 /// </summary>
                 /// <param name="StationId"></param>
                 /// <returns></returns>
@@ -116,21 +117,19 @@ namespace DalApi
                 {
                     Location temp = new();
                     for (int i = 0; i < DataSource.stations.Count; i++)
-                    {
                         if (DataSource.stations[i].Id == StationId)
                         {
                             temp.Latitude = DataSource.stations[i].Location.Latitude;
                             temp.Longitude = DataSource.stations[i].Location.Longitude;
                         }
-                    }
                     return temp;
                 }
 
                 /// <summary>
-                /// decrise num of available charge slots
+                /// decrease num of available charge slots
                 /// <param name="stationId"></param>
                 /// </summary>
-                public void DecriseChargeSlot(int stationId)
+                public void DecreaseChargeSlot(int stationId)
                 {
                     Station temp = new();
                     for (int i = 0; i < DataSource.stations.Count; i++)
@@ -147,6 +146,7 @@ namespace DalApi
                         }
                     }
                 }
+
                 /// <summary>
                 /// increase num of available charge slots
                 /// <param name="stationId"></param>
@@ -168,7 +168,7 @@ namespace DalApi
                     }
                 }
                 /// <summary>
-                /// return the distance between two coordinates
+                /// return the distance between two geographic coordinates
                 /// </summary>
                 /// <param name="a"></param>
                 /// <param name="b"></param>
