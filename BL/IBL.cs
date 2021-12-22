@@ -111,14 +111,14 @@ namespace BlApi
         /// </summary>
         /// <param name="droneId"></param>
         /// <returns></returns>
-        public bool PickUpParcelByDrone(int droneId);
+        public bool PickUpParcel(int droneId);
 
         /// <summary>
         /// deliver parcel to reciever. if succsses return true
         /// </summary>
         /// <param name="droneId"></param>
         /// <returns></returns>
-        public bool DeliverParcelByDrone(int droneId);
+        public bool DeliverParcel(int droneId);
 
         /// <summary>
         /// get stations list in condition
@@ -143,6 +143,5 @@ namespace BlApi
         /// </summary>
         /// <returns></returns> return list of parcels accured to conditions
         public IEnumerable<BO.ParcelToList> GetParcelsList(System.Predicate<DalApi.DO.Parcel> match);
-        //public IEnumerable<BO.ParcelToList> GetParcelsList(System.Predicate<DalApi.DO.Parcel> match);
     }
 }

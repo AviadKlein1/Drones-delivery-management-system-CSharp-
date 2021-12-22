@@ -7,7 +7,7 @@ namespace BlApi
         /// <summary>
         /// contains item updating functions
         /// </summary>
-        public partial class BL
+        public partial class BL : IBl
         {
             /// <summary>
             /// updates drone data
@@ -17,18 +17,17 @@ namespace BlApi
             /// <returns></returns>
             public bool UpdateDrone(int droneId, string newModel)
             {
-                bool flag = false;
+                bool found = false;
                 var dalDronesList = dal.GetDrones();
-                //search drone
                 foreach (var item in dalDronesList)
                 {
                     if (item.Id == droneId)
                     {
-                        flag = true;
+                        found = true;
                         break;
                     }
                 }
-                if (flag)
+                if (found)
                 {
                     dal.UpdateDrone(droneId, newModel);
                     foreach (var dItem in dronesList)
@@ -42,7 +41,7 @@ namespace BlApi
                 }
                 else
                     throw new WrongIdException(droneId, $"wrong id: {droneId}");
-                return flag;
+                return found;
             }
 
             /// <summary>
@@ -54,22 +53,22 @@ namespace BlApi
             /// <returns></returns>
             public bool UpdateStation(int stationId, string newName, int numOfChargeSlots)
             {
-                var flag = false;
+                bool found = false;
                 var dalStationsList = dal.GetStationsList(allStations);
                 //search station
                 foreach (var item in dalStationsList)
                 {
                     if (item.Id == stationId)
                     {
-                        flag = true;
+                        found = true;
                         break;
                     }
                 }
-                if (flag)
+                if (found)
                     dal.UpdateStation(stationId, newName, numOfChargeSlots);
                 else
                     throw new WrongIdException(stationId, $"wrong id: {stationId}");
-                return flag;
+                return found;
             }
 
             /// <summary>
@@ -81,22 +80,22 @@ namespace BlApi
             /// <returns></returns>
             public bool UpdateCustomer(int customerId, string newName, string newPhone)
             {
-                var flag = false;
+                var found = false;
                 var dalCustomersList = dal.GetCustomersList(allCustomers);
                 //search customer
                 foreach (var item in dalCustomersList)
                 {
                     if (item.Id == customerId)
                     {
-                        flag = true;
+                        found = true;
                         break;
                     }
                 }
-                if (flag)
+                if (found)
                     dal.UpdateCustomer(customerId, newName, newPhone);
                 else
                     throw new WrongIdException(customerId, $"wrong id: {customerId}");
-                return flag;
+                return found;
             }
 
             /// <summary>
@@ -106,22 +105,22 @@ namespace BlApi
             /// <returns></returns>
             public bool ChargeDrone(int droneId)
             {
-                var flag = false;
+                bool found = false;
                 var v = dronesList;
+
                 //search drone
-                foreach (var item in v)
+                foreach (DroneToList item in v)
                 {
                     if (item.Id == droneId)
                     {
                         if (item.Status != MyEnums.DroneStatus.available)
-                        {
-                            Console.WriteLine("not available drone\n");
-                            break;
-                        }
-                        else // is available 
+                            throw new OccupiedDroneException(droneId, $"wrong id: { droneId }");
+                        //is available
+                        else 
                         {
                             DalApi.DO.Location itemLocation = new(item.Location.Longitude, item.Location.Latitude);
                             var tempStation = NearestReachableChargeSlot(itemLocation, droneId);
+                            //if all stations are occupied
                             if (tempStation.Id == 0)
                             {
                                 Console.WriteLine("not available station to charge drone\n");
@@ -139,13 +138,13 @@ namespace BlApi
                                     var dis = dal.GetDistance(itemLocation, tempStation.Location);
                                     var neededBattery = (int)BatteryRequirementForVoyage(droneId, dis);
                                     dItem.Battery -= neededBattery;
-                                    flag = true;
+                                    found = true;
                                 }
                             }
                         }
                     }
                 }
-                return flag;
+                return found;
             }
 
             /// <summary>
@@ -156,7 +155,7 @@ namespace BlApi
             /// <returns></returns>
             public bool ReleaseDroneFromCharge(int droneId, int chargeTime)
             {
-                var flag = false;
+                bool found = false;
                 var v = dronesList;
                 //search drone
                 foreach (var item in v)
@@ -168,7 +167,8 @@ namespace BlApi
                             throw new WrongIdException
                                 (droneId, $"wrong id, drone is not charging currently: {droneId}");
                         }
-                        else // is maintenance 
+                        // in maintenance
+                        else
                         {
                             DalApi.DO.Location itemLocation = new(item.Location.Longitude, item.Location.Latitude);
                             var tempStation = NearestStation(itemLocation);
@@ -182,14 +182,15 @@ namespace BlApi
                                     //battery
                                     int newBattery = dItem.Battery += (int)(DroneLoadRate * chargeTime);
                                     dItem.Battery = newBattery > 100 ? 100 : newBattery;
-                                    flag = true;
+                                    found = true;
                                 }
                             }
                         }
                     }
                 }
-                return flag;
+                return found;
             }
+
             /// <summary>
             /// associate drone with parcel. if succsses return true
             /// </summary>
@@ -197,33 +198,28 @@ namespace BlApi
             /// <returns></returns>
             public bool ScheduleParcelToDrone(int droneId)
             {
-                var flag = false;
-           
-                    var v = dronesList;
+                bool found = false;
+                var v = dronesList;
                 //search drone
                 foreach (var item in v)
                 {
                     if (item.Id == droneId)
                     {
                         if (item.Status == MyEnums.DroneStatus.delivery)
-                        {
                             throw new OccupiedDroneException(droneId, $"drone is occupied, try another: {droneId}");
-                        }
                         else // is available 
                         {
                             int newParcelId = SuitableParcel(droneId);
                             if (newParcelId == 0)
                                 break;
-                            else flag = true;
+                            else found = true;
                             item.Status = MyEnums.DroneStatus.delivery;
                             item.DeliveredParcelId = newParcelId;
-                            dal.SheduleParcelToDrone(newParcelId, droneId);
+                            dal.ScheduleParcelToDrone(newParcelId, droneId);
                         }
                     }
-
                 }
-               
-                return flag;
+                return found;
             }
 
             /// <summary>
@@ -231,9 +227,9 @@ namespace BlApi
             /// </summary>
             /// <param name="droneId"></param>
             /// <returns></returns>
-            public bool PickUpParcelByDrone(int droneId)
+            public bool PickUpParcel(int droneId)
             {
-                var flag = false;
+                var found = false;
                 var droneExistFlag = false;
                 var v = dronesList;
                 int idOfThisParcel = 0;
@@ -247,16 +243,14 @@ namespace BlApi
                         droneExistFlag = true;
                     }
                 }
-                if (droneExistFlag == false)// exeption
-                {
+                if (droneExistFlag == false)
                     throw new WrongIdException(droneId, $"wrong id: {droneId}");
-                }
-                if (ScheduledButNotPickedUp(idOfThisParcel))// exeption
+                if (ScheduledButNotPickedUp(idOfThisParcel))
                 {
                     var parcelsList = dal.GetParcelsList(allParcels);
                     foreach (var item in parcelsList)
                     {
-                        //find our parcel
+                        //find parcel
                         if (item.Id == idOfThisParcel)
                         {
                             // our parcel belong to our drone
@@ -265,7 +259,7 @@ namespace BlApi
                                 ourSenderLocation = SenderLocation(item.Id);
                                 //update parcel
                                 dal.PickUpParcel(droneId, item.Id);
-                                flag = true;
+                                found = true;
                                 //update drone
                                 DroneToList temp = new();
                                 for (int i = 0; i < v.Count; i++)
@@ -293,17 +287,17 @@ namespace BlApi
                         }
                     }
                 }
-                return flag;
+                return found;
             }
 
             /// <summary>
-            /// deliver parcel to reciever. if succsses return true
+            /// deliver parcel to receiver
             /// </summary>
             /// <param name="droneId"></param>
-            /// <returns></returns>
-            public bool DeliverParcelByDrone(int droneId)
+            /// <returns></returns> returns a boolean type to determine wether
+            public bool DeliverParcel(int droneId)
             {
-                var flag = false;
+                bool flag = false;
                 var droneExistFlag = false;
                 var v = dronesList;
                 int idOfThisParcel = 0;
@@ -317,15 +311,10 @@ namespace BlApi
                         droneExistFlag = true;
                     }
                 }
-                if (droneExistFlag == false) // exeption
-                {
-                    Console.WriteLine("not such drone\n");
-                    return false;
-                }
+                if (droneExistFlag == false)
+                    throw new WrongIdException(droneId, $"wrong id: { droneId }");
                 if (!PickedUpButNotDelivered(idOfThisParcel))
-                {
                     Console.WriteLine("this parcel is not in the right status\n");
-                }
                 var parcelsList = dal.GetParcelsList(allParcels);
                 foreach (var item in parcelsList)
                 {

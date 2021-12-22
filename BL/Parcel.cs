@@ -9,9 +9,9 @@ namespace BlApi
         /// </summary>
         public class Parcel
         {
-            public int id { get; set; }
+            public int Id { get; set; }
             public CustomerInParcel Sender { get; set; }
-            public CustomerInParcel Reciever { get; set; }
+            public CustomerInParcel Receiver { get; set; }
             public DalApi.DO.MyEnums.WeightCategory Weight { get; set; }
             public DalApi.DO.MyEnums.PriorityLevel Priority { get; set; }
             public DroneInParcel DroneInParcel { get; set; }
@@ -26,7 +26,7 @@ namespace BlApi
             public Parcel()
             {
                 Sender = new CustomerInParcel();
-                Reciever = new CustomerInParcel();
+                Receiver = new CustomerInParcel();
                 DroneInParcel = new DroneInParcel();
                 Requested = DateTime.Now;
                 Scheduled = null;
@@ -41,9 +41,9 @@ namespace BlApi
             /// <param name="temp"></param>
             public Parcel(DalApi.DO.Parcel temp)
             {
-                id = temp.Id;
+                Id = temp.Id;
                 Sender = new CustomerInParcel();
-                Reciever = new CustomerInParcel();
+                Receiver = new CustomerInParcel();
                 DroneInParcel = new DroneInParcel();
                 Weight = temp.Weight;
                 Priority = temp.Priority;
@@ -54,7 +54,7 @@ namespace BlApi
             }
             public override string ToString()
             {
-                return $"ID: {id}\nWeight Category: {Weight}\nPriority: {Priority}" +
+                return $"ID: {Id}\nWeight Category: {Weight}\nPriority: {Priority}" +
                     $"\nrequested: {Requested}\nscheduled: {Scheduled}" +
                     $"\npicked up: {PickedUp}\ndelivered: {Delivered}\n";
             }
@@ -85,6 +85,7 @@ namespace BlApi
                     $" Weight Category: {Weight}\n Priority: {Priority}\n Parcel Status: {ParcelStatus}";
             }
         }
+
         public class ParcelInDelivery
         {
             public int Id { get; set; }
@@ -92,14 +93,14 @@ namespace BlApi
             public DalApi.DO.MyEnums.PriorityLevel Priority { get; set; }
             public bool BoolParcelStatus { get; set; }
             public CustomerInParcel Sender { get; set; }
-            public CustomerInParcel Reciever { get; set; }
+            public CustomerInParcel Receiver { get; set; }
             public Location PickUpLocation { get; set; }
             public Location TargetLocation { get; set; }
             public double Distance { get; set; }
 
             public override string ToString()
             {
-                return $"ID: {Id}\n sender: {Sender}\n reciever: {Reciever}\n bool Parcel Status: {BoolParcelStatus}" +
+                return $"ID: {Id}\n sender: {Sender}\n reciever: {Receiver}\n bool Parcel Status: {BoolParcelStatus}" +
                     $" Weight Category: {Weight}\n Priority: {Priority}\n distance: {Distance}\n" +
                     $" pick Up Location: {PickUpLocation}\n target Location: {TargetLocation}\n";
             }
@@ -108,14 +109,14 @@ namespace BlApi
         {
             public int Id { get; set; }
             public string SenderName { get; set; }
-            public string RecieverName { get; set; }
+            public string ReceiverName { get; set; }
             public DalApi.DO.MyEnums.WeightCategory Weight { get; set; }
             public DalApi.DO.MyEnums.PriorityLevel Priority { get; set; }
             public DalApi.DO.MyEnums.ParcelStatus ParcelStatus { get; set; }
 
             public override string ToString()
             {
-                return $"ID: {Id}\nSender name: {SenderName}\nReceiver name: {RecieverName}\n" +
+                return $"ID: {Id}\nSender name: {SenderName}\nReceiver name: {ReceiverName}\n" +
                     $"Weight Category: {Weight}\nPriority: {Priority}\nParcel Status: {ParcelStatus}";
             }
         }

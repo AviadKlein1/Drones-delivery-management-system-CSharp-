@@ -28,7 +28,15 @@ namespace BlApi
                 NumOfAvailableChargeSlots = temp.NumOfAvailableChargeSlots;
                 Location = new Location(temp.Location);
             }
+
+            /// <summary>
+            /// 
+            /// </summary>
             public int Id { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
             public string Name { get; set; }
             public int NumOfAvailableChargeSlots { get; set; }
             public int NumOfChargeSlots { get; set; }

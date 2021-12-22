@@ -44,11 +44,10 @@
             /// <returns></returns>
             public override string ToString()
             {
-                double minLat = ((double)(Latitude - (int)Latitude) * 60);
-                double minLon = ((double)(Longitude - (int)Longitude) * 60);
-                double secLat = ((double)(minLat - (int)minLat) * 60);
-                double secLon = ((double)(minLon - (int)minLon) * 60);
-
+                double minLat = (double)(Latitude - (int)Latitude) * 60;
+                double minLon = (double)(Longitude - (int)Longitude) * 60;
+                double secLat = (double)(minLat - (int)minLat) * 60;
+                double secLon = (double)(minLon - (int)minLon) * 60;
 
                 return $"{ (int)Latitude }° { (int)minLat }' { (int)secLat}\" N  " +
                     $"{ (int)Longitude }° {(int)minLon}' {(int)secLon}\" S";
