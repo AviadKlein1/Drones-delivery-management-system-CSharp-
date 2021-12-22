@@ -18,6 +18,7 @@ using BlApi;
 using ConsoleUI_BL;
 using System.Diagnostics;
 using ControlzEx.Theming;
+using System.Runtime.InteropServices;
 
 namespace PrL
 {
@@ -41,7 +42,6 @@ namespace PrL
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                
             }
         }
      
@@ -66,10 +66,20 @@ namespace PrL
         {
             Close();
         }
+
+        #region DllImport
+        [DllImport("Kernel32")]
+        public static extern void AllocConsole();
+
+        [DllImport("Kernel32")]
+        public static extern void FreeConsole();
+        #endregion
+
         private void AdminAccssesButton_Click(object sender, RoutedEventArgs e)
         {
+            AllocConsole();
             #region ADMIN API
-            Console.WriteLine("\n-- Welcome to -- Delivery by Drones --  System management interface --\n\n");
+            Console.WriteLine("\n-- Welcome to -- Delivery by Drones --  Management interface --\n\n");
 
             int id = 0;
             int choice1 = -1;

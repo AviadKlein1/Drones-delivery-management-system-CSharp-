@@ -21,16 +21,13 @@ namespace PrL
     /// </summary>
     public partial class dronesList : MetroWindow
     {
-
         BlApi.BO.BL bl;
         public dronesList(IBl mainBl)
         {
             InitializeComponent();
             ThemeManager.Current.ChangeTheme(this, "Light.blue");
-
             bl = (BlApi.BO.BL)mainBl;
             dronesListView.ItemsSource = bl.GetDrones();
-
             weightSelector.ItemsSource = Enum.GetValues(typeof(DalApi.DO.MyEnums.WeightCategory));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(BlApi.BO.MyEnums.DroneStatus));
 
@@ -54,7 +51,6 @@ namespace PrL
 
         private void dclick(object sender, MouseButtonEventArgs e)
         {
-           
             new AddDrone(bl, (BlApi.BO.DroneToList)dronesListView.SelectedItem).Show();
         }
 
@@ -66,7 +62,6 @@ namespace PrL
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
             dronesListView.Items.Refresh();
-           
         }
     }
 }
