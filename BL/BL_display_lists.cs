@@ -18,7 +18,8 @@ namespace BlApi
             public IEnumerable<StationToList> GetStationsList(System.Predicate<DalApi.DO.Station> match)
             {
                 List<StationToList> newList = new();
-                var v = dal.GetStationsList(match);
+                var v = dal.GetStationsList(item => item.IsActive);
+                
                 foreach (var item in v)
                 {
                     StationToList newStation = new();
