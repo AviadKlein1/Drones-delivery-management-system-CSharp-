@@ -353,6 +353,7 @@ namespace BlApi
                         else Console.WriteLine("not our parcel");
                     }
                 }
+
                 var g = ChargeDrone(droneId);
                 return flag;
             }

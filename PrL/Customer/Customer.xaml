@@ -44,10 +44,10 @@
             <TextBox  x:Name="PhoneBox" Text="{Binding Path = PhoneNumber}"  HorizontalAlignment="Center" Width="150"/>
             
             <TextBlock x:Name="ParcelSentBlock" Text="Parcel Sent: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
-            <TextBox  x:Name="ParcelSentBox" Text="{Binding Path = ParcelSent}" HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            <TextBox  x:Name="ParcelSentBox" HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
             
             <TextBlock x:Name="ParcelRecievedBlock" Text="Parcel Recieved: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
-            <TextBox  x:Name="ParcelRecievedBox" Text="{Binding Path = ParcelRecieved}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            <ComboBox  x:Name="ParcelRecievedComboBox" Text="{Binding Path = ParcelRecieved}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
             
             <TextBlock x:Name="LocationBlock" Text="The location: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox  x:Name="CustomerLocationBox"   HorizontalAlignment="Center" Width="150" IsEnabled="False"/>

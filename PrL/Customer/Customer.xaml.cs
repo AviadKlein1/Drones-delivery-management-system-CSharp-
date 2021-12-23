@@ -18,10 +18,8 @@ namespace PrL
             InitializeComponent();
             Title = "Add new Customer";
             bl = mainBl;
-            //AddWeightselectorCombo.ItemsSource = Enum.GetValues(typeof(DalApi.DO.MyEnums.WeightCategory));
-            //var StationsNameId = bl.GetStationsList(BlApi.BO.BL.AllStations).Select(item => item.Id + " " + item.Name);
-            //AddIdOfFirstChargeSelectorCombo.ItemsSource = StationsNameId;
             AddNewCustomer.Visibility = Visibility.Visible;
+
         }
         public Customer(BlApi.BO.BL mainBl, BlApi.BO.CustomerToList mainDrone)
         {
@@ -31,6 +29,13 @@ namespace PrL
             bl = mainBl;
             customerToList = mainDrone;
             customer = bl.DisplayCustomer(customerToList.Id);
+            var v = bl.DisplayCustomer(customerToList.Id).ParcelsSent.Select(item => item.Id + " ");
+            ParcelSentBox.Text = $"{v}";
+            ParcelRecievedComboBox.ItemsSource = bl.DisplayCustomer(customerToList.Id).ParcelsRecieved;
+
+
+
+
             DisplayCustomer.DataContext = customer;
             DisplayCustomer.Visibility = Visibility.Visible;
             double minLat = ((double)(customer.Location.Latitude - (int)customer.Location.Latitude) * 60);
@@ -65,7 +70,7 @@ namespace PrL
 
 
             MessageBox.Show("success!");
-            this.Close();
+            Close();
         }
         private void CancelButton3_Click(object sender, RoutedEventArgs e)
         {
@@ -77,7 +82,9 @@ namespace PrL
             customerToList.Name = (string)NameBox.Text;
             customerToList.PhoneNumber = (string)PhoneBox.Text;
             bl.UpdateCustomer(customerToList.Id, customerToList.Name, customerToList.PhoneNumber);
+            
             MessageBox.Show("success!");
+            Close();
         }
     }
 }
