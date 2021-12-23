@@ -41,12 +41,20 @@
         <Image Source="C:\Users\Aviad\Source\Repos\AviadKlein1\dotNet5782_2679_3080\PrL\resources\images\main.jpg" Stretch="Fill" />
 
         <Button
-            x:Name="CustomerEnterButton"
+            x:Name="AdminDrones"
             Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
-            Content="User"
+            Content="Drones"
             Background="Transparent"
-            ToolTip="User Interface"
-            Click="CustomerEnterButton_Click" Height="80" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"
+            ToolTip="Drones manage Interface"
+            Click="AdminDrones_Click" Height="80" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"
+            />
+        <Button
+            x:Name="AdminCustomers"
+            Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
+            Content="Customers"
+            Background="Transparent"
+            ToolTip="Customers manage Interface"
+            Click="AdminCustomers_Click"  Height="80" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,80,0,0"
             />
         <Button
             x:Name="AdminAccssesButton"

@@ -7,7 +7,7 @@ using ControlzEx.Theming;
 
 namespace PrL
 {
-    public partial class AddDrone : MetroWindow
+    public partial class AddDrone: MetroWindow
     {
         BlApi.BO.BL bl;
         BlApi.BO.Drone drone = new();
