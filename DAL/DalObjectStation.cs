@@ -57,6 +57,27 @@ namespace DalApi
                 }
 
                 /// <summary>
+                /// delete station
+                /// </summary>
+                /// <param name="myId"></param>
+                /// <returns></returns>
+                public void DeleteStation(int myId)
+                {
+                    for (int i = 0; i < DataSource.stations.Count; i++)
+                    {
+                        Station item = DataSource.stations[i];
+                        //search station
+                        if (DataSource.stations[i].Id == myId)
+                        {
+                            _ = DataSource.stations[i].IsActive == false;
+                            return;
+                        }
+                    }
+                   throw new WrongIdException(myId, $"wrong id: {myId}");
+                }
+
+
+                /// <summary>
                 /// return stations by conditions
                 /// </summary>
                 public IEnumerable<Station> GetStationsList(Predicate<Station> match)

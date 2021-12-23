@@ -1,7 +1,8 @@
 ﻿//Aviad Klein 315552679
 //Tomer Peretz 314083080
 //C# Mini Project
-//The program handles and monitors the ongoing management and activity of a courier company using drones  
+//The program handles and monitors the ongoing management
+//and activityof a courier company using drones  
 
 using System;
 using BlApi;
@@ -18,7 +19,7 @@ namespace ConsoleUI_BL
 
             Input myInputOutput = new();
 
-            Console.WriteLine("\n-- Welcome to -- Delivery by Drones --  System management interface --\n\n");
+            Console.WriteLine("\n-- Welcome to -- Delivery by Drones -- System management interface --\n\n");
 
             int id = 0;
             int choice1 = -1;
@@ -33,6 +34,7 @@ namespace ConsoleUI_BL
                     "2: Update an item\n" +
                     "3: Display an item\n" +
                     "4: Display a list of items\n" +
+                    "5: delete an item\n" + 
                     "0: exit\n");
                     int.TryParse(Console.ReadLine(), out choice1);
 
@@ -424,13 +426,82 @@ namespace ConsoleUI_BL
                                 }
                             }
                             break;
-                        //end
-                        case 0:
-                            Console.WriteLine("see you soon");
-                            return;
 
-                        default:
-                            break;
+                        //delete item
+                        //case 5:
+                        //    while (choice2 != 0)
+                        //    {
+                        //        Console.WriteLine("To delete a station enter 1" +
+                        //        "\nTo delete a drone enter 2" +
+                        //        "\nTo delete a customer enter 3" +
+                        //        "\nTo delete a parcel enter 4" +
+                        //        "\nTo return to main menu enter 0\n");
+                        //        int.TryParse(Console.ReadLine(), out choice2);
+                        //        switch (choice2)
+                        //        {
+                        //            //delete station
+                        //            case 1:
+                        //                Console.WriteLine("enter station id\n");
+                        //                int.TryParse(Console.ReadLine(), out id);
+                        //                try
+                        //                {
+                        //                    bl.DeleteStation(id);
+                        //                }
+                        //                catch (Exception ex)
+                        //                {
+                        //                    Console.WriteLine(ex.Message);
+                        //                }
+                        //                break;
+                        //            //delete drone
+                        //            case 2:
+                        //                Console.WriteLine("enter drone id\n");
+                        //                int.TryParse(Console.ReadLine(), out id);
+                        //                try
+                        //                {
+                        //                    bl.DeleteDrone(id));
+                        //                }
+                        //                catch (Exception ex)
+                        //                {
+                        //                    Console.WriteLine(ex.Message);
+                        //                }
+                        //                break;
+                        //            //delete customer
+                        //            case 3:
+                        //                Console.WriteLine("enter customer id\n");
+                        //                int.TryParse(Console.ReadLine(), out id);
+                        //                try
+                        //                {
+                        //                    bl.DeleteCustomer(id));
+                        //                }
+                        //                catch (Exception ex)
+                        //                {
+                        //                    Console.WriteLine(ex.Message);
+                        //                }
+                        //                break;
+                        //            //delete parcel
+                        //            case 4:
+                        //                Console.WriteLine("enter parcel id\n");
+                        //                int.TryParse(Console.ReadLine(), out id);
+                        //                try
+                        //                {
+                        //                    bl.DeleteParcel(id));
+                        //                }
+                        //                catch (Exception ex)
+                        //                {
+                        //                    Console.WriteLine(ex.Message);
+                        //                }
+                        //                break;
+
+                        //            default:
+                        //                break;
+
+                            //        //end
+                            //        case 0:
+                            //            Console.WriteLine("see you soon");
+                            //            return;
+                            //    }
+                            //}
+                            //break;
                     }
                 }
             }

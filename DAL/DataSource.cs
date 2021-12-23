@@ -29,10 +29,10 @@ namespace DalApi
                 {
                     public static int ParcelRunId = 100000;
                     public static double free = 0.15;
-                    public static double lightWeight = 0.3;
-                    public static double mediumWeight = 0.5;
-                    public static double heavyWeight = 0.75;
-                    public static double DroneLoadRate = 0.25;
+                    public static double lightWeight = 0.03;
+                    public static double mediumWeight = 0.05;
+                    public static double heavyWeight = 0.075;
+                    public static double DroneLoadRate = 0.4;
                 }
 
                 /// <summary>
