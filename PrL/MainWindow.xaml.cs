@@ -66,12 +66,6 @@ namespace PrL
         {
             Process.Start(new ProcessStartInfo("mailto:tomerperetz55@gmail.com?subject=SubjectExample&body=BodyExample") { UseShellExecute = true });
         }
-
-        private void CustomerEnterButton_Click(object sender, RoutedEventArgs e)
-        {
-            new dronesList(bl).Show();
-        }
-
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -515,5 +509,15 @@ namespace PrL
             }
         }
         #endregion ADMIN API
+
+        private void AdminDrones_Click(object sender, RoutedEventArgs e)
+        {
+            new dronesList(bl).Show();
+        }
+
+        private void AdminCustomers_Click(object sender, RoutedEventArgs e)
+        {
+            new CustomersList(bl).Show();
+        }
     }
 }

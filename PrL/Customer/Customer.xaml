@@ -1,0 +1,68 @@
+﻿<mah:MetroWindow
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PrL"
+        xmlns:BO="clr-namespace:BlApi.BO;assembly=BL" 
+        x:Class="PrL.Customer"
+        mc:Ignorable="d"
+    
+       Background="#FF517391" Height="570" Width="300">
+    <Grid>
+        <StackPanel x:Name="AddNewCustomer" Visibility="Collapsed">
+            <Label x:Name="InsertLabel" Content="Insert ditales" HorizontalAlignment="Center"  Margin="0,20,0,10" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+            <TextBlock x:Name="AddCustomerIdBlock"  Text="ID: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox x:Name="AddCustomerIdBox"  Text="Id..." HorizontalAlignment="Center" Width="150" />
+
+            <TextBlock x:Name="AddCustomerNameBlock" Text="Name: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150"/>
+            <TextBox  x:Name="AddCustomerNameBox" Text="Name..." HorizontalAlignment="Center" Width="150" />
+
+            <TextBlock x:Name="AddCustomerPhoneNumberBlock"  Text="Phone number: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="AddCustomerPhoneNumberBox" Text="Phone..." HorizontalAlignment="Center" Width="150" />
+
+            <TextBlock x:Name="AddCustomerLongitudeBlock" Text="Longitude: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="AddCustomerLongitudeBox" Text="Longitude..." HorizontalAlignment="Center" Width="150" />
+
+            <TextBlock x:Name="AddCustomerLattiudeBlock" Text="Lattiude: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="AddCustomerLattiudeBox" Text="Lattiude..." HorizontalAlignment="Center" Width="150" />
+
+            <Button x:Name="SubmitCustomerButton" Content="Submit" HorizontalAlignment="Center" Margin="0,40,0,0"  Height="84" Width="84" Click="SubmitCustomerButton_Click" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" BorderThickness="12" />
+
+        </StackPanel>
+
+        <StackPanel x:Name="DisplayCustomer" Visibility="Collapsed">
+            <Label x:Name="CustomerDitails" Content="Customer ditales" HorizontalAlignment="Center"  Margin="0,20,0,10" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+            <TextBlock x:Name="IdBlock"  Text="ID: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox x:Name="CustomerIdBox"  Text="{Binding Path = Id}" HorizontalAlignment="Center" Width="150" IsEnabled="False" />
+            
+            <TextBlock x:Name="NameBlock" Text="Name: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150"/>
+            <TextBox  x:Name="NameBox" Text="{Binding Path = Name}" HorizontalAlignment="Center" Width="150"/>
+            
+            <TextBlock x:Name="PhoneBlock"  Text="Phone number: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="PhoneBox" Text="{Binding Path = PhoneNumber}"  HorizontalAlignment="Center" Width="150"/>
+            
+            <TextBlock x:Name="ParcelSentBlock" Text="Parcel Sent: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="ParcelSentBox" Text="{Binding Path = ParcelSent}" HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            
+            <TextBlock x:Name="ParcelRecievedBlock" Text="Parcel Recieved: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="ParcelRecievedBox" Text="{Binding Path = ParcelRecieved}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            
+            <TextBlock x:Name="LocationBlock" Text="The location: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="CustomerLocationBox"   HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            
+            <Label x:Name="Options" Content="Update options"  HorizontalAlignment="Center"  Margin="0,20,0,2" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+
+            <StackPanel x:Name="UpdatePanel" Visibility="Visible">
+                <Button x:Name="UpdatNameAndPhone" Grid.Column="0" BorderBrush="Bisque" BorderThickness="2" Click="UpdatNameAndPhone_Click" Width="224">
+                    <TextBlock Text="Update Name and Phone number" TextWrapping="Wrap" Cursor="Hand" />
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <Button x:Name="CancelButton3" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,2"  Height="26" Width="52" Click="CancelButton3_Click"  Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" />
+
+    </Grid>
+</mah:MetroWindow>
+
+  
