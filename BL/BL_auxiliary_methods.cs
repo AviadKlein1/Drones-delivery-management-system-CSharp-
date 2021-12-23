@@ -89,17 +89,17 @@ namespace BlApi
                     {
                         var dalParcelsList = dal.GetParcelsList(allParcels);
                         //search parcel
-                        foreach (var Pelement in dalParcelsList)
+                        foreach (var myParcel in dalParcelsList)
                         {
-                            if (Pelement.DroneId == element.Id)
+                            if (myParcel.DroneId == element.Id)
                             {
                                 //calculate requirement
-                                if (Pelement.Weight == DalApi.DO.MyEnums.WeightCategory.light)
-                                    return lightWeight * distance;
-                                if (Pelement.Weight == DalApi.DO.MyEnums.WeightCategory.medium)
-                                    return mediumWeight * distance;
-                                if (Pelement.Weight == DalApi.DO.MyEnums.WeightCategory.heavy)
-                                    return heavyWeight * distance;
+                                if (myParcel.Weight == DalApi.DO.MyEnums.WeightCategory.light)
+                                    return lightWeight * distance / 100;
+                                if (myParcel.Weight == DalApi.DO.MyEnums.WeightCategory.medium)
+                                    return mediumWeight * distance / 100;
+                                if (myParcel.Weight == DalApi.DO.MyEnums.WeightCategory.heavy)
+                                    return heavyWeight * distance / 100;
                             }
                         }
                     }
@@ -523,7 +523,7 @@ namespace BlApi
                 var dis1 = dal.GetDistance(myDroneLocation, senderLocation);
                 var dis2 = dal.GetDistance(senderLocation, reciverLocation);
                 var dis3 = dal.GetDistance(reciverLocation, chargeStation.Location);
-                var fullDistance = (dis1 + dis2 + dis3) / 100000;
+                var fullDistance = (dis1 + dis2 + dis3) / 1000;
 
                 double Consumption = 0;
                 if (tempParcel.Weight == DalApi.DO.MyEnums.WeightCategory.light) Consumption = lightWeight;

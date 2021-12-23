@@ -271,6 +271,7 @@ namespace BlApi
                                         temp.Model = dItem.Model;
                                         temp.Location = new Location(ourSenderLocation);
                                         temp.Status = dItem.Status;
+                                        temp.Battery = dItem.Battery;
                                         temp.Weight = dItem.Weight;
                                         temp.DeliveredParcelId = item.Id;
                                         DalApi.DO.Location earlyDroneLocation =
@@ -340,6 +341,7 @@ namespace BlApi
                                     temp.Location = new Location(ourReciverLocation);
                                     temp.Status = MyEnums.DroneStatus.available;
                                     temp.Weight = dItem.Weight;
+                                    temp.Battery = dItem.Battery;
                                     temp.DeliveredParcelId = 0;
                                     DalApi.DO.Location earlyDroneLocation = new(dItem.Location.Longitude, dItem.Location.Latitude);
                                     // update battery

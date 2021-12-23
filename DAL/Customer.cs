@@ -15,8 +15,19 @@
             /// 
             /// </summary>
             public string Name { get; set; }
+            /// <summary>
+            /// 
+            /// </summary>
             public string PhoneNumber { get; set; }
+            /// <summary>
+            /// 
+            /// </summary>
             public Location Location { get; set; }
+            /// <summary>
+            /// 
+            /// </summary>
+            public bool IsActive { get; set; }
+
         }
     }
 }
