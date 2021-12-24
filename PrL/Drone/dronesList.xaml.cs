@@ -59,7 +59,7 @@ namespace PrL
             new AddDrone(bl).Show();
         }
 
-        private void Refresh_Click(object sender, RoutedEventArgs e)
+        public void Refresh_Click(object sender, RoutedEventArgs e)
         {
             dronesListView.Items.Refresh();
         }

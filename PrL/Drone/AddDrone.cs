@@ -80,7 +80,7 @@ namespace PrL
           
 
             MessageBox.Show("success!");
-            this.Close();
+            Close();
         }
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
@@ -92,12 +92,17 @@ namespace PrL
             droneToList.Model = (string)DroneModelBox.Text;
             bl.UpdateDrone(droneToList.Id, droneToList.Model);
             MessageBox.Show("success!");
+            Close();
+            
         }
-
         private void SendDroneToCharge_Click(object sender, RoutedEventArgs e)
         {
             if (bl.ChargeDrone(droneToList.Id)) MessageBox.Show("success!");
             else MessageBox.Show("Faild!");
+            this.
+
+
+            Close();
         }
 
         private void EndCharge_Click(object sender, RoutedEventArgs e)
@@ -105,6 +110,8 @@ namespace PrL
             int chargeTime = int.Parse(ChrgeTimeBox.Text);
             if (bl.ReleaseDroneFromCharge(droneToList.Id, chargeTime)) MessageBox.Show("success!");
             else MessageBox.Show("failed!");
+            Close();
+
         }
 
         private void ScheduleParcelToDrone_Click(object sender, RoutedEventArgs e)
@@ -119,18 +126,25 @@ namespace PrL
                 return;
             }
             MessageBox.Show("success!");
+            Close();
+
         }
 
         private void PickUpParcel_Click(object sender, RoutedEventArgs e)
         {
             if (bl.PickUpParcel(droneToList.Id)) MessageBox.Show("success!");
             else MessageBox.Show("failed!");
+            Close();
+
         }
 
         private void DeliverParcel_Click(object sender, RoutedEventArgs e)
         {
             if (bl.DeliverParcel(droneToList.Id)) MessageBox.Show("success!");
             else MessageBox.Show("Faild!");
+
+            Close();
+
         }
     }
 }
