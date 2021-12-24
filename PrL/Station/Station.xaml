@@ -1,12 +1,69 @@
-﻿<Window x:Class="PrL.Station.Station"
+﻿<mah:MetroWindow
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PrL.Station"
+        xmlns:local="clr-namespace:PrL"
+        xmlns:BO="clr-namespace:BlApi.BO;assembly=BL" 
+        x:Class="PrL.Station"
         mc:Ignorable="d"
-        Title="Station" Height="450" Width="800">
+    
+       Background="#FF517391" Height="570" Width="300">
     <Grid>
-        
+        <StackPanel x:Name="AddNewStation" Visibility="Collapsed">
+            <Label x:Name="InsertLabel" Content="Insert ditales" HorizontalAlignment="Center"  Margin="0,20,0,10" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+            
+            <TextBlock x:Name="AddStationIdBlock"  Text="ID: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox x:Name="AddStationIdBox"  Text="Id..." HorizontalAlignment="Center" Width="150" />
+
+            <TextBlock x:Name="AddStationNameBlock" Text="Name: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150"/>
+            <TextBox  x:Name="AddStationNameBox" Text="Name..." HorizontalAlignment="Center" Width="150" />
+
+            <TextBlock x:Name="AddStationNumOfCSBlock"  Text="Num Of Charge Slots: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="AddStationNumOfCSBox" Text="Num Of Charge Slots..." HorizontalAlignment="Center" Width="150" />
+
+            <TextBlock x:Name="AddStationLongitudeBlock" Text="Longitude: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="AddStationLongitudeBox" Text="Longitude..." HorizontalAlignment="Center" Width="150" />
+
+            <TextBlock x:Name="AddStationLattiudeBlock" Text="Lattiude: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="AddStationLattiudeBox" Text="Lattiude..." HorizontalAlignment="Center" Width="150" />
+
+            <Button x:Name="SubmitStationButton" Content="Submit" HorizontalAlignment="Center" Margin="0,40,0,0"  Height="84" Width="84" Click="SubmitStationButton_Click" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" BorderThickness="12" />
+
+        </StackPanel>
+
+        <StackPanel x:Name="DisplayStation" Visibility="Collapsed">
+            <Label x:Name="StationDitails" Content="Customer ditales" HorizontalAlignment="Center"  Margin="0,20,0,10" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+            <TextBlock x:Name="IdBlock"  Text="ID: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox x:Name="StationIdBox"  Text="{Binding Path = Id}" HorizontalAlignment="Center" Width="150" IsEnabled="False" />
+
+            <TextBlock x:Name="NameBlock" Text="Name: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150"/>
+            <TextBox  x:Name="NameStationBox" Text="{Binding Path = Name}" HorizontalAlignment="Center" Width="150"/>
+
+            <TextBlock x:Name="NumOfChargeSlotsBlock"  Text="Num Of Charge Slots: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="NumOfChargeSlotsBox" Text="{Binding Path = NumOfChargeSlots}"  HorizontalAlignment="Center" Width="150" />
+
+            <TextBlock x:Name="NumOfAvailableChargeSlotsBlock" Text="Num Of Available Charge Slots: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="NumOfAvailableChargeSlotsBox" Text="{Binding Path = NumOfAvailableChargeSlots}" HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+
+            <TextBlock x:Name="DronesInChargeBlock" Text="Drones In Charge: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <ComboBox  x:Name="DronesInChargeComboBox"  IsEditable="True" IsReadOnly="True"  HorizontalAlignment="Center" Width="150" Text="Double click drone" MouseDoubleClick="DronesInChargeComboBox_MouseDoubleClick"/>
+
+            <TextBlock x:Name="LocationStationBlock" Text="The location: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="StationLocationBox"   HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+
+            <Label x:Name="Options" Content="Update options"  HorizontalAlignment="Center"  Margin="0,20,0,2" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+
+            <StackPanel x:Name="UpdatePanel" Visibility="Visible">
+                <Button x:Name="UpdatNameAndChargeSlots" Grid.Column="0" BorderBrush="Bisque" BorderThickness="2" Click="UpdatNameAndChargeSlots_Click" Width="224">
+                    <TextBlock Text="Update Name and Charge Slots number" TextWrapping="Wrap" Cursor="Hand" />
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <Button x:Name="CancelButton3" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,2"  Height="26" Width="52" Click="CancelButton3_Click"  Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" />
+
     </Grid>
-</Window>
+</mah:MetroWindow>
+
+  

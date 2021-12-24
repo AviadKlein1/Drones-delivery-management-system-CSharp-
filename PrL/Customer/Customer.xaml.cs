@@ -29,12 +29,10 @@ namespace PrL
             bl = mainBl;
             customerToList = mainDrone;
             customer = bl.DisplayCustomer(customerToList.Id);
-            var v = bl.DisplayCustomer(customerToList.Id).ParcelsSent.Select(item => item.Id + " ");
-            ParcelSentBox.Text = $"{v}";
-            ParcelRecievedComboBox.ItemsSource = bl.DisplayCustomer(customerToList.Id).ParcelsRecieved;
-
-
-
+            ParcelRecievedComboBox.ItemsSource = customer.ParcelsRecieved.Select(item=> item.Id);
+            ParcelRecievedComboBox.Items.ToString();
+            ParcelSentComboBox.ItemsSource = customer.ParcelsSent.Select(item => item.Id);
+            ParcelSentComboBox.Items.ToString();
 
             DisplayCustomer.DataContext = customer;
             DisplayCustomer.Visibility = Visibility.Visible;
@@ -85,6 +83,19 @@ namespace PrL
             
             MessageBox.Show("success!");
             Close();
+        }
+
+        private void ParcelRecievedComboBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var v = (int)ParcelRecievedComboBox.SelectedItem;
+            MessageBox.Show(bl.DisplayParcel(v).ToString());
+           
+        }
+
+        private void ParcelSentComboBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var v = (int)ParcelSentComboBox.SelectedItem;
+            MessageBox.Show(bl.DisplayParcel(v).ToString());
         }
     }
 }

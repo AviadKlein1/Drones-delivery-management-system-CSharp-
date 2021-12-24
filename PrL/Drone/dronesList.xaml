@@ -19,7 +19,11 @@
         </mah:WindowCommands>
     </mah:MetroWindow.LeftWindowCommands>
     <Grid Name="Main_Grid">
-        <ListView x:Name="dronesListView" Background="#FF517391"  Grid.Row="2" Margin="0,23,0,0"  MouseDoubleClick="dclick">
+        <ListView x:Name="dronesListView" Background="#FF517391"
+                  Grid.Row="2" Margin="0,23,0,0"  MouseDoubleClick="dclick"
+                GridViewColumnHeader.Click="dronesListView_Click"
+            IsSynchronizedWithCurrentItem="True" >
+
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="BorderBrush" Value="LightGray" />
@@ -28,19 +32,16 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
-
-                    <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Id}"/>
                     <GridViewColumn Header="Model" Width="80" DisplayMemberBinding="{Binding Model}" />
                     <GridViewColumn Header="Weight" Width="80" DisplayMemberBinding="{Binding Weight}" />
-                    <GridViewColumn Header="Status" Width="80" DisplayMemberBinding="{Binding Status}" />
+                    <GridViewColumn Header="Status"  Width="80" DisplayMemberBinding="{Binding Status}" />
                     <GridViewColumn Header="Battery" Width="60" DisplayMemberBinding="{Binding Battery}" />
                     <GridViewColumn Header="Location" Width="220" DisplayMemberBinding="{Binding Location}" />
                     <GridViewColumn Header="Delivered Parcel Id" Width="140" DisplayMemberBinding="{Binding DeliveredParcelId}" />
-
                 </GridView>
-
             </ListView.View>
-        </ListView>
+            </ListView>
 
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
         VerticalAlignment="Stretch" Width="auto" Margin="0,0,0,0">
@@ -77,4 +78,6 @@
             <RowDefinition Height="400*"/>
         </Grid.RowDefinitions>
     </Grid>
+    
+    
 </mah:MetroWindow>

@@ -12,7 +12,7 @@ using System.Windows.Media;
 using MahApps.Metro.Controls;
 using ControlzEx.Theming;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.ComponentModel;
 using BlApi;
 namespace PrL
 {
@@ -22,6 +22,8 @@ namespace PrL
     public partial class dronesList : MetroWindow
     {
         BlApi.BO.BL bl;
+        
+
         public dronesList(IBl mainBl)
         {
             InitializeComponent();
@@ -47,21 +49,40 @@ namespace PrL
             if (e.AddedItems.Contains(DalApi.DO.MyEnums.WeightCategory.light)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInLight);
         }
 
-
-
         private void dclick(object sender, MouseButtonEventArgs e)
         {
-            new AddDrone(bl, (BlApi.BO.DroneToList)dronesListView.SelectedItem).Show();
+            try
+            {
+                new AddDrone(bl, (BlApi.BO.DroneToList)dronesListView.SelectedItem).Show();
+                Refresh_Click(sender, e);
+            }
+            catch (Exception) { }
         }
 
         private void AddNewDrone_Click(object sender, RoutedEventArgs e)
         {
             new AddDrone(bl).Show();
+            Refresh_Click(sender, e);
         }
 
         public void Refresh_Click(object sender, RoutedEventArgs e)
         {
             dronesListView.Items.Refresh();
+
+        }
+        private void AddGrouping(string header)
+        {
+            if (dronesListView.ItemsSource == null) return;
+            dronesListView.Items.SortDescriptions.Clear();
+            if (header == $"Id") dronesListView.Items.SortDescriptions.Add(new SortDescription("Id", ListSortDirection.Ascending));
+            if (header == $"Battery") dronesListView.Items.SortDescriptions.Add(new SortDescription("Battery", ListSortDirection.Ascending));
+            if (header == $"Status") dronesListView.Items.SortDescriptions.Add(new SortDescription("Status", ListSortDirection.Ascending));
+            if (header == $"Weight") dronesListView.Items.SortDescriptions.Add(new SortDescription("Weight", ListSortDirection.Ascending));
+            else return;
+        }
+        private void dronesListView_Click(object sender, RoutedEventArgs e)
+        {
+            AddGrouping(((GridViewColumnHeader)e.OriginalSource).Column.Header.ToString());
         }
     }
 }

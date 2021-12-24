@@ -14,6 +14,7 @@ using ControlzEx.Theming;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
+
 namespace PrL
 {
     /// <summary>
@@ -29,21 +30,23 @@ namespace PrL
             bl = (BlApi.BO.BL)mainBl;
             CustomersListView.ItemsSource = bl.GetCustomersList(BlApi.BO.BL.AllCustomers);
         }
-        private void DuobleClickCustomer(object sender, MouseButtonEventArgs e)
-        {
-            new Customer(bl, (BlApi.BO.CustomerToList)CustomersListView.SelectedItem).Show();
-            CustomersListView.Items.Refresh();
-        }
         private void AddNewCustomer_Click(object sender, RoutedEventArgs e)
         {
             new Customer(bl).Show();
             CustomersListView.Items.Refresh();
         }
-
         private void CustomersRefresh_Click_1(object sender, RoutedEventArgs e)
         {
             CustomersListView.Items.Refresh();
         }
+        private void DuobleClickCustomer(object sender, MouseButtonEventArgs e)
+        {
+            new Customer(bl, (BlApi.BO.CustomerToList)CustomersListView.SelectedItem).Show();
+            CustomersListView.Items.Refresh();
+        }
+       
+
+       
 
 
     }

@@ -63,13 +63,15 @@ namespace DalApi
                 /// <returns></returns>
                 public void DeleteStation(int myId)
                 {
-                    for (int i = 0; i < DataSource.stations.Count; i++)
+                    Station temp = new();
+                    foreach (Station item in DataSource.stations)
                     {
-                        Station item = DataSource.stations[i];
                         //search station
-                        if (DataSource.stations[i].Id == myId)
+                        if (item.Id == myId)
                         {
-                            _ = DataSource.stations[i].IsActive == false;
+                            temp = item;
+                            temp.IsActive = false;
+
                             return;
                         }
                     }
@@ -93,7 +95,7 @@ namespace DalApi
                 /// <param name="newName"></param>
                 /// <param name="numOfChargeSlots"></param>
                 /// </summary>
-                public void UpdateStation(int stationId, string newName, int numOfChargeSlots)
+                public void UpdateStation(int stationId, string newName, int numOfChargeSlots, int avialble)
                 {
                     Station temp = new();
                     for (int i = 0; i < DataSource.stations.Count; i++)
@@ -108,7 +110,10 @@ namespace DalApi
                             else
                                 temp.Name = item.Name;
                             if (numOfChargeSlots != 0)
+                            {
                                 temp.NumOfChargeSlots = numOfChargeSlots;
+                                temp.NumOfAvailableChargeSlots = avialble;
+                            }
                             else
                                 temp.NumOfChargeSlots = item.NumOfChargeSlots;
                             DataSource.stations[i] = temp;
@@ -183,7 +188,8 @@ namespace DalApi
                             temp.Id = stationId;
                             temp.Location = item.Location;
                             temp.Name = item.Name;
-                            temp.NumOfChargeSlots = item.NumOfChargeSlots + 1;
+                            temp.NumOfChargeSlots = item.NumOfChargeSlots;
+                            temp.NumOfAvailableChargeSlots = item.NumOfAvailableChargeSlots + 1;
                             DataSource.stations[i] = temp;
                         }
                     }

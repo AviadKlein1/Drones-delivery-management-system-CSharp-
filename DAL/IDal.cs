@@ -91,7 +91,7 @@ namespace DalApi
         /// <param name="newName"></param>
         /// <param name="numOfChargeSlots"></param>
         /// </summary>
-        public void UpdateStation(int stationId, string newName, int numOfChargeSlots);
+        public void UpdateStation(int stationId, string newName, int numOfChargeSlots,int avialble);
         /// <summary>
         /// update model in drone
         /// <param name="droneId"></param>

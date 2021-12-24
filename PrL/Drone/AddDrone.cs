@@ -15,6 +15,7 @@ namespace PrL
 
         public AddDrone(BlApi.BO.BL mainBl)
         {
+            ThemeManager.Current.ChangeTheme(this, "Light.blue");
             InitializeComponent();
             Title = "Add new drone";
             bl = mainBl;
@@ -25,7 +26,7 @@ namespace PrL
         }
         public AddDrone(BlApi.BO.BL mainBl, BlApi.BO.DroneToList mainDrone)
         {
-            ThemeManager.Current.ChangeTheme(this, "Dark.blue");
+            ThemeManager.Current.ChangeTheme(this, "light.green");
             InitializeComponent();
             Title = "Drone Diatels";
             bl = mainBl;
@@ -50,8 +51,9 @@ namespace PrL
             }
             if (droneToList.Status == BlApi.BO.MyEnums.DroneStatus.delivery)
             {
-                if(bl.ScheduledButNotPickedUp(droneToList.DeliveredParcelId)) PickUpParcelPanel.Visibility = Visibility.Visible;
+                /*if(bl.ScheduledButNotPickedUp(droneToList.DeliveredParcelId))*/ 
                 if (bl.PickedUpButNotDelivered(droneToList.DeliveredParcelId)) DeliverParcelPanel.Visibility = Visibility.Visible;
+                else PickUpParcelPanel.Visibility = Visibility.Visible;
             }
         }
 
@@ -99,9 +101,6 @@ namespace PrL
         {
             if (bl.ChargeDrone(droneToList.Id)) MessageBox.Show("success!");
             else MessageBox.Show("Faild!");
-            this.
-
-
             Close();
         }
 
@@ -132,10 +131,9 @@ namespace PrL
 
         private void PickUpParcel_Click(object sender, RoutedEventArgs e)
         {
-            if (bl.PickUpParcel(droneToList.Id)) MessageBox.Show("success!");
+            if (bl.PickUpParcel(droneToList.Id))  MessageBox.Show("success!");
             else MessageBox.Show("failed!");
             Close();
-
         }
 
         private void DeliverParcel_Click(object sender, RoutedEventArgs e)
@@ -146,5 +144,20 @@ namespace PrL
             Close();
 
         }
+        private void DeliveredParcelIdBox_DClick(object sender, RoutedEventArgs e)
+        {
+            var v = int.Parse(DeliveredParcelIdBox.Text);
+            
+            try
+            {
+                MessageBox.Show(bl.DisplayParcel(v).ToString());
+            }
+            catch(Exception ex)
+            {
+                _ = MessageBox.Show(ex.Message);
+                return;
+            }
+        }
+        
     }
 }

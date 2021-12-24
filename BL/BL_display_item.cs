@@ -24,6 +24,11 @@ namespace BlApi
                 }
                 //return new Station(temp);
                 Station retTemp = new(temp);
+                retTemp.NumOfChargeSlots = temp.NumOfChargeSlots;
+                retTemp.NumOfAvailableChargeSlots = temp.NumOfAvailableChargeSlots;
+                retTemp.Id = temp.Id;
+                retTemp.Name = temp.Name;
+                retTemp.Location = new Location(temp.Location);
 
                 var dronesInCharge = new List<DroneInCharge>();
                 foreach (var element in dronesList)

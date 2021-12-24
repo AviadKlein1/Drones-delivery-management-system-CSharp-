@@ -156,7 +156,7 @@ namespace ConsoleUI_BL
                                         var flag2 = false;
                                         try
                                         {
-                                            flag2 = bl.UpdateStation(id, string1, cin1);
+                                            flag2 = bl.UpdateStation(id, string1, cin1, bl.DisplayStation(id).NumOfAvailableChargeSlots);
 
                                         }
                                         catch (Exception ex)

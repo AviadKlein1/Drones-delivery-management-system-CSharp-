@@ -18,19 +18,20 @@ namespace BlApi
             public IEnumerable<StationToList> GetStationsList(System.Predicate<DalApi.DO.Station> match)
             {
                 List<StationToList> newList = new();
-                var v = dal.GetStationsList(item => item.IsActive);
-                
+                var v = dal.GetStationsList(match);
                 foreach (var item in v)
                 {
                     StationToList newStation = new();
                     newStation.Id = item.Id;
                     newStation.Name = item.Name;
                     newStation.NumOfAvailableChargeSlots = item.NumOfAvailableChargeSlots;
-                    newStation.NumOfOccupiedChargeSlots = item.NumOfChargeSlots - item.NumOfAvailableChargeSlots;
+
+                    newStation.NumOfOccupiedChargeSlots = (item.NumOfChargeSlots - item.NumOfAvailableChargeSlots);
+                    
                     newList.Add(newStation);
                 }
                 if (newList == null)
-                    System.Console.WriteLine("empty list\n");
+                    throw new System.Exception("empty list\n");
                 return newList;
             }
 

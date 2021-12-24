@@ -28,7 +28,6 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
-
                     <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Id}" />
                     <GridViewColumn Header="Name" Width="80" DisplayMemberBinding="{Binding Name }" />
                     <GridViewColumn Header="Phone Number" DisplayMemberBinding="{Binding PhoneNumber}" />
@@ -36,9 +35,7 @@
                     <GridViewColumn Header="Parcels sent but not delivered" DisplayMemberBinding="{Binding ParcelsSentButNotDelivered}" />
                     <GridViewColumn Header="Recieved Parcels" DisplayMemberBinding="{Binding ReceivedParcels}" />
                     <GridViewColumn Header="Scheduled parcels"  DisplayMemberBinding="{Binding ScheduledParcels}" />
-
                 </GridView>
-
             </ListView.View>
         </ListView>
 

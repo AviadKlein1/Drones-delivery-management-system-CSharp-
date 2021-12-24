@@ -13,14 +13,19 @@
     <Grid>
         <StackPanel x:Name="AddNewDrone" Visibility="Collapsed">
             <Label x:Name="InsertLabel" Content="Insert ditales" HorizontalAlignment="Center"  Margin="0,20,0,10" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+            
             <TextBlock x:Name="AddIdBlock"  Text="ID: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox x:Name="AddDroneIdBox"  Text="Id..." HorizontalAlignment="Center" Width="150" />
+            
             <TextBlock x:Name="AddModelBlock" Text="Model: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150"/>
             <TextBox  x:Name="AddDroneModelBox" Text="Model..." HorizontalAlignment="Center" Width="150" />
+            
             <TextBlock x:Name="AddweightBlock"  Text="Weight: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <ComboBox x:Name="AddWeightselectorCombo" IsEditable="True" IsReadOnly="True" HorizontalAlignment="Center" Width="150" Text="-- Choose weight --" />
+            
             <TextBlock x:Name="AddIdOfChargeSlotBlock" Text="Id of station to first charge: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <ComboBox x:Name="AddIdOfFirstChargeSelectorCombo" IsEditable="True" IsReadOnly="True" HorizontalAlignment="Center" Width="150" Text="-- Choose Station --" />
+            
             <Button x:Name="AddSubmitButton" Content="Submit" HorizontalAlignment="Center" Margin="0,40,0,0"  Height="84" Width="84" Click="Submit_Click" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" BorderThickness="12" />
             
         </StackPanel>
@@ -29,18 +34,25 @@
             <Label x:Name="DroneDitails" Content="Drone ditales" HorizontalAlignment="Center"  Margin="0,20,0,10" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
             <TextBlock x:Name="IdBlock"  Text="ID: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox x:Name="DroneIdBox"  Text="{Binding Path = Id}" HorizontalAlignment="Center" Width="150" IsEnabled="False" />
+            
             <TextBlock x:Name="ModelBlock" Text="Model: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150"/>
             <TextBox  x:Name="DroneModelBox" Text="{Binding Path = Model}" HorizontalAlignment="Center" Width="150"/>
+            
             <TextBlock x:Name="WeightBlock"  Text="Weight: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox  x:Name="WeightBox" Text="{Binding Path = Weight}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            
             <TextBlock x:Name="StatusBlock" Text="Status: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox  x:Name="StatusBox" Text="{Binding Path = Status}" HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            
             <TextBlock x:Name="BatteryBlock" Text="Battery charge: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox  x:Name="BatteryBox" Text="{Binding Path = Battery}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            
             <TextBlock x:Name="LocationBlock" Text="The location: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox  x:Name="LocationBox"   HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            
             <TextBlock x:Name="DeliveredParcelIdBlock" Text="Id of the deliverd parcel: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
-            <TextBox  x:Name="DeliveredParcelIdBox" Text="{Binding Path = DeliveredParcelId}" HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            <TextBox  x:Name="DeliveredParcelIdBox" Text="{Binding Path = DeliveredParcelId}" HorizontalAlignment="Center" Width="150" IsEnabled="True" MouseDoubleClick="DeliveredParcelIdBox_DClick"/>
+            
             <Label x:Name="Options" Content="Update options"  HorizontalAlignment="Center"  Margin="0,20,0,2" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
             
             <StackPanel x:Name="UpdatePanel" Visibility="Visible">

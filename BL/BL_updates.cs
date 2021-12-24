@@ -51,7 +51,7 @@ namespace BlApi
             /// <param name="newName"></param>
             /// <param name="numOfChargeSlots"></param>
             /// <returns></returns>
-            public bool UpdateStation(int stationId, string newName, int numOfChargeSlots)
+            public bool UpdateStation(int stationId, string newName, int numOfChargeSlots,int avialble)
             {
                 bool found = false;
                 var dalStationsList = dal.GetStationsList(allStations);
@@ -65,7 +65,7 @@ namespace BlApi
                     }
                 }
                 if (found)
-                    dal.UpdateStation(stationId, newName, numOfChargeSlots);
+                    dal.UpdateStation(stationId, newName, numOfChargeSlots, avialble);
                 else
                     throw new WrongIdException(stationId, $"wrong id: {stationId}");
                 return found;

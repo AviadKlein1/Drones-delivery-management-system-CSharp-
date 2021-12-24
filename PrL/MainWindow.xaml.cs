@@ -10,8 +10,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Accessibility;
 using BlApi;
@@ -22,11 +20,14 @@ using System.Runtime.InteropServices;
 
 namespace PrL
 {
+    
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-     public partial class MainWindow : MetroWindow
+    public partial class MainWindow : MetroWindow
     {
+
+      
         System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
         private void Timer_Click(object sender, EventArgs e)
         {
@@ -220,7 +221,7 @@ namespace PrL
                                         var flag2 = false;
                                         try
                                         {
-                                            flag2 = bl.UpdateStation(id, string1, cin1);
+                                            flag2 = bl.UpdateStation(id, string1, cin1, bl.DisplayStation(id).NumOfAvailableChargeSlots);
 
                                         }
                                         catch (Exception ex)
@@ -518,6 +519,11 @@ namespace PrL
         private void AdminCustomers_Click(object sender, RoutedEventArgs e)
         {
             new CustomersList(bl).Show();
+        }
+
+        private void AdminStations_Click(object sender, RoutedEventArgs e)
+        {
+            new StationsList(bl).Show();
         }
     }
 }
