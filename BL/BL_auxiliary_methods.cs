@@ -395,14 +395,14 @@ namespace BlApi
             /// </summary>
             /// <param name="droneId"></param>
             /// <returns></returns>
-            internal int SuitableParcel(int droneId)
+            internal int MostSuitableParcel(int droneId)
             {
-                var v = dronesList;
+                //retrieve drone's details
+                List<DroneToList> myDrones = dronesList;
                 DalApi.DO.MyEnums.WeightCategory myDroneWeight = new();
                 DalApi.DO.Location myDroneLocation = new();
                 int myDroneBattery = 0;
-
-                foreach (var item in v) // my drone data
+                foreach (DroneToList item in myDrones)
                 {
                     if (item.Id == droneId)
                     {
@@ -411,8 +411,8 @@ namespace BlApi
                         myDroneBattery = item.Battery;
                     }
                 }
-                // start searching
 
+                //declare necessary objects and parameters
                 List<DalApi.DO.Parcel> SuitableParcels = new();
                 var dalParcelsList = dal.GetParcelsList(allParcels);
                 var priorityArray = new int[1000];
@@ -420,16 +420,23 @@ namespace BlApi
                 var sortByDIstanceParcels = new List<DalApi.DO.Parcel>();
                 var tempP = new DalApi.DO.Parcel();
 
-                foreach (var item in dalParcelsList) // remove not suitable weight
+                //filter too heavy or too far or already associated parcels
+                foreach (DalApi.DO.Parcel item in dalParcelsList)
                 {
-                    if (item.Weight <= myDroneWeight && IsPossibleVoyage(item, myDroneLocation, myDroneBattery))
+                    if (item.Weight <= myDroneWeight &&
+                        item.DroneId == 0 &&
+                        IsPossibleVoyage(item, myDroneLocation, myDroneBattery))
                     {
                         SuitableParcels.Add(item);
                     }
                 }
                 var distanceSortToErase = SuitableParcels;
-                //score parcels
-                for (int j = SuitableParcels.Count; j > 0; j--)// sort parcels list by distance - the min dis is in last index
+
+                //score parcels by distance, weight and urgency
+                //the highest scored parcel will be associated to drone
+
+                //sort parcels list by distance - the min dis is in last index
+                for (int j = SuitableParcels.Count; j > 0; j--)
                 {
                     for (int i = 0; i < distanceSortToErase.Count; i++)//search the max
                     {
@@ -442,47 +449,63 @@ namespace BlApi
                         }
                     }
                     sortByDIstanceParcels.Add(tempP);
-                    for (int i = 0; i < distanceSortToErase.Count; i++)// erase the max distance parcel from list
-                    {
-                        DalApi.DO.Parcel item = distanceSortToErase[i];
-                        if (max == dal.GetDistance(SenderLocation(item.Id), myDroneLocation))
-                        {
-                            distanceSortToErase.Remove(item);
-                        }
-                    }
+                    //for (int i = 0; i < distanceSortToErase.Count; i++)// erase the max distance parcel from list
+                    //{
+                    //    DalApi.DO.Parcel item = distanceSortToErase[i];
+                    //    if (max == dal.GetDistance(SenderLocation(item.Id), myDroneLocation))
+                    //    {
+                    //        distanceSortToErase.Remove(item);
+                    //    }
+                    //}
                 }
-                for (int i = 0; i < sortByDIstanceParcels.Count; i++)// score by priority
+
+                //1. score parcels by priority
+                for (int i = 0; i < sortByDIstanceParcels.Count; i++)
                 {
                     DalApi.DO.Parcel item = sortByDIstanceParcels[i];
-                    if (item.Priority == DalApi.DO.MyEnums.PriorityLevel.urgent) priorityArray[i] += 100000;
-                    if (item.Priority == DalApi.DO.MyEnums.PriorityLevel.quickly) priorityArray[i] += 50000;
-                    if (item.Priority == DalApi.DO.MyEnums.PriorityLevel.regular) priorityArray[i] += 20000;
+                    if (item.Priority == DalApi.DO.MyEnums.PriorityLevel.urgent)
+                        priorityArray[i] += 100000;
+                    if (item.Priority == DalApi.DO.MyEnums.PriorityLevel.quickly)
+                        priorityArray[i] += 50000;
+                    if (item.Priority == DalApi.DO.MyEnums.PriorityLevel.regular)
+                        priorityArray[i] += 20000;
                 }
-                for (int i = 0; i < sortByDIstanceParcels.Count; i++)// score by weight
+
+                //2. score parcels by weight
+                for (int i = 0; i < sortByDIstanceParcels.Count; i++)
                 {
                     DalApi.DO.Parcel item = sortByDIstanceParcels[i];
-                    if ((myDroneWeight - item.Weight) == 0) priorityArray[i] += 10000;
-                    if ((myDroneWeight - item.Weight) == 1) priorityArray[i] += 5000;
-                    if ((myDroneWeight - item.Weight) == 2) priorityArray[i] += 2000;
+                    if ((myDroneWeight - item.Weight) == 0)
+                        priorityArray[i] += 10000;
+                    if ((myDroneWeight - item.Weight) == 1)
+                        priorityArray[i] += 5000;
+                    if ((myDroneWeight - item.Weight) == 2)
+                        priorityArray[i] += 2000;
                 }
-                for (int i = 0; i < sortByDIstanceParcels.Count; i++)// score by distance
+
+                //3. score parcels by distance
+                for (int i = 0; i < sortByDIstanceParcels.Count; i++)
                 {
                     priorityArray[i] += (i + 1);
                 }
+
+                //if no suitable parcels
                 if (sortByDIstanceParcels.Count == 0)
-                    throw new Exception($"no suitable parcel {droneId}");
+                    throw new Exception($"no suitable parcel { droneId }");
+
+                //find the highest scored parcel
                 max = 0;
                 int index = -1;
-                for (int i = 0; i < sortByDIstanceParcels.Count; i++)// find the index in the
-                {
+                for (int i = 0; i < sortByDIstanceParcels.Count; i++)
                     if (priorityArray[i] > max)
                     {
                         max = priorityArray[i];
                         index = i;
                     }
-                }
-                var parcelTemp = sortByDIstanceParcels[index];
-                return parcelTemp.Id;
+                var nextParcel = sortByDIstanceParcels[index];
+
+                //return highest scored parcel
+                return nextParcel.Id;
             }
 
             /// <summary>
@@ -493,16 +516,14 @@ namespace BlApi
             /// <returns></returns> a boolean type
             internal static bool IsSuitable(List<DalApi.DO.Parcel> list, DalApi.DO.Parcel myParcel)
             {
-                bool flag = true;
+                bool isSuitable = true;
                 //search parcel in list of unsuitable parcels
                 foreach (var item in list)
                 {
-                    if (item.Id == myParcel.Id)
-                    {
-                        flag = false;
-                    }
+                    if (item.Id == myParcel.Id || item.DroneId != 0)
+                        isSuitable = false;
                 }
-                return flag;
+                return isSuitable;
             }
 
             /// <summary>
@@ -514,25 +535,24 @@ namespace BlApi
             internal bool IsPossibleVoyage(DalApi.DO.Parcel tempParcel,
                 DalApi.DO.Location myDroneLocation, int myDroneBattery)
             {
-                bool flag = false;
-
                 var senderLocation = SenderLocation(tempParcel.Id);
                 var reciverLocation = ReciverLocation(tempParcel.Id);
                 var chargeStation = NearestAvailableChargeSlot(reciverLocation);
 
-                var dis1 = dal.GetDistance(myDroneLocation, senderLocation);
-                var dis2 = dal.GetDistance(senderLocation, reciverLocation);
-                var dis3 = dal.GetDistance(reciverLocation, chargeStation.Location);
-                var fullDistance = (dis1 + dis2 + dis3) / 1000;
+                double dis1 = dal.GetDistance(myDroneLocation, senderLocation);
+                double dis2 = dal.GetDistance(senderLocation, reciverLocation);
+                double dis3 = dal.GetDistance(reciverLocation, chargeStation.Location);
+                double fullDistance = (dis1 + dis2 + dis3) / 1000;
 
                 double Consumption = 0;
-                if (tempParcel.Weight == DalApi.DO.MyEnums.WeightCategory.light) Consumption = lightWeight;
-                if (tempParcel.Weight == DalApi.DO.MyEnums.WeightCategory.medium) Consumption = mediumWeight;
-                if (tempParcel.Weight == DalApi.DO.MyEnums.WeightCategory.heavy) Consumption = heavyWeight;
+                if (tempParcel.Weight == DalApi.DO.MyEnums.WeightCategory.light)
+                    Consumption = lightWeight;
+                if (tempParcel.Weight == DalApi.DO.MyEnums.WeightCategory.medium)
+                    Consumption = mediumWeight;
+                if (tempParcel.Weight == DalApi.DO.MyEnums.WeightCategory.heavy)
+                    Consumption = heavyWeight;
 
-                if (myDroneBattery < (fullDistance * Consumption)) flag = false;
-                else flag = true;
-                return flag;
+                return myDroneBattery > (fullDistance * Consumption / 100);
             }
 
             /// <summary>
@@ -540,10 +560,10 @@ namespace BlApi
             /// </summary>
             /// <param name="dalParcelsList"></param>
             /// <param name="myDroneLocation"></param>
-            /// <param name="notSuatableList"></param>
+            /// <param name="notSuiatableList"></param>
             /// <returns></returns>
             internal DalApi.DO.Parcel TheNearestParcel
-                (IEnumerable<DalApi.DO.Parcel> dalParcelsList, DalApi.DO.Location myDroneLocation, List<DalApi.DO.Parcel> notSuatableList)
+                (IEnumerable<DalApi.DO.Parcel> dalParcelsList, DalApi.DO.Location myDroneLocation, List<DalApi.DO.Parcel> notSuiatableList)
             {
                 DalApi.DO.Parcel temp = new DalApi.DO.Parcel();
                 var min = 9999999999.0;
@@ -551,7 +571,7 @@ namespace BlApi
                 foreach (var item in dalParcelsList)
                 {
                     var dis = dal.GetDistance(SenderLocation(item.Id), myDroneLocation);
-                    if (dis < min && IsSuitable(notSuatableList, item))
+                    if (dis < min && IsSuitable(notSuiatableList, item))
                         min = dis;
                 }
                 //find chosen parcel

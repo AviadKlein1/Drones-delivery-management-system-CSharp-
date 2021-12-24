@@ -209,7 +209,7 @@ namespace BlApi
                             throw new OccupiedDroneException(droneId, $"drone is occupied, try another: {droneId}");
                         else // is available 
                         {
-                            int newParcelId = SuitableParcel(droneId);
+                            int newParcelId = MostSuitableParcel(droneId);
                             if (newParcelId == 0)
                                 break;
                             else found = true;

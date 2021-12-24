@@ -88,12 +88,16 @@ namespace DalApi
                     #endregion
                     #region initialize parcels
                     //parcels
-                    int index1 = rd.Next(10);
-                    int index2 = rd.Next(10);
-                    while (index1 == index2)
-                        index2 = rd.Next(10);
-                    int droneIndex1 = -1;
-                    int droneIndex2 = -1;
+                    int parcelIndex1 = rd.Next(10);
+                    int parcelIndex2 = rd.Next(10);
+                    //verify different indexes
+                    while (parcelIndex1 == parcelIndex2)
+                        parcelIndex2 = rd.Next(10);
+                    int droneIndex1 = rd.Next(5);
+                    int droneIndex2 = rd.Next(5);
+                    //verify different indexes
+                    while (droneIndex1 == droneIndex2)
+                        droneIndex2 = rd.Next(5);
                     for (int i = 0; i < 10; i++)
                     {
                         //constructor
@@ -106,12 +110,8 @@ namespace DalApi
 
                         //initialize status randomly (delivery, maintenance, available)
                         //up to two parcels in delivery
-                        if (i == index1 || i == index2)
+                        if (i == parcelIndex1)
                         {
-                            droneIndex1 = rd.Next(5);
-                            //verify different drines for different parcels
-                            while (droneIndex2 == droneIndex1)
-                                droneIndex1 = rd.Next(5);
                             myParcel.DroneId = drones[droneIndex1].Id;
                             myParcel.SenderId = customers[i].Id;
                             myParcel.Scheduled = DateTime.Now;
@@ -119,6 +119,24 @@ namespace DalApi
                             //verify different customers initialized as sender and receiver
                             while (myParcel.ReceiverId == myParcel.SenderId)
                                 myParcel.ReceiverId = customers[rd.Next(10)].Id;
+                        }
+                        if (i == parcelIndex2)
+                        {
+                            myParcel.DroneId = drones[droneIndex2].Id;
+                            myParcel.SenderId = customers[i].Id;
+                            myParcel.Scheduled = DateTime.Now;
+                            myParcel.ReceiverId = customers[rd.Next(10)].Id;
+                            //verify different customers initialized as sender and receiver
+                            while (myParcel.ReceiverId == myParcel.SenderId)
+                                myParcel.ReceiverId = customers[rd.Next(10)].Id;
+                        }
+                        //if not associated
+                        if(i != parcelIndex1 && i != parcelIndex2)
+                        {
+                            myParcel.DroneId = 0;
+                            myParcel.SenderId = 0;
+                            myParcel.Scheduled = null;
+                            myParcel.ReceiverId = 0;
                         }
                         parcels.Add(myParcel);
                     }
