@@ -19,7 +19,7 @@ namespace BlApi
             {
                 bool found = false;
                 var dalDronesList = dal.GetDrones();
-                foreach (var item in dalDronesList)
+                foreach (DalApi.DO.Drone item in dalDronesList)
                 {
                     if (item.Id == droneId)
                     {
@@ -30,7 +30,7 @@ namespace BlApi
                 if (found)
                 {
                     dal.UpdateDrone(droneId, newModel);
-                    foreach (var dItem in dronesList)
+                    foreach (DroneToList dItem in dronesList)
                     {
                         if (dItem.Id == droneId)
                         {
@@ -201,20 +201,22 @@ namespace BlApi
                 bool found = false;
                 var v = dronesList;
                 //search drone
-                foreach (var item in v)
+                foreach (DroneToList drone in v)
                 {
-                    if (item.Id == droneId)
+                    if (drone.Id == droneId)
                     {
-                        if (item.Status == MyEnums.DroneStatus.delivery)
+                        if (drone.Status == MyEnums.DroneStatus.delivery)
                             throw new OccupiedDroneException(droneId, $"drone is occupied, try another: {droneId}");
-                        else // is available 
+                        //is available 
+                        else
                         {
                             int newParcelId = MostSuitableParcel(droneId);
                             if (newParcelId == 0)
                                 break;
-                            else found = true;
-                            item.Status = MyEnums.DroneStatus.delivery;
-                            item.DeliveredParcelId = newParcelId;
+                            else 
+                                found = true;
+                            drone.Status = MyEnums.DroneStatus.delivery;
+                            drone.DeliveredParcelId = newParcelId;
                             dal.ScheduleParcelToDrone(newParcelId, droneId);
                         }
                     }
@@ -229,8 +231,8 @@ namespace BlApi
             /// <returns></returns>
             public bool PickUpParcel(int droneId)
             {
-                var found = false;
-                var droneExistFlag = false;
+                bool found = false;
+                bool droneExistFlag = false;
                 var v = dronesList;
                 int idOfThisParcel = 0;
                 DalApi.DO.Location ourSenderLocation = new();
@@ -253,7 +255,7 @@ namespace BlApi
                         //find parcel
                         if (item.Id == idOfThisParcel)
                         {
-                            // our parcel belong to our drone
+                            //our parcel belong to our drone
                             if (item.DroneId == droneId)
                             {
                                 ourSenderLocation = SenderLocation(item.Id);
@@ -276,7 +278,10 @@ namespace BlApi
                                         temp.DeliveredParcelId = item.Id;
                                         DalApi.DO.Location earlyDroneLocation =
                                             new(dItem.Location.Longitude, dItem.Location.Latitude);
-                                        // update battery
+                                        //uodate location
+                                        temp.Location.Longitude = ourSenderLocation.Longitude;
+                                        temp.Location.Latitude = ourSenderLocation.Latitude;
+                                        //update battery
                                         temp.Battery -= (int)BatteryRequirementForVoyage
                                             (droneId, dal.GetDistance(earlyDroneLocation, ourSenderLocation));
                                         if (temp.Battery < 0) temp.Battery = 0;
@@ -284,7 +289,8 @@ namespace BlApi
                                     }
                                 }
                             }
-                            else System.Console.WriteLine("not our parcel");
+                            else
+                                Console.WriteLine("not our parcel");
                         }
                     }
                 }
@@ -355,7 +361,6 @@ namespace BlApi
                         else Console.WriteLine("not our parcel");
                     }
                 }
-
                 var g = ChargeDrone(droneId);
                 return flag;
             }

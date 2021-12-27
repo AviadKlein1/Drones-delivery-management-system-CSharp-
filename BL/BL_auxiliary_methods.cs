@@ -142,7 +142,7 @@ namespace BlApi
             }
 
             /// <summary>
-            /// search for parcel's sender location
+            /// search for parcel's sender location (giving parcel's id)
             /// </summary>
             /// <param name="parcelId"></param>
             /// return location type (longitude, latitude)
@@ -151,18 +151,19 @@ namespace BlApi
                 DalApi.DO.Location tempLocation = new();
                 var dalParcelsList = dal.GetParcelsList(allParcels);
                 //search parcel
-                foreach (var pElement in dalParcelsList)
+                foreach (var parcel in dalParcelsList)
                 {
-                    if (pElement.Id == parcelId)
+                    if (parcel.Id == parcelId)
                     {
                         var customersList = dal.GetCustomersList(allCustomers);
                         //search parcel's sender
-                        foreach (var cElement in customersList)
+                        foreach (var customer in customersList)
                         {
-                            if (cElement.Id == pElement.SenderId)
-                                tempLocation = cElement.Location;
+                            if (customer.Id == parcel.SenderId)
+                                tempLocation = customer.Location;
                         }
                     }
+                    break;
                 }
                 return tempLocation;
             }
@@ -409,6 +410,7 @@ namespace BlApi
                         myDroneWeight = item.Weight;
                         myDroneLocation = new DalApi.DO.Location(item.Location.Longitude, item.Location.Latitude);
                         myDroneBattery = item.Battery;
+                       
                     }
                 }
 
@@ -503,7 +505,6 @@ namespace BlApi
                         index = i;
                     }
                 var nextParcel = sortByDIstanceParcels[index];
-
                 //return highest scored parcel
                 return nextParcel.Id;
             }
@@ -565,7 +566,7 @@ namespace BlApi
             internal DalApi.DO.Parcel TheNearestParcel
                 (IEnumerable<DalApi.DO.Parcel> dalParcelsList, DalApi.DO.Location myDroneLocation, List<DalApi.DO.Parcel> notSuiatableList)
             {
-                DalApi.DO.Parcel temp = new DalApi.DO.Parcel();
+                DalApi.DO.Parcel temp = new();
                 var min = 9999999999.0;
                 //search for neartest parcel
                 foreach (var item in dalParcelsList)

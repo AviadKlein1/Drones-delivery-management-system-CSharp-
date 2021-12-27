@@ -73,7 +73,7 @@ namespace BlApi
         /// <param name="newName"></param>
         /// <param name="numOfChargeSlots"></param>
         /// <returns></returns>
-        public bool UpdateStation(int stationId, string newName, int numOfChargeSlots);
+        public bool UpdateStation(int stationId, string newName, int numOfChargeSlots, int avielable);
 
         /// <summary>
         /// update customer details
