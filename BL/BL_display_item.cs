@@ -82,7 +82,7 @@ namespace BlApi
                 }
                 catch (Exception)
                 {
-                    throw;
+                    throw new WrongIdException(customerId);
                 }
 
                 Customer retTemp = new(temp);
@@ -135,17 +135,30 @@ namespace BlApi
             //display parcel
             public Parcel DisplayParcel(int parcelId)
             {
-                DalApi.DO.Parcel temp = new();
+                BlApi.BO.Parcel temp = new();
+                var v = dal.GetParcel(parcelId);
                 try
                 {
-                    temp = dal.GetParcel(parcelId);
+                    temp.Id = v.Id;
+                    if (v.DroneId == 0) temp.DroneInParcel = new DroneInParcel(0);
+                    if (v.DroneId != 0) temp.DroneInParcel = new DroneInParcel(v.DroneId);
+                    temp.DroneInParcel = new DroneInParcel(v.DroneId == 0 ? 0 : v.DroneId);
+
+                    temp.Priority = v.Priority;
+                    temp.Sender = new CustomerInParcel(v.SenderId != 0? v.SenderId : 0);
+                    temp.Receiver = new CustomerInParcel(v.ReceiverId != 0 ? v.ReceiverId : 0); ;
+                    temp.Requested = v.Requested;
+                    temp.Scheduled = v.Scheduled;
+                    temp.PickedUp = v.PickedUp;
+                    temp.Delivered = v.Delivered;
+                    temp.Weight = v.Weight;
+
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw;
+                    throw new Exception(ex.Message);
                 }
-                Parcel retTemp = new(temp);
-                return retTemp;
+                return temp;
             }
         }
     }

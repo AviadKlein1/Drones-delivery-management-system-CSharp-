@@ -76,7 +76,6 @@ namespace PrL
                 return;
             }
 
-
             MessageBox.Show("success!");
             Close();
         }

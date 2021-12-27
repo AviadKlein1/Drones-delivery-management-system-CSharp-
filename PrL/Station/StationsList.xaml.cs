@@ -12,7 +12,7 @@ using System.Windows.Media;
 using MahApps.Metro.Controls;
 using ControlzEx.Theming;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 using BlApi;
 
 namespace PrL
@@ -22,15 +22,27 @@ namespace PrL
     /// </summary>
     public partial class StationsList : MetroWindow
     {
+        System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
+        private void Timer_Click(object sender, EventArgs e)
+        {
+            StationsListView.ItemsSource = bl.GetStationsList(AllStations);
+            StationsListView.Items.Refresh();
+        }
         BlApi.BO.BL bl;
+        static bool AllStations(DalApi.DO.Station s) { return true; }
+        System.Predicate<DalApi.DO.Station> allStations = AllStations;
         public StationsList(IBl mainBl)
         {
+            bl = (BlApi.BO.BL)mainBl;
+            var stationsList = bl.GetStationsList(allStations);
+            Timer.Tick += new EventHandler(Timer_Click);
+            Timer.Interval = new TimeSpan(0, 0, 1);
+            Timer.Start();
             InitializeComponent();
             ThemeManager.Current.ChangeTheme(this, "Light.blue");
-            bl = (BlApi.BO.BL)mainBl;
-            try
+            try 
             {
-                StationsListView.ItemsSource = bl.GetStationsList(BlApi.BO.BL.AllStations);
+                StationsListView.ItemsSource = stationsList;
             }
             catch(Exception ex)
             {
@@ -40,17 +52,26 @@ namespace PrL
         private void AddNewStation_Click(object sender, RoutedEventArgs e)
         {
             new Station(bl).Show();
-            StationsListView.Items.Refresh();
-        }
+            StationsListView_SourceUpdated(sender, e);
+        
+            }
         private void StationsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new Station(bl, (BlApi.BO.StationToList)StationsListView.SelectedItem).Show();
-            StationsListView.Items.Refresh();
+            try
+            {
+                new Station(bl, (BlApi.BO.StationToList)StationsListView.SelectedItem).Show();
+            }
+            catch (Exception) { }
         }
 
-        //private void StRefresh_Click(object sender, RoutedEventArgs e)
-        //{
-        //    StationsListView.Items.Refresh();
-        //}
+        private void StationsListView_SourceUpdated(object sender, RoutedEventArgs e)
+        {
+            StationsListView.Items.Refresh();
+        }
+        public void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            StationsListView.Items.Refresh();
+
+        }
     }
 }

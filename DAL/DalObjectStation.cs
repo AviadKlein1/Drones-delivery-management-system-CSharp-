@@ -70,7 +70,7 @@ namespace DalApi
                         if (item.Id == myId)
                         {
                             temp = item;
-                            temp.IsActive = false;
+                            //temp.IsActive = false;
 
                             return;
                         }
