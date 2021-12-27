@@ -12,7 +12,7 @@
             public Location Location { get; set; }
             public int NumOfChargeSlots { get; set; }
             public int NumOfAvailableChargeSlots { get; set; }
-            public bool IsActive { get; set; }
+            //public bool IsActive { get; set; }
         }
     }
 }

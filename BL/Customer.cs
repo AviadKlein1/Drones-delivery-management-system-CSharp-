@@ -63,7 +63,13 @@ namespace BlApi
         /// </summary>
         public class CustomerInParcel
         {
-            public CustomerInParcel() { }
+            public CustomerInParcel() { Id = 0; Name = null; }
+            public CustomerInParcel(int Id) 
+            { 
+                this.Id = Id;
+                Name = null;
+            }
+
             public int Id { get; set; }
             public string Name { get; set; }
             public override string ToString()

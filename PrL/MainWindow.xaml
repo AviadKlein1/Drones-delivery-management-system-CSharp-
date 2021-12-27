@@ -8,7 +8,8 @@
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:local="clr-namespace:PrL"
 
-        xmlns:System="clr-namespace:System;assembly=System.Runtime" x:Class="PrL.MainWindow"
+        xmlns:System="clr-namespace:System;assembly=System.Runtime"
+    x:Class="PrL.MainWindow"
 
         mc:Ignorable="d"
         GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
@@ -37,42 +38,52 @@
         </mah:WindowCommands>
     </mah:MetroWindow.LeftWindowCommands>
     <Grid>
+        <Image Source="resources\images\DroneDelivery.jfif" Stretch="Fill" />
 
-        <Image Source="C:\Users\Aviad\Source\Repos\AviadKlein1\dotNet5782_2679_3080\PrL\resources\images\main.jpg" Stretch="Fill" />
+        <TextBlock HorizontalAlignment="Center" Name="dateTimeBlock"  TextWrapping="Wrap" VerticalAlignment="Bottom" Margin="50"/>
+        <DockPanel HorizontalAlignment="Center"  VerticalAlignment="Bottom">
+            <Label  Content="Created by Tomer Peretz &amp; Aviad Klein" BorderThickness="1"  FontFamily="Javanese Text" FontSize="16" />
+        </DockPanel>
 
-        <Button
+            <StackPanel >
+                <Button
+            x:Name="ConsoleMode"
+            Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
+                    FontSize="16"
+            Content="--Console Mode--"
+            ToolTip="Administrator API"
+            Click="AdminAccssesButton_Click"  />
+                <Button
             x:Name="AdminDrones"
             Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
-            Content="Drones"
-            Background="Transparent"
+            Content="Drones Api"
             ToolTip="Drones manage Interface"
-            Click="AdminDrones_Click" Height="80" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    FontSize="16"
+            Click="AdminDrones_Click" 
             />
-        <Button
+                <Button
+            x:Name="AdminParcels"
+            Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
+            Content="Parcels Api"
+            ToolTip="Parcels manage Interface"
+            Click="AdminParcels_Click" 
+                    FontSize="16"
+            />
+                <Button
             x:Name="AdminCustomers"
             Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
-            Content="Customers"
-            Background="Transparent"
+            Content="Customers Api"
             ToolTip="Customers manage Interface"
-            Click="AdminCustomers_Click"  Height="80" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,80,0,0"
-            />
-        <Button
+            FontSize="16"
+            Click="AdminCustomers_Click" />
+            <Button
             x:Name="AdminStations"
             Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
-            Content="Stations"
-            Background="Transparent"
+            Content="Stations Api"
+                FontSize="16"
             ToolTip="Customers manage Interface"
-            Click="AdminStations_Click"  Height="80" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,160,0,0"
-            />
-        <Button
-            x:Name="AdminAccssesButton"
-            Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
-            Content="Admin"
-            Background="Transparent"
-            ToolTip="Administrator API"
-            Click="AdminAccssesButton_Click" Width="80" Height="80" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Center" Name="dateTimeBlock"  TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <Label Content="Created by Tomer Peretz &amp; Aviad Klein"  Margin="30,0,30,0" BorderThickness="1" BorderBrush="AliceBlue" VerticalAlignment="Bottom" Width="286" Background="#FF517391" FontFamily="Javanese Text" FontSize="16" Height="36"/>
+            Click="AdminStations_Click"/>
+            </StackPanel>
 
     </Grid>
 </mah:MetroWindow>

@@ -8,18 +8,9 @@
         xmlns:local="clr-namespace:PrL"
         mc:Ignorable="d"
         Title="Stations List" Background="#FF517391" Height="450" Width="710">
-    <!--<mah:MetroWindow.LeftWindowCommands>
-
-        --><!--<mah:WindowCommands>
-            <Button x:Name="StRefresh_Click" Click="StRefresh_Click" ToolTip="Refresh list">
-                <iconPacks:PackIconModern Width="22"
-                                  Height="22"
-                                  Kind="Refresh" />
-            </Button>
-        </mah:WindowCommands>--><!--
-    </mah:MetroWindow.LeftWindowCommands>-->
+    
     <Grid Name="Main_Grid">
-        <ListView x:Name="StationsListView" Background="#FF517391"  Grid.Row="2" Margin="0,23,0,0" MouseDoubleClick="StationsListView_MouseDoubleClick">
+        <ListView x:Name="StationsListView" Background="#FF517391" Binding.SourceUpdated="StationsListView_SourceUpdated"  Grid.Row="2" Margin="0,23,0,0" MouseDoubleClick="StationsListView_MouseDoubleClick">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="BorderBrush" Value="LightGray" />
@@ -45,7 +36,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
 
-            <Button x:Name="AddNewStation"  Background="#FF517391" Grid.Column="2" Width="200" Height="48" VerticalAlignment="Center" Margin="0,0,155,0" Click="AddNewStation_Click" Grid.ColumnSpan="2" >
+            <Button x:Name="AddNewStation"  Background="#FF517391" Grid.Column="0" Width="200" Height="48" VerticalAlignment="Center" Margin="0,0,155,0" Click="AddNewStation_Click" Grid.ColumnSpan="2" >
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>

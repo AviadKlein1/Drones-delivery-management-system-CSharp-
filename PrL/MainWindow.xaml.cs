@@ -26,8 +26,6 @@ namespace PrL
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
-
-      
         System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
         private void Timer_Click(object sender, EventArgs e)
         {
@@ -55,9 +53,6 @@ namespace PrL
                 MessageBox.Show(ex.Message);
             }
         }
-     
-       
-
         private void GitHub_Click(object sender, RoutedEventArgs e)
         {
             Process.Start(new ProcessStartInfo("https://github.com/AviadKlein1/dotNet5782_2679_3080") { UseShellExecute = true });
@@ -83,6 +78,7 @@ namespace PrL
         private void AdminAccssesButton_Click(object sender, RoutedEventArgs e)
         {
             AllocConsole();
+
             #region ADMIN API
             Console.WriteLine("\n-- Welcome to -- Delivery by Drones --  Management interface --\n\n");
 
@@ -494,6 +490,7 @@ namespace PrL
                         //end
                         case 0:
                             Console.WriteLine("see you soon");
+                            FreeConsole();
                             return;
 
                         default:
@@ -524,6 +521,12 @@ namespace PrL
         private void AdminStations_Click(object sender, RoutedEventArgs e)
         {
             new StationsList(bl).Show();
+        }
+
+        private void AdminParcels_Click(object sender, RoutedEventArgs e)
+        {
+            new ParcelsList(bl).Show();
+
         }
     }
 }

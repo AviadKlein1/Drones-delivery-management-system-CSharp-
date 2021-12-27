@@ -22,14 +22,22 @@ namespace PrL
     public partial class dronesList : MetroWindow
     {
         BlApi.BO.BL bl;
-        
+        System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
+        private void Timer_Click(object sender, EventArgs e)
+        {
+            dronesListView.Items.Refresh();
+        }
 
         public dronesList(IBl mainBl)
         {
+            Timer.Tick += new EventHandler(Timer_Click);
+            Timer.Interval = new TimeSpan(0, 0, 1);
+            Timer.Start();
             InitializeComponent();
             ThemeManager.Current.ChangeTheme(this, "Light.blue");
             bl = (BlApi.BO.BL)mainBl;
             dronesListView.ItemsSource = bl.GetDrones();
+
             weightSelector.ItemsSource = Enum.GetValues(typeof(DalApi.DO.MyEnums.WeightCategory));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(BlApi.BO.MyEnums.DroneStatus));
 
@@ -54,7 +62,6 @@ namespace PrL
             try
             {
                 new AddDrone(bl, (BlApi.BO.DroneToList)dronesListView.SelectedItem).Show();
-                Refresh_Click(sender, e);
             }
             catch (Exception) { }
         }
@@ -62,14 +69,8 @@ namespace PrL
         private void AddNewDrone_Click(object sender, RoutedEventArgs e)
         {
             new AddDrone(bl).Show();
-            Refresh_Click(sender, e);
         }
 
-        public void Refresh_Click(object sender, RoutedEventArgs e)
-        {
-            dronesListView.Items.Refresh();
-
-        }
         private void AddGrouping(string header)
         {
             if (dronesListView.ItemsSource == null) return;

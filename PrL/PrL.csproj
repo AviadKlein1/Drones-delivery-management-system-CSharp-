@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="resources\images\DroneDelivery.jfif" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
@@ -17,6 +21,12 @@
   <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
     <ProjectReference Include="..\ConsoleUI_BL\ConsoleUI_BL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="resources\images\DroneDelivery.jfif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

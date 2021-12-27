@@ -65,7 +65,15 @@
             /// </summary>
             public DroneInParcel()
             {
-
+                Id = 0;
+                Battery = 0;
+                Location = null;
+            }
+            public DroneInParcel(int Id)
+            {
+                this.Id = Id;
+                Battery = 0;
+                Location = null;
             }
 
             public int Id { get; set; }

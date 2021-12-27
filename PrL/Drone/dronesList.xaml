@@ -8,17 +8,7 @@
         xmlns:local="clr-namespace:PrL"
         mc:Ignorable="d"
         Title="drones List" Background="#FF517391" Height="450" Width="710">
-    <mah:MetroWindow.LeftWindowCommands>
-
-        <mah:WindowCommands>
-            <Button x:Name="Refresh" Click="Refresh_Click" ToolTip="Refresh list">
-                <iconPacks:PackIconModern Width="22"
-                                  Height="22"
-                                  Kind="Refresh" />
-            </Button>
-        </mah:WindowCommands>
-    </mah:MetroWindow.LeftWindowCommands>
-    <Grid Name="Main_Grid">
+            <Grid Name="Main_Grid">
         <ListView x:Name="dronesListView" Background="#FF517391"
                   Grid.Row="2" Margin="0,23,0,0"  MouseDoubleClick="dclick"
                 GridViewColumnHeader.Click="dronesListView_Click"

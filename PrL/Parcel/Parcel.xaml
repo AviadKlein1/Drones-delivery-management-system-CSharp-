@@ -1,12 +1,75 @@
-﻿<Window x:Class="PrL.Parcel.Parcel"
+﻿<mah:MetroWindow
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PrL.Parcel"
+        xmlns:local="clr-namespace:PrL"
+        xmlns:BO="clr-namespace:BlApi.BO;assembly=BL" 
+        x:Class="PrL.Parcel"
         mc:Ignorable="d"
-        Title="Parcel" Height="450" Width="800">
+    
+       Background="#FF517391" Height="570" Width="300">
     <Grid>
-        
+        <StackPanel x:Name="AddNewParcel" Visibility="Collapsed">
+            <Label x:Name="InsertLabel" Content="Insert ditales" HorizontalAlignment="Center"  Margin="0,20,0,10" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+            
+            <TextBlock x:Name="AddSenderIdBlock"  Text="Sender: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <ComboBox x:Name="AddSenderIdComboBox" HorizontalAlignment="Center" Width="150" IsEditable="True" IsReadOnly="True" Text="-- Choose Sender --"/>
+
+            <TextBlock x:Name="AddReceiverIdBlock" Text="Reciver: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150"/>
+            <ComboBox  x:Name="AddReceiverIsComboBox" HorizontalAlignment="Center" Width="150" IsEditable="True" IsReadOnly="True" Text="-- Choose Receiver --" />
+
+            <TextBlock x:Name="AddweightBlock"  Text="Weight: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <ComboBox x:Name="AddWeightselectorComboBox" IsEditable="True" IsReadOnly="True" HorizontalAlignment="Center" Width="150" Text="-- Choose weight --" />
+
+            <TextBlock x:Name="AddPriorityBlock" Text="Priority: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <ComboBox x:Name="AddPriorityComboBox" IsEditable="True" IsReadOnly="True" HorizontalAlignment="Center" Width="150" Text="-- Choose Station --" />
+
+            <Button x:Name="SubmitParcelButton" Content="Submit" HorizontalAlignment="Center" Margin="0,40,0,0"  Height="84" Width="84" Click="SubmitParcelButton_Click" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" BorderThickness="12" />
+
+        </StackPanel>
+
+        <StackPanel x:Name="DisplayParcel" Visibility="Collapsed">
+            <Label x:Name="ParcelDitails" Content="Parcel ditales" HorizontalAlignment="Center"  Margin="0,20,0,10" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+            <TextBlock x:Name="ParcelIdBlock"  Text="ID: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox x:Name="ParcelIdBox"  Text="{Binding Path = Id}" HorizontalAlignment="Center" Width="150" IsEnabled="False" />
+
+            <TextBlock x:Name="SenderNameBlock" Text="Sender name: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150"/>
+            <TextBox  x:Name="SenderNameBox"  HorizontalAlignment="Center" Width="150"/>
+
+            <TextBlock x:Name="RecieverNameBlock"  Text="Reciever name: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="RecieverNameBox"   HorizontalAlignment="Center" Width="150"/>
+
+            <TextBlock x:Name="ParcelWeightBlock" Text="Parcel Weight: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="ParcelWeightComboBox" Text="{Binding  Path = Weight}" HorizontalAlignment="Center" Width="150" />
+
+            <TextBlock x:Name="DroneInParcelIdBlock" Text="Drone Id: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="DroneInParcelIdBox" Text="{Binding  Path = DroneInParcel}"  HorizontalAlignment="Center" Width="150"  />
+
+            <TextBlock x:Name="RequestedBlock" Text="Requested: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="RequestedBox"  Text="{Binding  Path = Requested}"   HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+
+            <TextBlock x:Name="ScheduledBlock" Text="Scheduled: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="ScheduledBox" Text="{Binding  Path = Scheduled}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+
+            <TextBlock x:Name="PickedUpBlock" Text="PickedUp: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="PickedUpBox" Text="{Binding  Path = PickedUp}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+
+            <TextBlock x:Name="DeliveredBlock" Text="Delivered: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="DeliveredBox" Text="{Binding  Path = Delivered}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+
+            <!--<Label x:Name="Options" Content="Update options"  HorizontalAlignment="Center"  Margin="0,20,0,2" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+
+            <StackPanel x:Name="UpdatePanel" Visibility="Visible">
+                <Button x:Name="UpdatNameAndPhone" Grid.Column="0" BorderBrush="Bisque" BorderThickness="2" Click="UpdatNameAndPhone_Click" Width="224">
+                    <TextBlock Text="Update Name and Phone number" TextWrapping="Wrap" Cursor="Hand" />
+                </Button>
+            </StackPanel>-->
+        </StackPanel>
+        <Button x:Name="CancelButton3" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,2"  Height="26" Width="52" Click="CancelButton3_Click"  Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" />
+
     </Grid>
-</Window>
+</mah:MetroWindow>
+
+  
