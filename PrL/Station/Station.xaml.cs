@@ -39,8 +39,7 @@ namespace PrL
             stationToList = mainDrone;
             station = bl.DisplayStation(stationToList.Id);
 
-            DronesInChargeComboBox.ItemsSource = station.DronesInCharge.Select(item => item.Id);
-            DronesInChargeComboBox.Items.ToString();
+            DronesInChargeComboBox.ItemsSource = station.DronesInCharge;
 
             DisplayStation.DataContext = station;
             DisplayStation.Visibility = Visibility.Visible;

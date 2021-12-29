@@ -30,19 +30,16 @@ namespace BlApi
                 retTemp.Name = temp.Name;
                 retTemp.Location = new Location(temp.Location);
 
+
                 var dronesInCharge = new List<DroneInCharge>();
-                foreach (var element in dronesList)
+                foreach (var item in dronesList)
                 {
-                    if (element.Status == MyEnums.DroneStatus.maintenance &&
-                        element.Location == retTemp.Location)
-                    {
-                        DroneInCharge droneTemp = new()
+                    if (item.Status == MyEnums.DroneStatus.maintenance)
+                        if (item.Location.Latitude == retTemp.Location.Latitude &&
+                           item.Location.Longitude == retTemp.Location.Longitude)
                         {
-                            Id = element.Id,
-                            Battery = element.Battery
-                        };
-                        dronesInCharge.Add(droneTemp);
-                    }
+                            dronesInCharge.Add(new DroneInCharge(item.Id, item.Battery));
+                        }
                 }
                 retTemp.DronesInCharge = dronesInCharge;
                 return retTemp;

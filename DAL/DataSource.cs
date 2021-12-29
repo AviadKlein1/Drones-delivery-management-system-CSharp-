@@ -72,11 +72,13 @@ namespace DalApi
                     //customers
                     for (int i = 0; i < 10; i++)
                     {
+                        double lat = rd.Next(33, 36) + rd.NextDouble();
+                        double longi = rd.Next(29, 33) + rd.NextDouble();
                         Customer myCustomer = new()
                         {
                             Id = rd.Next(100000000, 1000000000),
                             Name = NamesOfCustomers[i],
-                            Location = stationTos[rd.Next(0, 10)].Location
+                            Location = new Location(lat, longi)
                         };
                         int[] areaCode = new int[] { 0, 2, 4, 8 };
                         string phoneNumber = "05" + areaCode[rd.Next(4)] + "-";
@@ -114,6 +116,7 @@ namespace DalApi
                         {
                             myParcel.DroneId = drones[droneIndex1].Id;
                             myParcel.SenderId = customers[i].Id;
+                            myParcel.Requested = DateTime.Now;
                             myParcel.Scheduled = DateTime.Now;
                             myParcel.ReceiverId = customers[rd.Next(10)].Id;
                             //verify different customers initialized as sender and receiver
@@ -124,6 +127,7 @@ namespace DalApi
                         {
                             myParcel.DroneId = drones[droneIndex2].Id;
                             myParcel.SenderId = customers[i].Id;
+                            myParcel.Requested = DateTime.Now;
                             myParcel.Scheduled = DateTime.Now;
                             myParcel.ReceiverId = customers[rd.Next(10)].Id;
                             //verify different customers initialized as sender and receiver
@@ -138,9 +142,8 @@ namespace DalApi
                             while (myParcel.ReceiverId == myParcel.SenderId)
                                 myParcel.ReceiverId = customers[rd.Next(10)].Id;
                             myParcel.DroneId = 0;
-                            myParcel.SenderId = 0;
+                            myParcel.Requested = DateTime.Now;
                             myParcel.Scheduled = null;
-                            myParcel.ReceiverId = 0;
                         }
                         parcels.Add(myParcel);
                     }

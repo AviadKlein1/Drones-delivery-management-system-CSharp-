@@ -270,6 +270,8 @@ namespace BlApi
                                     DroneToList dItem = v[i];
                                     if (dItem.Id == droneId)
                                     {
+                                        DalApi.DO.Location earlyDroneLocation =
+                                            new(dItem.Location.Longitude, dItem.Location.Latitude);
                                         temp.Id = dItem.Id;
                                         temp.Model = dItem.Model;
                                         temp.Location = new Location(ourSenderLocation);
@@ -277,14 +279,12 @@ namespace BlApi
                                         temp.Battery = dItem.Battery;
                                         temp.Weight = dItem.Weight;
                                         temp.DeliveredParcelId = item.Id;
-                                        DalApi.DO.Location earlyDroneLocation =
-                                            new(dItem.Location.Longitude, dItem.Location.Latitude);
+                                        
                                         //uodate location
                                         temp.Location.Longitude = ourSenderLocation.Longitude;
                                         temp.Location.Latitude = ourSenderLocation.Latitude;
                                         //update battery
-                                        temp.Battery -= (int)BatteryRequirementForVoyage
-                                            (droneId, dal.GetDistance(earlyDroneLocation, ourSenderLocation));
+                                        temp.Battery -= (int)BatteryRequirementForVoyage(droneId, dal.GetDistance(earlyDroneLocation, ourSenderLocation));
                                         if (temp.Battery < 0) temp.Battery = 0;
                                         v[i] = temp;
                                     }

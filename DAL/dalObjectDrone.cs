@@ -86,6 +86,7 @@ namespace DalApi
                         }
                     }
                 }
+               
 
                 /// <summary>
                 /// returns an array contains electricity consumption data
