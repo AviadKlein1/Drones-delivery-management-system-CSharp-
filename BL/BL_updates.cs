@@ -217,6 +217,7 @@ namespace BlApi
                                 found = true;
                             drone.Status = MyEnums.DroneStatus.delivery;
                             drone.DeliveredParcelId = newParcelId;
+
                             dal.ScheduleParcelToDrone(newParcelId, droneId);
                         }
                     }

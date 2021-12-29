@@ -120,7 +120,7 @@ namespace DalApi
                             while (myParcel.ReceiverId == myParcel.SenderId)
                                 myParcel.ReceiverId = customers[rd.Next(10)].Id;
                         }
-                        if (i == parcelIndex2)
+                        else if (i == parcelIndex2)
                         {
                             myParcel.DroneId = drones[droneIndex2].Id;
                             myParcel.SenderId = customers[i].Id;
@@ -131,8 +131,12 @@ namespace DalApi
                                 myParcel.ReceiverId = customers[rd.Next(10)].Id;
                         }
                         //if not associated
-                        if(i != parcelIndex1 && i != parcelIndex2)
+                        else
                         {
+                            myParcel.SenderId = customers[i].Id;
+                            myParcel.ReceiverId = customers[rd.Next(10)].Id;
+                            while (myParcel.ReceiverId == myParcel.SenderId)
+                                myParcel.ReceiverId = customers[rd.Next(10)].Id;
                             myParcel.DroneId = 0;
                             myParcel.SenderId = 0;
                             myParcel.Scheduled = null;

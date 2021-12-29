@@ -178,7 +178,7 @@ namespace BlApi
                     if (pElement.Id == parcelId)
                     {
                         var customersList = dal.GetCustomersList(allCustomers);
-                        //search parcel's reciver
+                        //search parcel's receiver
                         foreach (var cElement in customersList)
                         {
                             if (cElement.Id == pElement.ReceiverId)
