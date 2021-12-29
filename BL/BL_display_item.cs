@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BlApi
 {
@@ -31,16 +32,11 @@ namespace BlApi
                 retTemp.Location = new Location(temp.Location);
 
 
-                var dronesInCharge = new List<DroneInCharge>();
-                foreach (var item in dronesList)
-                {
-                    if (item.Status == MyEnums.DroneStatus.maintenance)
-                        if (item.Location.Latitude == retTemp.Location.Latitude &&
-                           item.Location.Longitude == retTemp.Location.Longitude)
-                        {
-                            dronesInCharge.Add(new DroneInCharge(item.Id, item.Battery));
-                        }
-                }
+                var dronesInCharge = (from item in dronesList
+                                      where item.Status == MyEnums.DroneStatus.maintenance
+                                      where item.Location.Latitude == retTemp.Location.Latitude &&
+                                            item.Location.Longitude == retTemp.Location.Longitude
+                                      select new DroneInCharge(item.Id, item.Battery)).ToList();
                 retTemp.DronesInCharge = dronesInCharge;
                 return retTemp;
             }
@@ -50,20 +46,20 @@ namespace BlApi
             {
                 bool exist = false;
                 Drone retDrone = new();
-                foreach (var element in dronesList)
+                foreach (var element in from element in dronesList
+                                        where element.Id == droneId
+                                        select element)
                 {
-                    if (element.Id == droneId)
-                    {
-                        exist = true;
-                        retDrone.Id = element.Id;
-                        retDrone.Location = element.Location;
-                        retDrone.Weight = element.Weight;
-                        retDrone.Status = element.Status;
-                        retDrone.Model = element.Model;
-                        retDrone.Battery = element.Battery;
-                        retDrone.Location = element.Location;
-                    }
+                    exist = true;
+                    retDrone.Id = element.Id;
+                    retDrone.Location = element.Location;
+                    retDrone.Weight = element.Weight;
+                    retDrone.Status = element.Status;
+                    retDrone.Model = element.Model;
+                    retDrone.Battery = element.Battery;
+                    retDrone.Location = element.Location;
                 }
+
                 if (exist == false)
                     throw new WrongIdException(droneId, $"Wrong ID: {droneId}");
                 return retDrone;
