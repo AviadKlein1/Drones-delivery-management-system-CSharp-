@@ -18,8 +18,8 @@ namespace BlApi
             public IEnumerable<StationToList> GetStationsList(System.Predicate<DalApi.DO.Station> match)
             {
                 List<StationToList> newList = new();
-                var v = dal.GetStationsList(match);
-                foreach (var item in v)
+                IEnumerable<DalApi.DO.Station> v = dal.GetStationsList(match);
+                foreach (DalApi.DO.Station item in v)
                 {
                     StationToList newStation = new();
                     newStation.Id = item.Id;
@@ -41,14 +41,14 @@ namespace BlApi
             /// <returns></returns> reyurn list of drones
             public List<DroneToList> GetDronesList(System.Predicate<DroneToList> match)
             {
-                var v = dronesList.FindAll(match);
+                List<DroneToList> v = dronesList.FindAll(match);
                 if (v == null)
                     System.Console.WriteLine("empty list\n");
                 return v;
             }
             public List<DroneToList> GetDrones()
             {
-                var v = dronesList;
+                List<DroneToList> v = dronesList;
                 return v;
 
                 //var v = dronesList;
@@ -68,7 +68,7 @@ namespace BlApi
             public IEnumerable<CustomerToList> GetCustomersList(System.Predicate<DalApi.DO.Customer> match)
             {
                 List<CustomerToList> tmp1 = new();
-                var v = dal.GetCustomersList(match);
+                IEnumerable<DalApi.DO.Customer> v = dal.GetCustomersList(match);
                 foreach (var element in v)
                 {
                     CustomerToList myCustomer = new();
@@ -77,7 +77,7 @@ namespace BlApi
                     myCustomer.Name = element.Name;
                     myCustomer.PhoneNumber = element.PhoneNumber;
                     var parcelsList = dal.GetParcelsList(allParcels);
-                    foreach (var item in parcelsList)
+                    foreach (DalApi.DO.Parcel item in parcelsList)
                     {
                         if (item.SenderId == element.Id)
                         {
@@ -115,7 +115,7 @@ namespace BlApi
                     //display customers (sender and receiver)
                     string senderName = null;
                     string receiverName = null;
-                    foreach (var cElement in customersList)
+                    foreach (DalApi.DO.Customer cElement in customersList)
                     {
                         if (cElement.Id == element.SenderId)
                             senderName = cElement.Name;
@@ -131,10 +131,7 @@ namespace BlApi
                     if(element.Delivered != null)
                         myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.delivered;
 
-
-
                     tmp1.Add(myParcel);
-
                 }
                 return tmp1;
             }

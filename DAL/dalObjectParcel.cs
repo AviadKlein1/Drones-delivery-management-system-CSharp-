@@ -79,7 +79,7 @@ namespace DalApi
                 /// <returns></returns>
                 public void ScheduleParcelToDrone(int newParcelId, int droneId)
                 {
-                    Parcel myParcel = new();
+                    Parcel temp = new();
                     for (int i = 0; i < DataSource.parcels.Count; i++)
                         //search parcel
                         if (DataSource.parcels[i].Id == newParcelId)

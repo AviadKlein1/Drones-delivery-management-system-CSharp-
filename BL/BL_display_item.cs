@@ -128,7 +128,7 @@ namespace BlApi
             //display parcel
             public Parcel DisplayParcel(int parcelId)
             {
-                BlApi.BO.Parcel temp = new();
+                Parcel temp = new();
                 var v = dal.GetParcel(parcelId);
                 try
                 {

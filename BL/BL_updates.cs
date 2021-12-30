@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace BlApi
 {
@@ -18,25 +19,24 @@ namespace BlApi
             public bool UpdateDrone(int droneId, string newModel)
             {
                 bool found = false;
-                var dalDronesList = dal.GetDrones();
-                foreach (DalApi.DO.Drone item in dalDronesList)
+                System.Collections.Generic.IEnumerable<DalApi.DO.Drone> dalDronesList = dal.GetDrones();
+                foreach (var _ in from DalApi.DO.Drone item in dalDronesList
+                                  where item.Id == droneId
+                                  select new { })
                 {
-                    if (item.Id == droneId)
-                    {
-                        found = true;
-                        break;
-                    }
+                    found = true;
+                    break;
                 }
+
                 if (found)
                 {
                     dal.UpdateDrone(droneId, newModel);
-                    foreach (DroneToList dItem in dronesList)
+                    foreach (var dItem in from DroneToList dItem in dronesList
+                                          where dItem.Id == droneId
+                                          select dItem)
                     {
-                        if (dItem.Id == droneId)
-                        {
-                            dItem.Model = newModel;
-                            break;
-                        }
+                        dItem.Model = newModel;
+                        break;
                     }
                 }
                 else
@@ -54,16 +54,17 @@ namespace BlApi
             public bool UpdateStation(int stationId, string newName, int numOfChargeSlots,int avialble)
             {
                 bool found = false;
-                var dalStationsList = dal.GetStationsList(allStations);
+                System.Collections.Generic.IEnumerable<DalApi.DO.Station> dalStationsList = dal.GetStationsList(allStations);
+                foreach (var _ in
                 //search station
-                foreach (var item in dalStationsList)
+                from item in dalStationsList
+                where item.Id == stationId
+                select new { })
                 {
-                    if (item.Id == stationId)
-                    {
-                        found = true;
-                        break;
-                    }
+                    found = true;
+                    break;
                 }
+
                 if (found)
                     dal.UpdateStation(stationId, newName, numOfChargeSlots, avialble);
                 else
@@ -80,17 +81,18 @@ namespace BlApi
             /// <returns></returns>
             public bool UpdateCustomer(int customerId, string newName, string newPhone)
             {
-                var found = false;
+                bool found = false;
                 var dalCustomersList = dal.GetCustomersList(allCustomers);
+                foreach (var _ in
                 //search customer
-                foreach (var item in dalCustomersList)
+                from item in dalCustomersList
+                where item.Id == customerId
+                select new { })
                 {
-                    if (item.Id == customerId)
-                    {
-                        found = true;
-                        break;
-                    }
+                    found = true;
+                    break;
                 }
+
                 if (found)
                     dal.UpdateCustomer(customerId, newName, newPhone);
                 else
@@ -107,40 +109,38 @@ namespace BlApi
             {
                 bool found = false;
                 var v = dronesList;
-
+                foreach (var item in
                 //search drone
-                foreach (DroneToList item in v)
+                from DroneToList item in v
+                where item.Id == droneId
+                select item)
                 {
-                    if (item.Id == droneId)
+                    if (item.Status != MyEnums.DroneStatus.available)
+                        throw new OccupiedDroneException(droneId, $"wrong id: { droneId }");
+                    //is available
+                    else
                     {
-                        if (item.Status != MyEnums.DroneStatus.available)
-                            throw new OccupiedDroneException(droneId, $"wrong id: { droneId }");
-                        //is available
-                        else 
+                        DalApi.DO.Location itemLocation = new(item.Location.Longitude, item.Location.Latitude);
+                        var tempStation = NearestReachableChargeSlot(itemLocation, droneId);
+                        //if all stations are occupied
+                        if (tempStation.Id == 0)
                         {
-                            DalApi.DO.Location itemLocation = new(item.Location.Longitude, item.Location.Latitude);
-                            var tempStation = NearestReachableChargeSlot(itemLocation, droneId);
-                            //if all stations are occupied
-                            if (tempStation.Id == 0)
-                            {
-                                Console.WriteLine("not available station to charge drone\n");
-                                break;
-                            }
-                            // send drone to charge
-                            dal.DecreaseChargeSlot(tempStation.Id);
-                            foreach (var dItem in dronesList)
-                            {
-                                if (dItem.Id == droneId)
-                                {
-                                    dItem.Status = MyEnums.DroneStatus.maintenance;
-                                    dItem.Location = new Location(tempStation.Location);
-                                    //battery
-                                    var dis = dal.GetDistance(itemLocation, tempStation.Location);
-                                    var neededBattery = (int)BatteryRequirementForVoyage(droneId, dis);
-                                    dItem.Battery -= neededBattery;
-                                    found = true;
-                                }
-                            }
+                            Console.WriteLine("not available station to charge drone\n");
+                            break;
+                        }
+                        // send drone to charge
+                        dal.DecreaseChargeSlot(tempStation.Id);
+                        foreach (var dItem in from dItem in dronesList
+                                              where dItem.Id == droneId
+                                              select dItem)
+                        {
+                            dItem.Status = MyEnums.DroneStatus.maintenance;
+                            dItem.Location = new Location(tempStation.Location);
+                            //battery
+                            double dis = dal.GetDistance(itemLocation, tempStation.Location);
+                            int neededBattery = (int)BatteryRequirementForVoyage(droneId, dis);
+                            dItem.Battery -= neededBattery;
+                            found = true;
                         }
                     }
                 }
@@ -157,34 +157,30 @@ namespace BlApi
             {
                 bool found = false;
                 var v = dronesList;
+                foreach (DroneToList item in
                 //search drone
-                foreach (var item in v)
+                from item in v
+                where item.Id == droneId
+                select item)
                 {
-                    if (item.Id == droneId)
+                    if (item.Status != MyEnums.DroneStatus.maintenance)
+                        throw new WrongIdException
+                            (droneId, $"wrong id, drone is not charging currently: {droneId}");
+                    // in maintenance
+                    else
                     {
-                        if (item.Status != MyEnums.DroneStatus.maintenance)
+                        DalApi.DO.Location itemLocation = new(item.Location.Longitude, item.Location.Latitude);
+                        var tempStation = NearestStation(itemLocation);
+                        dal.IncreaseChargeSlot(tempStation.Id);
+                        foreach (var dItem in from dItem in dronesList
+                                              where dItem.Id == droneId
+                                              select dItem)
                         {
-                            throw new WrongIdException
-                                (droneId, $"wrong id, drone is not charging currently: {droneId}");
-                        }
-                        // in maintenance
-                        else
-                        {
-                            DalApi.DO.Location itemLocation = new(item.Location.Longitude, item.Location.Latitude);
-                            var tempStation = NearestStation(itemLocation);
-                            dal.IncreaseChargeSlot(tempStation.Id);
-
-                            foreach (var dItem in dronesList)
-                            {
-                                if (dItem.Id == droneId)
-                                {
-                                    dItem.Status = MyEnums.DroneStatus.available;
-                                    //battery
-                                    int newBattery = dItem.Battery += (int)(DroneLoadRate * chargeTime);
-                                    dItem.Battery = newBattery > 100 ? 100 : newBattery;
-                                    found = true;
-                                }
-                            }
+                            dItem.Status = MyEnums.DroneStatus.available;
+                            //battery
+                            int newBattery = dItem.Battery += (int)(DroneLoadRate * chargeTime);
+                            dItem.Battery = newBattery > 100 ? 100 : newBattery;
+                            found = true;
                         }
                     }
                 }
@@ -200,26 +196,26 @@ namespace BlApi
             {
                 bool found = false;
                 var v = dronesList;
+                foreach (var drone in
                 //search drone
-                foreach (DroneToList drone in v)
+                from DroneToList drone in v
+                where drone.Id == droneId
+                select drone)
                 {
-                    if (drone.Id == droneId)
+                    if (drone.Status == MyEnums.DroneStatus.delivery)
+                        throw new OccupiedDroneException(droneId, $"drone is occupied, try another: {droneId}");
+                    //is available 
+                    else
                     {
-                        if (drone.Status == MyEnums.DroneStatus.delivery)
-                            throw new OccupiedDroneException(droneId, $"drone is occupied, try another: {droneId}");
-                        //is available 
+                        int newParcelId = MostSuitableParcel(droneId);
+                        if (newParcelId == 0)
+                            break;
                         else
-                        {
-                            int newParcelId = MostSuitableParcel(droneId);
-                            if (newParcelId == 0)
-                                break;
-                            else 
-                                found = true;
-                            drone.Status = MyEnums.DroneStatus.delivery;
-                            drone.DeliveredParcelId = newParcelId;
+                            found = true;
+                        drone.Status = MyEnums.DroneStatus.delivery;
+                        drone.DeliveredParcelId = newParcelId;
 
-                            dal.ScheduleParcelToDrone(newParcelId, droneId);
-                        }
+                        dal.ScheduleParcelToDrone(newParcelId, droneId);
                     }
                 }
                 return found;
@@ -237,62 +233,62 @@ namespace BlApi
                 var v = dronesList;
                 int idOfThisParcel = 0;
                 DalApi.DO.Location ourSenderLocation = new();
+                foreach (DroneToList item in
                 //search drone
-                foreach (var item in v)
+                from item in v
+                where item.Id == droneId
+                select item)
                 {
-                    if (item.Id == droneId)
-                    {
-                        idOfThisParcel = item.DeliveredParcelId;
-                        droneExistFlag = true;
-                    }
+                    idOfThisParcel = item.DeliveredParcelId;
+                    droneExistFlag = true;
                 }
+
                 if (droneExistFlag == false)
                     throw new WrongIdException(droneId, $"wrong id: {droneId}");
                 if (ScheduledButNotPickedUp(idOfThisParcel))
                 {
                     var parcelsList = dal.GetParcelsList(allParcels);
-                    foreach (var item in parcelsList)
+                    foreach (var item in from DalApi.DO.Parcel item in parcelsList//find parcel
+                                         where item.Id == idOfThisParcel
+                                         select item)
                     {
-                        //find parcel
-                        if (item.Id == idOfThisParcel)
+                        //our parcel belong to our drone
+                        if (item.DroneId == droneId)
                         {
-                            //our parcel belong to our drone
-                            if (item.DroneId == droneId)
+                            ourSenderLocation = SenderLocation(item.Id);
+                            //update parcel
+                            dal.PickUpParcel(droneId, item.Id);
+                            found = true;
+                            //update drone
+                            DroneToList temp = new();
+                            for (int i = 0; i < v.Count; i++)
                             {
-                                ourSenderLocation = SenderLocation(item.Id);
-                                //update parcel
-                                dal.PickUpParcel(droneId, item.Id);
-                                found = true;
-                                //update drone
-                                DroneToList temp = new();
-                                for (int i = 0; i < v.Count; i++)
+                                DroneToList dItem = v[i];
+                                if (dItem.Id == droneId)
                                 {
-                                    DroneToList dItem = v[i];
-                                    if (dItem.Id == droneId)
-                                    {
-                                        DalApi.DO.Location earlyDroneLocation =
-                                            new(dItem.Location.Longitude, dItem.Location.Latitude);
-                                        temp.Id = dItem.Id;
-                                        temp.Model = dItem.Model;
-                                        temp.Location = new Location(ourSenderLocation);
-                                        temp.Status = dItem.Status;
-                                        temp.Battery = dItem.Battery;
-                                        temp.Weight = dItem.Weight;
-                                        temp.DeliveredParcelId = item.Id;
-                                        
-                                        //uodate location
-                                        temp.Location.Longitude = ourSenderLocation.Longitude;
-                                        temp.Location.Latitude = ourSenderLocation.Latitude;
-                                        //update battery
-                                        temp.Battery -= (int)BatteryRequirementForVoyage(droneId, dal.GetDistance(earlyDroneLocation, ourSenderLocation));
-                                        if (temp.Battery < 0) temp.Battery = 0;
-                                        v[i] = temp;
-                                    }
+                                    DalApi.DO.Location earlyDroneLocation =
+                                        new(dItem.Location.Longitude, dItem.Location.Latitude);
+                                    temp.Id = dItem.Id;
+                                    temp.Model = dItem.Model;
+                                    temp.Location = new Location(ourSenderLocation);
+                                    temp.Status = dItem.Status;
+                                    temp.Battery = dItem.Battery;
+                                    temp.Weight = dItem.Weight;
+                                    temp.DeliveredParcelId = item.Id;
+
+                                    //uodate location
+                                    temp.Location.Longitude = ourSenderLocation.Longitude;
+                                    temp.Location.Latitude = ourSenderLocation.Latitude;
+                                    //update battery
+                                    temp.Battery -= (int)BatteryRequirementForVoyage(droneId, dal.GetDistance(earlyDroneLocation, ourSenderLocation));
+                                    if (temp.Battery < 0)
+                                        temp.Battery = 0;
+                                    v[i] = temp;
                                 }
                             }
-                            else
-                                Console.WriteLine("not our parcel");
                         }
+                        else
+                            Console.WriteLine("not our parcel");
                     }
                 }
                 return found;
@@ -310,60 +306,60 @@ namespace BlApi
                 var v = dronesList;
                 int idOfThisParcel = 0;
                 DalApi.DO.Location ourReceiverLocation = new();
+                foreach (var item in
                 //search drone
-                foreach (var item in v)
+                from item in v
+                where item.Id == droneId
+                select item)
                 {
-                    if (item.Id == droneId)
-                    {
-                        idOfThisParcel = item.DeliveredParcelId;
-                        droneExistFlag = true;
-                        break;
-                    }
+                    idOfThisParcel = item.DeliveredParcelId;
+                    droneExistFlag = true;
+                    break;
                 }
+
                 if (droneExistFlag == false)
                     throw new WrongIdException(droneId, $"wrong id: { droneId }");
                 if (!PickedUpButNotDelivered(idOfThisParcel))
                     Console.WriteLine("this parcel is not in the right status\n");
                 var parcelsList = dal.GetParcelsList(allParcels);
-                foreach (var item in parcelsList)
+                foreach (var item in from item in parcelsList//find our parcel
+                                     where item.Id == idOfThisParcel
+                                     select item)
                 {
-                    //find our parcel
-                    if (item.Id == idOfThisParcel)
+                    //our parcel belong to our drone
+                    if (item.DroneId == droneId)
                     {
-                        //our parcel belong to our drone
-                        if (item.DroneId == droneId)
+                        ourReceiverLocation = ReceiverLocation(item.Id);
+                        //update parcel
+                        dal.DeliverParcel(droneId, item.Id);
+                        flag = true;
+                        //update drone
+                        DroneToList temp = new();
+                        for (int i = 0; i < v.Count; i++)
                         {
-                            ourReceiverLocation = ReceiverLocation(item.Id);
-                            //update parcel
-                            dal.DeliverParcel(droneId, item.Id);
-                            flag = true;
-                            //update drone
-                            DroneToList temp = new();
-                            for (int i = 0; i < v.Count; i++)
+                            DroneToList myDrone = v[i];
+                            if (myDrone.Id == droneId)
                             {
-                                DroneToList myDrone = v[i];
-                                if (myDrone.Id == droneId)
-                                {
-                                    temp.Id = myDrone.Id;
-                                    temp.Model = myDrone.Model;
-                                    temp.Location = new Location(ourReceiverLocation);
-                                    temp.Status = MyEnums.DroneStatus.available;
-                                    temp.Weight = myDrone.Weight;
-                                    temp.Battery = myDrone.Battery;
-                                    temp.DeliveredParcelId = 0;
-                                    DalApi.DO.Location earlyDroneLocation = new(myDrone.Location.Longitude, myDrone.Location.Latitude);
-                                    //update battery
-                                    temp.Battery -= (int)BatteryRequirementForVoyage
-                                        (droneId, dal.GetDistance(earlyDroneLocation, ourReceiverLocation));
-                                    if (temp.Battery < 0) temp.Battery = 0;
-                                    v[i] = temp;
-                                }
+                                temp.Id = myDrone.Id;
+                                temp.Model = myDrone.Model;
+                                temp.Location = new Location(ourReceiverLocation);
+                                temp.Status = MyEnums.DroneStatus.available;
+                                temp.Weight = myDrone.Weight;
+                                temp.Battery = myDrone.Battery;
+                                temp.DeliveredParcelId = 0;
+                                DalApi.DO.Location earlyDroneLocation = new(myDrone.Location.Longitude, myDrone.Location.Latitude);
+                                //update battery
+                                temp.Battery -= (int)BatteryRequirementForVoyage
+                                    (droneId, dal.GetDistance(earlyDroneLocation, ourReceiverLocation));
+                                if (temp.Battery < 0)
+                                    temp.Battery = 0;
+                                v[i] = temp;
                             }
                         }
-                        else Console.WriteLine("not our parcel");
                     }
+                    else Console.WriteLine("not our parcel");
                 }
-                var g = ChargeDrone(droneId);
+                bool g = ChargeDrone(droneId);
                 return flag;
             }
         }

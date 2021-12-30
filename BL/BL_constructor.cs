@@ -36,9 +36,9 @@ namespace BlApi
                 DroneLoadRate = dal.DroneElectricityConsumption()[4];
 
                 //insert drones to list
-                var dalDrones = dal.GetDrones();
+                IEnumerable<DalApi.DO.Drone> dalDrones = dal.GetDrones();
                 DroneToList temp = new();
-                foreach (var element in dalDrones)
+                foreach (DalApi.DO.Drone element in dalDrones)
                 {
                     DroneToList temp1 = new();
                     temp1.Id = element.Id;
