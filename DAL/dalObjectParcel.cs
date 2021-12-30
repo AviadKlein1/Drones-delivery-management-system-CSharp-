@@ -44,18 +44,18 @@ namespace DalApi
                 public Parcel GetParcel(int myId)
                 {
                     bool found = false;
-                    Parcel temp = new();
+                    Parcel myParcel = new();
                     for (int i = 0; i < DataSource.parcels.Count; i++)
                     {
                         //search parcel
                         if (DataSource.parcels[i].Id == myId)
                         {
                             found = true;
-                            temp = DataSource.parcels[i];
+                            myParcel = DataSource.parcels[i];
                         }
                     }
                     if (found == true)
-                        return temp;
+                        return myParcel;
                     //if not found
                     else
                         throw new WrongIdException(myId, $"wrong id: { myId }");
@@ -79,15 +79,16 @@ namespace DalApi
                 /// <returns></returns>
                 public void ScheduleParcelToDrone(int newParcelId, int droneId)
                 {
-                    Parcel temp = new();
+                    Parcel myParcel = new();
                     for (int i = 0; i < DataSource.parcels.Count; i++)
                         //search parcel
                         if (DataSource.parcels[i].Id == newParcelId)
                         {
-                            temp = DataSource.parcels[i];
-                            temp.Scheduled = DateTime.Now;
-                            temp.DroneId = droneId;
-                            DataSource.parcels[i] = temp;
+                            myParcel = DataSource.parcels[i];
+                            myParcel.Scheduled = DateTime.Now;
+                            myParcel.DroneId = droneId;
+                            DataSource.parcels[i] = myParcel;
+                            break;
                         }
                 }
 

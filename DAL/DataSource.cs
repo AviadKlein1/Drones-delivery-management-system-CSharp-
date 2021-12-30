@@ -55,6 +55,7 @@ namespace DalApi
                         stations.Add(myStation);
                     }
                     #endregion
+
                     #region initialize drones
                     //drones
                     for (int i = 0; i < 5; i++)
@@ -68,6 +69,7 @@ namespace DalApi
                         drones.Add(myDrone);
                     }
                     #endregion
+
                     #region initialize customers
                     //customers
                     for (int i = 0; i < 10; i++)
@@ -86,6 +88,7 @@ namespace DalApi
                         customers.Add(myCustomer);
                     }
                     #endregion
+
                     #region initialize parcels
                     //parcels
                     int parcelIndex1 = rd.Next(10);
@@ -105,7 +108,7 @@ namespace DalApi
                         {
                             Id = Config.ParcelRunId++,
                             Weight = (MyEnums.WeightCategory)rd.Next(3),
-                            Priority = (MyEnums.PriorityLevel)rd.Next(3)
+                            Priority = (MyEnums.PriorityLevel)rd.Next(3),
                         };
 
                         //initialize status randomly (delivery, maintenance, available)
@@ -133,10 +136,13 @@ namespace DalApi
                         //if not associated
                         if(i != parcelIndex1 && i != parcelIndex2)
                         {
+                            myParcel.SenderId = customers[i].Id;
+                            myParcel.ReceiverId = customers[rd.Next(10)].Id;
+                            myParcel.Scheduled = DateTime.Now;
                             myParcel.DroneId = 0;
-                            myParcel.SenderId = 0;
                             myParcel.Scheduled = null;
-                            myParcel.ReceiverId = 0;
+                            while (myParcel.ReceiverId == myParcel.SenderId)
+                                myParcel.ReceiverId = customers[rd.Next(10)].Id;
                         }
                         parcels.Add(myParcel);
                     }
@@ -159,8 +165,8 @@ namespace DalApi
                         Location = new Location(longi, lati);
                     }
                 }
-                public static string[] NamesOfCustomers =
-                    { "Yael Katz",
+                public static string[] NamesOfCustomers = {
+                  "Yael Katz",
                   "Yossi Mizrahi",
                   "Ronit Peretz",
                   "Moti Klein",
@@ -169,10 +175,11 @@ namespace DalApi
                   "Tamar Tabib",
                   "Avi Gold",
                   "Shira Lasker",
-                  "Yoni Biton" };
+                  "Yoni Biton" 
+                };
 
-                public static StationToInitialize[] stationTos =
-                    { new StationToInitialize("Jerusalem", 31.78029702774437, 35.22149040877181),
+                public static StationToInitialize[] stationTos = {
+                  new StationToInitialize("Jerusalem", 31.78029702774437, 35.22149040877181),
                   new StationToInitialize("Tel Aviv", 32.082937755612186, 34.7908251395941),
                   new StationToInitialize("Haifa", 32.805995463493694, 34.99025372436736),
                   new StationToInitialize("Ashdod", 31.794795027439164, 34.651403839531135),

@@ -168,26 +168,30 @@ namespace BlApi
                 return tempLocation;
             }
 
-            internal DalApi.DO.Location ReciverLocation(int parcelId)
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="parcelId"></param>
+            /// <returns></returns>
+            internal DalApi.DO.Location ReceiverLocation(int parcelId)
             {
-                DalApi.DO.Location tempLocation = new();
-                var dalParcelsList = dal.GetParcelsList(allParcels);
+                DalApi.DO.Location myLocation = new();
+                var ParcelsList = dal.GetParcelsList(allParcels);
                 //search parcel
-                foreach (var pElement in dalParcelsList)
+                foreach (var parcel in ParcelsList)
                 {
-                    if (pElement.Id == parcelId)
+                    if (parcel.Id == parcelId)
                     {
-                        var customersList = dal.GetCustomersList(allCustomers);
-                        //search parcel's reciver
-                        foreach (var cElement in customersList)
+                        var CustomersList = dal.GetCustomersList(allCustomers);
+                        //search parcel's receiver
+                        foreach (var customer in CustomersList)
                         {
-                            if (cElement.Id == pElement.ReceiverId)
-                                tempLocation = cElement.Location;
+                            if (customer.Id == parcel.ReceiverId)
+                                myLocation = customer.Location;
                         }
                     }
                 }
-                return tempLocation;
-
+                return myLocation;
             }
 
             /// <summary>
@@ -537,7 +541,7 @@ namespace BlApi
                 DalApi.DO.Location myDroneLocation, int myDroneBattery)
             {
                 var senderLocation = SenderLocation(tempParcel.Id);
-                var reciverLocation = ReciverLocation(tempParcel.Id);
+                var reciverLocation = ReceiverLocation(tempParcel.Id);
                 var chargeStation = NearestAvailableChargeSlot(reciverLocation);
 
                 double dis1 = dal.GetDistance(myDroneLocation, senderLocation);
