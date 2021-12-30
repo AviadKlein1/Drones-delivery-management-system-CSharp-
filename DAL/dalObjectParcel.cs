@@ -84,11 +84,17 @@ namespace DalApi
                         //search parcel
                         if (DataSource.parcels[i].Id == newParcelId)
                         {
-                            myParcel = DataSource.parcels[i];
-                            myParcel.Scheduled = DateTime.Now;
-                            myParcel.DroneId = droneId;
-                            DataSource.parcels[i] = myParcel;
-                            break;
+                            temp.Id = DataSource.parcels[i].Id;
+                            temp.Requested = DataSource.parcels[i].Requested;
+                            temp.PickedUp = null;
+                            temp.Delivered = null;
+                            temp.Scheduled = DateTime.Now;
+                            temp.DroneId = droneId;
+                            temp.Priority = DataSource.parcels[i].Priority;
+                            temp.ReceiverId = DataSource.parcels[i].ReceiverId;
+                            temp.SenderId = DataSource.parcels[i].SenderId;
+                            temp.Weight = DataSource.parcels[i].Weight;
+                            DataSource.parcels[i] = temp;
                         }
                 }
 

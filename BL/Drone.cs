@@ -47,6 +47,11 @@
         /// </summary>
         public class DroneInCharge
         {
+            public DroneInCharge(int Id, int Battery)
+            {
+                this.Id = Id;
+                this.Battery = Battery;
+            }
             public int Id { get; set; }
             public int Battery { get; set; }
             public override string ToString()

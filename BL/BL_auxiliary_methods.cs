@@ -80,9 +80,7 @@ namespace BlApi
             /// returns a number between 1 and 100
             internal double BatteryRequirementForVoyage(int myDroneId, double distance)
             {
-
-                var dalDronesList = dal.GetDrones();
-                foreach (var element in dalDronesList)
+                foreach (var element in dronesList)
                 {
                     //search drone
                     if (element.Id == myDroneId)
@@ -101,10 +99,11 @@ namespace BlApi
                                 if (myParcel.Weight == DalApi.DO.MyEnums.WeightCategory.heavy)
                                     return heavyWeight * distance / 100;
                             }
-                        }
+                        }       
                     }
                 }
-                return -1;
+
+                return BL.free * distance / 100;
             }
 
             /// <summary>
@@ -163,7 +162,6 @@ namespace BlApi
                                 tempLocation = customer.Location;
                         }
                     }
-                    break;
                 }
                 return tempLocation;
             }
@@ -182,9 +180,9 @@ namespace BlApi
                 {
                     if (parcel.Id == parcelId)
                     {
-                        var CustomersList = dal.GetCustomersList(allCustomers);
+                        var customersList = dal.GetCustomersList(allCustomers);
                         //search parcel's receiver
-                        foreach (var customer in CustomersList)
+                        foreach (var cElement in customersList)
                         {
                             if (customer.Id == parcel.ReceiverId)
                                 myLocation = customer.Location;
@@ -379,17 +377,21 @@ namespace BlApi
             {
                 DalApi.DO.Station tempStation = new();
                 var stationList = dal.GetStationsList(allStations);
-                double min = 99999999999;
-                var requiredChargingLevel = (int)BatteryRequirementForVoyage(myDroneId, min);
+                double minDistance = 99999;
+                var requiredChargingLevel = (int)BatteryRequirementForVoyage(myDroneId, 99999999);
                 var currentChargingLevel = ChargingLevel(myDroneId);
                 //search for nearer stations
                 foreach (var element in stationList)
                 {
                     var dis = dal.GetDistance(l, element.Location);
-                    if (dis < min && element.NumOfAvailableChargeSlots > 0 && (requiredChargingLevel <= currentChargingLevel))
+                    if (dis < minDistance && element.NumOfAvailableChargeSlots > 0) 
                     {
-                        min = dis;
-                        tempStation = element;
+                        requiredChargingLevel = (int)BatteryRequirementForVoyage(myDroneId, dis);
+                        if(requiredChargingLevel <= currentChargingLevel)
+                        {
+                            minDistance = dis;
+                            tempStation = element;
+                        }
                     }
                 }
                 return tempStation;
