@@ -37,8 +37,7 @@
             public override string ToString()
             {
                 return $"ID: {Id}\nModel: {Model}\nWeight Category: {Weight}\nStatus:" +
-                    $"{Status}\nBattery: {Battery}\nLongitude: {Location.Longitude}\n" +
-                    $"Latitude:{Location.Latitude}\n "/*+$"{del} \n{delPar}\n"*/;
+                    $"{Status}\nBattery: {Battery}\nLocation: {Location}\n";
             }
         }
 
@@ -59,6 +58,7 @@
                 return $"ID: {Id}\n Battery: {Battery}\n";
             }
         }
+       
 
         /// <summary>
         /// entity drone in parcel - constructor and fields

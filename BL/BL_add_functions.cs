@@ -86,7 +86,7 @@ namespace BlApi
                 temp.Id = myCustomer.Id;
                 temp.Name = myCustomer.Name;
                 temp.PhoneNumber = myCustomer.PhoneNumber;
-                temp.Location = new DalApi.DO.Location(myCustomer.Location.Longitude, myCustomer.Location.Latitude);
+                temp.Location = new DalApi.DO.Location(myCustomer.Location.Latitude, myCustomer.Location.Longitude);
 
                 //add customer to list of customers
                 try

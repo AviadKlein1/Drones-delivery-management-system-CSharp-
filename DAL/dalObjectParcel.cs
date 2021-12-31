@@ -48,7 +48,7 @@ namespace DalApi
                     for (int i = 0; i < DataSource.parcels.Count; i++)
                     {
                         //search parcel
-                        if (DataSource.parcels[i].Id == myId)
+                        if (DataSource.parcels[i].Id == myId && DataSource.parcels[i].IsActive)
                         {
                             found = true;
                             temp = DataSource.parcels[i];
@@ -61,14 +61,61 @@ namespace DalApi
                         throw new WrongIdException(myId, $"wrong id: { myId }");
                 }
 
+                public void DeleteParcel(int myId)
+                {
+                    Parcel temp = new();
+                    for (int i = 0; i < DataSource.parcels.Count; i++)
+                    {
+                        Parcel item = DataSource.parcels[i];
+                        //search customers
+                        if (item.Id == myId)
+                        {
+                            temp.Id = item.Id;
+                            temp.IsActive = false;
+                            temp.DroneId = item.DroneId;
+                            temp.Priority = item.Priority;
+                            temp.Weight = item.Weight;
+                            temp.SenderId = item.SenderId;
+                            temp.ReceiverId = item.ReceiverId;
+                            temp.Requested = item.Requested;
+                            temp.Scheduled = item.Scheduled;
+                            temp.PickedUp = item.PickedUp;
+                            temp.Delivered = item.Delivered;
+                            DataSource.parcels[i] = temp;
+                            return;
+                        }
+                    }
+                    throw new WrongIdException(myId, $"wrong id: {myId}");
+                }
                 /// <summary>
                 /// return filtered list of parcels by conditions
                 /// </summary>
-                public IEnumerable<Parcel> GetParcelsList(Predicate<Parcel> match)
+                /// 
+                /// 
+                public IEnumerable<DO.Parcel> GetParcelsList(System.Predicate<DalApi.DO.Parcel> match)
                 {
-                    List<Parcel> newList = new();
-                    newList = DataSource.parcels.FindAll(match);
-                    return newList;
+                    List<Parcel> temp1 = new();
+                    List<Parcel> temp2 = new();
+                    foreach (var item in DataSource.parcels)
+                    {
+                        if (item.IsActive) temp1.Add(item);
+                    };
+                    temp2 = temp1.FindAll(match);
+                    return temp2 ;
+                }
+                /// <summary>
+                /// return filtered list of parcels by conditions
+                /// </summary>
+                /// 
+                /// 
+                public IEnumerable<Parcel> GetParcelsList()
+                {
+                    List<Parcel> temp = new();
+                    foreach (var item in DataSource.parcels)
+                    {
+                        if (item.IsActive) temp.Add(item);
+                    };
+                    return temp;
                 }
                 
                 /// <summary>
@@ -82,7 +129,7 @@ namespace DalApi
                     Parcel temp = new();
                     for (int i = 0; i < DataSource.parcels.Count; i++)
                         //search parcel
-                        if (DataSource.parcels[i].Id == newParcelId)
+                        if (DataSource.parcels[i].Id == newParcelId && DataSource.parcels[i].IsActive)
                         {
                             temp.Id = DataSource.parcels[i].Id;
                             temp.Requested = DataSource.parcels[i].Requested;
@@ -90,6 +137,7 @@ namespace DalApi
                             temp.Delivered = null;
                             temp.Scheduled = DateTime.Now;
                             temp.DroneId = droneId;
+                            temp.IsActive = true;
                             temp.Priority = DataSource.parcels[i].Priority;
                             temp.ReceiverId = DataSource.parcels[i].ReceiverId;
                             temp.SenderId = DataSource.parcels[i].SenderId;

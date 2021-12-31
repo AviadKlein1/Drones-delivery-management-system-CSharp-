@@ -31,19 +31,21 @@ namespace PrL
         public Parcel(BlApi.BO.BL mainBl, BlApi.BO.ParcelToList mainParcel)
         {
 
+            
+            ThemeManager.Current.ChangeTheme(this, "Dark.blue");
+            InitializeComponent();
+            Title = "Parcel Diatels";
+            bl = mainBl;
+            DisplayParcel.Visibility = Visibility.Visible;
             try
             {
-                ThemeManager.Current.ChangeTheme(this, "Dark.blue");
-                InitializeComponent();
-                Title = "Parcel Diatels";
-                bl = mainBl;
                 parcelToList = mainParcel;
                 parcel = bl.DisplayParcel(parcelToList.Id);
                 RecieverNameBox.Text = parcel.Sender.Id == 0 ? "---" : bl.DisplayCustomer(parcel.Sender.Id).Name;
                 SenderNameBox.Text = parcel.Receiver.Id == 0 ? "---" : bl.DisplayCustomer(parcel.Receiver.Id).Name;
-                DroneInParcelIdBox.Text = parcel.DroneInParcel.Id == 0? "---": $"{bl.DisplayDrone(parcel.DroneInParcel.Id).Id}";
+                DroneInParcelIdBox.Text = parcel.DroneInParcel.Id == 0 ? "---" : $"{bl.DisplayDrone(parcel.DroneInParcel.Id).Id}";
                 DisplayParcel.DataContext = parcel;
-                DisplayParcel.Visibility = Visibility.Visible;
+                if(parcel.PickedUp == null)DeleteParcel.Visibility = Visibility.Visible;
             }
             catch (Exception ex)
             {
@@ -80,6 +82,12 @@ namespace PrL
 
 
             MessageBox.Show("success!");
+            Close();
+        }
+
+        private void DeleteParcel_Click(object sender, RoutedEventArgs e)
+        {
+            bl.DeleteParcel(parcel);
             Close();
         }
     }

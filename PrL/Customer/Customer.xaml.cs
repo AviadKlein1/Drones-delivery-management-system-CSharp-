@@ -87,15 +87,40 @@ namespace PrL
 
         private void ParcelRecievedComboBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var v = (int)ParcelRecievedComboBox.SelectedItem;
-            MessageBox.Show(bl.DisplayParcel(v).ToString());
-           
+            try
+            {
+                var v = (int)ParcelRecievedComboBox.SelectedItem;
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            MessageBox.Show(bl.DisplayParcel((int)ParcelRecievedComboBox.SelectedItem).ToString());
+
         }
 
         private void ParcelSentComboBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var v = (int)ParcelSentComboBox.SelectedItem;
-            MessageBox.Show(bl.DisplayParcel(v).ToString());
+            try
+            {
+                var v = (int)ParcelSentComboBox.SelectedItem;
+
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            MessageBox.Show(bl.DisplayParcel((int)ParcelSentComboBox.SelectedItem).ToString());
+        }
+
+        private void DeleteCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            bl.DeleteCustomer(customer);
+            Close();
         }
     }
 }

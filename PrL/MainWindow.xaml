@@ -45,7 +45,7 @@
             <Label  Content="Created by Tomer Peretz &amp; Aviad Klein" BorderThickness="1"  FontFamily="Javanese Text" FontSize="16" />
         </DockPanel>
 
-            <StackPanel >
+            <StackPanel Margin="80,0" >
                 <Button
             x:Name="ConsoleMode"
             Style="{DynamicResource MahApps.Styles.Button.Chromeless}"

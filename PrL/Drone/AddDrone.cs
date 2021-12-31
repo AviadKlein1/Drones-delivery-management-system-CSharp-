@@ -26,7 +26,7 @@ namespace PrL
         }
         public AddDrone(BlApi.BO.BL mainBl, BlApi.BO.DroneToList mainDrone)
         {
-            ThemeManager.Current.ChangeTheme(this, "light.green");
+            ThemeManager.Current.ChangeTheme(this, "light.blue");
             InitializeComponent();
             Title = "Drone Diatels";
             bl = mainBl;
@@ -51,7 +51,6 @@ namespace PrL
             }
             if (droneToList.Status == BlApi.BO.MyEnums.DroneStatus.delivery)
             {
-                /*if(bl.ScheduledButNotPickedUp(droneToList.DeliveredParcelId))*/ 
                 if (bl.PickedUpButNotDelivered(droneToList.DeliveredParcelId)) DeliverParcelPanel.Visibility = Visibility.Visible;
                 else PickUpParcelPanel.Visibility = Visibility.Visible;
             }
@@ -86,6 +85,12 @@ namespace PrL
         }
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
+            Close();
+        }
+        private void DeleteDrone_Click(object sender, RoutedEventArgs e)
+        {
+            
+            bl.DeleteDrone(bl.DisplayDrone(droneToList.Id));
             Close();
         }
 

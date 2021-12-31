@@ -45,8 +45,8 @@ namespace PrL
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Contains(BlApi.BO.MyEnums.DroneStatus.maintenance)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInMaintenance);
-            if (e.AddedItems.Contains(BlApi.BO.MyEnums.DroneStatus.available)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInAvailable);
-            if (e.AddedItems.Contains(BlApi.BO.MyEnums.DroneStatus.delivery)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInDelivery);
+            else if (e.AddedItems.Contains(BlApi.BO.MyEnums.DroneStatus.available)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInAvailable);
+            else if (e.AddedItems.Contains(BlApi.BO.MyEnums.DroneStatus.delivery)) dronesListView.ItemsSource = bl.GetDronesList(bl.allDronesInDelivery);
         }
 
         private void weightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -84,6 +84,16 @@ namespace PrL
         private void dronesListView_Click(object sender, RoutedEventArgs e)
         {
             AddGrouping(((GridViewColumnHeader)e.OriginalSource).Column.Header.ToString());
+        }
+
+        private void StatusSelector_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            dronesListView.ItemsSource = bl.GetDrones();
+        }
+
+        private void weightSelector_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            dronesListView.ItemsSource = bl.GetDrones();
         }
     }
 }

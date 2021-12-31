@@ -15,7 +15,7 @@
             <Label Content="Password" Foreground="Wheat"/>
             <PasswordBox x:Name="TextPass" Foreground="Wheat" FontSize="18" Background="Gray"/>
             <Button  x:Name="SignUp" Content="Sign Up" Background="Gray" Margin="60,5" DockPanel.Dock="Right" Click="SignUp_Click" Focusable="True" IsDefault="True"/>
-            <Button  x:Name="NewUser" Content="New User" Background="Gray" Margin="60,5" DockPanel.Dock="Left" />
+            <Button  x:Name="NewUser" Content="New User" Background="Gray" Margin="60,5" Click="NewUser_Click" DockPanel.Dock="Left" />
         </StackPanel>
     </Border>
 </Window>

@@ -54,7 +54,7 @@ namespace BlApi
             public bool UpdateStation(int stationId, string newName, int numOfChargeSlots,int avialble)
             {
                 bool found = false;
-                var dalStationsList = dal.GetStationsList(allStations);
+                var dalStationsList = dal.GetStationsList();
                 //search station
                 foreach (var item in dalStationsList)
                 {
@@ -81,7 +81,7 @@ namespace BlApi
             public bool UpdateCustomer(int customerId, string newName, string newPhone)
             {
                 var found = false;
-                var dalCustomersList = dal.GetCustomersList(allCustomers);
+                var dalCustomersList = dal.GetCustomersList();
                 //search customer
                 foreach (var item in dalCustomersList)
                 {
@@ -141,6 +141,7 @@ namespace BlApi
                                     found = true;
                                 }
                             }
+                            dal.AddDroneCharge(droneId, tempStation.Id);
                         }
                     }
                 }
@@ -170,7 +171,8 @@ namespace BlApi
                         // in maintenance
                         else
                         {
-                            DalApi.DO.Location itemLocation = new(item.Location.Longitude, item.Location.Latitude);
+                            DalApi.DO.Location itemLocation = new(item.Location.Latitude, item.Location.Longitude);
+                          
                             var tempStation = NearestStation(itemLocation);
                             dal.IncreaseChargeSlot(tempStation.Id);
 
@@ -188,6 +190,7 @@ namespace BlApi
                         }
                     }
                 }
+                dal.EndDroneCharge(droneId);
                 return found;
             }
 
@@ -217,7 +220,7 @@ namespace BlApi
                                 found = true;
                             drone.Status = MyEnums.DroneStatus.delivery;
                             drone.DeliveredParcelId = newParcelId;
-
+                            
                             dal.ScheduleParcelToDrone(newParcelId, droneId);
                         }
                     }
@@ -250,7 +253,7 @@ namespace BlApi
                     throw new WrongIdException(droneId, $"wrong id: {droneId}");
                 if (ScheduledButNotPickedUp(idOfThisParcel))
                 {
-                    var parcelsList = dal.GetParcelsList(allParcels);
+                    var parcelsList = dal.GetParcelsList();
                     foreach (var item in parcelsList)
                     {
                         //find parcel
@@ -323,7 +326,7 @@ namespace BlApi
                     throw new WrongIdException(droneId, $"wrong id: { droneId }");
                 if (!PickedUpButNotDelivered(idOfThisParcel))
                     Console.WriteLine("this parcel is not in the right status\n");
-                var parcelsList = dal.GetParcelsList(allParcels);
+                var parcelsList = dal.GetParcelsList();
                 foreach (var item in parcelsList)
                 {
                     //find our parcel

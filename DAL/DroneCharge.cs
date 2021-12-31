@@ -7,9 +7,16 @@
         /// </summary>
         public struct DroneCharge
         {
+            public DroneCharge(int droneId, int stationId)
+            {
+                this.DroneId = droneId;
+                this.StationId = stationId;
+                IsActive = true;
+        }
             /// <summary>
             /// 
             /// </summary>
+            public bool IsActive { get; set; }
             public int DroneId { get; set; }
             
             /// <summary>

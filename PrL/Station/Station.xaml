@@ -62,7 +62,7 @@
             </StackPanel>
         </StackPanel>
         <Button x:Name="CancelButton3" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,2"  Height="26" Width="52" Click="CancelButton3_Click"  Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" />
-
+        <Button x:Name="DeleteStation" Content="Delete!" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="2,0,0,2"  Height="26" Width="52" Click="DeleteStation_Click" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" />
     </Grid>
 </mah:MetroWindow>
 

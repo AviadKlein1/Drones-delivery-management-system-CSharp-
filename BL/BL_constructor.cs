@@ -104,11 +104,13 @@ namespace BlApi
 
                             if (newDrone.Status == MyEnums.DroneStatus.maintenance)
                             {
-                                var dalStationsList = dal.GetStationsList(allStations);
+                                var dalStationsList = dal.GetStationsList();
 
                                 int index = rd.Next(0, dalStationsList.Count());
                                 newDrone.Location = new Location(dalStationsList.ElementAt(index).Location);
-                                dal.DecreaseChargeSlot(dalStationsList.ElementAt(index).Id);
+                                var stationId = dalStationsList.ElementAt(index).Id;
+                                dal.DecreaseChargeSlot(stationId);
+                                dal.AddDroneCharge(newDrone.Id, stationId);
                                 newDrone.Battery = rd.Next(0, 21);
                             }
                             //available drone
@@ -123,7 +125,7 @@ namespace BlApi
                                 }
                                 else
                                 {
-                                    var dalStationsList = dal.GetStationsList(allStations);
+                                    var dalStationsList = dal.GetStationsList();
                                     //newDrone.Location = new Location(31.783333,35.216667);
                                     newDrone.Location = new Location(dalStationsList.ElementAt(0).Location);
                                 }

@@ -4,10 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
+
 using MahApps.Metro.Controls;
 using ControlzEx.Theming;
 
@@ -39,7 +36,7 @@ namespace PrL
             stationToList = mainDrone;
             station = bl.DisplayStation(stationToList.Id);
 
-            DronesInChargeComboBox.ItemsSource = station.DronesInCharge;
+            DronesInChargeComboBox.ItemsSource = bl.GetDroneChargesList(station.Id).Select(item=> item.Id);
 
             DisplayStation.DataContext = station;
             DisplayStation.Visibility = Visibility.Visible;
@@ -82,7 +79,7 @@ namespace PrL
         private void DronesInChargeComboBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var v = (int)DronesInChargeComboBox.SelectedItem;
-            MessageBox.Show(bl.DisplayParcel(v).ToString());
+            MessageBox.Show(bl.DisplayDrone(v).ToString());
         }
 
         private void UpdatNameAndChargeSlots_Click(object sender, RoutedEventArgs e)
@@ -96,7 +93,12 @@ namespace PrL
             Close();
 
         }
-            
+
+        private void DeleteStation_Click(object sender, RoutedEventArgs e)
+        {
+            bl.DeleteStation(station);
+            Close();
+        }
     }
 }
 

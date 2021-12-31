@@ -1,0 +1,45 @@
+﻿<mah:MetroWindow x:Class="PrL.User"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PrL"
+        xmlns:BO="clr-namespace:BlApi.BO;assembly=BL" 
+        mc:Ignorable="d"
+    
+       Background="#FF517391" Height="570" Width="300">
+    <Grid>
+        <StackPanel x:Name="DisplayUserCustomer" Visibility="Visible">
+            <Label x:Name="CustomerDitails" Content="User ditales" HorizontalAlignment="Center"  Margin="0,20,0,10" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+            <TextBlock x:Name="IdBlock"  Text="ID: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox x:Name="UserCustomerIdBox"  Text="{Binding Path = Id}" HorizontalAlignment="Center" Width="150" IsEnabled="False" />
+
+            <TextBlock x:Name="NameBlock" Text="Name: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150"/>
+            <TextBox  x:Name="UserNameBox" Text="{Binding Path = Name}" HorizontalAlignment="Center" Width="150"/>
+
+            <TextBlock x:Name="PhoneBlock"  Text="Phone number: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="UserPhoneBox" Text="{Binding Path = PhoneNumber}"  HorizontalAlignment="Center" Width="150"/>
+
+            <TextBlock x:Name="ParcelSentBlock" Text="Parcel from me: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <ComboBox  x:Name="UserParcelSentComboBox" IsEditable="True" IsReadOnly="True" HorizontalAlignment="Center" Width="150" Text="Double click parcel" MouseDoubleClick="UserParcelSentComboBox_MouseDoubleClick" />
+
+            <TextBlock x:Name="ParcelRecievedBlock" Text="Parcel to me: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <ComboBox  x:Name="UserParcelRecievedComboBox"  IsEditable="True" IsReadOnly="True"  HorizontalAlignment="Center" Width="150" Text="Double click parcel" MouseDoubleClick="UserParcelRecievedComboBox_MouseDoubleClick"/>
+
+            <TextBlock x:Name="LocationBlock" Text="The location: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="UserCustomerLocationBox"   HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+
+            <Label x:Name="Options" Content="Update options"  HorizontalAlignment="Center"  Margin="0,20,0,2" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+
+            <StackPanel x:Name="UpdatePanel" Visibility="Visible">
+                <Button x:Name="UserUpdatNameAndPhone" Grid.Column="0" Click="UserUpdatNameAndPhone_Click" BorderBrush="Bisque" BorderThickness="2"  Width="224">
+                    <TextBlock Text="Update Name and Phone number" TextWrapping="Wrap" Cursor="Hand" />
+                </Button>
+                <Button x:Name="UserAddParcel" Grid.Column="0" BorderBrush="Bisque" BorderThickness="2" Click="UserAddParcel_Click" Width="224">
+                    <TextBlock Text="Reqwest for new shipment" TextWrapping="Wrap" Cursor="Hand" />
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</mah:MetroWindow>

@@ -49,8 +49,9 @@ namespace DalApi
                             Id = rd.Next(100, 1000),
                             Name = stationTos[i].Name,
                             NumOfChargeSlots = rd.Next(1, 5),
-                            Location = stationTos[i].Location
+                            Location = stationTos[i].Location,
                         };
+                        myStation.IsActive = true;
                         myStation.NumOfAvailableChargeSlots = myStation.NumOfChargeSlots;
                         stations.Add(myStation);
                     }
@@ -63,7 +64,9 @@ namespace DalApi
                         {
                             Id = rd.Next(100, 1000),
                             Model = "drone" + (i + 1),
-                            Weight = (MyEnums.WeightCategory)rd.Next(3)
+                            Weight = (MyEnums.WeightCategory)rd.Next(3),
+                            IsActive = true
+
                         };
                         drones.Add(myDrone);
                     }
@@ -78,7 +81,9 @@ namespace DalApi
                         {
                             Id = rd.Next(100000000, 1000000000),
                             Name = NamesOfCustomers[i],
-                            Location = new Location(lat, longi)
+                            Location = new Location(lat, longi),
+                            IsActive = true
+
                         };
                         int[] areaCode = new int[] { 0, 2, 4, 8 };
                         string phoneNumber = "05" + areaCode[rd.Next(4)] + "-";
@@ -107,7 +112,8 @@ namespace DalApi
                         {
                             Id = Config.ParcelRunId++,
                             Weight = (MyEnums.WeightCategory)rd.Next(3),
-                            Priority = (MyEnums.PriorityLevel)rd.Next(3)
+                            Priority = (MyEnums.PriorityLevel)rd.Next(3),
+                            IsActive = true
                         };
 
                         //initialize status randomly (delivery, maintenance, available)

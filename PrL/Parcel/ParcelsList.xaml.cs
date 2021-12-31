@@ -47,7 +47,6 @@ namespace PrL
         {
             if (ParcelsListView.ItemsSource == null) return;
             ParcelsListView.Items.SortDescriptions.Clear();
-            view.GroupDescriptions.Clear();
             if (header == $"Id") ParcelsListView.Items.SortDescriptions.Add(new SortDescription("Id", ListSortDirection.Ascending));
             if (header == $"Weight") ParcelsListView.Items.SortDescriptions.Add(new SortDescription("Weight", ListSortDirection.Ascending));
             if (header == $"Priority") ParcelsListView.Items.SortDescriptions.Add(new SortDescription("Priority", ListSortDirection.Ascending));
@@ -60,13 +59,14 @@ namespace PrL
         }
         private void ReceiverNameSelector_Click(object sender, RoutedEventArgs e)
         {
-            view.GroupDescriptions.Clear();
-            view.GroupDescriptions.Add(new PropertyGroupDescription("ReceiverName"));
+            ParcelsListView.Items.SortDescriptions.Clear();
+            ParcelsListView.Items.SortDescriptions.Add(new SortDescription("ReceiverName", ListSortDirection.Descending));
         }
+
         private void SenderNameSelector_Click_1(object sender, RoutedEventArgs e)
         {
-            view.GroupDescriptions.Clear();
-            view.GroupDescriptions.Add(new PropertyGroupDescription("SenderName"));
+            ParcelsListView.Items.SortDescriptions.Clear();
+            ParcelsListView.Items.SortDescriptions.Add(new SortDescription("SenderName", ListSortDirection.Descending));
         }
     }
 

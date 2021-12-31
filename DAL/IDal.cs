@@ -31,6 +31,17 @@ namespace DalApi
         /// </summary>
         /// returns new parcel's id
         public void AddParcel(DO.Parcel parcel);
+        /// <summary>
+        /// add drone to drone charge list
+        /// </summary>
+        ///
+        public void AddDroneCharge(int droneId,int StationId);
+        public void EndDroneCharge(int droneId);
+
+        public void DeleteStation(int myId);
+        public void DeleteParcel(int myId);
+        public void DeleteDrone(int myId);
+        public void DeleteCustomer(int myId);
 
         /// <summary>
         /// return station by its id
@@ -145,20 +156,24 @@ namespace DalApi
         /// </summary>
         /// <param name="match"></param>
         /// <returns></returns>
-        public IEnumerable<DO.Station> GetStationsList(System.Predicate<DO.Station> match);
+        public IEnumerable<DO.Station> GetStationsList();
+
+        public IEnumerable<DO.DroneCharge> GetDroneCharges();
 
         /// <summary>
         /// get filtered customers list (by condition)
         /// </summary>
         /// <param name="match"></param>
         /// <returns></returns>
-        public IEnumerable<DO.Customer> GetCustomersList(System.Predicate<DO.Customer> match);
+        public IEnumerable<DO.Customer> GetCustomersList();
 
         /// <summary>
         /// get filtered parcels list (by condition)
         /// </summary>
         /// <param name="match"></param>
         /// <returns></returns>
-        public IEnumerable<DO.Parcel> GetParcelsList(System.Predicate<DO.Parcel> match);
+        public IEnumerable<DO.Parcel> GetParcelsList();
+        public IEnumerable<DO.Parcel> GetParcelsList(System.Predicate<DalApi.DO.Parcel> match);
+
     }
 }

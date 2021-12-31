@@ -23,6 +23,26 @@ namespace DalApi
                     //insert customer to list
                     DataSource.customers.Add(myCustomer);
                 }
+                public void DeleteCustomer(int myId)
+                {
+                    Customer temp = new();
+                    for (int i = 0; i < DataSource.customers.Count; i++)
+                    {
+                        Customer item = DataSource.customers[i];
+                        //search customers
+                        if (item.Id == myId)
+                        {
+                            temp.Id = item.Id;
+                            temp.IsActive = false;
+                            temp.Location = new Location(item.Location.Latitude, item.Location.Longitude);
+                            temp.Name = item.Name;
+                            temp.PhoneNumber = item.PhoneNumber;
+                            DataSource.customers[i] = temp;
+                            return;
+                        }
+                    }
+                    throw new WrongIdException(myId, $"wrong id: {myId}");
+                }
 
                 /// <summary>
                 /// returns a costumer by its id
@@ -35,7 +55,7 @@ namespace DalApi
                     Customer temp = new();
                     //search costumer
                     for (int i = 0; i < DataSource.customers.Count; i++)
-                        if (DataSource.customers[i].Id == myId)
+                        if (DataSource.customers[i].Id == myId && DataSource.customers[i].IsActive)
                         {
                             found = true;
                             temp = DataSource.customers[i];
@@ -50,11 +70,14 @@ namespace DalApi
                 /// <summary>
                 /// return customers by conditions
                 /// </summary>
-                public IEnumerable<Customer> GetCustomersList(System.Predicate<Customer> match)
+                public IEnumerable<Customer> GetCustomersList()
                 {
-                    List<Customer> newList = new();
-                    newList = DataSource.customers.FindAll(match);
-                    return newList;
+                    List<Customer> temp = new();
+                    foreach (var item in DataSource.customers)
+                    {
+                        if (item.IsActive) temp.Add(item);
+                    };
+                    return temp;
                 }
                
                 /// <summary>
@@ -69,7 +92,7 @@ namespace DalApi
                     for (int i = 0; i < DataSource.customers.Count; i++)
                     {
                         Customer item = DataSource.customers[i];
-                        if (item.Id == customerId)
+                        if (item.Id == customerId && item.IsActive)
                         {
                             temp.Id = customerId;
                             temp.Location = item.Location;
@@ -81,6 +104,7 @@ namespace DalApi
                             else
                                 temp.PhoneNumber = item.PhoneNumber;
                             temp.Location = item.Location;
+                            temp.IsActive = true;
                             DataSource.customers[i] = temp;
                         }
                     }

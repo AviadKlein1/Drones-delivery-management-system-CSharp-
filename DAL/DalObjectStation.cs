@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DalApi
 {
@@ -44,7 +45,7 @@ namespace DalApi
                     Station temp = new();
                     for (int i = 0; i < DataSource.stations.Count; i++)
                         //search station
-                        if (DataSource.stations[i].Id == myId)
+                        if (DataSource.stations[i].Id == myId && DataSource.stations[i].IsActive)
                         {
                             found = true;
                             temp = DataSource.stations[i];
@@ -64,14 +65,19 @@ namespace DalApi
                 public void DeleteStation(int myId)
                 {
                     Station temp = new();
-                    foreach (Station item in DataSource.stations)
+                    for (int i = 0; i < DataSource.stations.Count; i++)
                     {
+                        Station item = DataSource.stations[i];
                         //search station
                         if (item.Id == myId)
                         {
-                            temp = item;
-                            //temp.IsActive = false;
-
+                            temp.Id = item.Id;
+                            temp.IsActive = false;
+                            temp.Location = new Location(item.Location.Latitude, item.Location.Longitude);
+                            temp.Name = item.Name;
+                            temp.NumOfAvailableChargeSlots = item.NumOfAvailableChargeSlots;
+                            temp.NumOfChargeSlots = item.NumOfChargeSlots;
+                            DataSource.stations[i] = temp;
                             return;
                         }
                     }
@@ -82,11 +88,14 @@ namespace DalApi
                 /// <summary>
                 /// return stations by conditions
                 /// </summary>
-                public IEnumerable<Station> GetStationsList(Predicate<Station> match)
+                public IEnumerable<Station> GetStationsList()
                 {
-                    List<Station> newList = new();
-                    newList = DataSource.stations.FindAll(match);
-                    return newList;
+                    List<Station> temp = new();
+                    temp.AddRange(from item in DataSource.stations
+                                  where item.IsActive
+                                  select item);
+                    ;
+                    return temp;
                 }
                 
                 /// <summary>
@@ -125,12 +134,12 @@ namespace DalApi
                 /// </summary>
                 public IEnumerable<Station> GetAvailableToChargeStations()
                 {
-                    int size = DataSource.stations.Count;
-                    List<Station> temp = DataSource.stations;
-                    for (int i = 0; i < size; i++)
+                    List<Station> temp = new();
+                    var v = GetStationsList();
+                    foreach (var item in v)
                         //if available for charge
-                        if (DataSource.stations[i].NumOfAvailableChargeSlots > 0)
-                            temp.Add(DataSource.stations[i]);
+                        if (item.NumOfAvailableChargeSlots > 0)
+                            temp.Add(item);
                     return temp;
                 }
 
@@ -166,6 +175,7 @@ namespace DalApi
                             temp.Id = stationId;
                             temp.Location = item.Location;
                             temp.Name = item.Name;
+                            temp.IsActive = true;
                             temp.NumOfChargeSlots = item.NumOfChargeSlots;
                             temp.NumOfAvailableChargeSlots = item.NumOfAvailableChargeSlots - 1;
                             DataSource.stations[i] = temp;
@@ -188,6 +198,7 @@ namespace DalApi
                             temp.Id = stationId;
                             temp.Location = item.Location;
                             temp.Name = item.Name;
+                            temp.IsActive = true;
                             temp.NumOfChargeSlots = item.NumOfChargeSlots;
                             temp.NumOfAvailableChargeSlots = item.NumOfAvailableChargeSlots + 1;
                             DataSource.stations[i] = temp;

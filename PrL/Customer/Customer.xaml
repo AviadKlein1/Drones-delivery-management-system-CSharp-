@@ -43,10 +43,10 @@
             <TextBlock x:Name="PhoneBlock"  Text="Phone number: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox  x:Name="PhoneBox" Text="{Binding Path = PhoneNumber}"  HorizontalAlignment="Center" Width="150"/>
             
-            <TextBlock x:Name="ParcelSentBlock" Text="Parcel Sent: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBlock x:Name="ParcelSentBlock" Text="Parcel from me: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <ComboBox  x:Name="ParcelSentComboBox" IsEditable="True" IsReadOnly="True" HorizontalAlignment="Center" Width="150" Text="Double click parcel"  MouseDoubleClick="ParcelSentComboBox_MouseDoubleClick"/>
             
-            <TextBlock x:Name="ParcelRecievedBlock" Text="Parcel Recieved: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
+            <TextBlock x:Name="ParcelRecievedBlock" Text="Parcel to me: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <ComboBox  x:Name="ParcelRecievedComboBox"  IsEditable="True" IsReadOnly="True"  HorizontalAlignment="Center" Width="150" Text="Double click parcel" MouseDoubleClick="ParcelRecievedComboBox_MouseDoubleClick"/>
             
             <TextBlock x:Name="LocationBlock" Text="The location: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
@@ -61,7 +61,7 @@
             </StackPanel>
         </StackPanel>
         <Button x:Name="CancelButton3" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,2"  Height="26" Width="52" Click="CancelButton3_Click"  Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" />
-
+        <Button x:Name="DeleteCustomer" Content="Delete!" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="2,0,0,2"  Height="26" Width="52" Click="DeleteCustomer_Click" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" />
     </Grid>
 </mah:MetroWindow>
 

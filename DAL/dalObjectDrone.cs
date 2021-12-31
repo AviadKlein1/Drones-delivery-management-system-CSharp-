@@ -32,6 +32,52 @@ namespace DalApi
                     DataSource.drones.Add(myDrone);
                     //find charge slot
                     DecreaseChargeSlot(firstChargeStationId);
+                    AddDroneCharge(myDrone.Id, firstChargeStationId);
+                }
+
+                public void DeleteDrone(int myId)
+                {
+                    Drone temp = new();
+                    for (int i = 0; i < DataSource.drones.Count; i++)
+                    {
+                        Drone item = DataSource.drones[i];
+                        //search drones
+                        if (item.Id == myId)
+                        {
+                            temp.Id = item.Id;
+                            temp.IsActive = false;
+                            temp.Model = item.Model;
+                            DataSource.drones[i] = temp;
+                            return;
+                        }
+                    }
+                    throw new WrongIdException(myId, $"wrong id: {myId}");
+                }
+                /// <summary>
+                /// add drone to list of drone Charge
+                /// </summary>
+                public void AddDroneCharge(int droneId, int StationId)
+                {
+                    bool found = false;
+                    for (int i = 0; i < DataSource.stations.Count; i++)
+                        if (DataSource.stations[i].Id == StationId)
+                            found = true;
+                    //if not such station exist
+                    if (found == false)
+                        throw new WrongIdException(StationId, $"no such station: {StationId}");
+                    var temp = new DroneCharge(droneId, StationId);
+                    DataSource.droneCharges.Add(temp);
+                }
+                public void EndDroneCharge(int droneId)
+                {
+                    var temp = new DroneCharge();
+                    for (int i = 0; i < DataSource.droneCharges.Count; i++)
+                        if (DataSource.droneCharges[i].DroneId == droneId)
+                        {
+                            temp.DroneId = droneId;
+                            temp.StationId = DataSource.droneCharges[i].StationId;
+                            temp.IsActive = false;
+                        }
                 }
 
                 /// <summary>
@@ -44,7 +90,7 @@ namespace DalApi
                     bool found = false;
                     Drone temp = new();
                     for (int i = 0; i < DataSource.drones.Count; i++)
-                        if (DataSource.drones[i].Id == myId)
+                        if (DataSource.drones[i].Id == myId && DataSource.drones[i].IsActive)
                         {
                             found = true;
                             temp = DataSource.drones[i];
@@ -62,7 +108,19 @@ namespace DalApi
                 public IEnumerable<Drone> GetDrones()
                 {
                     List<Drone> temp = new();
-                    temp = DataSource.drones;
+                    foreach (var item in DataSource.drones)
+                    {
+                        if (item.IsActive) temp.Add(item);
+                    }
+                    return temp;
+                }
+                public IEnumerable<DO.DroneCharge> GetDroneCharges()
+                {
+                    List<DroneCharge> temp = new();
+                    foreach (var item in DataSource.droneCharges)
+                    {
+                        if (item.IsActive) temp.Add(item);
+                    }
                     return temp;
                 }
 

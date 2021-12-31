@@ -80,7 +80,7 @@ namespace BlApi
 
                 Customer retTemp = new(temp);
                 // maybe duiplay parcels at this customer? 
-                var parcelsList = dal.GetParcelsList(allParcels);
+                var parcelsList = dal.GetParcelsList();
                 foreach (var item in parcelsList)
                 {
                     ParcelAtCustomer myParcel = new();

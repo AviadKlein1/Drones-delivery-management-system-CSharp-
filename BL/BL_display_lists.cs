@@ -18,7 +18,8 @@ namespace BlApi
             public IEnumerable<StationToList> GetStationsList(System.Predicate<DalApi.DO.Station> match)
             {
                 List<StationToList> newList = new();
-                var v = dal.GetStationsList(match);
+                var c = (List<DalApi.DO.Station>)dal.GetStationsList();
+                var v = c.FindAll(match);
                 foreach (var item in v)
                 {
                     StationToList newStation = new();
@@ -36,9 +37,9 @@ namespace BlApi
             }
 
             /// <summary>
-            /// display drones list
+            /// display Charge drones list
             /// </summary>
-            /// <returns></returns> reyurn list of drones
+            /// <returns></returns> return list of drone Charges
             public List<DroneToList> GetDronesList(System.Predicate<DroneToList> match)
             {
                 var v = dronesList.FindAll(match);
@@ -46,19 +47,31 @@ namespace BlApi
                     System.Console.WriteLine("empty list\n");
                 return v;
             }
+            public IEnumerable<DroneInCharge> GetDroneChargesList(int stationId)
+            {
+                var v = dal.GetDroneCharges();
+
+                if (v == null)
+                    throw new System.Exception("empty list");
+                List<DroneInCharge> temp = new();
+                int tempBattery;
+                foreach (var item in v)
+                {
+                    foreach (var Ditem in dronesList)
+                    {
+                        if (item.DroneId == Ditem.Id && item.StationId == stationId)
+                        {
+                            tempBattery = Ditem.Battery;
+                            temp.Add(new DroneInCharge(item.DroneId, tempBattery));
+                        }
+                    }
+                }
+                return temp;
+            }
             public List<DroneToList> GetDrones()
             {
                 var v = dronesList;
                 return v;
-
-                //var v = dronesList;
-                //int i = 1;
-                //foreach (var item in v)
-                //{
-                //    System.Console.WriteLine("Drone #",i++, ": ");
-                //    System.Console.WriteLine(item);
-
-                //}
             }
 
             /// <summary>
@@ -68,7 +81,8 @@ namespace BlApi
             public IEnumerable<CustomerToList> GetCustomersList(System.Predicate<DalApi.DO.Customer> match)
             {
                 List<CustomerToList> tmp1 = new();
-                var v = dal.GetCustomersList(match);
+                var c = (List<DalApi.DO.Customer>)dal.GetCustomersList();
+                var v = c.FindAll(match);
                 foreach (var element in v)
                 {
                     CustomerToList myCustomer = new();
@@ -111,7 +125,7 @@ namespace BlApi
                     myParcel.Id = element.Id;
                     myParcel.Weight = element.Weight;
                     myParcel.Priority = element.Priority;
-                    var customersList = dal.GetCustomersList(allCustomers);
+                    var customersList = dal.GetCustomersList();
                     //display customers (sender and receiver)
                     string senderName = null;
                     string receiverName = null;

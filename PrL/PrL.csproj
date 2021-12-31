@@ -9,6 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="resources\images\a.jpg" />
+    <None Remove="resources\images\back.jfif" />
+    <None Remove="resources\images\Background.jfif" />
     <None Remove="resources\images\DroneDelivery.jfif" />
   </ItemGroup>
 
@@ -24,6 +27,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="resources\images\a.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\images\back.jfif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\images\Background.jfif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="resources\images\DroneDelivery.jfif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

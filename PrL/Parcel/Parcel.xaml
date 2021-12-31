@@ -59,16 +59,9 @@
             <TextBlock x:Name="DeliveredBlock" Text="Delivered: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox  x:Name="DeliveredBox" Text="{Binding  Path = Delivered}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
 
-            <!--<Label x:Name="Options" Content="Update options"  HorizontalAlignment="Center"  Margin="0,20,0,2" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
-
-            <StackPanel x:Name="UpdatePanel" Visibility="Visible">
-                <Button x:Name="UpdatNameAndPhone" Grid.Column="0" BorderBrush="Bisque" BorderThickness="2" Click="UpdatNameAndPhone_Click" Width="224">
-                    <TextBlock Text="Update Name and Phone number" TextWrapping="Wrap" Cursor="Hand" />
-                </Button>
-            </StackPanel>-->
         </StackPanel>
         <Button x:Name="CancelButton3" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,2"  Height="26" Width="52" Click="CancelButton3_Click"  Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" />
-
+        <Button x:Name="DeleteParcel" Content="Delete!" HorizontalAlignment="Right" Visibility="Collapsed" VerticalAlignment="Bottom" Margin="2,0,0,2"  Height="26" Width="52" Click="DeleteParcel_Click" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" />
     </Grid>
 </mah:MetroWindow>
 

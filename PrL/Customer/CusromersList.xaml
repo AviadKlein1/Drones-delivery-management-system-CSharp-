@@ -7,61 +7,50 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:PrL"
         mc:Ignorable="d"
-        Title="Customers List" Background="#FF517391" Height="450" Width="710">
-    
-    <Grid Name="Main_Grid">
-        <ListView x:Name="CustomersListView" Background="#FF517391"  Grid.Row="2" Margin="0,23,0,0"  MouseDoubleClick="DuobleClickCustomer">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="BorderBrush" Value="LightGray" />
-                    <Setter Property="BorderThickness" Value="0,0,0,1" />
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Id}" />
-                    <GridViewColumn Header="Name" Width="80" DisplayMemberBinding="{Binding Name }" />
-                    <GridViewColumn Header="Phone Number" DisplayMemberBinding="{Binding PhoneNumber}" />
-                    <GridViewColumn Header="Parcels Delivered" DisplayMemberBinding="{Binding ParcelsDelivered}" />
-                    <GridViewColumn Header="Parcels sent but not delivered" DisplayMemberBinding="{Binding ParcelsSentButNotDelivered}" />
-                    <GridViewColumn Header="Recieved Parcels" DisplayMemberBinding="{Binding ReceivedParcels}" />
-                    <GridViewColumn Header="Scheduled parcels"  DisplayMemberBinding="{Binding ScheduledParcels}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+        Title="Customers List" Height="450" Width="710">
 
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
+    <Grid>
+        <Image Source="\resources\images\a.jpg" Stretch="Fill"/>
+        <Grid Name="Main_Grid">
+            <ListView x:Name="CustomersListView" Background="#FF517391"  Grid.Row="2" Margin="35,35,35,35"  MouseDoubleClick="DuobleClickCustomer">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="BorderBrush" Value="LightGray" />
+                        <Setter Property="BorderThickness" Value="0,0,0,1" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Id}" />
+                        <GridViewColumn Header="Name" Width="80" DisplayMemberBinding="{Binding Name }" />
+                        <GridViewColumn Header="Phone Number" DisplayMemberBinding="{Binding PhoneNumber}" />
+                        <GridViewColumn Header="Parcels Delivered" DisplayMemberBinding="{Binding ParcelsDelivered}" />
+                        <GridViewColumn Header="Parcels sent but not delivered" DisplayMemberBinding="{Binding ParcelsSentButNotDelivered}" />
+                        <GridViewColumn Header="Recieved Parcels" DisplayMemberBinding="{Binding ReceivedParcels}" />
+                        <GridViewColumn Header="Scheduled parcels"  DisplayMemberBinding="{Binding ScheduledParcels}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
         VerticalAlignment="Stretch" Width="auto" Margin="0,0,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions >
-            
-            <Button x:Name="AddNewCustomer"  Background="#FF517391" Grid.Column="2" Width="200" Height="48" VerticalAlignment="Center" Margin="0,0,155,0" Click="AddNewCustomer_Click" Grid.ColumnSpan="2" >
-                <StackPanel>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Image Source="C:\Users\Aviad\Source\Repos\AviadKlein1\dotNet5782_2679_3080\PrL\resources\images\drone_add.gif" Margin="0,-20,0,137" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="188" />
-                        <TextBlock Text="Add Customer" Grid.Column="1"  Margin="-89,0,0,10"  />
-                    </Grid>
-                </StackPanel>
-            </Button>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions >
 
+                <Button x:Name="AddNewCustomer" Background="Transparent"  Grid.Column="0"  Click ="AddNewCustomer_Click" >
+                    <Label Content="Add Customer" FontSize="19" FontFamily="Arial" FontWeight="Normal" Cursor="Hand" FontStyle="Normal" mah:ControlsHelper.ContentCharacterCasing="Upper"  />
+                </Button>
+            </Grid>
 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50*" />
 
-
-
+                <RowDefinition Height="400*"/>
+            </Grid.RowDefinitions>
         </Grid>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50*" />
-
-            <RowDefinition Height="400*"/>
-        </Grid.RowDefinitions>
     </Grid>
 </mah:MetroWindow>

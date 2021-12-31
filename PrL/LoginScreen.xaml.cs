@@ -19,20 +19,40 @@ namespace PrL
     /// </summary>
     public partial class LoginScreen : Window
     {
+        
+        MainWindow current;
+        public static List<Account> accounts = new();
+        public static void addAccount(Account ac)
+        {
+            accounts.Add(ac);
+        }
         public LoginScreen()
         {
             InitializeComponent();
+            accounts.Add(new Account("Avi Gold", "123"));
         }
 
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
-            if((TextUser.Text == "Admin" || TextUser.Text == "admin")&&TextPass.Password == "123456" )
+            foreach (var item in accounts)
             {
-                new MainWindow().Show();
-                Close();
+                if (TextUser.Text == item.UserName && TextPass.Password == item.password)
+                {
+                    current = new MainWindow(item.UserName);
+                    return;
+                }
             }
-            else MessageBox.Show("try different pass");
+            if ((TextUser.Text == "Admin" || TextUser.Text == "admin")&&TextPass.Password == "123456" )
+            {
+                current = new MainWindow("");
+                current.Show();
+            }
+            MessageBox.Show("Something's wrong! If you're new here, create an account");
+        }
 
+        private void NewUser_Click(object sender, RoutedEventArgs e)
+        {
+            new NewUser(accounts).Show();
         }
     }
 }

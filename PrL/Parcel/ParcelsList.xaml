@@ -7,59 +7,53 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:PrL"
         mc:Ignorable="d"
-        Title="Parcels List" Background="#FF517391" Height="450" Width="710">
+        Title="Parcels List" Height="450" Width="710">
 
-    <Grid Name="Main_Grid">
-        <ListView x:Name="ParcelsListView" Background="#FF517391"  Grid.Row="2" Margin="0,23,0,0" 
+    <Grid>
+        <Image Source="\resources\images\a.jpg" Stretch="Fill"/>
+        <Grid Name="Main_Grid">
+            <ListView x:Name="ParcelsListView" Background="#FF517391"  Grid.Row="2" Margin="35,35,35,35" 
                   MouseDoubleClick="ParcelsListView_MouseDoubleClick" GridViewColumnHeader.Click="ParcelsListView_Click"
                   IsSynchronizedWithCurrentItem="True" >
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="BorderBrush" Value="LightGray" />
-                    <Setter Property="BorderThickness" Value="0,0,0,1" />
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" />
-                    <GridViewColumn Header="Sender name"  DisplayMemberBinding="{Binding SenderName }" />
-                    <GridViewColumn Header="Receiver name" DisplayMemberBinding="{Binding ReceiverName}" />
-                    <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Weight}" />
-                    <GridViewColumn Header="Priority" DisplayMemberBinding="{Binding Priority}" />
-                    <GridViewColumn Header="Parcel status" DisplayMemberBinding="{Binding ParcelStatus}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="BorderBrush" Value="LightGray" />
+                        <Setter Property="BorderThickness" Value="0,0,0,1" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" />
+                        <GridViewColumn Header="Sender name"  DisplayMemberBinding="{Binding SenderName }" />
+                        <GridViewColumn Header="Receiver name" DisplayMemberBinding="{Binding ReceiverName}" />
+                        <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Weight}" />
+                        <GridViewColumn Header="Priority" DisplayMemberBinding="{Binding Priority}" />
+                        <GridViewColumn Header="Parcel status" DisplayMemberBinding="{Binding ParcelStatus}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
 
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
+            <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
         VerticalAlignment="Stretch" Width="auto" Margin="0,0,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions >
-            <Button x:Name="ReceiverNameSelector"  Content="--Group by Recivers--" Grid.Column="1" Click="ReceiverNameSelector_Click"/>
-            <Button x:Name="SenderNameSelector"  Content="--Group by Senders--" Grid.Column="0" Click="SenderNameSelector_Click_1"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions >
+                <Button x:Name="ReceiverNameSelector" Background="Transparent"  Content="--Group by Recivers--" Grid.Column="1" Click="ReceiverNameSelector_Click"/>
+                <Button x:Name="SenderNameSelector" Background="Transparent" Content="--Group by Senders--" Grid.Column="0" Click="SenderNameSelector_Click_1"/>
 
-            <Button x:Name="AddNewParcel"  Background="#FF517391" Grid.Column="2" Width="200" Height="48" VerticalAlignment="Center" Margin="0,0,155,0" Click="AddNewParcel_Click" Grid.ColumnSpan="2" >
-                <StackPanel>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Image Source="C:\Users\Aviad\Source\Repos\AviadKlein1\dotNet5782_2679_3080\PrL\resources\images\drone_add.gif" Margin="0,-20,0,137" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="188" />
-                        <TextBlock Text="Add Parcel" Grid.Column="1"  Margin="-89,0,0,10"  />
-                    </Grid>
-                </StackPanel>
-            </Button>
+                <Button x:Name="AddNewParcel" Background="Transparent"  Grid.Column="2"  Click ="AddNewParcel_Click" >
+                    <Label Content="Add Parcel" FontSize="20" FontFamily="Arial" FontWeight="Normal" Cursor="Hand" FontStyle="Normal" mah:ControlsHelper.ContentCharacterCasing="Upper"  />
+                </Button>
+            </Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50*" />
+
+                <RowDefinition Height="400*"/>
+            </Grid.RowDefinitions>
         </Grid>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50*" />
-
-            <RowDefinition Height="400*"/>
-        </Grid.RowDefinitions>
     </Grid>
 </mah:MetroWindow>

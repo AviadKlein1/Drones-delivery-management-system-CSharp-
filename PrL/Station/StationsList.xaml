@@ -7,58 +7,52 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:PrL"
         mc:Ignorable="d"
-        Title="Stations List" Background="#FF517391" Height="450" Width="710">
-    
-    <Grid Name="Main_Grid">
-        <ListView x:Name="StationsListView" Background="#FF517391" Binding.SourceUpdated="StationsListView_SourceUpdated"  Grid.Row="2" Margin="0,23,0,0" MouseDoubleClick="StationsListView_MouseDoubleClick">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="BorderBrush" Value="LightGray" />
-                    <Setter Property="BorderThickness" Value="0,0,0,1" />
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Id}" />
-                    <GridViewColumn Header="Name" Width="80" DisplayMemberBinding="{Binding Name }" />
-                    <GridViewColumn Header="Num Of Available Charge Slots" Width="220"   DisplayMemberBinding="{Binding NumOfAvailableChargeSlots}" />
-                    <GridViewColumn Header="Num Of Occupied Charge Slots" Width="220" DisplayMemberBinding="{Binding NumOfOccupiedChargeSlots}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+        Title="Stations List" Height="450" Width="710">
 
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
+    <Grid>
+        <Image Source="\resources\images\a.jpg" Stretch="Fill"/>
+        <Grid Name="Main_Grid">
+            <ListView x:Name="StationsListView" Background="#FF517391" Binding.SourceUpdated="StationsListView_SourceUpdated"  Grid.Row="2" Margin="35,35,35,35"  MouseDoubleClick="StationsListView_MouseDoubleClick">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="BorderBrush" Value="LightGray" />
+                        <Setter Property="BorderThickness" Value="0,0,0,1" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Id}" />
+                        <GridViewColumn Header="Name" Width="80" DisplayMemberBinding="{Binding Name }" />
+                        <GridViewColumn Header="Num Of Available Charge Slots" Width="220"   DisplayMemberBinding="{Binding NumOfAvailableChargeSlots}" />
+                        <GridViewColumn Header="Num Of Occupied Charge Slots" Width="220" DisplayMemberBinding="{Binding NumOfOccupiedChargeSlots}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
         VerticalAlignment="Stretch" Width="auto" Margin="0,0,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions >
 
-            <Button x:Name="AddNewStation"  Background="#FF517391" Grid.Column="0" Width="200" Height="48" VerticalAlignment="Center" Margin="0,0,155,0" Click="AddNewStation_Click" Grid.ColumnSpan="2" >
-                <StackPanel>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Image Source="C:\Users\Aviad\Source\Repos\AviadKlein1\dotNet5782_2679_3080\PrL\resources\images\drone_add.gif" Margin="0,-20,0,137" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="188" />
-                        <TextBlock Text="Add Station" Grid.Column="1"  Margin="-89,0,0,10"  />
-                    </Grid>
-                </StackPanel>
-            </Button>
+                <Button x:Name="AddNewStation" Background="Transparent"  Grid.Column="0"  Click ="AddNewStation_Click" >
+                    <Label Content="Add Station" FontSize="20" FontFamily="Arial" FontWeight="Normal" Cursor="Hand" FontStyle="Normal" mah:ControlsHelper.ContentCharacterCasing="Upper"  />
+                </Button>
 
 
 
 
 
+            </Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50*" />
+
+                <RowDefinition Height="400*"/>
+            </Grid.RowDefinitions>
         </Grid>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50*" />
-
-            <RowDefinition Height="400*"/>
-        </Grid.RowDefinitions>
     </Grid>
 </mah:MetroWindow>

@@ -35,7 +35,7 @@ namespace PrL
         }
 
         internal IBl bl;
-        public MainWindow()
+        public MainWindow(string userName)
         {
             ShowCloseButton = false;
             Timer.Tick += new EventHandler(Timer_Click);
@@ -51,6 +51,25 @@ namespace PrL
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+            bool found = false;
+            var c = bl.GetCustomersList(BlApi.BO.BL.AllCustomers);
+            if (userName != "")
+            {
+                foreach (var item in c)
+                {
+                    if (item.Name == userName)
+                    {
+                        new User(item.Id, bl).Show();
+                        found = true;
+                        Close();
+                    }
+                }
+                if (!found)
+                {
+                    new UserCustomer(userName, bl).Show();
+                    Close();
+                }
             }
         }
         private void GitHub_Click(object sender, RoutedEventArgs e)
