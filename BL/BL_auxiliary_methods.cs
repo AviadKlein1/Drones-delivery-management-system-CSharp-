@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BlApi
 {
@@ -28,9 +29,9 @@ namespace BlApi
                 var dalParcelsList = dal.GetParcelsList();
                 foreach (var element in dalParcelsList)
                 {
-                    if (element.DroneId == droneId)
-                        return true;
+                    return true;
                 }
+
                 return false;
             }
 
@@ -44,9 +45,9 @@ namespace BlApi
                 var dalParcelsList = dal.GetParcelsList();
                 foreach (var element in dalParcelsList)
                 {
-                    if (element.DroneId == droneId)
-                        return element.Id;
+                    return element.Id;
                 }
+
                 return 0;
             }
             internal Parcel GetParcelBySendeId(int MySenderId)
@@ -55,9 +56,9 @@ namespace BlApi
                 var dalParcelsList = dal.GetParcelsList();
                 foreach (var element in dalParcelsList)
                 {
-                    if (element.SenderId == MySenderId)
-                        myParcel = new Parcel(element);
+                    myParcel = new Parcel(element);
                 }
+
                 return myParcel;
             }
             internal Parcel GetParcelByReciverId(int MyReciverId)
@@ -66,9 +67,9 @@ namespace BlApi
                 var dalParcelsList = dal.GetParcelsList();
                 foreach (var element in dalParcelsList)
                 {
-                    if (element.ReceiverId == MyReciverId)
-                        myParcel = new Parcel(element);
+                    myParcel = new Parcel(element);
                 }
+
                 return myParcel;
             }
 
@@ -103,7 +104,7 @@ namespace BlApi
                     }
                 }
 
-                return BL.free * distance / 100;
+                return free * distance / 100;
             }
 
             /// <summary>
@@ -115,11 +116,14 @@ namespace BlApi
             {
                 var dalParcelsList = dal.GetParcelsList(scheduledButNotPickedUp);
                 //search parcel
-                foreach (var element in dalParcelsList)
+                foreach (var _ in
+                from element in dalParcelsList
+                where element.Id == parcelId
+                select new { })
                 {
-                    if (element.Id == parcelId)
-                        return true;
+                    return true;
                 }
+
                 return false;
             }
 
@@ -132,11 +136,14 @@ namespace BlApi
             {
                 var dalParcelsList = dal.GetParcelsList(pickedUpButNotDeliverd);
                 //search parcel
-                foreach (var element in dalParcelsList)
+                foreach (var _ in
+                from element in dalParcelsList
+                where element.Id == parcelId
+                select new { })
                 {
-                    if (element.Id == parcelId)
-                        return true;
+                    return true;
                 }
+
                 return false;
             }
 
@@ -166,7 +173,12 @@ namespace BlApi
                 return tempLocation;
             }
 
-            internal DalApi.DO.Location ReciverLocation(int parcelId)
+            /// <summary>
+            /// giving a parcel id, returns the location of the receiver
+            /// </summary>
+            /// <param name="parcelId"></param>
+            /// <returns></returns>
+            internal DalApi.DO.Location ReceiverLocation(int parcelId)
             {
                 DalApi.DO.Location tempLocation = new();
                 var dalParcelsList = dal.GetParcelsList();
@@ -186,6 +198,7 @@ namespace BlApi
                 }
                 return tempLocation;
 
+                return myLocation;
             }
 
             /// <summary>
@@ -198,7 +211,12 @@ namespace BlApi
                 DalApi.DO.Station tempStation = new();
                 var dalParcelsList = dal.GetParcelsList();
                 //search parcel
-                foreach (var pElement in dalParcelsList)
+                from pElement in dalParcelsList
+                where pElement.Id == parcelId
+                let customersList = dal.GetCustomersList(allCustomers)//search sender of parcel
+                from cElement in customersList
+                where cElement.Id == pElement.SenderId
+                select cElement)
                 {
                     if (pElement.Id == parcelId)
                     {

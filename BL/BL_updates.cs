@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace BlApi
 {
@@ -18,25 +19,24 @@ namespace BlApi
             public bool UpdateDrone(int droneId, string newModel)
             {
                 bool found = false;
-                var dalDronesList = dal.GetDrones();
-                foreach (DalApi.DO.Drone item in dalDronesList)
+                System.Collections.Generic.IEnumerable<DalApi.DO.Drone> dalDronesList = dal.GetDrones();
+                foreach (var _ in from DalApi.DO.Drone item in dalDronesList
+                                  where item.Id == droneId
+                                  select new { })
                 {
-                    if (item.Id == droneId)
-                    {
-                        found = true;
-                        break;
-                    }
+                    found = true;
+                    break;
                 }
+
                 if (found)
                 {
                     dal.UpdateDrone(droneId, newModel);
-                    foreach (DroneToList dItem in dronesList)
+                    foreach (var dItem in from DroneToList dItem in dronesList
+                                          where dItem.Id == droneId
+                                          select dItem)
                     {
-                        if (dItem.Id == droneId)
-                        {
-                            dItem.Model = newModel;
-                            break;
-                        }
+                        dItem.Model = newModel;
+                        break;
                     }
                 }
                 else

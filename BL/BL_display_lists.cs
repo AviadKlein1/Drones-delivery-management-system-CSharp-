@@ -145,8 +145,6 @@ namespace BlApi
                     if(element.Delivered != null)
                         myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.delivered;
 
-
-
                     tmp1.Add(myParcel);
 
                 }

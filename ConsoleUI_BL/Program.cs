@@ -2,7 +2,7 @@
 //Tomer Peretz 314083080
 //C# Mini Project
 //The program handles and monitors the ongoing management
-//and activityof a courier company using drones  
+//and activity of a courier company using drones  
 
 using System;
 using BlApi;
@@ -126,7 +126,6 @@ namespace ConsoleUI_BL
                                 {
                                     //update dron's data
                                     case 1:
-
                                         Console.WriteLine("enter drone id:\n");
                                         int.TryParse(Console.ReadLine(), out id);
                                         Console.WriteLine("enter new model:\n");
@@ -230,7 +229,6 @@ namespace ConsoleUI_BL
                                         break;
 
                                     case 6:
-
                                         Console.WriteLine("enter drone id:\n");
                                         int.TryParse(Console.ReadLine(), out id);
                                         var flag6 = false;

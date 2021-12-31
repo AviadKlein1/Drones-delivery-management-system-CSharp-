@@ -44,18 +44,18 @@ namespace DalApi
                 public Parcel GetParcel(int myId)
                 {
                     bool found = false;
-                    Parcel temp = new();
+                    Parcel myParcel = new();
                     for (int i = 0; i < DataSource.parcels.Count; i++)
                     {
                         //search parcel
                         if (DataSource.parcels[i].Id == myId && DataSource.parcels[i].IsActive)
                         {
                             found = true;
-                            temp = DataSource.parcels[i];
+                            myParcel = DataSource.parcels[i];
                         }
                     }
                     if (found == true)
-                        return temp;
+                        return myParcel;
                     //if not found
                     else
                         throw new WrongIdException(myId, $"wrong id: { myId }");
