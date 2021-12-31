@@ -335,7 +335,7 @@ namespace BlApi
                         // our parcel belong to our drone
                         if (item.DroneId == droneId)
                         {
-                            ourReciverLocation = ReciverLocation(item.Id);
+                            ourReciverLocation = ReceiverLocation(item.Id);
                             //update parcel
                             dal.DeliverParcel(droneId, item.Id);
                             flag = true;

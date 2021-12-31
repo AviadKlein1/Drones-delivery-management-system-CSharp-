@@ -38,6 +38,29 @@ namespace BlApi
         /// display station
         /// </summary>
         /// <returns></returns>
+        /// /// <summary>
+        /// Delete station 
+        /// </summary>
+        /// <returns></returns>
+        public void DeleteStation(BO.Station myStation);
+
+        /// <summary>
+        /// Delete drone
+        /// </summary>
+        /// <returns></returns>
+        public void DeleteDrone(BO.Drone myDrone);
+
+        /// <summary>
+        /// add customer
+        /// </summary>
+        /// <returns></returns>
+        public void DeleteCustomer(BO.Customer myCustomer);
+
+        /// <summary>
+        /// Delete parcel
+        /// </summary>
+        /// <returns></returns>
+        public void DeleteParcel(BO.Parcel myParcel);
         public BO.Station DisplayStation(int stationId);
 
         /// <summary>
@@ -126,11 +149,16 @@ namespace BlApi
         /// <returns></returns> return list of stations accured to conditions
         public IEnumerable<BO.StationToList> GetStationsList(System.Predicate<DalApi.DO.Station> match);
 
+
         /// <summary>
         /// get drones list in condition
         /// </summary>
         /// <returns></returns> return list of drones accured to conditions
         public List<BO.DroneToList> GetDronesList(System.Predicate<BO.DroneToList> match);
+
+        public IEnumerable<BO.DroneInCharge> GetDroneChargesList(int stationId);
+
+
 
         /// <summary>
         /// get customers list in condition
@@ -138,10 +166,12 @@ namespace BlApi
         /// <returns></returns> return list of customers accured to conditions
         public IEnumerable<BO.CustomerToList> GetCustomersList(System.Predicate<DalApi.DO.Customer> match);
 
+
         /// <summary>
         /// get parcels list in condition
         /// </summary>
         /// <returns></returns> return list of parcels accured to conditions
         public IEnumerable<BO.ParcelToList> GetParcelsList(System.Predicate<DalApi.DO.Parcel> match);
+
     }
 }
