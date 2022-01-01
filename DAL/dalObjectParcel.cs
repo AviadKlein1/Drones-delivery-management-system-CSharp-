@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using DalApi;
+using System.Linq;
 
 namespace DalApi
 {
@@ -96,10 +97,10 @@ namespace DalApi
                 {
                     List<Parcel> temp1 = new();
                     List<Parcel> temp2 = new();
-                    foreach (var item in DataSource.parcels)
-                    {
-                        if (item.IsActive) temp1.Add(item);
-                    };
+                    temp1.AddRange(from item in DataSource.parcels
+                                   where item.IsActive
+                                   select item);
+                    ;
                     temp2 = temp1.FindAll(match);
                     return temp2 ;
                 }
@@ -111,10 +112,10 @@ namespace DalApi
                 public IEnumerable<Parcel> GetParcelsList()
                 {
                     List<Parcel> temp = new();
-                    foreach (var item in DataSource.parcels)
-                    {
-                        if (item.IsActive) temp.Add(item);
-                    };
+                    temp.AddRange(from item in DataSource.parcels
+                                  where item.IsActive
+                                  select item);
+                    ;
                     return temp;
                 }
                 

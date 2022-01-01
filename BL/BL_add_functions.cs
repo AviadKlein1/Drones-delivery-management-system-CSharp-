@@ -16,10 +16,12 @@ namespace BlApi
                 DalApi.DO.Station temp = new();
 
                 temp.Id = myStation.Id;
-                temp.Location = new DalApi.DO.Location(myStation.Location.Longitude, myStation.Location.Latitude);
+                temp.Location = new DalApi.DO.Location(myStation.Location.Latitude, myStation.Location.Longitude);
                 temp.Name = myStation.Name;
                 temp.NumOfAvailableChargeSlots = myStation.NumOfAvailableChargeSlots;
                 temp.NumOfChargeSlots = myStation.NumOfChargeSlots;
+                temp.IsActive = true;
+
 
                 //add new station to list of stations
                 try
@@ -41,6 +43,7 @@ namespace BlApi
                 temp.Id = myDrone.Id;
                 temp.Model = myDrone.Model;
                 temp.Weight = myDrone.Weight;
+                temp.IsActive = true;
 
                 //add new drone to list of drones
                 try
@@ -86,6 +89,7 @@ namespace BlApi
                 temp.Id = myCustomer.Id;
                 temp.Name = myCustomer.Name;
                 temp.PhoneNumber = myCustomer.PhoneNumber;
+                temp.IsActive = true;
                 temp.Location = new DalApi.DO.Location(myCustomer.Location.Latitude, myCustomer.Location.Longitude);
 
                 //add customer to list of customers
@@ -112,6 +116,7 @@ namespace BlApi
                 temp.ReceiverId = myParcel.Receiver.Id;
                 temp.DroneId = (myParcel.DroneInParcel == null ? 0 : myParcel.DroneInParcel.Id);
                 temp.Requested = DateTime.Now;
+                temp.IsActive = true;
                 temp.Scheduled = null;
                 temp.PickedUp = null;
                 temp.Delivered = null;

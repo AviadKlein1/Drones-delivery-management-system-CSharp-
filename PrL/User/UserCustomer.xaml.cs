@@ -34,13 +34,13 @@ namespace PrL
         {
             InitializeComponent();
             bl = (BlApi.BO.BL)_bl;
-
+            this.UserName = UserName;
         }
 
         private void SubmitDitails_Click(object sender, RoutedEventArgs e)
         {
             customer.Id = int.Parse(ID.Text);
-            customer.Name = (string)Name.Text;
+            customer.Name = UserName;
             customer.PhoneNumber = (string)phoneNumber.Text;
             customer.Location.Latitude = double.Parse(Latitude.Text);
             customer.Location.Longitude = double.Parse(Longitude.Text);

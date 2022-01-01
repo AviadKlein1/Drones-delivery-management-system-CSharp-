@@ -46,6 +46,7 @@ namespace PrL
             {
                 current = new MainWindow("");
                 current.Show();
+                return;
             }
             MessageBox.Show("Something's wrong! If you're new here, create an account");
         }

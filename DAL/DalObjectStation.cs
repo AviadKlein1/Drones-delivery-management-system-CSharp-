@@ -136,10 +136,9 @@ namespace DalApi
                 {
                     List<Station> temp = new();
                     var v = GetStationsList();
-                    foreach (var item in v)
-                        //if available for charge
-                        if (item.NumOfAvailableChargeSlots > 0)
-                            temp.Add(item);
+                    temp.AddRange(from item in v//if available for charge
+                                  where item.NumOfAvailableChargeSlots > 0
+                                  select item);
                     return temp;
                 }
 

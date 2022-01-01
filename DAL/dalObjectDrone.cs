@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace DalApi
 {
@@ -108,19 +109,17 @@ namespace DalApi
                 public IEnumerable<Drone> GetDrones()
                 {
                     List<Drone> temp = new();
-                    foreach (var item in DataSource.drones)
-                    {
-                        if (item.IsActive) temp.Add(item);
-                    }
+                    temp.AddRange(from item in DataSource.drones
+                                  where item.IsActive
+                                  select item);
                     return temp;
                 }
                 public IEnumerable<DO.DroneCharge> GetDroneCharges()
                 {
                     List<DroneCharge> temp = new();
-                    foreach (var item in DataSource.droneCharges)
-                    {
-                        if (item.IsActive) temp.Add(item);
-                    }
+                    temp.AddRange(from item in DataSource.droneCharges
+                                  where item.IsActive
+                                  select item);
                     return temp;
                 }
 

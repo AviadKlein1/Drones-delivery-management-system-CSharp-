@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 public delegate bool Predicate<in T>(T obj);
 
@@ -55,17 +56,15 @@ namespace BlApi
                     throw new System.Exception("empty list");
                 List<DroneInCharge> temp = new();
                 int tempBattery;
-                foreach (var item in v)
+                foreach (var (item, Ditem) in from item in v
+                                              from Ditem in dronesList
+                                              where item.DroneId == Ditem.Id && item.StationId == stationId
+                                              select (item, Ditem))
                 {
-                    foreach (var Ditem in dronesList)
-                    {
-                        if (item.DroneId == Ditem.Id && item.StationId == stationId)
-                        {
-                            tempBattery = Ditem.Battery;
-                            temp.Add(new DroneInCharge(item.DroneId, tempBattery));
-                        }
-                    }
+                    tempBattery = Ditem.Battery;
+                    temp.Add(new DroneInCharge(item.DroneId, tempBattery));
                 }
+
                 return temp;
             }
             public List<DroneToList> GetDrones()

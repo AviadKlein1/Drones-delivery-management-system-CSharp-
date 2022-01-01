@@ -6,21 +6,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PrL"
         mc:Ignorable="d"
-        Title="User Ditails" Height="550" Width="300" FontSize="14" Background="#FF245170" Foreground="#FF341010">
+        Title="User Ditails" Height="462" Width="300" FontSize="14" Background="#FF245170" Foreground="#FF341010">
     <Border Background="#FF2B2323" CornerRadius="20" Margin="20,20,20,12" >
         <StackPanel Margin="20,20,20,16">
             <Label  Content="User Ditails:" Foreground="Wheat" FontSize="25" HorizontalAlignment="Center"/>
             <Separator></Separator>
             <Label Content="ID" Foreground="Wheat"/>
             <TextBox x:Name="ID" Background="Gray"  FontSize="18"/>
-            <Label Content="Name" Foreground="Wheat"/>
-            <TextBox x:Name="Name" Foreground="Wheat" FontSize="18" Background="Gray"/>
+            
             <Label Content="phone number" Foreground="Wheat"/>
-            <TextBox x:Name="phoneNumber" Foreground="Wheat" FontSize="18" Background="Gray"/>
+            <TextBox x:Name="phoneNumber" FontSize="18" Background="Gray"/>
             <Label Content="Latitude" Foreground="Wheat"/>
-            <TextBox x:Name="Latitude" Foreground="Wheat" FontSize="18" Background="Gray"/>
+            <TextBox x:Name="Latitude" FontSize="18" Background="Gray"/>
             <Label Content="Longitude" Foreground="Wheat"/>
-            <TextBox x:Name="Longitude" Foreground="Wheat" FontSize="18" Background="Gray"/>
+            <TextBox x:Name="Longitude"  FontSize="18" Background="Gray"/>
             <Button  x:Name="SubmitDitails" Content="Submit" Background="Gray" Margin="60,14" Click="SubmitDitails_Click" Focusable="True" IsDefault="True"/>
 
         </StackPanel>

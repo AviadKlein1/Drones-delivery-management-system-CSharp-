@@ -49,6 +49,7 @@ namespace PrL
             parcel.Priority = (DalApi.DO.MyEnums.PriorityLevel)UserAddPriority.SelectedItem;
             bl.AddParcel(parcel);
             MessageBox.Show("Success!");
+            new User(UserId, bl).Show();
             Close();
         }
     }

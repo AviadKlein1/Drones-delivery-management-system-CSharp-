@@ -14,10 +14,10 @@
             <ComboBox x:Name="UserAddReceiverId" Background="Gray"  FontSize="18" IsEditable="True" IsReadOnly="True" Text="-- Choose Receiver --"/>
 
             <Label Content="Weight" Foreground="Wheat"/>
-            <ComboBox x:Name="UserAddWeightselector" IsEditable="True" IsReadOnly="True" Foreground="Wheat" FontSize="18" Background="Gray"/>
+            <ComboBox x:Name="UserAddWeightselector" IsEditable="True" IsReadOnly="True"  FontSize="18" Background="Gray"/>
 
             <Label Content="Priority" Foreground="Wheat"/>
-            <ComboBox x:Name="UserAddPriority" IsEditable="True" IsReadOnly="True" Foreground="Wheat" FontSize="18" Background="Gray"/>
+            <ComboBox x:Name="UserAddPriority" IsEditable="True" IsReadOnly="True" FontSize="18" Background="Gray"/>
             
             <Button  x:Name="SubmitDitails" Content="Submit" Background="Gray" Margin="60,14" Click="SubmitDitails_Click" Focusable="True" IsDefault="True"/>
         </StackPanel>

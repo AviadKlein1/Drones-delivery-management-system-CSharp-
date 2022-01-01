@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PrL"
         mc:Ignorable="d"
-        Title="LoginScreen" Height="350" Width="300" FontSize="14" Background="#FF245170" Foreground="#FF341010">
+        Title="LoginScreen" Height="374" Width="300" FontSize="14" Background="#FF245170" Foreground="#FF341010">
     <Border Background="#FF2B2323" CornerRadius="20" Margin="20,20,20,12" >
         <StackPanel Margin="20,20,20,16">
             <Label  Content="Login:" Foreground="Wheat" FontSize="25" HorizontalAlignment="Center"/>
@@ -14,8 +14,8 @@
             <TextBox x:Name="TextUser" Background="Gray"  FontSize="18"/>
             <Label Content="Password" Foreground="Wheat"/>
             <PasswordBox x:Name="TextPass" Foreground="Wheat" FontSize="18" Background="Gray"/>
-            <Button  x:Name="SignUp" Content="Sign Up" Background="Gray" Margin="60,5" DockPanel.Dock="Right" Click="SignUp_Click" Focusable="True" IsDefault="True"/>
-            <Button  x:Name="NewUser" Content="New User" Background="Gray" Margin="60,5" Click="NewUser_Click" DockPanel.Dock="Left" />
+            <Button  x:Name="SignUp" Content="Sign Up" Background="Gray" Margin="60,12" DockPanel.Dock="Right" Click="SignUp_Click" Focusable="True" IsDefault="True"/>
+            <Button  x:Name="NewUser" Content="New User" Background="Gray" Margin="60,0" Click="NewUser_Click" DockPanel.Dock="Left" />
         </StackPanel>
     </Border>
 </Window>

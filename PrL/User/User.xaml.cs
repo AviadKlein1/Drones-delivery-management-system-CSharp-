@@ -24,31 +24,26 @@ namespace PrL
     /// <summary>
     /// Interaction logic for User.xaml
     /// </summary>
-    public partial class User : MetroWindow
+    public partial class User : Window
     {
         int Id;
         BlApi.BO.BL bl;
         public static BlApi.BO.Customer customer = new();
-        System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
         string name;
-        private void Timer_Click(object sender, EventArgs e)
-        {
-            customer = bl.DisplayCustomer(Id);
-        }
+      
         public User(int UserId , IBl _bl )
         {
             Id = UserId;
             InitializeComponent();
             bl = (BlApi.BO.BL)_bl;
-
             customer = bl.DisplayCustomer(UserId);
             name = customer.Name;
             UserParcelRecievedComboBox.ItemsSource = customer.ParcelsRecieved.Select(item => item.Id);
             UserParcelRecievedComboBox.Items.ToString();
             UserParcelSentComboBox.ItemsSource = customer.ParcelsSent.Select(item => item.Id);
             UserParcelSentComboBox.Items.ToString();
-
             DisplayUserCustomer.DataContext = customer;
+
             double minLat = ((double)(customer.Location.Latitude - (int)customer.Location.Latitude) * 60);
             double minLon = ((double)(customer.Location.Longitude - (int)customer.Location.Longitude) * 60);
             double secLat = ((double)(minLat - (int)minLat) * 60);
@@ -60,6 +55,7 @@ namespace PrL
         private void UserAddParcel_Click(object sender, RoutedEventArgs e)
         {
             new UserAddParcel(Id, bl).Show();
+            Close();
         }
 
         private void UserUpdatNameAndPhone_Click(object sender, RoutedEventArgs e)
@@ -72,14 +68,20 @@ namespace PrL
             customer.Name = (string)UserNameBox.Text;
             customer.PhoneNumber = (string)UserPhoneBox.Text;
             bl.UpdateCustomer(customer.Id, customer.Name, customer.PhoneNumber);
-            
-            
+            customer = bl.DisplayCustomer(Id);
+            name = customer.Name;
+            UserParcelRecievedComboBox.ItemsSource = customer.ParcelsRecieved.Select(item => item.Id);
+            UserParcelRecievedComboBox.Items.ToString();
+            UserParcelSentComboBox.ItemsSource = customer.ParcelsSent.Select(item => item.Id);
+            UserParcelSentComboBox.Items.ToString();
+            DisplayUserCustomer.DataContext = customer;
             MessageBox.Show("success!");
         }
 
         private void UserParcelRecievedComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             MessageBox.Show(bl.DisplayParcel((int)UserParcelRecievedComboBox.SelectedItem).ToString());
+
         }
 
         private void UserParcelSentComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
