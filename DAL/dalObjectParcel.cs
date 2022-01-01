@@ -118,7 +118,33 @@ namespace DalApi
                     ;
                     return temp;
                 }
-                
+                public void UpdatedroneIdInParcel(int ParcelId, int droneId)
+                {
+                    Parcel temp = new();
+                    for (int i = 0; i < DataSource.parcels.Count; i++)
+                    {
+                        Parcel item = DataSource.parcels[i];
+                        //search customers
+                        if (item.Id == ParcelId)
+                        {
+                            temp.Id = item.Id;
+                            temp.IsActive = true;
+                            temp.DroneId = droneId;
+                            temp.Priority = item.Priority;
+                            temp.Weight = item.Weight;
+                            temp.SenderId = item.SenderId;
+                            temp.ReceiverId = item.ReceiverId;
+                            temp.Requested = item.Requested;
+                            temp.Scheduled = item.Scheduled;
+                            temp.PickedUp = item.PickedUp;
+                            temp.Delivered = item.Delivered;
+                            DataSource.parcels[i] = temp;
+                            return;
+                        }
+                    }
+                }
+
+
                 /// <summary>
                 /// Schedule Parcel To Drone in dal
                 /// </summary>

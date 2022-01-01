@@ -134,7 +134,7 @@ namespace BlApi
                 {
                     temp.Id = v.Id;
                     if (v.DroneId == 0) temp.DroneInParcel = new DroneInParcel(0);
-                    if (v.DroneId != 0) temp.DroneInParcel = new DroneInParcel(v.DroneId);
+                    else temp.DroneInParcel = new DroneInParcel(v.DroneId);
                     temp.DroneInParcel = new DroneInParcel(v.DroneId == 0 ? 0 : v.DroneId);
 
                     temp.Priority = v.Priority;

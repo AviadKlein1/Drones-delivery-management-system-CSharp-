@@ -29,7 +29,7 @@ namespace BlApi
                 var dalParcelsList = dal.GetParcelsList();
                 foreach (var element in dalParcelsList)
                 {
-                    return true;
+                    if(element.DroneId == droneId)return true;
                 }
 
                 return false;
@@ -47,7 +47,6 @@ namespace BlApi
                 {
                     return element.Id;
                 }
-
                 return 0;
             }
             internal Parcel GetParcelBySendeId(int MySenderId)

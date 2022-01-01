@@ -36,16 +36,16 @@
             <TextBox x:Name="ParcelIdBox"  Text="{Binding Path = Id}" HorizontalAlignment="Center" Width="150" IsEnabled="False" />
 
             <TextBlock x:Name="SenderNameBlock" Text="Sender name: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150"/>
-            <TextBox  x:Name="SenderNameBox"  HorizontalAlignment="Center" Width="150"/>
+            <TextBox  x:Name="SenderNameBox"  HorizontalAlignment="Center" Width="150"  IsEnabled="False"/>
 
             <TextBlock x:Name="RecieverNameBlock"  Text="Reciever name: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
-            <TextBox  x:Name="RecieverNameBox"   HorizontalAlignment="Center" Width="150"/>
+            <TextBox  x:Name="RecieverNameBox"   HorizontalAlignment="Center" Width="150"  IsEnabled="False"/>
 
             <TextBlock x:Name="ParcelWeightBlock" Text="Parcel Weight: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
-            <TextBox  x:Name="ParcelWeightComboBox" Text="{Binding  Path = Weight}" HorizontalAlignment="Center" Width="150" />
+            <TextBox  x:Name="ParcelWeightComboBox" Text="{Binding  Path = Weight}" HorizontalAlignment="Center" Width="150" IsEnabled="False" />
 
             <TextBlock x:Name="DroneInParcelIdBlock" Text="Drone Id: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
-            <TextBox  x:Name="DroneInParcelIdBox" Text="{Binding  Path = DroneInParcel}"  HorizontalAlignment="Center" Width="150"  />
+            <TextBox  x:Name="DroneInParcelIdBox"   HorizontalAlignment="Center" Width="150" IsEnabled="False" />
 
             <TextBlock x:Name="RequestedBlock" Text="Requested: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox  x:Name="RequestedBox"  Text="{Binding  Path = Requested}"   HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
@@ -55,13 +55,15 @@
 
             <TextBlock x:Name="PickedUpBlock" Text="PickedUp: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox  x:Name="PickedUpBox" Text="{Binding  Path = PickedUp}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            <Button x:Name="PickupButton" Content="Pick up" HorizontalAlignment="Center" Width="150" Click="PickupButton_Click"  Visibility="Collapsed"/>
 
             <TextBlock x:Name="DeliveredBlock" Text="Delivered: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox  x:Name="DeliveredBox" Text="{Binding  Path = Delivered}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            <Button x:Name="DeliverButton" Content="Deilver" HorizontalAlignment="Center" Width="150" Click="DeliverButton_Click" Visibility="Collapsed"/>
 
         </StackPanel>
         <Button x:Name="CancelButton3" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,2"  Height="26" Width="52" Click="CancelButton3_Click"  Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" />
-        <Button x:Name="DeleteParcel" Content="Delete!" HorizontalAlignment="Right" Visibility="Collapsed" VerticalAlignment="Bottom" Margin="2,0,0,2"  Height="26" Width="52" Click="DeleteParcel_Click" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" />
+        <Button x:Name="DeleteParcel" Content="Delete!" HorizontalAlignment="Right" Visibility="Visible" VerticalAlignment="Bottom" Margin="2,0,0,2"  Height="26" Width="52" Click="DeleteParcel_Click" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" />
     </Grid>
 </mah:MetroWindow>
 

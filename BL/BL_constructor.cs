@@ -71,6 +71,12 @@ namespace BlApi
                         newDrone.Battery = element.Battery;
                         newDrone.DeliveredParcelId = element.DeliveredParcelId;
 
+                        var p = GetParcelsList(allParcels);
+                        foreach (var item in p)
+                        {
+                            if (item.Id == element.DeliveredParcelId) dal.UpdatedroneIdInParcel(element.DeliveredParcelId, element.Id);
+                        }
+
                         if (IsAssociatedDrone(element.Id) && IsAnyUnassociatedParcel())
                         {
                             //drone status

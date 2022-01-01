@@ -174,6 +174,8 @@ namespace DalApi
         /// <returns></returns>
         public IEnumerable<DO.Parcel> GetParcelsList();
         public IEnumerable<DO.Parcel> GetParcelsList(System.Predicate<DalApi.DO.Parcel> match);
+        public void UpdatedroneIdInParcel(int ParcelId, int droneId);
+
 
     }
 }

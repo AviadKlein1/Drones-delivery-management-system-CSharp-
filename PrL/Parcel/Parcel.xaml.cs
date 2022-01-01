@@ -12,7 +12,9 @@ namespace PrL
         BlApi.BO.Parcel parcel = new();
         BlApi.BO.ParcelToList parcelToList = new();
         BlApi.BO.BL bl;
-
+        bool IsScheduled = false;
+        int droneId = 0;
+        string empty = "---";
         public Parcel(BlApi.BO.BL mainBl)
         {
             InitializeComponent();
@@ -30,22 +32,42 @@ namespace PrL
         }
         public Parcel(BlApi.BO.BL mainBl, BlApi.BO.ParcelToList mainParcel)
         {
-
-            
             ThemeManager.Current.ChangeTheme(this, "Dark.blue");
             InitializeComponent();
             Title = "Parcel Diatels";
             bl = mainBl;
+            parcelToList = mainParcel;
+            parcel = bl.DisplayParcel(parcelToList.Id);
             DisplayParcel.Visibility = Visibility.Visible;
+            if (parcel.DroneInParcel.Id != 0) IsScheduled = true;
+            var v = bl.GetDrones();
+            foreach (var item in v)
+            {
+                if (item.DeliveredParcelId == parcel.Id)droneId = item.Id;
+            }
+            if(IsScheduled)droneId = bl.DisplayDrone(parcel.DroneInParcel.Id).Id;
+
+
             try
             {
-                parcelToList = mainParcel;
-                parcel = bl.DisplayParcel(parcelToList.Id);
-                RecieverNameBox.Text = parcel.Sender.Id == 0 ? "---" : bl.DisplayCustomer(parcel.Sender.Id).Name;
-                SenderNameBox.Text = parcel.Receiver.Id == 0 ? "---" : bl.DisplayCustomer(parcel.Receiver.Id).Name;
-                DroneInParcelIdBox.Text = parcel.DroneInParcel.Id == 0 ? "---" : $"{bl.DisplayDrone(parcel.DroneInParcel.Id).Id}";
+                RecieverNameBox.Text = bl.DisplayCustomer(parcel.Sender.Id).Name;
+                SenderNameBox.Text = bl.DisplayCustomer(parcel.Receiver.Id).Name;
                 DisplayParcel.DataContext = parcel;
-                if(parcel.PickedUp == null)DeleteParcel.Visibility = Visibility.Visible;
+                if (IsScheduled) DroneInParcelIdBox.Text = $"{droneId}";
+                else DroneInParcelIdBox.Text = empty;
+                DisplayParcel.DataContext = parcel;
+                if (parcel.Scheduled != null && parcel.PickedUp == null)
+                {
+                    DeleteParcel.Visibility = Visibility.Collapsed;
+                    PickupButton.Visibility = Visibility.Visible;
+                }
+                if (parcel.PickedUp != null && parcel.Delivered == null)
+                {
+                    DeleteParcel.Visibility = Visibility.Collapsed;
+
+                    PickupButton.Visibility = Visibility.Collapsed;
+                    DeliverButton.Visibility = Visibility.Visible;
+                }
             }
             catch (Exception ex)
             {
@@ -88,7 +110,23 @@ namespace PrL
         private void DeleteParcel_Click(object sender, RoutedEventArgs e)
         {
             bl.DeleteParcel(parcel);
+            MessageBox.Show("success!");
             Close();
+        }
+
+        private void PickupButton_Click(object sender, RoutedEventArgs e)
+        {
+            bl.PickUpParcel(droneId);
+            MessageBox.Show("success!");
+            Close();
+        }
+
+        private void DeliverButton_Click(object sender, RoutedEventArgs e)
+        {
+            bl.DeliverParcel(droneId);
+            MessageBox.Show("success!");
+            Close();
+
         }
     }
 }

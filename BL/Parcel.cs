@@ -33,6 +33,7 @@ namespace BlApi
                 PickedUp = null;
                 Delivered = null;
                 DroneInParcel = null;
+                
             }
 
             /// <summary>
