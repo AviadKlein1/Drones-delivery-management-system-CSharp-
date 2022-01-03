@@ -95,7 +95,7 @@ namespace BlApi
                 //add customer to list of customers
                 try
                 {
-                    dal.Addcustomer(temp);
+                    dal.AddCustomer(temp);
                 }
                 catch (DalApi.DO.ExistingIdException ex)
                 {

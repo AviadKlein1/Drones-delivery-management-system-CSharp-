@@ -106,7 +106,7 @@ namespace DalApi
                 /// <summary>
                 /// return all drones
                 /// </summary>
-                public IEnumerable<Drone> GetDrones()
+                public IEnumerable<Drone> GetDronesList()
                 {
                     List<Drone> temp = new();
                     temp.AddRange(from item in DataSource.drones

@@ -15,7 +15,7 @@ namespace DalApi
                 /// add customer to list of customers
                 /// </summary>
                 /// <param name="myCustomer"></param>
-                public void Addcustomer(Customer myCustomer)
+                public void AddCustomer(Customer myCustomer)
                 {
                     for (int i = 0; i < DataSource.customers.Count; i++)
                         if (DataSource.customers[i].Id == myCustomer.Id)

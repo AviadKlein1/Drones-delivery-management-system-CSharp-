@@ -24,7 +24,7 @@ namespace DalApi
         /// add costumer to list of costimers
         /// </summary>
         /// <param name="myCustomer"></param>
-        public void Addcustomer(DO.Customer customer);
+        public void AddCustomer(DO.Customer customer);
 
         /// <summary>
         /// add parcel to list
@@ -70,10 +70,7 @@ namespace DalApi
         /// <returns></returns>
         public DO.Parcel GetParcel(int id);
 
-        /// <summary>
-        /// return all drones
-        /// </summary>
-        public IEnumerable<DO.Drone> GetDrones();
+     
        
         /// <summary>
         /// returns an array contains electricity consumption data
@@ -172,6 +169,11 @@ namespace DalApi
         /// <param name="match"></param>
         /// <returns></returns>
         public IEnumerable<DO.Parcel> GetParcelsList();
+
+        /// <summary>
+        /// return all drones
+        /// </summary>
+        public IEnumerable<DO.Drone> GetDronesList();
 
         public void UpdatedroneIdInParcel(int ParcelId, int droneId);
         public IEnumerable<DO.DroneCharge> GetDroneCharges();

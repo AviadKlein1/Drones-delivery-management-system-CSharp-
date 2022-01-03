@@ -139,9 +139,9 @@ namespace BlApi
                     }
                     myParcel.SenderName = senderName;
                     myParcel.ReceiverName = receiverName;
-                    if (ScheduledButNotPickedUp(element.Id))
+                    if (element.Scheduled != null && element.PickedUp == null)
                         myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.scheduled;
-                    if (PickedUpButNotDelivered(element.Id))
+                    if (element.Delivered == null && element.PickedUp != null)
                         myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.pickedUp;
                     if(element.Delivered != null)
                         myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.delivered;

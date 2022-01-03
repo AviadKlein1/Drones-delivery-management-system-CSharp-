@@ -1,0 +1,8 @@
+<Config>
+	<ParcelRunId>100000</ParcelRunId>
+	<free>0.15</free>
+	<lightWeight>0.1</lightWeight>
+	<mediumWeight>0.2</mediumWeight>
+	<heavyWeight>0.3</heavyWeight>
+	<DroneLoadRate>0.4</DroneLoadRate>
+</Config>

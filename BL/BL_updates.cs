@@ -19,7 +19,7 @@ namespace BlApi
             public bool UpdateDrone(int droneId, string newModel)
             {
                 bool found = false;
-                System.Collections.Generic.IEnumerable<DalApi.DO.Drone> dalDronesList = dal.GetDrones();
+                System.Collections.Generic.IEnumerable<DalApi.DO.Drone> dalDronesList = dal.GetDronesList();
                 foreach (var _ in from DalApi.DO.Drone item in dalDronesList
                                   where item.Id == droneId
                                   select new { })
