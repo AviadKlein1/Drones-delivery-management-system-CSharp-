@@ -13,22 +13,22 @@ namespace DalApi
     sealed partial class DalXml : IDal
     {
         XElement ConfigRoot;
-        string ConfigPath = @"xml/ConfigXml.xml";
+        string ConfigPath = @"C:\Users\Aviad\source\repos\AviadKlein1\dotNet5782_2679_3080\DAL\bin\Debug\net5.0\xml\ConfigXml.xml";
 
-        XElement StationsRoot;
-        string stationsPath = @"xml/StationsXml.xml";
+        XElement ArrayOfStation;
+        string stationsPath = @"C:\Users\Aviad\source\repos\AviadKlein1\dotNet5782_2679_3080\DAL\bin\Debug\net5.0\xml\StationsXml.xml";
 
-        XElement ParcelsRoot;
-        string parcelsPath = @"xml/ParcelsXml.xml";
+        XElement ArrayOfParcel;
+        string parcelsPath = @"C:\Users\Aviad\source\repos\AviadKlein1\dotNet5782_2679_3080\DAL\bin\Debug\net5.0\xml\ParcelsXml.xml";
 
-        XElement DronesRoot;
-        string dronesPath = @"xml/DronesXml.xml";
+        XElement ArrayOfDrone;
+        string dronesPath = @"C:\Users\Aviad\source\repos\AviadKlein1\dotNet5782_2679_3080\DAL\bin\Debug\net5.0\xml\DronesXml.xml";
 
-        XElement CustomersRoot;
-        string customersPath = @"xml/CustomersXml.xml";
+        XElement ArrayOfCustomer;
+        string customersPath = @"C:\Users\Aviad\source\repos\AviadKlein1\dotNet5782_2679_3080\DAL\bin\Debug\net5.0\xml\CustomersXml.xml";
 
-        XElement DroneChargesRoot;
-        string droneChargesPath = @"xml/DroneChargesXml.xml";
+        XElement ArrayOfDroneCharge;
+        string droneChargesPath = @"C:\Users\Aviad\source\repos\AviadKlein1\dotNet5782_2679_3080\DAL\bin\Debug\net5.0\xml\DroneChargesXml.xml";
         
 
         public DalXml()
@@ -36,39 +36,39 @@ namespace DalApi
             if (!File.Exists(ConfigPath))
                 CreateFiles(ConfigRoot, "ConfigRoot", ConfigPath);
             else
-                LoadData(StationsRoot, stationsPath);
+                LoadData(ConfigRoot, ConfigPath);
 
             if (!File.Exists(stationsPath))
-                CreateFiles(StationsRoot, "StationsRoot",stationsPath);
+                CreateFiles(ArrayOfStation, "ArrayOfStation", stationsPath);
             else
-                LoadData(StationsRoot, stationsPath);
+                LoadData(ArrayOfStation, stationsPath);
 
             if (!File.Exists(parcelsPath))
-                CreateFiles(ParcelsRoot, "ParcelsRoot", parcelsPath);
+                CreateFiles(ArrayOfParcel, "ArrayOfParcel", parcelsPath);
             else
-                LoadData(ParcelsRoot, parcelsPath);
+                LoadData(ArrayOfParcel, parcelsPath);
 
             if (!File.Exists(customersPath))
-                CreateFiles(CustomersRoot, "CustomersRoot", customersPath);
+                CreateFiles(ArrayOfCustomer, "ArrayOfCustomer", customersPath);
             else
-                LoadData(CustomersRoot, customersPath);
+                LoadData(ArrayOfCustomer, customersPath);
 
             if (!File.Exists(dronesPath))
-                CreateFiles(DronesRoot, "DronesRoot", dronesPath);
+                CreateFiles(ArrayOfDrone, "ArrayOfDrone", dronesPath);
             else
-                LoadData(DronesRoot, dronesPath);
+                LoadData(ArrayOfDrone, dronesPath);
 
             if (!File.Exists(droneChargesPath))
-                CreateFiles(DroneChargesRoot, "DroneChargesRoot",droneChargesPath);
+                CreateFiles(ArrayOfDroneCharge, "ArrayOfDroneCharge", droneChargesPath);
             else
-                LoadData(DroneChargesRoot, droneChargesPath);
+                LoadData(ArrayOfDroneCharge, droneChargesPath);
 
             DataSource.Initialize();
-            XMLTools.SaveListToXMLSerializer(DataSource.stations, stationsPath);
-            XMLTools.SaveListToXMLSerializer(DataSource.parcels, parcelsPath);
-            XMLTools.SaveListToXMLSerializer(DataSource.drones, dronesPath);
-            XMLTools.SaveListToXMLSerializer(DataSource.droneCharges, droneChargesPath);
-            XMLTools.SaveListToXMLSerializer(DataSource.customers, customersPath);
+            XMLTools.SaveListToXMLSerializer<Station>(DataSource.stations, stationsPath);
+            XMLTools.SaveListToXMLSerializer<Parcel>(DataSource.parcels, parcelsPath);
+            XMLTools.SaveListToXMLSerializer<Drone>(DataSource.drones, dronesPath);
+            XMLTools.SaveListToXMLSerializer<DroneCharge>(DataSource.droneCharges, droneChargesPath);
+            XMLTools.SaveListToXMLSerializer<Customer>(DataSource.customers, customersPath);
         }
         static class DataSource
         {
@@ -198,6 +198,9 @@ namespace DalApi
                         myParcel.SenderId = customers[i].Id;
                         myParcel.Requested = DateTime.Now;
                         myParcel.Scheduled = DateTime.Now;
+                        myParcel.PickedUp = DateTime.MinValue;
+                        myParcel.Delivered = DateTime.MinValue;
+
                         myParcel.ReceiverId = customers[rd.Next(10)].Id;
                         //verify different customers initialized as sender and receiver
                         while (myParcel.ReceiverId == myParcel.SenderId)
@@ -212,7 +215,10 @@ namespace DalApi
                             myParcel.ReceiverId = customers[rd.Next(10)].Id;
                         myParcel.DroneId = 0;
                         myParcel.Requested = DateTime.Now;
-                        myParcel.Scheduled = null;
+                        myParcel.Scheduled = DateTime.MinValue;
+                        myParcel.PickedUp = DateTime.MinValue;
+                        myParcel.Delivered = DateTime.MinValue;
+
                     }
                     parcels.Add(myParcel);
                 }

@@ -1,10 +1,12 @@
 ﻿using DalApi.DO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace DalApi
 {
@@ -32,8 +34,8 @@ namespace DalApi
             XElement NumOfAvailableChargeSlots = new XElement("NumOfAvailableChargeSlots", station.NumOfAvailableChargeSlots);
             XElement IsActive = new XElement("IsActive", station.IsActive);
 
-            StationsRoot.Add(new XElement("Station", Id, Name, Location, NumOfChargeSlots, NumOfAvailableChargeSlots, IsActive));
-            StationsRoot.Save(stationsPath);
+            ArrayOfStation.Add(new XElement("Station", Id, Name, Location, NumOfChargeSlots, NumOfAvailableChargeSlots, IsActive));
+            ArrayOfStation.Save(stationsPath);
         }
 
         public void AddDrone(Drone drone, int firstChargeStationId)
@@ -43,8 +45,8 @@ namespace DalApi
             XElement Weight = new XElement("Weight", drone.Weight);
             XElement IsActive = new XElement("IsActive", drone.IsActive);
 
-            DronesRoot.Add(new XElement("Drone", Id, Model, Weight, IsActive));
-            DronesRoot.Save(dronesPath);
+            ArrayOfDrone.Add(new XElement("Drone", Id, Model, Weight, IsActive));
+            ArrayOfDrone.Save(dronesPath);
             AddDroneCharge(drone.Id, firstChargeStationId);
             DecreaseChargeSlot(firstChargeStationId);
         }
@@ -55,8 +57,8 @@ namespace DalApi
             XElement Weight = new XElement("Weight", drone.Weight);
             XElement IsActive = new XElement("IsActive", drone.IsActive);
 
-            DronesRoot.Add(new XElement("Drone", Id, Model, Weight, IsActive));
-            DronesRoot.Save(dronesPath);
+            ArrayOfDrone.Add(new XElement("Drone", Id, Model, Weight, IsActive));
+            ArrayOfDrone.Save(dronesPath);
         }
 
         public void AddCustomer(Customer customer)
@@ -68,8 +70,8 @@ namespace DalApi
             XElement Latitude = new XElement("Latitude", customer.Location.Latitude);
             XElement Longitude = new XElement("Longitude", customer.Location.Longitude);
             XElement Location = new XElement("Location", Latitude, Longitude);
-            CustomersRoot.Add(new XElement("Customer", Id, Name, PhoneNumber, Location, IsActive));
-            CustomersRoot.Save(customersPath);
+            ArrayOfCustomer.Add(new XElement("Customer", Id, Name, PhoneNumber, Location, IsActive));
+            ArrayOfCustomer.Save(customersPath);
         }
 
         public void AddParcel(Parcel parcel)
@@ -86,9 +88,9 @@ namespace DalApi
             XElement PickedUp = new XElement("PickedUp", parcel.PickedUp);
             XElement Delivered = new XElement("Delivered", parcel.Delivered);
 
-            ParcelsRoot.Add(new XElement("parcel", Id, SenderId, ReceiverId, DroneId,
+            ArrayOfParcel.Add(new XElement("parcel", Id, SenderId, ReceiverId, DroneId,
                Weight, Priority, Requested, Scheduled, PickedUp, Delivered, IsActive));
-            ParcelsRoot.Save(parcelsPath);
+            ArrayOfParcel.Save(parcelsPath);
         }
 
         public void AddDroneCharge(int _droneId, int _StationId)
@@ -97,56 +99,56 @@ namespace DalApi
             XElement DroneId = new XElement("DroneId", _droneId);
             XElement IsActive = new XElement("IsActive", true);
 
-            DroneChargesRoot.Add(new XElement("DroneCharge", StationId, DroneId, IsActive));
-            DroneChargesRoot.Save(droneChargesPath);
+            ArrayOfDroneCharge.Add(new XElement("DroneCharge", StationId, DroneId, IsActive));
+            ArrayOfDroneCharge.Save(droneChargesPath);
         }
         #endregion
         #region delete func
         public void DeleteStation(int myId)
         {
-            XElement stationElement = (from item in StationsRoot.Elements()
+            XElement stationElement = (from item in ArrayOfStation.Elements()
                                        where int.Parse(item.Element("id").Value) == myId
                                        select item).FirstOrDefault();
 
             stationElement.Element("IsActive").Value = "false";
-            StationsRoot.Save(stationsPath);
+            ArrayOfStation.Save(stationsPath);
         }
 
         public void DeleteParcel(int myId)
         {
-            XElement parcelElement = (from item in ParcelsRoot.Elements()
+            XElement parcelElement = (from item in ArrayOfParcel.Elements()
                                       where int.Parse(item.Element("id").Value) == myId
                                       select item).FirstOrDefault();
 
             parcelElement.Element("IsActive").Value = "false";
-            ParcelsRoot.Save(parcelsPath);
+            ArrayOfParcel.Save(parcelsPath);
         }
 
         public void DeleteDrone(int myId)
         {
-            XElement droneElement = (from item in DronesRoot.Elements()
+            XElement droneElement = (from item in ArrayOfDrone.Elements()
                                      where int.Parse(item.Element("id").Value) == myId
                                      select item).FirstOrDefault();
 
             droneElement.Element("IsActive").Value = "false";
-            DronesRoot.Save(dronesPath);
+            ArrayOfDrone.Save(dronesPath);
         }
 
         public void DeleteCustomer(int myId)
         {
-            XElement customerElement = (from item in CustomersRoot.Elements()
+            XElement customerElement = (from item in ArrayOfCustomer.Elements()
                                         where int.Parse(item.Element("id").Value) == myId
                                         select item).FirstOrDefault();
 
             customerElement.Element("IsActive").Value = "false";
-            CustomersRoot.Save(customersPath);
+            ArrayOfCustomer.Save(customersPath);
         }
         #endregion
         #region Individual view
         public Station GetStation(int id)
         {
             Station station = new();
-            XElement stationElement = (from item in StationsRoot.Elements()
+            XElement stationElement = (from item in ArrayOfStation.Elements()
                                        where int.Parse(item.Element("id").Value) == id
                                        select item).FirstOrDefault();
             station.Id = int.Parse(stationElement.Element("Id").Value);
@@ -162,7 +164,7 @@ namespace DalApi
         public Drone GetDrone(int id)
         {
             Drone drone = new();
-            XElement droneElement = (from item in DronesRoot.Elements()
+            XElement droneElement = (from item in ArrayOfDrone.Elements()
                                      where int.Parse(item.Element("id").Value) == id
                                      select item).FirstOrDefault();
             drone.Id = int.Parse(droneElement.Element("Id").Value);
@@ -175,7 +177,7 @@ namespace DalApi
         public Customer GetCustomer(int id)
         {
             Customer customer = new();
-            XElement customerElement = (from item in CustomersRoot.Elements()
+            XElement customerElement = (from item in ArrayOfCustomer.Elements()
                                         where int.Parse(item.Element("id").Value) == id
                                         select item).FirstOrDefault();
             customer.Id = int.Parse(customerElement.Element("Id").Value);
@@ -190,7 +192,7 @@ namespace DalApi
         public Parcel GetParcel(int id)
         {
             Parcel parcel = new();
-            XElement parcelElement = (from item in ParcelsRoot.Elements()
+            XElement parcelElement = (from item in ArrayOfParcel.Elements()
                                       where int.Parse(item.Element("id").Value) == id
                                       select item).FirstOrDefault();
 
@@ -328,6 +330,7 @@ namespace DalApi
             //{
             //    parcels = null;
             //}
+            XMLTools.SaveListToXMLSerializer<Parcel>(parcels, parcelsPath);
             return parcels;
         }
         #endregion
@@ -396,7 +399,7 @@ namespace DalApi
                     else
                         temp.NumOfChargeSlots = item.NumOfChargeSlots;
                     DataSource.stations[i] = temp;
-                    XMLTools.SaveListToXMLSerializer(DataSource.stations, stationsPath);
+                    XMLTools.SaveListToXMLSerializer<Station>(DataSource.stations, stationsPath);
 
                 }
             }
@@ -416,7 +419,7 @@ namespace DalApi
                     DataSource.drones[i] = temp;
                 }
             }
-            XMLTools.SaveListToXMLSerializer(DataSource.drones, dronesPath);
+            XMLTools.SaveListToXMLSerializer<Drone>(DataSource.drones, dronesPath);
         }
 
         public void UpdateCustomer(int customerId, string newName, string newPhone)
@@ -439,7 +442,7 @@ namespace DalApi
                     temp.Location = item.Location;
                     temp.IsActive = true;
                     DataSource.customers[i] = temp;
-                    XMLTools.SaveListToXMLSerializer(DataSource.customers, customersPath);
+                    XMLTools.SaveListToXMLSerializer<Customer>(DataSource.customers, customersPath);
 
                 }
             }
@@ -447,74 +450,74 @@ namespace DalApi
 
         public void DecreaseChargeSlot(int stationId)
         {
-            XElement stationElement = (from item in StationsRoot.Elements()
+            XElement stationElement = (from item in ArrayOfStation.Elements()
                                        where int.Parse(item.Element("id").Value) == stationId
                                        select item).FirstOrDefault();
 
             var oldNum = int.Parse(stationElement.Element("NumOfAvailableChargeSlots").Value);
             stationElement.Element("NumOfAvailableChargeSlots").Value = (oldNum - 1).ToString();
-            StationsRoot.Save(stationsPath);
+            ArrayOfStation.Save(stationsPath);
 
         }
 
         public void IncreaseChargeSlot(int stationId)
         {
-            XElement stationElement = (from item in StationsRoot.Elements()
+            XElement stationElement = (from item in ArrayOfStation.Elements()
                                        where int.Parse(item.Element("id").Value) == stationId
                                        select item).FirstOrDefault();
 
             var oldNum = int.Parse(stationElement.Element("NumOfAvailableChargeSlots").Value);
             stationElement.Element("NumOfAvailableChargeSlots").Value = (oldNum + 1).ToString();
-            StationsRoot.Save(stationsPath);
+            ArrayOfStation.Save(stationsPath);
         }
 
         public void ScheduleParcelToDrone(int newParcelId, int droneId)
         {
-            XElement parcelElement = (from item in ParcelsRoot.Elements()
+            XElement parcelElement = (from item in ArrayOfParcel.Elements()
                                       where int.Parse(item.Element("id").Value) == newParcelId
                                       select item).FirstOrDefault();
 
             parcelElement.Element("DroneId").Value = droneId.ToString();
-            ParcelsRoot.Save(parcelsPath);
+            ArrayOfParcel.Save(parcelsPath);
         }
 
         public void PickUpParcel(int droneId, int parcelId)
         {
 
-            XElement parcelElement = (from item in ParcelsRoot.Elements()
+            XElement parcelElement = (from item in ArrayOfParcel.Elements()
                                       where int.Parse(item.Element("id").Value) == parcelId
                                       select item).FirstOrDefault();
 
             parcelElement.Element("PickedUp").Value = DateTime.Now.ToString();
-            ParcelsRoot.Save(parcelsPath);
+            ArrayOfParcel.Save(parcelsPath);
         }
 
         public void DeliverParcel(int droneId, int parcelId)
         {
-            XElement parcelElement = (from item in ParcelsRoot.Elements()
+            XElement parcelElement = (from item in ArrayOfParcel.Elements()
                                       where int.Parse(item.Element("id").Value) == parcelId
                                       select item).FirstOrDefault();
 
             parcelElement.Element("Delivered").Value = DateTime.Now.ToString();
-            ParcelsRoot.Save(parcelsPath);
+            ArrayOfParcel.Save(parcelsPath);
         }
         public void UpdatedroneIdInParcel(int ParcelId, int droneId)
         {
-            XElement parcelElement = (from item in ParcelsRoot.Elements()
+            XElement parcelElement = (from item in ArrayOfParcel.FirstNode.ElementsAfterSelf()
                                       where int.Parse(item.Element("id").Value) == ParcelId
                                       select item).FirstOrDefault();
 
-            parcelElement.Element("DroneId").Value = ParcelId.ToString();
-            ParcelsRoot.Save(parcelsPath);
+            parcelElement.Element("DroneId").Value = droneId.ToString();
+            ArrayOfParcel.Save(parcelsPath);
         }
       
         public void EndDroneCharge(int droneId)
         {
-            XElement droneChargeElement = (from item in DroneChargesRoot.Elements()
+            XElement droneChargeElement = (from item in ArrayOfDroneCharge.Elements()
                                      where int.Parse(item.Element("id").Value) == droneId
                                      select item).FirstOrDefault();
             droneChargeElement.Element("IsActive").Value = "false";
-            DroneChargesRoot.Save(droneChargesPath);
+            ArrayOfDroneCharge.Save(droneChargesPath);
         }
     }
 }

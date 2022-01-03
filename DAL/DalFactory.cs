@@ -5,9 +5,9 @@ namespace DalApi
 {
     public class DalFactory
     {
-        public static IDal GetDal()
+        public static DO.IDal GetDal()
         {
-            IDal dal = DalXml.Instance;
+            DO.IDal dal = DalXml.Instance;
             return dal;
         }
     }
