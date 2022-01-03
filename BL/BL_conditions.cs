@@ -31,7 +31,7 @@ namespace BlApi
             public System.Predicate<DalApi.DO.Parcel> pickedUpButNotDeliverd = PickedUpButNotDeliverd;
             //customers
             public static bool AllCustomers(DalApi.DO.Customer c) { return true; }
-            public readonly System.Predicate<DalApi.DO.Customer> allCustomers = AllCustomers;
+            public static readonly System.Predicate<DalApi.DO.Customer> allCustomers = AllCustomers;
 
             //drones
             public static bool AllDrones(DalApi.DO.Drone d) { return true; }

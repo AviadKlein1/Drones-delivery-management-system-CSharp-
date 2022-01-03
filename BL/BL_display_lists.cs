@@ -89,7 +89,7 @@ namespace BlApi
                     myCustomer.Id = element.Id;
                     myCustomer.Name = element.Name;
                     myCustomer.PhoneNumber = element.PhoneNumber;
-                    var parcelsList = dal.GetParcelsList(allParcels);
+                    var parcelsList = dal.GetParcelsList();
                     foreach (var item in parcelsList)
                     {
                         if (item.SenderId == element.Id)
@@ -117,7 +117,9 @@ namespace BlApi
             public IEnumerable<ParcelToList> GetParcelsList(System.Predicate<DalApi.DO.Parcel> match)
             {
                 List<ParcelToList> tmp1 = new();
-                var v = dal.GetParcelsList(match);
+                var c = (List<DalApi.DO.Parcel>) dal.GetParcelsList();
+                var v = c.FindAll(match);
+
                 foreach (var element in v)
                 {
                     ParcelToList myParcel = new();

@@ -158,7 +158,6 @@ namespace DalApi
         /// <returns></returns>
         public IEnumerable<DO.Station> GetStationsList();
 
-        public IEnumerable<DO.DroneCharge> GetDroneCharges();
 
         /// <summary>
         /// get filtered customers list (by condition)
@@ -173,8 +172,9 @@ namespace DalApi
         /// <param name="match"></param>
         /// <returns></returns>
         public IEnumerable<DO.Parcel> GetParcelsList();
-        public IEnumerable<DO.Parcel> GetParcelsList(System.Predicate<DalApi.DO.Parcel> match);
+
         public void UpdatedroneIdInParcel(int ParcelId, int droneId);
+        public IEnumerable<DO.DroneCharge> GetDroneCharges();
 
 
     }

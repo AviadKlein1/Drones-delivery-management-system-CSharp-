@@ -15,7 +15,7 @@ namespace BlApi
             /// returns boollean expression
             internal bool IsAnyUnassociatedParcel()
             {
-                var v = dal.GetParcelsList(unassociatedParcels);
+                var v = GetParcelsList(unassociatedParcels);
                 if (v == null) return false;
                 else return true;
             }
@@ -106,7 +106,7 @@ namespace BlApi
             ///  returns boolean type
             public bool ScheduledButNotPickedUp(int parcelId)
             {
-                var dalParcelsList = dal.GetParcelsList(scheduledButNotPickedUp);
+                var dalParcelsList = GetParcelsList(scheduledButNotPickedUp);
                 //search parcel
                 foreach (var _ in
                 from element in dalParcelsList
@@ -126,7 +126,7 @@ namespace BlApi
             /// returns boolean type
             public bool PickedUpButNotDelivered(int parcelId)
             {
-                var dalParcelsList = dal.GetParcelsList(pickedUpButNotDeliverd);
+                var dalParcelsList = GetParcelsList(pickedUpButNotDeliverd);
                 //search parcel
                 foreach (var _ in
                 from element in dalParcelsList

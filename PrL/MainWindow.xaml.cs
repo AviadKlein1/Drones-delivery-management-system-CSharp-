@@ -34,7 +34,7 @@ namespace PrL
             dateTimeBlock.Text =d.Day+"/"+ d.Month+"/"+ d.Year+"  "+ d.Hour + " : " + d.Minute + " : " + d.Second;
         }
 
-        internal IBl bl;
+        public IBl bl;
         public MainWindow(string userName)
         {
             ShowCloseButton = false;
@@ -53,7 +53,7 @@ namespace PrL
                 MessageBox.Show(ex.Message);
             }
             bool found = false;
-            var c = bl.GetCustomersList(BlApi.BO.BL.AllCustomers);
+            var c = bl.GetCustomersList(BlApi.BO.BL.allCustomers);
             if (userName != "")
             {
                 foreach (var item in c)

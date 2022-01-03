@@ -5,19 +5,17 @@ using System.Linq;
 
 namespace DalApi
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    internal class DalConfig
+    class DalConfig
     {
         internal static string DalName;
         internal static Dictionary<string, string> DalPackages;
         static DalConfig()
         {
-            XElement dalConfig = XElement.Load(@"xml\dal-config.xml");
+            XElement dalConfig = XElement.Load(@"C:\Users\Aviad\source\repos\AviadKlein1\dotNet5782_2679_3080\DAL\dal-config.xml");
             DalName = dalConfig.Element("dal").Value;
-            DalPackages = (from pkg in dalConfig.Element("dal-packages").Elements() select pkg).
-                ToDictionary(p => "" + p.Name, p => p.Value);
+            DalPackages = (from pkg in dalConfig.Element("dal-packages").Elements()
+                           select pkg
+                          ).ToDictionary(p => "" + p.Name, p => p.Value);
         }
     }
     public class DalConfigException : Exception
