@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 public delegate bool Predicate<in T>(T obj);
@@ -94,7 +95,7 @@ namespace BlApi
                     {
                         if (item.SenderId == element.Id)
                         {
-                            if (item.Delivered != null)
+                            if (item.Delivered != DateTime.MinValue)
                                 myCustomer.ParcelsDelivered++;
                             if (PickedUpButNotDelivered(item.Id))
                                 myCustomer.ParcelsSentButNotDelivered++;
@@ -102,7 +103,7 @@ namespace BlApi
                                 myCustomer.ScheduledParcels++;
                         }
                         if (item.ReceiverId == element.Id)
-                            if (item.Delivered != null)
+                            if (item.Delivered != DateTime.MinValue)
                                 myCustomer.ReceivedParcels++;
                     }
                     tmp1.Add(myCustomer);
@@ -116,9 +117,10 @@ namespace BlApi
             /// <returns></returns> return list of parcels
             public IEnumerable<ParcelToList> GetParcelsList(System.Predicate<DalApi.DO.Parcel> match)
             {
-                List<ParcelToList> tmp1 = new();
-                var c = (List<DalApi.DO.Parcel>) dal.GetParcelsList();
-                var v = c.FindAll(match);
+                List<ParcelToList> tmpParcel = new();
+                var c = dal.GetParcelsList();
+                var d = (List<DalApi.DO.Parcel>)c;
+                var v = d.FindAll(match);
 
                 foreach (var element in v)
                 {
@@ -139,17 +141,17 @@ namespace BlApi
                     }
                     myParcel.SenderName = senderName;
                     myParcel.ReceiverName = receiverName;
-                    if (element.Scheduled != null && element.PickedUp == null)
+                    if (element.Scheduled != DateTime.MinValue && element.PickedUp == DateTime.MinValue)
                         myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.scheduled;
-                    if (element.Delivered == null && element.PickedUp != null)
+                    if (element.Delivered == DateTime.MinValue && element.PickedUp != DateTime.MinValue)
                         myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.pickedUp;
-                    if(element.Delivered != null)
+                    if(element.Delivered != DateTime.MinValue)
                         myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.delivered;
 
-                    tmp1.Add(myParcel);
+                    tmpParcel.Add(myParcel);
 
                 }
-                return tmp1;
+                return tmpParcel;
             }
         }
     }

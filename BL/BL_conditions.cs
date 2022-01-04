@@ -23,11 +23,11 @@ namespace BlApi
             //parcels
             public static bool AllParcels(DalApi.DO.Parcel p) { return true; }
             public readonly System.Predicate<DalApi.DO.Parcel> allParcels = AllParcels;
-            public static bool UnassociatedParcels(DalApi.DO.Parcel p) { return p.Scheduled == null; }
+            public static bool UnassociatedParcels(DalApi.DO.Parcel p) { return p.Scheduled == DateTime.MinValue; }
             public System.Predicate<DalApi.DO.Parcel> unassociatedParcels = UnassociatedParcels;
-            static bool ScheduledButNotPickedUp(DalApi.DO.Parcel p) { return p.Scheduled != null && p.PickedUp == null; }
+            static bool ScheduledButNotPickedUp(DalApi.DO.Parcel p) { return p.Scheduled != DateTime.MinValue && p.PickedUp == DateTime.MinValue; }
             public System.Predicate<DalApi.DO.Parcel> scheduledButNotPickedUp = ScheduledButNotPickedUp;
-            public static bool PickedUpButNotDeliverd(DalApi.DO.Parcel p) { return p.Delivered == null && p.PickedUp != null; }
+            public static bool PickedUpButNotDeliverd(DalApi.DO.Parcel p) { return p.Delivered == DateTime.MinValue && p.PickedUp != DateTime.MinValue; }
             public System.Predicate<DalApi.DO.Parcel> pickedUpButNotDeliverd = PickedUpButNotDeliverd;
             //customers
             public static bool AllCustomers(DalApi.DO.Customer c) { return true; }

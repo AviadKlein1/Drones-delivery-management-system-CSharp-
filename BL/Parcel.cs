@@ -29,9 +29,9 @@ namespace BlApi
                 Receiver = new CustomerInParcel();
                 DroneInParcel = new DroneInParcel();
                 Requested = DateTime.Now;
-                Scheduled = null;
-                PickedUp = null;
-                Delivered = null;
+                Scheduled = DateTime.MinValue;
+                PickedUp = DateTime.MinValue;
+                Delivered = DateTime.MinValue;
                 DroneInParcel = null;
                 
             }

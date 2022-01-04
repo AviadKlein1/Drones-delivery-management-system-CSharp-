@@ -116,6 +116,8 @@ namespace DalApi
                             Id = Config.ParcelRunId++,
                             Weight = (MyEnums.WeightCategory)rd.Next(3),
                             Priority = (MyEnums.PriorityLevel)rd.Next(3),
+                            PickedUp = DateTime.MinValue,
+                            Delivered = DateTime.MinValue,
                             IsActive = true
                         };
 
@@ -127,6 +129,8 @@ namespace DalApi
                             myParcel.SenderId = customers[i].Id;
                             myParcel.Requested = DateTime.Now;
                             myParcel.Scheduled = DateTime.Now;
+                            myParcel.PickedUp = DateTime.MinValue;
+                            myParcel.Delivered = DateTime.MinValue;
                             myParcel.ReceiverId = customers[rd.Next(10)].Id;
                             //verify different customers initialized as sender and receiver
                             while (myParcel.ReceiverId == myParcel.SenderId)
@@ -138,6 +142,8 @@ namespace DalApi
                             myParcel.SenderId = customers[i].Id;
                             myParcel.Requested = DateTime.Now;
                             myParcel.Scheduled = DateTime.Now;
+                            myParcel.PickedUp = DateTime.MinValue;
+                            myParcel.Delivered = DateTime.MinValue;
                             myParcel.ReceiverId = customers[rd.Next(10)].Id;
                             //verify different customers initialized as sender and receiver
                             while (myParcel.ReceiverId == myParcel.SenderId)
@@ -152,7 +158,9 @@ namespace DalApi
                                 myParcel.ReceiverId = customers[rd.Next(10)].Id;
                             myParcel.DroneId = 0;
                             myParcel.Requested = DateTime.Now;
-                            myParcel.Scheduled = null;
+                            myParcel.Scheduled = DateTime.MinValue;
+                            myParcel.PickedUp = DateTime.MinValue;
+                            myParcel.Delivered = DateTime.MinValue;
                         }
                         parcels.Add(myParcel);
                     }

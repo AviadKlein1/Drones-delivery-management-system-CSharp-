@@ -13,68 +13,80 @@ namespace DalApi
     sealed partial class DalXml : IDal
     {
         XElement ConfigRoot;
-        string ConfigPath = @"C:\Users\Aviad\source\repos\AviadKlein1\dotNet5782_2679_3080\DAL\bin\Debug\net5.0\xml\ConfigXml.xml";
+        string ConfigPath = @"xml\ConfigXml.xml";
 
         XElement ArrayOfStation;
-        string stationsPath = @"C:\Users\Aviad\source\repos\AviadKlein1\dotNet5782_2679_3080\DAL\bin\Debug\net5.0\xml\StationsXml.xml";
+        string stationsPath = @"xml\StationsXml.xml";
 
         XElement ArrayOfParcel;
-        string parcelsPath = @"C:\Users\Aviad\source\repos\AviadKlein1\dotNet5782_2679_3080\DAL\bin\Debug\net5.0\xml\ParcelsXml.xml";
+        string parcelsPath = @"xml\ParcelsXml.xml";
 
         XElement ArrayOfDrone;
-        string dronesPath = @"C:\Users\Aviad\source\repos\AviadKlein1\dotNet5782_2679_3080\DAL\bin\Debug\net5.0\xml\DronesXml.xml";
+        string dronesPath = @"xml\DronesXml.xml";
 
         XElement ArrayOfCustomer;
-        string customersPath = @"C:\Users\Aviad\source\repos\AviadKlein1\dotNet5782_2679_3080\DAL\bin\Debug\net5.0\xml\CustomersXml.xml";
+        string customersPath = @"xml\CustomersXml.xml";
 
         XElement ArrayOfDroneCharge;
-        string droneChargesPath = @"C:\Users\Aviad\source\repos\AviadKlein1\dotNet5782_2679_3080\DAL\bin\Debug\net5.0\xml\DroneChargesXml.xml";
-        
+        string droneChargesPath = @"xml\DroneChargesXml.xml";
+
 
         public DalXml()
         {
+            DataSource.Initialize();
+
             if (!File.Exists(ConfigPath))
+            {
                 CreateFiles(ConfigRoot, "ConfigRoot", ConfigPath);
-            else
-                LoadData(ConfigRoot, ConfigPath);
+                AddConfig();
+            }
+            //LoadData(ConfigRoot, ConfigPath);
 
             if (!File.Exists(stationsPath))
+            {
                 CreateFiles(ArrayOfStation, "ArrayOfStation", stationsPath);
-            else
-                LoadData(ArrayOfStation, stationsPath);
+                foreach (var item in DataSource.stations)
+                    AddStation(item);
+            }
+            LoadData(ArrayOfStation, stationsPath);
+
 
             if (!File.Exists(parcelsPath))
+            {
                 CreateFiles(ArrayOfParcel, "ArrayOfParcel", parcelsPath);
-            else
-                LoadData(ArrayOfParcel, parcelsPath);
+                foreach (var item in DataSource.parcels)
+                    AddParcel(item);
+            }
+            LoadData(ArrayOfParcel, parcelsPath);
+
 
             if (!File.Exists(customersPath))
+            {
                 CreateFiles(ArrayOfCustomer, "ArrayOfCustomer", customersPath);
-            else
-                LoadData(ArrayOfCustomer, customersPath);
+                foreach (var item in DataSource.customers)
+                    AddCustomer(item);
+            }
+            LoadData(ArrayOfCustomer, customersPath);
+
 
             if (!File.Exists(dronesPath))
+            {
                 CreateFiles(ArrayOfDrone, "ArrayOfDrone", dronesPath);
-            else
-                LoadData(ArrayOfDrone, dronesPath);
+                foreach (var item in DataSource.drones)
+                    AddDrone(item);
+            }
+            LoadData(ArrayOfDrone, dronesPath);
+
 
             if (!File.Exists(droneChargesPath))
                 CreateFiles(ArrayOfDroneCharge, "ArrayOfDroneCharge", droneChargesPath);
-            else
-                LoadData(ArrayOfDroneCharge, droneChargesPath);
-
-            DataSource.Initialize();
-            XMLTools.SaveListToXMLSerializer<Station>(DataSource.stations, stationsPath);
-            XMLTools.SaveListToXMLSerializer<Parcel>(DataSource.parcels, parcelsPath);
-            XMLTools.SaveListToXMLSerializer<Drone>(DataSource.drones, dronesPath);
-            XMLTools.SaveListToXMLSerializer<DroneCharge>(DataSource.droneCharges, droneChargesPath);
-            XMLTools.SaveListToXMLSerializer<Customer>(DataSource.customers, customersPath);
+            LoadData(ArrayOfDroneCharge, droneChargesPath);
         }
         static class DataSource
         {
             //random static variable
             private static readonly Random rd = new();
-
+            public static int parcelRunId = 100000;
             //lists for items
             internal static List<Station> stations = new();
             internal static List<Drone> drones = new();
@@ -82,19 +94,7 @@ namespace DalApi
             internal static List<DroneCharge> droneCharges = new();
             internal static List<Parcel> parcels = new();
 
-            /// <summary>
-            /// battery consumption values
-            /// </summary>
-            internal class Config
-            {
-                public static int ParcelRunId = 100000;
-                public static double free = 0.15;
-                public static double lightWeight = 0.1;
-                public static double mediumWeight = 0.2;
-                public static double heavyWeight = 0.3;
-                public static double DroneLoadRate = 0.4;
-            }
-
+          
             /// <summary>
             /// randomly initializes first cells of list, 
             /// </summary>
@@ -173,7 +173,7 @@ namespace DalApi
                     //constructor
                     Parcel myParcel = new()
                     {
-                        Id = Config.ParcelRunId++,
+                        Id = parcelRunId++,
                         Weight = (MyEnums.WeightCategory)rd.Next(3),
                         Priority = (MyEnums.PriorityLevel)rd.Next(3),
                         IsActive = true
@@ -187,6 +187,8 @@ namespace DalApi
                         myParcel.SenderId = customers[i].Id;
                         myParcel.Requested = DateTime.Now;
                         myParcel.Scheduled = DateTime.Now;
+                        myParcel.PickedUp = DateTime.MinValue;
+                        myParcel.Delivered = DateTime.MinValue;
                         myParcel.ReceiverId = customers[rd.Next(10)].Id;
                         //verify different customers initialized as sender and receiver
                         while (myParcel.ReceiverId == myParcel.SenderId)
@@ -222,9 +224,9 @@ namespace DalApi
                     }
                     parcels.Add(myParcel);
                 }
-                #endregion
+                
             }
-
+            #endregion
             #region auxiliary arrays
             /// <summary>
             /// initializes customers and statoins according to 
@@ -294,8 +296,11 @@ namespace DalApi
             if (str == "medium") return DalApi.DO.MyEnums.WeightCategory.medium;
             else return DalApi.DO.MyEnums.WeightCategory.heavy;
         }
+
+       
         DalApi.DO.MyEnums.PriorityLevel PriorityLevel(string str)
         {
+            
             if (str == "quickly") return DalApi.DO.MyEnums.PriorityLevel.quickly;
             if (str == "regular") return DalApi.DO.MyEnums.PriorityLevel.regular;
             else return DalApi.DO.MyEnums.PriorityLevel.urgent;

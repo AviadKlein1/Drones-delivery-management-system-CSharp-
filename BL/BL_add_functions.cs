@@ -117,9 +117,9 @@ namespace BlApi
                 temp.DroneId = (myParcel.DroneInParcel == null ? 0 : myParcel.DroneInParcel.Id);
                 temp.Requested = DateTime.Now;
                 temp.IsActive = true;
-                temp.Scheduled = null;
-                temp.PickedUp = null;
-                temp.Delivered = null;
+                temp.Scheduled = DateTime.MinValue;
+                temp.PickedUp = DateTime.MinValue;
+                temp.Delivered = DateTime.MinValue;
                 Console.WriteLine("your parcel ID is: " + temp.Id + "\n");
 
                 //add parcel to list of parcels

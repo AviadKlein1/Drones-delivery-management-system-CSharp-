@@ -56,12 +56,12 @@ namespace PrL
                 if (IsScheduled) DroneInParcelIdBox.Text = $"{droneId}";
                 else DroneInParcelIdBox.Text = empty;
                 DisplayParcel.DataContext = parcel;
-                if (parcel.Scheduled != null && parcel.PickedUp == null)
+                if (parcel.Scheduled != DateTime.MinValue && parcel.Scheduled == DateTime.MinValue)
                 {
                     DeleteParcel.Visibility = Visibility.Collapsed;
                     PickupButton.Visibility = Visibility.Visible;
                 }
-                if (parcel.PickedUp != null && parcel.Delivered == null)
+                if (parcel.PickedUp != DateTime.MinValue && parcel.Delivered == DateTime.MinValue)
                 {
                     DeleteParcel.Visibility = Visibility.Collapsed;
 

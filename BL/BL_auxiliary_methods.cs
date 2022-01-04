@@ -26,7 +26,7 @@ namespace BlApi
             /// <returns></returns>
             internal bool IsAssociatedDrone(int droneId)
             {
-                var dalParcelsList = GetParcelsList(allParcels);
+                var dalParcelsList = GetParcelsList(item => item.IsActive == true);
                 foreach (var element in dalParcelsList)
                 {
                     if(element.ParcelStatus == DalApi.DO.MyEnums.ParcelStatus.scheduled)return true;
@@ -290,7 +290,7 @@ namespace BlApi
             internal List<DalApi.DO.Customer> RecieversList()
             {
                 List<DalApi.DO.Customer> temp = new();
-                DateTime? emptyDateTime = null;
+                DateTime? emptyDateTime = DateTime.MinValue;
                 var dalParcelsList = dal.GetParcelsList();
                 temp.AddRange(
                 //search parcel

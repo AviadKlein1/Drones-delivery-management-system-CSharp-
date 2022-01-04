@@ -84,7 +84,7 @@ namespace BlApi
                 foreach (var item in parcelsList)
                 {
                     ParcelAtCustomer myParcel = new();
-                    DateTime? empty = null;
+                    DateTime? empty = DateTime.MinValue;
                     if (item.SenderId == retTemp.Id)
                     {
                         myParcel.Id = item.Id;
@@ -109,7 +109,7 @@ namespace BlApi
                         myParcel.Weight = item.Weight;
                         myParcel.Priority = item.Priority;
 
-                        if (item.Requested != null && item.Scheduled == null)
+                        if (item.Requested != DateTime.MinValue && item.Scheduled == DateTime.MinValue)
                             myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.requested;
                         if (item.Scheduled != empty && item.PickedUp == empty)
                             myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.scheduled;

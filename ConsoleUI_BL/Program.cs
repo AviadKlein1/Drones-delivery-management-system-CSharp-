@@ -404,7 +404,7 @@ namespace ConsoleUI_BL
                                         break;
                                     //display list of not associated parcels
                                     case 5:
-                                        static bool UnassociatedParcels(DalApi.DO.Parcel p) { return (p.Scheduled == null); }
+                                        static bool UnassociatedParcels(DalApi.DO.Parcel p) { return (p.Scheduled == DateTime.MinValue); }
                                         System.Predicate<DalApi.DO.Parcel> unassociatedParcels = UnassociatedParcels;
                                         var notAssociatedParcelsList = bl.GetParcelsList(unassociatedParcels);
                                         foreach (var element in notAssociatedParcelsList)
