@@ -279,6 +279,7 @@ namespace DalApi
 
         public static void LoadData(XElement root, string path)
         {
+
             try
             {
                 root = XElement.Load(path);
