@@ -1,35 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 using DalApi.DO;
 
-
 namespace DalApi
 {
-    sealed partial class DalXml : IDal
+    internal sealed partial class DalXml : IDal
     {
-        XElement ConfigRoot;
-        string ConfigPath = @"ConfigXml.xml";
+        private XElement ConfigRoot;
+        private readonly string ConfigPath = @"ConfigXml.xml";
+        private XElement ArrayOfStation;
+        private readonly string stationsPath = @"StationsXml.xml";
+        private readonly string dronesPath = @"DronesXml.xml";
+        private XElement ArrayOfCustomer;
+        private readonly string customersPath = @"CustomersXml.xml";
+        private readonly string droneChargesPath = @"DroneChargesXml.xml";
 
-        XElement ArrayOfStation;
-        string stationsPath = @"StationsXml.xml";
+        public XElement ArrayOfParcel1 { get; set; }
 
-        XElement ArrayOfParcel;
-        string parcelsPath = @"ParcelsXml.xml";
+        public string ParcelsPath { get; } = @"ParcelsXml.xml";
+        public XElement ArrayOfDrone1 { get; set; }
+        public XElement ArrayOfDroneCharge1 { get; set; }
 
-        XElement ArrayOfDrone;
-        string dronesPath = @"DronesXml.xml";
-
-        XElement ArrayOfCustomer;
-        string customersPath = @"CustomersXml.xml";
-
-        XElement ArrayOfDroneCharge;
-        string droneChargesPath = @"DroneChargesXml.xml";
-
+        public string DroneChargesPath => droneChargesPath;
 
         public DalXml()
         {
@@ -45,44 +39,41 @@ namespace DalApi
             if (!File.Exists(stationsPath))
             {
                 CreateFiles(ArrayOfStation, "ArrayOfStation", stationsPath);
-                foreach (var item in DataSource.stations)
+                foreach (Station item in DataSource.stations)
                     AddStation(item);
             }
             LoadData(ArrayOfStation, stationsPath);
 
-
-            if (!File.Exists(parcelsPath))
+            if (!File.Exists(ParcelsPath))
             {
-                CreateFiles(ArrayOfParcel, "ArrayOfParcel", parcelsPath);
-                foreach (var item in DataSource.parcels)
+                CreateFiles(ArrayOfParcel1, "ArrayOfParcel", ParcelsPath);
+                foreach (Parcel item in DataSource.parcels)
                     AddParcel(item);
             }
-            LoadData(ArrayOfParcel, parcelsPath);
-
+            LoadData(ArrayOfParcel1, ParcelsPath);
 
             if (!File.Exists(customersPath))
             {
                 CreateFiles(ArrayOfCustomer, "ArrayOfCustomer", customersPath);
-                foreach (var item in DataSource.customers)
+                foreach (Customer item in DataSource.customers)
                     AddCustomer(item);
             }
             LoadData(ArrayOfCustomer, customersPath);
 
-
             if (!File.Exists(dronesPath))
             {
-                CreateFiles(ArrayOfDrone, "ArrayOfDrone", dronesPath);
-                foreach (var item in DataSource.drones)
+                CreateFiles(ArrayOfDrone1, "ArrayOfDrone", dronesPath);
+                foreach (Drone item in DataSource.drones)
                     AddDrone(item);
             }
-            LoadData(ArrayOfDrone, dronesPath);
-
+            LoadData(ArrayOfDrone1, dronesPath);
 
             if (!File.Exists(droneChargesPath))
-                CreateFiles(ArrayOfDroneCharge, "ArrayOfDroneCharge", droneChargesPath);
-            LoadData(ArrayOfDroneCharge, droneChargesPath);
+                CreateFiles(ArrayOfDroneCharge1, "ArrayOfDroneCharge", droneChargesPath);
+            LoadData(ArrayOfDroneCharge1, droneChargesPath);
         }
-        static class DataSource
+
+        private static class DataSource
         {
             //random static variable
             private static readonly Random rd = new();
@@ -93,8 +84,7 @@ namespace DalApi
             internal static List<Customer> customers = new();
             internal static List<DroneCharge> droneCharges = new();
             internal static List<Parcel> parcels = new();
-
-          
+            
             /// <summary>
             /// randomly initializes first cells of list, 
             /// </summary>
@@ -127,7 +117,6 @@ namespace DalApi
                         Model = "drone" + (i + 1),
                         Weight = (MyEnums.WeightCategory)rd.Next(3),
                         IsActive = true
-
                     };
                     drones.Add(myDrone);
                 }
@@ -220,11 +209,9 @@ namespace DalApi
                         myParcel.Scheduled = DateTime.MinValue;
                         myParcel.PickedUp = DateTime.MinValue;
                         myParcel.Delivered = DateTime.MinValue;
-
                     }
                     parcels.Add(myParcel);
-                }
-                
+                }           
             }
             #endregion
             #region auxiliary arrays
@@ -271,7 +258,7 @@ namespace DalApi
             #endregion
         }
 
-        private void CreateFiles(XElement root,string name, string path)
+        private static void CreateFiles(XElement root,string name, string path)
         {
             root = new XElement(name);
             root.Save(path);
@@ -279,7 +266,6 @@ namespace DalApi
 
         public static void LoadData(XElement root, string path)
         {
-
             try
             {
                 root = XElement.Load(path);
@@ -288,23 +274,26 @@ namespace DalApi
             {
                 throw new Exception("File upload problem");
             }
-
         }
 
-        DalApi.DO.MyEnums.WeightCategory WeightCategory(string str)
+        private static MyEnums.WeightCategory WeightCategory(string str)
         {
-            if (str == "light") return DalApi.DO.MyEnums.WeightCategory.light;
-            if (str == "medium") return DalApi.DO.MyEnums.WeightCategory.medium;
-            else return DalApi.DO.MyEnums.WeightCategory.heavy;
+            if (str == "light")
+                return MyEnums.WeightCategory.light;
+            if (str == "medium")
+                return MyEnums.WeightCategory.medium;
+            else
+                return MyEnums.WeightCategory.heavy;
         }
 
-       
-        DalApi.DO.MyEnums.PriorityLevel PriorityLevel(string str)
+        private static MyEnums.PriorityLevel PriorityLevel(string str)
         {
-            
-            if (str == "quickly") return DalApi.DO.MyEnums.PriorityLevel.quickly;
-            if (str == "regular") return DalApi.DO.MyEnums.PriorityLevel.regular;
-            else return DalApi.DO.MyEnums.PriorityLevel.urgent;
+            if (str == "quickly")
+                return MyEnums.PriorityLevel.quickly;
+            if (str == "regular")
+                return MyEnums.PriorityLevel.regular;
+            else
+                return MyEnums.PriorityLevel.urgent;
         }
     }
 }

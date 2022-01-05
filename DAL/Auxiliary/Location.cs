@@ -19,17 +19,17 @@
             }
 
             /// <summary>
-            /// 
+            /// longitude
             /// </summary>
             public double Longitude { get; set; }
 
             /// <summary>
-            /// 
+            /// latitude
             /// </summary>
             public double Latitude { get; set; }
 
             /// <summary>
-            /// 
+            /// to string function
             /// </summary>
             /// <returns></returns>
             public override string ToString()
