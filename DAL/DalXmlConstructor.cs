@@ -13,22 +13,22 @@ namespace DalApi
     sealed partial class DalXml : IDal
     {
         XElement ConfigRoot;
-        string ConfigPath = @"xml\ConfigXml.xml";
+        string ConfigPath = @"ConfigXml.xml";
 
         XElement ArrayOfStation;
-        string stationsPath = @"xml\StationsXml.xml";
+        string stationsPath = @"StationsXml.xml";
 
         XElement ArrayOfParcel;
-        string parcelsPath = @"xml\ParcelsXml.xml";
+        string parcelsPath = @"ParcelsXml.xml";
 
         XElement ArrayOfDrone;
-        string dronesPath = @"xml\DronesXml.xml";
+        string dronesPath = @"DronesXml.xml";
 
         XElement ArrayOfCustomer;
-        string customersPath = @"xml\CustomersXml.xml";
+        string customersPath = @"CustomersXml.xml";
 
         XElement ArrayOfDroneCharge;
-        string droneChargesPath = @"xml\DroneChargesXml.xml";
+        string droneChargesPath = @"DroneChargesXml.xml";
 
 
         public DalXml()
