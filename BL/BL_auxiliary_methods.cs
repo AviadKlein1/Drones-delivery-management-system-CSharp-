@@ -26,10 +26,10 @@ namespace BlApi
             /// <returns></returns>
             internal bool IsAssociatedDrone(int droneId)
             {
-                var dalParcelsList = GetParcelsList(item => item.IsActive == true);
+                var dalParcelsList = dal.GetParcelsList();
                 foreach (var element in dalParcelsList)
                 {
-                    if(element.ParcelStatus == DalApi.DO.MyEnums.ParcelStatus.scheduled)return true;
+                    if(element.DroneId == droneId)return true;
                 }
 
                 return false;
@@ -45,7 +45,7 @@ namespace BlApi
                 var dalParcelsList = dal.GetParcelsList();
                 foreach (var element in dalParcelsList)
                 {
-                    return element.Id;
+                    if (element.DroneId == droneId) return element.Id;
                 }
                 return 0;
             }

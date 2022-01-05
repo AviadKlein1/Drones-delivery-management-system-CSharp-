@@ -48,17 +48,17 @@
             <TextBox  x:Name="DroneInParcelIdBox"   HorizontalAlignment="Center" Width="150" IsEnabled="False" />
 
             <TextBlock x:Name="RequestedBlock" Text="Requested: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
-            <TextBox  x:Name="RequestedBox"  Text="{Binding  Path = Requested}"   HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            <TextBox  x:Name="RequestedBox"     HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
 
             <TextBlock x:Name="ScheduledBlock" Text="Scheduled: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
-            <TextBox  x:Name="ScheduledBox" Text="{Binding  Path = Scheduled}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            <TextBox  x:Name="ScheduledBox"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
 
             <TextBlock x:Name="PickedUpBlock" Text="PickedUp: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
-            <TextBox  x:Name="PickedUpBox" Text="{Binding  Path = PickedUp}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            <TextBox  x:Name="PickedUpBox"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
             <Button x:Name="PickupButton" Content="Pick up" HorizontalAlignment="Center" Width="150" Click="PickupButton_Click"  Visibility="Collapsed"/>
 
             <TextBlock x:Name="DeliveredBlock" Text="Delivered: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
-            <TextBox  x:Name="DeliveredBox" Text="{Binding  Path = Delivered}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            <TextBox  x:Name="DeliveredBox" HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
             <Button x:Name="DeliverButton" Content="Deilver" HorizontalAlignment="Center" Width="150" Click="DeliverButton_Click" Visibility="Collapsed"/>
 
         </StackPanel>

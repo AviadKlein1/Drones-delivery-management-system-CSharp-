@@ -56,8 +56,8 @@ namespace BlApi
             public override string ToString()
             {
                 return $"ID: {Id}\nWeight Category: {Weight}\nPriority: {Priority}" +
-                    $"\nrequested: {Requested}\nscheduled: {Scheduled}" +
-                    $"\npicked up: {PickedUp}\ndelivered: {Delivered}\n";
+                    $"\nrequested: {Requested}\nscheduled: {(Scheduled != DateTime.MinValue ? Scheduled : "---")}" +
+                    $"\npicked up: {(PickedUp != DateTime.MinValue ? Scheduled : "---")}\ndelivered: {(Delivered != DateTime.MinValue ? Scheduled : "---")}\n";
             }
         }
 

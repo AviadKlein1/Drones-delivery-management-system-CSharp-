@@ -141,11 +141,11 @@ namespace BlApi
                     }
                     myParcel.SenderName = senderName;
                     myParcel.ReceiverName = receiverName;
-                    if (element.Scheduled != DateTime.MinValue && element.PickedUp == DateTime.MinValue)
+                    if (element.Scheduled > DateTime.MinValue && element.PickedUp == DateTime.MinValue)
                         myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.scheduled;
-                    if (element.Delivered == DateTime.MinValue && element.PickedUp != DateTime.MinValue)
+                    if (element.Delivered == DateTime.MinValue && element.PickedUp > DateTime.MinValue)
                         myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.pickedUp;
-                    if(element.Delivered != DateTime.MinValue)
+                    if(element.Delivered > DateTime.MinValue)
                         myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.delivered;
 
                     tmpParcel.Add(myParcel);

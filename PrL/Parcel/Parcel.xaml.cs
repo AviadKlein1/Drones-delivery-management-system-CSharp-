@@ -54,20 +54,45 @@ namespace PrL
                 SenderNameBox.Text = bl.DisplayCustomer(parcel.Receiver.Id).Name;
                 DisplayParcel.DataContext = parcel;
                 if (IsScheduled) DroneInParcelIdBox.Text = $"{droneId}";
-                else DroneInParcelIdBox.Text = empty;
-                DisplayParcel.DataContext = parcel;
-                if (parcel.Scheduled != DateTime.MinValue && parcel.Scheduled == DateTime.MinValue)
+                else
                 {
+                    RequestedBox.Text = parcel.Requested.ToString();
+                    DroneInParcelIdBox.Text = empty;
+                    ScheduledBox.Text = "---";
+                    PickedUpBox.Text = "---";
+                    DeliveredBox.Text = "---";
+                }
+                DisplayParcel.DataContext = parcel;
+                if (parcel.Scheduled != DateTime.MinValue && parcel.PickedUp == DateTime.MinValue)
+                {
+                    RequestedBox.Text = parcel.Requested.ToString();
+                    ScheduledBox.Text = parcel.Scheduled.ToString();
+                    PickedUpBox.Text = "---";
+                    DeliveredBox.Text= "---";
                     DeleteParcel.Visibility = Visibility.Collapsed;
                     PickupButton.Visibility = Visibility.Visible;
                 }
                 if (parcel.PickedUp != DateTime.MinValue && parcel.Delivered == DateTime.MinValue)
                 {
+                    RequestedBox.Text = parcel.Requested.ToString();
+                    ScheduledBox.Text = parcel.Scheduled.ToString();
+                    PickedUpBox.Text = parcel.PickedUp.ToString();
+                    DeliveredBox.Text = "---";
                     DeleteParcel.Visibility = Visibility.Collapsed;
-
                     PickupButton.Visibility = Visibility.Collapsed;
                     DeliverButton.Visibility = Visibility.Visible;
                 }
+                if (parcel.Delivered != DateTime.MinValue)
+                {
+                    RequestedBox.Text = parcel.Requested.ToString();
+                    ScheduledBox.Text = parcel.Scheduled.ToString();
+                    PickedUpBox.Text = parcel.PickedUp.ToString();
+                    DeliveredBox.Text = parcel.Delivered.ToString();
+                    DeleteParcel.Visibility = Visibility.Collapsed;
+                    PickupButton.Visibility = Visibility.Collapsed;
+                    DeliverButton.Visibility = Visibility.Collapsed;
+                }
+
             }
             catch (Exception ex)
             {

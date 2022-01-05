@@ -100,10 +100,10 @@ namespace DalApi
             XElement DroneId = new XElement("DroneId", parcel.DroneId);
             XElement Weight = new XElement("Weight", parcel.Weight);
             XElement Priority = new XElement("Priority", parcel.Priority);
-            XElement Requested = new XElement("Requested", (parcel.Requested == DateTime.MinValue ? DateTime.MinValue : parcel.Requested));
-            XElement Scheduled = new XElement("Scheduled", (parcel.Scheduled == DateTime.MinValue ? DateTime.MinValue : parcel.Scheduled));
-            XElement PickedUp = new XElement("PickedUp", (parcel.PickedUp == DateTime.MinValue ? DateTime.MinValue : parcel.PickedUp));
-            XElement Delivered = new XElement("Delivered", (parcel.Delivered == DateTime.MinValue ? DateTime.MinValue : parcel.Delivered));
+            XElement Requested = new XElement("Requested", parcel.Requested);
+            XElement Scheduled = new XElement("Scheduled", parcel.Scheduled);
+            XElement PickedUp = new XElement("PickedUp", parcel.PickedUp);
+            XElement Delivered = new XElement("Delivered", parcel.Delivered);
 
             ArrayOfParcel.Add(new XElement("Parcel", Id, SenderId, ReceiverId, DroneId,
                Weight, Priority, Requested, Scheduled, PickedUp, Delivered, IsActive));
@@ -442,7 +442,7 @@ namespace DalApi
                                            where int.Parse(item.Element("Id").Value) == customerId
                                         select item).FirstOrDefault();
             customerElement.Element("Name").Value = newName;
-            customerElement.Element("Phone").Value = newPhone;
+            customerElement.Element("PhoneNumber").Value = newPhone;
             ArrayOfDroneCharge.Save(droneChargesPath);
 
         }
@@ -480,6 +480,7 @@ namespace DalApi
                                       select item).FirstOrDefault();
 
             parcelElement.Element("DroneId").Value = droneId.ToString();
+            parcelElement.Element("Scheduled").Value = DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm:ss.fffffffZ");
             ArrayOfParcel.Save(parcelsPath);
         }
 
@@ -489,8 +490,7 @@ namespace DalApi
             XElement parcelElement = (from item in ArrayOfParcel.Elements()
                                       where int.Parse(item.Element("Id").Value) == parcelId
                                       select item).FirstOrDefault();
-
-            parcelElement.Element("PickedUp").Value = DateTime.Now.ToString();
+            parcelElement.Element("PickedUp").Value = DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm:ss.fffffffZ");
             ArrayOfParcel.Save(parcelsPath);
         }
 
@@ -501,7 +501,7 @@ namespace DalApi
                                       where int.Parse(item.Element("Id").Value) == parcelId
                                       select item).FirstOrDefault();
 
-            parcelElement.Element("Delivered").Value = DateTime.Now.ToString();
+            parcelElement.Element("Delivered").Value = DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm:ss.fffffffZ");
             ArrayOfParcel.Save(parcelsPath);
         }
         public void UpdatedroneIdInParcel(int ParcelId, int droneId)
@@ -519,7 +519,7 @@ namespace DalApi
         {
             ArrayOfDroneCharge = XElement.Load(droneChargesPath);
             XElement droneChargeElement = (from item in ArrayOfDroneCharge.Elements()
-                                     where int.Parse(item.Element("Id").Value) == droneId
+                                     where int.Parse(item.Element("DroneId").Value) == droneId
                                      select item).FirstOrDefault();
             droneChargeElement.Element("IsActive").Value = "false";
             ArrayOfDroneCharge.Save(droneChargesPath);

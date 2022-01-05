@@ -19,11 +19,9 @@ namespace PrL
         CollectionView view;
         private void Timer_Click(object sender, EventArgs e)
         {
-            //ParcelsListView.ItemsSource = bl.GetParcelsList(allParcels);
-            ParcelsListView.Items.Refresh();
+            ParcelsListView.ItemsSource = bl.GetParcelsList(item=> item.IsActive == true);
         }
-        //static bool AllParcels(DalApi.DO.Parcel p) { return true; }
-        //System.Predicate<DalApi.DO.Parcel> allParcels = AllParcels;
+        
         public ParcelsList(IBl mainBl)
         {
             bl = (BlApi.BO.BL)mainBl;

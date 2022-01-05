@@ -65,27 +65,28 @@ namespace PrL
                 if (item.UserName == name)
                     item.UserName = (string)UserNameBox.Text;
             }
-            customer.Name = (string)UserNameBox.Text;
-            customer.PhoneNumber = (string)UserPhoneBox.Text;
-            bl.UpdateCustomer(customer.Id, customer.Name, customer.PhoneNumber);
-            customer = bl.DisplayCustomer(Id);
-            name = customer.Name;
-            UserParcelRecievedComboBox.ItemsSource = customer.ParcelsRecieved.Select(item => item.Id);
-            UserParcelRecievedComboBox.Items.ToString();
-            UserParcelSentComboBox.ItemsSource = customer.ParcelsSent.Select(item => item.Id);
-            UserParcelSentComboBox.Items.ToString();
-            DisplayUserCustomer.DataContext = customer;
+            bl.UpdateCustomer(customer.Id, (string)UserNameBox.Text, (string)UserPhoneBox.Text);
+            
             MessageBox.Show("success!");
+            //customer = bl.DisplayCustomer(customer.Id);
+            //name = customer.Name;
+            //UserParcelRecievedComboBox.ItemsSource = customer.ParcelsRecieved.Select(item => item.Id);
+            //UserParcelRecievedComboBox.Items.ToString();
+            //UserParcelSentComboBox.ItemsSource = customer.ParcelsSent.Select(item => item.Id);
+            //UserParcelSentComboBox.Items.ToString();
+            //DisplayUserCustomer.DataContext = customer;
         }
 
         private void UserParcelRecievedComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if (UserParcelRecievedComboBox.SelectedItem == null) return;
             MessageBox.Show(bl.DisplayParcel((int)UserParcelRecievedComboBox.SelectedItem).ToString());
 
         }
 
         private void UserParcelSentComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if (UserParcelSentComboBox.SelectedItem == null) return;
             MessageBox.Show(bl.DisplayParcel((int)UserParcelSentComboBox.SelectedItem).ToString());
         }
     }

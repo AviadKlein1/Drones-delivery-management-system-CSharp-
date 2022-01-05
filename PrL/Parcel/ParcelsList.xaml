@@ -28,7 +28,7 @@
                         <GridViewColumn Header="Receiver name" DisplayMemberBinding="{Binding ReceiverName}" />
                         <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Weight}" />
                         <GridViewColumn Header="Priority" DisplayMemberBinding="{Binding Priority}" />
-                        <GridViewColumn Header="Parcel status" DisplayMemberBinding="{Binding ParcelStatus}" />
+                        <GridViewColumn x:Name="Status" Header="Parcel status" DisplayMemberBinding="{Binding ParcelStatus}" />
                     </GridView>
                 </ListView.View>
             </ListView>

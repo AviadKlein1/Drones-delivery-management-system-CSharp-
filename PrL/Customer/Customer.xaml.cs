@@ -106,7 +106,7 @@ namespace PrL
             try
             {
                 var v = (int)ParcelSentComboBox.SelectedItem;
-
+                if (v == null) return;
             }
 
             catch (Exception ex)

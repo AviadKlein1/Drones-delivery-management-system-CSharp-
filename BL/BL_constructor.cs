@@ -52,12 +52,10 @@ namespace BlApi
                     //search for an associated drone
                     for (int i = 0; i < dronesList.Count; i++)
                     {
+                        DroneToList Dtemp = dronesList[i];
                         if (IsAssociatedDrone(dronesList[i].Id))
-                        {
-                            DroneToList Dtemp = dronesList[i];
                             Dtemp.DeliveredParcelId = AssociatedParcelId(dronesList[i].Id);
-                            dronesList[i] = Dtemp;
-                        }
+                        dronesList[i] = Dtemp;
                     }
 
                     //
