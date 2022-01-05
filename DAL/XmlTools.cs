@@ -14,14 +14,6 @@ namespace DalApi
     /// </summary>
     public class XMLTools
     {
-        static string dir = @"xml/";
-        static XMLTools()
-        {
-            if (!Directory.Exists(dir))
-                Directory.CreateDirectory(dir);
-        }
-
-
         #region SaveLoadWithXMLSerializer
         /// <summary>
         /// saves the list in the file with XMLSerializer
