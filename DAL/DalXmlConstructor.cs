@@ -40,7 +40,7 @@ namespace DalApi
                 CreateFiles(ConfigRoot, "ConfigRoot", ConfigPath);
                 AddConfig();
             }
-            //LoadData(ConfigRoot, ConfigPath);
+            LoadData(ConfigRoot, ConfigPath);
 
             if (!File.Exists(stationsPath))
             {

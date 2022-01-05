@@ -32,7 +32,7 @@ namespace DalApi
             XElement heavyWeight = new XElement("heavyWeight", 0.3);
             XElement DroneLoadRate = new XElement("DroneLoadRate", 0.4);
 
-            ConfigRoot.Add(new XElement("ConfigRoot", ParcelRunId, free, lightWeight, mediumWeight, heavyWeight, DroneLoadRate));
+            ConfigRoot.Add( ParcelRunId, free, lightWeight, mediumWeight, heavyWeight, DroneLoadRate);
             ConfigRoot.Save(ConfigPath);
         }
         public void AddStation(Station station)
@@ -365,7 +365,7 @@ namespace DalApi
         #endregion
         public int ParcelRunId()
         {
-            XElement parcelRunIdX = ConfigRoot.Element("ConfigRoot").Element("ParcelRunId");
+            XElement parcelRunIdX = ConfigRoot.Element("ParcelRunId");
             var parcelRunId = int.Parse(parcelRunIdX.Value);
             parcelRunIdX.Value = (parcelRunId + 1).ToString();
             return parcelRunId;
@@ -500,8 +500,9 @@ namespace DalApi
             XElement parcelElement = (from item in ArrayOfParcel.Elements()
                                       where int.Parse(item.Element("Id").Value) == parcelId
                                       select item).FirstOrDefault();
-
+            int dId = 0;
             parcelElement.Element("Delivered").Value = DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm:ss.fffffffZ");
+            parcelElement.Element("DroneId").Value = dId.ToString();
             ArrayOfParcel.Save(parcelsPath);
         }
         public void UpdatedroneIdInParcel(int ParcelId, int droneId)
