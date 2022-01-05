@@ -13,6 +13,7 @@ namespace DalApi
     sealed partial class DalXml : IDal
     {
         XElement ConfigRoot;
+
         string ConfigPath = @"ConfigXml.xml";
 
         XElement ArrayOfStation;
