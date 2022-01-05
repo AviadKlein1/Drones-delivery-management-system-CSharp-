@@ -643,6 +643,7 @@ namespace DalApi
         public void PickUpParcel(int droneId, int parcelId)
         {
             ArrayOfParcel1 = XElement.Load(ParcelsPath);
+
             XElement parcelElement = (from item in ArrayOfParcel1.Elements()
                                       where int.Parse(item.Element("Id").Value) == parcelId
                                       select item).FirstOrDefault();
