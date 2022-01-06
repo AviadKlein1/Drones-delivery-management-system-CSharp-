@@ -66,7 +66,7 @@ namespace DalApi
 
             ArrayOfDrone1.Add(new XElement("Drone", Id, Model, Weight, IsActive));
             ArrayOfDrone1.Save(dronesPath);
-            AddDroneCharge(drone.Id, firstChargeStationId);
+            AddDroneCharge(drone.Id, firstChargeStationId, DateTime.Now);
             DecreaseChargeSlot(firstChargeStationId);
         }
 
@@ -133,14 +133,15 @@ namespace DalApi
         /// </summary>
         /// <param name="_droneId"></param>
         /// <param name="_StationId"></param>
-        public void AddDroneCharge(int _droneId, int _StationId)
+        public void AddDroneCharge(int _droneId, int _StationId, DateTime time)
         {
             ArrayOfDroneCharge1 = XElement.Load(DroneChargesPath);
             XElement StationId = new("StationId", _StationId);
             XElement DroneId = new("DroneId", _droneId);
             XElement IsActive = new("IsActive", true);
+            XElement Time = new("Time", time);
 
-            ArrayOfDroneCharge1.Add(new XElement("DroneCharge", StationId, DroneId, IsActive));
+            ArrayOfDroneCharge1.Add(new XElement("DroneCharge", StationId, DroneId, Time, IsActive));
             ArrayOfDroneCharge1.Save(DroneChargesPath);
         }
         #endregion
@@ -356,7 +357,8 @@ namespace DalApi
                                 {
                                     DroneId = int.Parse(item.Element("DroneId").Value),
                                     StationId = int.Parse(item.Element("StationId").Value),
-                                    IsActive = Convert.ToBoolean(item.Element("IsActive").Value)
+                                    IsActive = Convert.ToBoolean(item.Element("IsActive").Value),
+                                    StartChargeTime = (DateTime)item.Element("Time")
                                 }
                           ).ToList();
             }
@@ -690,14 +692,17 @@ namespace DalApi
         /// release drone from charge
         /// </summary>
         /// <param name="droneId"></param>
-        public void EndDroneCharge(int droneId)
+        public double EndDroneCharge(int droneId, DateTime endTime)
         {
             ArrayOfDroneCharge1 = XElement.Load(DroneChargesPath);
             XElement droneChargeElement = (from item in ArrayOfDroneCharge1.Elements()
                                      where int.Parse(item.Element("DroneId").Value) == droneId
                                      select item).FirstOrDefault();
             droneChargeElement.Element("IsActive").Value = "false";
+            var startTime = (DateTime)droneChargeElement.Element("Time");
+            var chargeTime =(endTime - startTime).TotalSeconds;
             ArrayOfDroneCharge1.Save(DroneChargesPath);
+            return chargeTime;
         }
     }
 }

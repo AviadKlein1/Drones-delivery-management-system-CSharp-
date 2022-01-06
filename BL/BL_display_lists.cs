@@ -63,7 +63,7 @@ namespace BlApi
                                               select (item, Ditem))
                 {
                     tempBattery = Ditem.Battery;
-                    temp.Add(new DroneInCharge(item.DroneId, tempBattery));
+                    temp.Add(new DroneInCharge(item.DroneId, tempBattery,item.StartChargeTime));
                 }
 
                 return temp;

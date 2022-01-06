@@ -120,7 +120,7 @@ namespace BlApi
         /// <param name="droneId"></param>
         /// <param name="chargeTime"></param>
         /// <returns></returns>
-        public bool ReleaseDroneFromCharge(int droneId, int chargeTime);
+        public bool ReleaseDroneFromCharge(int droneId);
 
         /// <summary>
         /// associate drone with parcel. if succsses return true

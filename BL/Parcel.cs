@@ -92,7 +92,7 @@ namespace BlApi
             public int Id { get; set; }
             public DalApi.DO.MyEnums.WeightCategory Weight { get; set; }
             public DalApi.DO.MyEnums.PriorityLevel Priority { get; set; }
-            public bool BoolParcelStatus { get; set; }
+            public bool IsPickedUp { get; set; }
             public CustomerInParcel Sender { get; set; }
             public CustomerInParcel Receiver { get; set; }
             public Location PickUpLocation { get; set; }
@@ -101,8 +101,8 @@ namespace BlApi
 
             public override string ToString()
             {
-                return $"ID: {Id}\n sender: {Sender}\n reciever: {Receiver}\n bool Parcel Status: {BoolParcelStatus}" +
-                    $" Weight Category: {Weight}\n Priority: {Priority}\n distance: {Distance}\n" +
+                return $"ID: {Id}\n sender:\n {Sender} reciever:\n {Receiver} Is picked up?: {IsPickedUp}\n" +
+                    $" Weight Category: {Weight}\n Priority Category: {Priority}\n distance of all shipment: {Distance}\n" +
                     $" pick Up Location: {PickUpLocation}\n target Location: {TargetLocation}\n";
             }
         }

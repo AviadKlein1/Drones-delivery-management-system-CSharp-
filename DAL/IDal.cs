@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DalApi
 {
@@ -37,8 +38,8 @@ namespace DalApi
             /// add drone to drone charge list
             /// </summary>
             ///
-            public void AddDroneCharge(int droneId, int StationId);
-            public void EndDroneCharge(int droneId);
+            public void AddDroneCharge(int droneId, int StationId, DateTime time);
+            public double EndDroneCharge(int droneId, DateTime endTime);
 
             public void DeleteStation(int myId);
             public void DeleteParcel(int myId);

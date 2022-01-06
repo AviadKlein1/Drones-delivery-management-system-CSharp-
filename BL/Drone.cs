@@ -1,4 +1,6 @@
-﻿namespace BlApi
+﻿using System;
+
+namespace BlApi
 {
     namespace BO
     {
@@ -46,13 +48,16 @@
         /// </summary>
         public class DroneInCharge
         {
-            public DroneInCharge(int Id, int Battery)
+            public DroneInCharge(int Id, int Battery, DateTime time)
             {
                 this.Id = Id;
                 this.Battery = Battery;
+                this.StartChargeTime = time;
             }
             public int Id { get; set; }
             public int Battery { get; set; }
+            public DateTime StartChargeTime { get; set; }
+
             public override string ToString()
             {
                 return $"ID: {Id}\n Battery: {Battery}\n";

@@ -69,9 +69,8 @@
 
             <StackPanel x:Name="EndChargePanel" Visibility="Collapsed">
                 <Button x:Name="EndCharge" BorderBrush="Bisque" BorderThickness="2" Width="224" Click="EndCharge_Click">
-                    <TextBlock Text="EndCharge - insert charge time:" TextWrapping="Wrap" Cursor="Hand" />
+                    <TextBlock Text="EndCharge" TextWrapping="Wrap" Cursor="Hand" />
                 </Button>
-                <TextBox x:Name="ChrgeTimeBox" HorizontalAlignment="Center" Width="98"/>
             </StackPanel>
 
             <StackPanel x:Name="ScheduleParcelToDronePanel" Visibility="Collapsed">

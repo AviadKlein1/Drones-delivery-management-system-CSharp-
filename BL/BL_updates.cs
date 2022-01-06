@@ -143,7 +143,7 @@ namespace BlApi
                             found = true;
                         }
 
-                        dal.AddDroneCharge(droneId, tempStation.Id);
+                        dal.AddDroneCharge(droneId, tempStation.Id, DateTime.Now);
                     }
                 }
 
@@ -156,7 +156,7 @@ namespace BlApi
             /// <param name="droneId"></param>
             /// <param name="chargeTime"></param>
             /// <returns></returns>
-            public bool ReleaseDroneFromCharge(int droneId, int chargeTime)
+            public bool ReleaseDroneFromCharge(int droneId)
             {
                 bool found = false;
                 var v = dronesList;
@@ -175,6 +175,7 @@ namespace BlApi
                     else
                     {
                         DalApi.DO.Location itemLocation = new(item.Location.Latitude, item.Location.Longitude);
+                        var chargeTime = dal.EndDroneCharge(droneId, DateTime.Now);
 
                         var tempStation = NearestStation(itemLocation);
                         dal.IncreaseChargeSlot(tempStation.Id);
@@ -191,7 +192,6 @@ namespace BlApi
                     }
                 }
 
-                dal.EndDroneCharge(droneId);
                 return found;
             }
 
@@ -222,7 +222,6 @@ namespace BlApi
                             found = true;
                         drone.Status = MyEnums.DroneStatus.delivery;
                         drone.DeliveredParcelId = newParcelId;
-
                         dal.ScheduleParcelToDrone(newParcelId, droneId);
                     }
                 }

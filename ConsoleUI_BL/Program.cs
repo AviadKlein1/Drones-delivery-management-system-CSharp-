@@ -216,7 +216,7 @@ namespace ConsoleUI_BL
                                         var flag5 = false;
                                         try
                                         {
-                                            flag5 = bl.ReleaseDroneFromCharge(id, cin1);
+                                            flag5 = bl.ReleaseDroneFromCharge(id);
                                         }
                                         catch (Exception ex)
                                         {

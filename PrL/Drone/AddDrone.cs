@@ -111,8 +111,7 @@ namespace PrL
 
         private void EndCharge_Click(object sender, RoutedEventArgs e)
         {
-            int chargeTime = int.Parse(ChrgeTimeBox.Text);
-            if (bl.ReleaseDroneFromCharge(droneToList.Id, chargeTime)) MessageBox.Show("success!");
+            if (bl.ReleaseDroneFromCharge(droneToList.Id)) MessageBox.Show("success!");
             else MessageBox.Show("failed!");
             Close();
 
@@ -155,7 +154,7 @@ namespace PrL
             
             try
             {
-                MessageBox.Show(bl.DisplayParcel(v).ToString());
+                MessageBox.Show(bl.DisplayDeliveredParcel(droneToList.Id).ToString());
             }
             catch(Exception ex)
             {

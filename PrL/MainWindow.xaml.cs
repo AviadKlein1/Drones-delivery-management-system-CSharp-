@@ -292,12 +292,10 @@ namespace PrL
                                     case 5:
                                         Console.WriteLine("enter drone id:\n");
                                         int.TryParse(Console.ReadLine(), out id);
-                                        Console.WriteLine("enter required charging duration (in minutes):\n");
-                                        int.TryParse(Console.ReadLine(), out cin1);
                                         var flag5 = false;
                                         try
                                         {
-                                            flag5 = bl.ReleaseDroneFromCharge(id, cin1);
+                                            flag5 = bl.ReleaseDroneFromCharge(id);
                                         }
                                         catch (Exception ex)
                                         {

@@ -115,13 +115,13 @@ namespace BlApi
                                 newDrone.Location = new Location(dalStationsList.ElementAt(index).Location);
                                 var stationId = dalStationsList.ElementAt(index).Id;
                                 dal.DecreaseChargeSlot(stationId);
-                                dal.AddDroneCharge(newDrone.Id, stationId);
+                                dal.AddDroneCharge(newDrone.Id, stationId, DateTime.Now);
                                 newDrone.Battery = rd.Next(0, 21);
                             }
                             //available drone
                             else
                             {
-                                var customers = RecieversList();
+                                var customers = (List<DalApi.DO.Customer>)dal.GetCustomersList();
                                 int index;
                                 if (customers.Count > 0)
                                 {

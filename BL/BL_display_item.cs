@@ -36,7 +36,8 @@ namespace BlApi
                                       where item.Status == MyEnums.DroneStatus.maintenance
                                       where item.Location.Latitude == retTemp.Location.Latitude &&
                                             item.Location.Longitude == retTemp.Location.Longitude
-                                      select new DroneInCharge(item.Id, item.Battery)).ToList();
+                                      select new DroneInCharge(item.Id, item.Battery,
+                                      dal.GetDroneCharges().First(itemDC=> itemDC.DroneId == item.Id).StartChargeTime)).ToList();
                 retTemp.DronesInCharge = dronesInCharge;
                 return retTemp;
             }
@@ -44,6 +45,7 @@ namespace BlApi
             //display drone
             public Drone DisplayDrone(int droneId)
             {
+                var DelPar = new ParcelInDelivery();
                 bool exist = false;
                 Drone retDrone = new();
                 foreach (var element in from element in dronesList
@@ -58,6 +60,9 @@ namespace BlApi
                     retDrone.Model = element.Model;
                     retDrone.Battery = element.Battery;
                     retDrone.Location = element.Location;
+                    DelPar.Id =AssociatedParcelId(element.Id);
+                    retDrone.DeliveredParcel = DelPar;
+
                 }
 
                 if (exist == false)
@@ -99,7 +104,7 @@ namespace BlApi
                             myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.pickedUp;
                         if (item.Delivered != empty)
                             myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.delivered;
-                       
+
                         myParcel.TheSecondSide = TheOtherSide(myParcel.Id, retTemp.Id);
                         retTemp.ParcelsSent.Add(myParcel);
                     }
@@ -138,8 +143,10 @@ namespace BlApi
                     temp.DroneInParcel = new DroneInParcel(v.DroneId == 0 ? 0 : v.DroneId);
 
                     temp.Priority = v.Priority;
-                    temp.Sender = new CustomerInParcel(v.SenderId != 0? v.SenderId : 0);
-                    temp.Receiver = new CustomerInParcel(v.ReceiverId != 0 ? v.ReceiverId : 0); ;
+                    temp.Sender = new CustomerInParcel(v.SenderId != 0 ? v.SenderId: 0);
+                    temp.Sender.Name = NameOfCustomer(v.SenderId);
+                    temp.Receiver = new CustomerInParcel(v.ReceiverId != 0 ? v.ReceiverId : 0);
+                    temp.Receiver.Name = NameOfCustomer(v.ReceiverId);
                     temp.Requested = v.Requested;
                     temp.Scheduled = v.Scheduled;
                     temp.PickedUp = v.PickedUp;
@@ -151,6 +158,27 @@ namespace BlApi
                 {
                     throw new Exception(ex.Message);
                 }
+                return temp;
+            }
+            public ParcelInDelivery DisplayDeliveredParcel(int droneId)
+            {
+                var drone = DisplayDrone(droneId);
+                var droneLocation = new DalApi.DO.Location(drone.Location.Latitude, drone.Location.Longitude);
+                if (drone.DeliveredParcel.Id == 0) throw new WrongIdException(droneId, "no parcel delivered at this drone");
+                var parcel = DisplayParcel(drone.DeliveredParcel.Id);
+                ParcelInDelivery temp = new();
+                temp.Id = drone.DeliveredParcel.Id;
+                temp.Priority = parcel.Priority;
+                temp.Sender = parcel.Sender;
+                temp.Receiver = parcel.Receiver;
+                temp.Weight = parcel.Weight;
+                temp.IsPickedUp = parcel.PickedUp > DateTime.MinValue ? false : true;
+                temp.PickUpLocation = new Location(SenderLocation(temp.Id));
+                temp.TargetLocation = new Location(ReceiverLocation(temp.Id));
+
+                temp.Distance = dal.GetDistance(droneLocation, SenderLocation(temp.Id)) +
+                    dal.GetDistance(SenderLocation(temp.Id), ReceiverLocation(temp.Id)) +
+                    dal.GetDistance(ReceiverLocation(temp.Id), NearestAvailableChargeSlot(ReceiverLocation(temp.Id)).Location);
                 return temp;
             }
         }

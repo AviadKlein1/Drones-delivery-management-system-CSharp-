@@ -260,7 +260,14 @@ namespace BlApi
 
                 return tempStation;
             }
-
+            internal string NameOfCustomer(int customerId)
+            {
+                string tempName ="";
+                var c = GetCustomersList(allCustomers);
+                foreach (var item in c)
+                    if (item.Id == customerId) tempName = item.Name;
+                return tempName;
+            }
             /// <summary>
             /// finds the nearest available charge slot
             /// </summary>

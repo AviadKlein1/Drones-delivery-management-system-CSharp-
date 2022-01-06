@@ -1,4 +1,10 @@
-﻿namespace DalApi
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml.Linq;
+using DalApi.DO;
+
+namespace DalApi
 {
     namespace DO
     {
@@ -12,10 +18,11 @@
             /// </summary>
             /// <param name="myDroneId"></param>
             /// <param name="myStationId"></param>
-            public DroneCharge(int myDroneId, int myStationId)
+            public DroneCharge(int myDroneId, int myStationId, DateTime time)
             {
                 DroneId = myDroneId;
                 StationId = myStationId;
+                StartChargeTime = time;
                 IsActive = true;
             }
 
@@ -23,7 +30,8 @@
             /// is deleted
             /// </summary>
             public bool IsActive { get; set; }
-
+            
+            public DateTime StartChargeTime { get; set; }
             /// <summary>
             /// drone's identification
             /// </summary>
