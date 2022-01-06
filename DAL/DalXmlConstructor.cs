@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
 using DalApi.DO;
+using System.Runtime.CompilerServices;
 
 namespace DalApi
 {
@@ -24,6 +25,8 @@ namespace DalApi
         public XElement ArrayOfDroneCharge1 { get; set; }
 
         public string DroneChargesPath => droneChargesPath;
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
 
         public DalXml()
         {
@@ -264,7 +267,7 @@ namespace DalApi
             root.Save(path);
         }
 
-        public static void LoadData(XElement root, string path)
+        internal static void LoadData(XElement root, string path)
         {
             try
             {

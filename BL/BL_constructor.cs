@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using DalApi.DO;
 using DalApi;
+using System.Runtime.CompilerServices;
+
 namespace BlApi
 {
     namespace BO
@@ -13,9 +15,10 @@ namespace BlApi
         public sealed partial class BL : IBl
         {
             private static readonly IBl instance = new BL();
+            [MethodImpl(MethodImplOptions.Synchronized)]
             public static IBl GetInstance() { return instance; }
 
-            private readonly IDal dal;
+            internal readonly IDal dal;
             private readonly Random rd = new();
             private readonly List<DroneToList> dronesList = new();
 

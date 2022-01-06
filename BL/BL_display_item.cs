@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Runtime.CompilerServices;
 namespace BlApi
 {
     namespace BO
@@ -12,37 +12,43 @@ namespace BlApi
         public partial class BL : IBl
         {
             //display station
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
             public Station DisplayStation(int stationId)
             {
-                DalApi.DO.Station temp = new();
-                try
+                lock (dal)
                 {
-                    temp = dal.GetStation(stationId);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-                //return new Station(temp);
-                Station retTemp = new(temp);
-                retTemp.NumOfChargeSlots = temp.NumOfChargeSlots;
-                retTemp.NumOfAvailableChargeSlots = temp.NumOfAvailableChargeSlots;
-                retTemp.Id = temp.Id;
-                retTemp.Name = temp.Name;
-                retTemp.Location = new Location(temp.Location);
+                    DalApi.DO.Station temp = new();
+                    try
+                    {
+                        temp = dal.GetStation(stationId);
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                    //return new Station(temp);
+                    Station retTemp = new(temp);
+                    retTemp.NumOfChargeSlots = temp.NumOfChargeSlots;
+                    retTemp.NumOfAvailableChargeSlots = temp.NumOfAvailableChargeSlots;
+                    retTemp.Id = temp.Id;
+                    retTemp.Name = temp.Name;
+                    retTemp.Location = new Location(temp.Location);
 
 
-                var dronesInCharge = (from item in dronesList
-                                      where item.Status == MyEnums.DroneStatus.maintenance
-                                      where item.Location.Latitude == retTemp.Location.Latitude &&
-                                            item.Location.Longitude == retTemp.Location.Longitude
-                                      select new DroneInCharge(item.Id, item.Battery,
-                                      dal.GetDroneCharges().First(itemDC=> itemDC.DroneId == item.Id).StartChargeTime)).ToList();
-                retTemp.DronesInCharge = dronesInCharge;
-                return retTemp;
+                    var dronesInCharge = (from item in dronesList
+                                          where item.Status == MyEnums.DroneStatus.maintenance
+                                          where item.Location.Latitude == retTemp.Location.Latitude &&
+                                                item.Location.Longitude == retTemp.Location.Longitude
+                                          select new DroneInCharge(item.Id, item.Battery,
+                                          dal.GetDroneCharges().First(itemDC => itemDC.DroneId == item.Id).StartChargeTime)).ToList();
+                    retTemp.DronesInCharge = dronesInCharge;
+                    return retTemp;
+                }
             }
 
             //display drone
+            [MethodImpl(MethodImplOptions.Synchronized)]
             public Drone DisplayDrone(int droneId)
             {
                 var DelPar = new ParcelInDelivery();
@@ -71,95 +77,104 @@ namespace BlApi
             }
 
             //display customer
+            [MethodImpl(MethodImplOptions.Synchronized)]
             public Customer DisplayCustomer(int customerId)
             {
-                DalApi.DO.Customer temp = new();
-                try
+                lock (dal)
                 {
-                    temp = dal.GetCustomer(customerId);
-                }
-                catch (Exception)
-                {
-                    throw new WrongIdException(customerId);
-                }
-
-                Customer retTemp = new(temp);
-                // maybe duiplay parcels at this customer? 
-                var parcelsList = dal.GetParcelsList();
-                foreach (var item in parcelsList)
-                {
-                    ParcelAtCustomer myParcel = new();
-                    DateTime? empty = DateTime.MinValue;
-                    if (item.SenderId == retTemp.Id)
+                    DalApi.DO.Customer temp = new();
+                    try
                     {
-                        myParcel.Id = item.Id;
-                        myParcel.Weight = item.Weight;
-                        myParcel.Priority = item.Priority;
-
-                        if (item.Requested != empty && item.Scheduled == empty)
-                            myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.requested;
-                        if (item.Scheduled != empty && item.PickedUp == empty)
-                            myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.scheduled;
-                        if (item.PickedUp != empty && item.Delivered == empty)
-                            myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.pickedUp;
-                        if (item.Delivered != empty)
-                            myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.delivered;
-
-                        myParcel.TheSecondSide = TheOtherSide(myParcel.Id, retTemp.Id);
-                        retTemp.ParcelsSent.Add(myParcel);
+                        temp = dal.GetCustomer(customerId);
                     }
-                    if (item.ReceiverId == retTemp.Id)
+                    catch (Exception)
                     {
-                        myParcel.Id = item.Id;
-                        myParcel.Weight = item.Weight;
-                        myParcel.Priority = item.Priority;
-
-                        if (item.Requested != DateTime.MinValue && item.Scheduled == DateTime.MinValue)
-                            myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.requested;
-                        if (item.Scheduled != empty && item.PickedUp == empty)
-                            myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.scheduled;
-                        if (item.PickedUp != empty && item.Delivered == empty)
-                            myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.pickedUp;
-                        if (item.Delivered != empty)
-                            myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.delivered;
-
-                        myParcel.TheSecondSide = TheOtherSide(myParcel.Id, retTemp.Id);
-                        retTemp.ParcelsRecieved.Add(myParcel);
+                        throw new WrongIdException(customerId);
                     }
+
+                    Customer retTemp = new(temp);
+                    // maybe duiplay parcels at this customer? 
+                    var parcelsList = dal.GetParcelsList();
+                    foreach (var item in parcelsList)
+                    {
+                        ParcelAtCustomer myParcel = new();
+                        DateTime? empty = DateTime.MinValue;
+                        if (item.SenderId == retTemp.Id)
+                        {
+                            myParcel.Id = item.Id;
+                            myParcel.Weight = item.Weight;
+                            myParcel.Priority = item.Priority;
+
+                            if (item.Requested != empty && item.Scheduled == empty)
+                                myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.requested;
+                            if (item.Scheduled != empty && item.PickedUp == empty)
+                                myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.scheduled;
+                            if (item.PickedUp != empty && item.Delivered == empty)
+                                myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.pickedUp;
+                            if (item.Delivered != empty)
+                                myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.delivered;
+
+                            myParcel.TheSecondSide = TheOtherSide(myParcel.Id, retTemp.Id);
+                            retTemp.ParcelsSent.Add(myParcel);
+                        }
+                        if (item.ReceiverId == retTemp.Id)
+                        {
+                            myParcel.Id = item.Id;
+                            myParcel.Weight = item.Weight;
+                            myParcel.Priority = item.Priority;
+
+                            if (item.Requested != DateTime.MinValue && item.Scheduled == DateTime.MinValue)
+                                myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.requested;
+                            if (item.Scheduled != empty && item.PickedUp == empty)
+                                myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.scheduled;
+                            if (item.PickedUp != empty && item.Delivered == empty)
+                                myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.pickedUp;
+                            if (item.Delivered != empty)
+                                myParcel.ParcelStatus = DalApi.DO.MyEnums.ParcelStatus.delivered;
+
+                            myParcel.TheSecondSide = TheOtherSide(myParcel.Id, retTemp.Id);
+                            retTemp.ParcelsRecieved.Add(myParcel);
+                        }
+                    }
+                    return retTemp;
                 }
-                return retTemp;
             }
 
             //display parcel
+            [MethodImpl(MethodImplOptions.Synchronized)]
             public Parcel DisplayParcel(int parcelId)
             {
-                Parcel temp = new();
-                var v = dal.GetParcel(parcelId);
-                try
+                lock (dal)
                 {
-                    temp.Id = v.Id;
-                    if (v.DroneId == 0) temp.DroneInParcel = new DroneInParcel(0);
-                    else temp.DroneInParcel = new DroneInParcel(v.DroneId);
-                    temp.DroneInParcel = new DroneInParcel(v.DroneId == 0 ? 0 : v.DroneId);
+                    Parcel temp = new();
+                    var v = dal.GetParcel(parcelId);
+                    try
+                    {
+                        temp.Id = v.Id;
+                        if (v.DroneId == 0) temp.DroneInParcel = new DroneInParcel(0);
+                        else temp.DroneInParcel = new DroneInParcel(v.DroneId);
+                        temp.DroneInParcel = new DroneInParcel(v.DroneId == 0 ? 0 : v.DroneId);
 
-                    temp.Priority = v.Priority;
-                    temp.Sender = new CustomerInParcel(v.SenderId != 0 ? v.SenderId: 0);
-                    temp.Sender.Name = NameOfCustomer(v.SenderId);
-                    temp.Receiver = new CustomerInParcel(v.ReceiverId != 0 ? v.ReceiverId : 0);
-                    temp.Receiver.Name = NameOfCustomer(v.ReceiverId);
-                    temp.Requested = v.Requested;
-                    temp.Scheduled = v.Scheduled;
-                    temp.PickedUp = v.PickedUp;
-                    temp.Delivered = v.Delivered;
-                    temp.Weight = v.Weight;
+                        temp.Priority = v.Priority;
+                        temp.Sender = new CustomerInParcel(v.SenderId != 0 ? v.SenderId : 0);
+                        temp.Sender.Name = NameOfCustomer(v.SenderId);
+                        temp.Receiver = new CustomerInParcel(v.ReceiverId != 0 ? v.ReceiverId : 0);
+                        temp.Receiver.Name = NameOfCustomer(v.ReceiverId);
+                        temp.Requested = v.Requested;
+                        temp.Scheduled = v.Scheduled;
+                        temp.PickedUp = v.PickedUp;
+                        temp.Delivered = v.Delivered;
+                        temp.Weight = v.Weight;
 
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                    return temp;
                 }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
-                return temp;
             }
+            [MethodImpl(MethodImplOptions.Synchronized)]
             public ParcelInDelivery DisplayDeliveredParcel(int droneId)
             {
                 var drone = DisplayDrone(droneId);
@@ -175,10 +190,15 @@ namespace BlApi
                 temp.IsPickedUp = parcel.PickedUp > DateTime.MinValue ? false : true;
                 temp.PickUpLocation = new Location(SenderLocation(temp.Id));
                 temp.TargetLocation = new Location(ReceiverLocation(temp.Id));
+                temp.Distance = dal.GetDistance(droneLocation, SenderLocation(temp.Id))
+                    + dal.GetDistance(SenderLocation(temp.Id), ReceiverLocation(temp.Id))
+                    + dal.GetDistance(ReceiverLocation(temp.Id), NearestAvailableChargeSlot(ReceiverLocation(temp.Id)).Location);
 
-                temp.Distance = dal.GetDistance(droneLocation, SenderLocation(temp.Id)) +
-                    dal.GetDistance(SenderLocation(temp.Id), ReceiverLocation(temp.Id)) +
-                    dal.GetDistance(ReceiverLocation(temp.Id), NearestAvailableChargeSlot(ReceiverLocation(temp.Id)).Location);
+                if (parcel.Scheduled != DateTime.MinValue && parcel.PickedUp == DateTime.MinValue)
+                    temp.Distance = dal.GetDistance(droneLocation, SenderLocation(temp.Id));
+                if (parcel.PickedUp != DateTime.MinValue && parcel.Delivered == DateTime.MinValue)
+                    temp.Distance = dal.GetDistance(SenderLocation(temp.Id), ReceiverLocation(temp.Id));
+
                 return temp;
             }
         }

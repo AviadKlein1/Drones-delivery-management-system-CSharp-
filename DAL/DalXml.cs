@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using System.Runtime.CompilerServices;
 
 namespace DalApi
 {
@@ -12,11 +13,14 @@ namespace DalApi
         /// <summary>
         /// create a single instance of dal object
         /// </summary>
+        /// 
+
         public static IDal Instance { get; } = new DalXml();
         #endregion
 
         #region add func
-        public void AddConfig()
+
+        internal void AddConfig()
         {
             ConfigRoot = XElement.Load(ConfigPath);
             XElement ParcelRunId = new XElement("ParcelRunId",DataSource.parcelRunId);
@@ -34,6 +38,8 @@ namespace DalApi
         /// add station
         /// </summary>
         /// <param name="station"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public void AddStation(Station station)
         {
             ArrayOfStation = XElement.Load(stationsPath);
@@ -56,6 +62,8 @@ namespace DalApi
         /// </summary>
         /// <param name="drone"></param>
         /// <param name="firstChargeStationId"></param>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone drone, int firstChargeStationId)
         {
             ArrayOfDrone1 = XElement.Load(dronesPath);
@@ -74,6 +82,8 @@ namespace DalApi
         /// add drone
         /// </summary>
         /// <param name="drone"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public void AddDrone(Drone drone)
         {
             ArrayOfDrone1 = XElement.Load(dronesPath);
@@ -90,6 +100,8 @@ namespace DalApi
         /// add customer
         /// </summary>
         /// <param name="customer"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public void AddCustomer(Customer customer)
         {
             ArrayOfCustomer = XElement.Load(customersPath);
@@ -108,6 +120,8 @@ namespace DalApi
         /// add parcel
         /// </summary>
         /// <param name="parcel"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public void AddParcel(Parcel parcel)
         {
             ArrayOfParcel1 = XElement.Load(ParcelsPath);
@@ -133,6 +147,8 @@ namespace DalApi
         /// </summary>
         /// <param name="_droneId"></param>
         /// <param name="_StationId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public void AddDroneCharge(int _droneId, int _StationId, DateTime time)
         {
             ArrayOfDroneCharge1 = XElement.Load(DroneChargesPath);
@@ -151,6 +167,8 @@ namespace DalApi
         /// delete station
         /// </summary>
         /// <param name="myId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public void DeleteStation(int myId)
         {
             ArrayOfStation = XElement.Load(stationsPath);
@@ -166,6 +184,8 @@ namespace DalApi
         /// delete parcel
         /// </summary>
         /// <param name="myId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public void DeleteParcel(int myId)
         {
             ArrayOfParcel1 = XElement.Load(ParcelsPath);
@@ -181,6 +201,8 @@ namespace DalApi
         /// delete drone
         /// </summary>
         /// <param name="myId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public void DeleteDrone(int myId)
         {
             ArrayOfDrone1 = XElement.Load(dronesPath);
@@ -196,6 +218,8 @@ namespace DalApi
         /// delete customer
         /// </summary>
         /// <param name="myId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public void DeleteCustomer(int myId)
         {
             ArrayOfCustomer = XElement.Load(customersPath);
@@ -214,6 +238,8 @@ namespace DalApi
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public Station GetStation(int id)
         {
             ArrayOfStation = XElement.Load(stationsPath);
@@ -239,6 +265,8 @@ namespace DalApi
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public Drone GetDrone(int id)
         {
             ArrayOfDrone1 = XElement.Load(dronesPath);
@@ -261,6 +289,8 @@ namespace DalApi
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public Customer GetCustomer(int id)
         {
             ArrayOfCustomer = XElement.Load(customersPath);
@@ -285,6 +315,8 @@ namespace DalApi
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public Parcel GetParcel(int id)
         {
             ArrayOfParcel1 = XElement.Load(ParcelsPath);
@@ -315,6 +347,8 @@ namespace DalApi
         /// get drones list
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public IEnumerable<Drone> GetDronesList()
         {
             //List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(dronesPath);
@@ -344,6 +378,8 @@ namespace DalApi
         /// get list of entities "drone charge"
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public IEnumerable<DroneCharge> GetDroneCharges()
         {
             //List<DroneCharge> droneCharges = XMLTools.LoadListFromXMLSerializer<DroneCharge>(droneChargesPath);
@@ -373,6 +409,8 @@ namespace DalApi
         /// get list of stations
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public IEnumerable<Station> GetStationsList()
         {
             List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(stationsPath);
@@ -405,6 +443,8 @@ namespace DalApi
         /// get customers list
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public IEnumerable<Customer> GetCustomersList()
         {
             //List<Customer> customers = XMLTools.LoadListFromXMLSerializer<Customer>(customersPath);
@@ -438,6 +478,8 @@ namespace DalApi
         /// get parcels list
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public IEnumerable<Parcel> GetParcelsList()
         {
             //List<Parcel> parcels = XMLTools.LoadListFromXMLSerializer<Parcel>(parcelsPath);
@@ -469,6 +511,8 @@ namespace DalApi
         /// parcel's identification (starts with 1000 and jumps by 1)
         /// </summary>
         /// <returns></returns>4 digit number
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public int ParcelRunId()
         {
             XElement parcelRunIdX = ConfigRoot.Element("ParcelRunId");
@@ -481,6 +525,8 @@ namespace DalApi
         /// determines electricity consumption for different situations (free, light weight. ect.) 
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public double[] DroneElectricityConsumption()
         {
             double[] droneElectricityConsumption = new double[5];
@@ -503,6 +549,8 @@ namespace DalApi
         /// </summary>
         /// <param name="StationId"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public Location StationLocate(int StationId)
         {
             Location temp = new();
@@ -521,6 +569,8 @@ namespace DalApi
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public double GetDistance(Location a, Location b)
         {
             double d1 = a.Latitude * (Math.PI / 180.0);
@@ -541,6 +591,8 @@ namespace DalApi
         /// <param name="newName"></param>
         /// <param name="numOfChargeSlots"></param>
         /// <param name="avialble"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public void UpdateStation(int stationId, string newName, int numOfChargeSlots, int avialble)
         {
             ArrayOfStation = XElement.Load(stationsPath);
@@ -559,6 +611,8 @@ namespace DalApi
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="newModel"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public void UpdateDrone(int droneId, string newModel)
         {
             ArrayOfDrone1 = XElement.Load(dronesPath);
@@ -576,6 +630,8 @@ namespace DalApi
         /// <param name="customerId"></param>
         /// <param name="newName"></param>
         /// <param name="newPhone"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public void UpdateCustomer(int customerId, string newName, string newPhone)
         {
             ArrayOfCustomer = XElement.Load(customersPath);
@@ -592,6 +648,8 @@ namespace DalApi
         /// decrease number of available charging slots
         /// </summary>
         /// <param name="stationId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public void DecreaseChargeSlot(int stationId)
         {
             ArrayOfStation = XElement.Load(stationsPath);
@@ -608,6 +666,8 @@ namespace DalApi
         /// increase number of available charging slots
         /// </summary>
         /// <param name="stationId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public void IncreaseChargeSlot(int stationId)
         {
             ArrayOfStation = XElement.Load(stationsPath);
@@ -625,6 +685,8 @@ namespace DalApi
         /// </summary>
         /// <param name="newParcelId"></param>
         /// <param name="droneId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public void ScheduleParcelToDrone(int newParcelId, int droneId)
         {
             ArrayOfParcel1 = XElement.Load(ParcelsPath);
@@ -642,6 +704,8 @@ namespace DalApi
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="parcelId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public void PickUpParcel(int droneId, int parcelId)
         {
             ArrayOfParcel1 = XElement.Load(ParcelsPath);
@@ -659,6 +723,8 @@ namespace DalApi
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="parcelId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public void DeliverParcel(int droneId, int parcelId)
         {
             ArrayOfParcel1 = XElement.Load(ParcelsPath);
@@ -677,6 +743,8 @@ namespace DalApi
         /// </summary>
         /// <param name="ParcelId"></param>
         /// <param name="droneId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public void UpdatedroneIdInParcel(int ParcelId, int droneId)
         {
             ArrayOfParcel1 = XElement.Load(ParcelsPath);
@@ -692,6 +760,8 @@ namespace DalApi
         /// release drone from charge
         /// </summary>
         /// <param name="droneId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
         public double EndDroneCharge(int droneId, DateTime endTime)
         {
             ArrayOfDroneCharge1 = XElement.Load(DroneChargesPath);

@@ -1,4 +1,5 @@
-﻿namespace DalApi
+﻿
+namespace DalApi
 {
     public class DalFactory
     {

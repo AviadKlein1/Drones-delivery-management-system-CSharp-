@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using System.Runtime.CompilerServices;
+using System;
 
 namespace BlApi
 {
@@ -10,6 +12,8 @@ namespace BlApi
         public partial class BL : IBl
         {
             //add station
+            [MethodImpl(MethodImplOptions.Synchronized)]
+
             public void AddStation(Station myStation)
             {
                 //create a new station
@@ -26,15 +30,21 @@ namespace BlApi
                 //add new station to list of stations
                 try
                 {
-                    dal.AddStation(temp);
+                    lock (dal)
+                    {
+                        dal.AddStation(temp);
+                    }
                 }
                 catch (DalApi.DO.ExistingIdException ex)
                 {
                     throw new ExistingIdException(myStation.Id, ex.Message);
                 }
             }
+        
 
             //add drone
+
+            [MethodImpl(MethodImplOptions.Synchronized)]
             public void AddDrone(Drone myDrone)
             {
                 //create new drone
@@ -48,7 +58,10 @@ namespace BlApi
                 //add new drone to list of drones
                 try
                 {
-                    dal.AddDrone(temp, myDrone.FirstChargeStationId);
+                    lock (dal)
+                    {
+                        dal.AddDrone(temp, myDrone.FirstChargeStationId);
+                    }
                 }
                 catch (DalApi.DO.ExistingIdException ex)
                 {
@@ -65,22 +78,25 @@ namespace BlApi
             }
 
             //add drone (BL)
+            [MethodImpl(MethodImplOptions.Synchronized)]
             public DroneToList AddDroneToBLList(Drone myDrone)
             {
                 //add drone to list (BL)
                 DroneToList myDronesToList = new();
-
-                myDronesToList.Id = myDrone.Id;
-                myDronesToList.Model = myDrone.Model;
-                myDronesToList.Weight = myDrone.Weight;
-                myDronesToList.Battery = rd.Next(20, 41);
-                myDronesToList.Status = MyEnums.DroneStatus.maintenance;
-                myDronesToList.Location = new Location(dal.StationLocate(myDrone.FirstChargeStationId));
-
+                lock (dal)
+                {
+                    myDronesToList.Id = myDrone.Id;
+                    myDronesToList.Model = myDrone.Model;
+                    myDronesToList.Weight = myDrone.Weight;
+                    myDronesToList.Battery = rd.Next(20, 41);
+                    myDronesToList.Status = MyEnums.DroneStatus.maintenance;
+                    myDronesToList.Location = new Location(dal.StationLocate(myDrone.FirstChargeStationId));
+                }
                 return myDronesToList;
             }
 
             //add customer
+            [MethodImpl(MethodImplOptions.Synchronized)]
             public void Addcustomer(Customer myCustomer)
             {
                 //create new customer
@@ -95,7 +111,10 @@ namespace BlApi
                 //add customer to list of customers
                 try
                 {
-                    dal.AddCustomer(temp);
+                    lock (dal)
+                    {
+                        dal.AddCustomer(temp);
+                    }
                 }
                 catch (DalApi.DO.ExistingIdException ex)
                 {
@@ -105,31 +124,34 @@ namespace BlApi
             }
 
             //add parcel
+            [MethodImpl(MethodImplOptions.Synchronized)]
             public void AddParcel(Parcel myParcel)
             {
                 DalApi.DO.Parcel temp = new();
-
-                temp.Id = dal.ParcelRunId();
-                temp.Weight = myParcel.Weight;
-                temp.Priority = myParcel.Priority;
-                temp.SenderId = myParcel.Sender.Id;
-                temp.ReceiverId = myParcel.Receiver.Id;
-                temp.DroneId = (myParcel.DroneInParcel == null ? 0 : myParcel.DroneInParcel.Id);
-                temp.Requested = DateTime.Now;
-                temp.IsActive = true;
-                temp.Scheduled = DateTime.MinValue;
-                temp.PickedUp = DateTime.MinValue;
-                temp.Delivered = DateTime.MinValue;
-                Console.WriteLine("your parcel ID is: " + temp.Id + "\n");
-
-                //add parcel to list of parcels
-                try
+                lock (dal)
                 {
-                    dal.AddParcel(temp);
-                }
-                catch (DalApi.DO.ExistingIdException ex)
-                {
-                    throw new ExistingIdException(temp.Id, ex.Message);
+                    temp.Id = dal.ParcelRunId();
+                    temp.Weight = myParcel.Weight;
+                    temp.Priority = myParcel.Priority;
+                    temp.SenderId = myParcel.Sender.Id;
+                    temp.ReceiverId = myParcel.Receiver.Id;
+                    temp.DroneId = (myParcel.DroneInParcel == null ? 0 : myParcel.DroneInParcel.Id);
+                    temp.Requested = DateTime.Now;
+                    temp.IsActive = true;
+                    temp.Scheduled = DateTime.MinValue;
+                    temp.PickedUp = DateTime.MinValue;
+                    temp.Delivered = DateTime.MinValue;
+                    Console.WriteLine("your parcel ID is: " + temp.Id + "\n");
+
+                    //add parcel to list of parcels
+                    try
+                    {
+                        dal.AddParcel(temp);
+                    }
+                    catch (DalApi.DO.ExistingIdException ex)
+                    {
+                        throw new ExistingIdException(temp.Id, ex.Message);
+                    }
                 }
             }
         }
