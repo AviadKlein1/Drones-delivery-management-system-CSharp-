@@ -151,6 +151,10 @@ namespace BlApi
                     }
                 }
             }
+            public void PlaySimulator(int droneId, Action ui_Update, Func<bool> stopCheck)
+            {
+
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ namespace PrL
     {
         BlApi.BO.BL bl;
         BlApi.BO.Drone drone = new();
-        BlApi.BO.DroneToList droneToList = new();
+        DroneModelToList droneToList = new();
 
         public AddDrone(BlApi.BO.BL mainBl)
         {
@@ -24,7 +24,7 @@ namespace PrL
             AddIdOfFirstChargeSelectorCombo.ItemsSource = StationsNameId;
             AddNewDrone.Visibility = Visibility.Visible;
         }
-        public AddDrone(BlApi.BO.BL mainBl, BlApi.BO.DroneToList mainDrone)
+        public AddDrone(BlApi.BO.BL mainBl, DroneModelToList mainDrone)
         {
             ThemeManager.Current.ChangeTheme(this, "light.blue");
             InitializeComponent();

@@ -25,6 +25,13 @@ namespace DalApi
                 StartChargeTime = time;
                 IsActive = true;
             }
+            public DroneCharge(bool flag)
+            {
+                DroneId = 0;
+                StationId = 0;
+                StartChargeTime = DateTime.MinValue;
+                IsActive = flag;
+            }
 
             /// <summary>
             /// is deleted

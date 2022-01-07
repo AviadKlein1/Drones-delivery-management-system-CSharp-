@@ -151,6 +151,20 @@ namespace DalApi
         /// 
         public void AddDroneCharge(int _droneId, int _StationId, DateTime time)
         {
+            var DCH = GetDroneChrge(_droneId);
+            if(!DCH.IsActive && DCH.DroneId > 10)//false
+            {
+                ArrayOfDroneCharge1 = XElement.Load(droneChargesPath);
+                XElement cdh = (from item in ArrayOfDroneCharge1.Elements()
+                                         where int.Parse(item.Element("DroneId").Value) == _droneId
+                                         select item).FirstOrDefault();
+
+                cdh.Element("IsActive").Value = "true";
+                cdh.Element("Time").Value = DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm:ss.fffffffZ");
+                cdh.Element("StationId").Value = _StationId.ToString(); ;
+                ArrayOfDrone1.Save(dronesPath);
+                return;
+            }
             ArrayOfDroneCharge1 = XElement.Load(DroneChargesPath);
             XElement StationId = new("StationId", _StationId);
             XElement DroneId = new("DroneId", _droneId);
@@ -282,6 +296,23 @@ namespace DalApi
             drone.IsActive = Convert.ToBoolean(droneElement.Element("IsActive").Value);
 
             return drone;
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 
+        public DroneCharge GetDroneChrge(int id)
+        {
+            ArrayOfDroneCharge1 = XElement.Load(droneChargesPath);
+
+            DroneCharge dch  = new(false);
+            XElement droneChargeElement = (from item in ArrayOfDroneCharge1.Elements()
+                                     where int.Parse(item.Element("DroneId").Value) == id
+                                     select item).FirstOrDefault();
+            if (droneChargeElement == null) return dch;
+            dch.DroneId = int.Parse(droneChargeElement.Element("DroneId").Value);
+            dch.StationId = int.Parse(droneChargeElement.Element("StationId").Value);
+            dch.StartChargeTime = (DateTime)(droneChargeElement.Element("Time"));
+            dch.IsActive = Convert.ToBoolean(droneChargeElement.Element("IsActive").Value);
+            return dch;
         }
 
         /// <summary>

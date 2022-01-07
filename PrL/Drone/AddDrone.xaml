@@ -45,7 +45,7 @@
             <TextBox  x:Name="StatusBox" Text="{Binding Path = Status}" HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
             
             <TextBlock x:Name="BatteryBlock" Text="Battery charge: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
-            <TextBox  x:Name="BatteryBox" Text="{Binding Path = Battery}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            <TextBox  x:Name="BatteryBox" Text="{Binding Path = BatteryNum}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
             
             <TextBlock x:Name="LocationBlock" Text="The location: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox  x:Name="LocationBox"   HorizontalAlignment="Center" Width="150" IsEnabled="False"/>

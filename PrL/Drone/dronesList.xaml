@@ -13,25 +13,36 @@
         <Image Source="\resources\images\a.jpg" Stretch="Fill"/>
         <Grid Name="Main_Grid">
 
-            <ListView x:Name="dronesListView" Background="#FF517391" Margin="35,35,35,35"
+            <ListView x:Name="dronesListView" Background="Transparent" Margin="35,35,35,35"
                   Grid.Row="2"  MouseDoubleClick="dclick"
                 GridViewColumnHeader.Click="dronesListView_Click"
-            IsSynchronizedWithCurrentItem="True" >
+           >
 
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
                         <Setter Property="BorderBrush" Value="LightGray" />
                         <Setter Property="BorderThickness" Value="0,0,0,1" />
                     </Style>
+                    
                 </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Id}"/>
+                        <GridViewColumn Header="Id"  Width="50" DisplayMemberBinding="{Binding Id}"/>
                         <GridViewColumn Header="Model" Width="80" DisplayMemberBinding="{Binding Model}" />
                         <GridViewColumn Header="Weight" Width="80" DisplayMemberBinding="{Binding Weight}" />
                         <GridViewColumn Header="Status"  Width="80" DisplayMemberBinding="{Binding Status}" />
-                        <GridViewColumn Header="Battery" Width="60" DisplayMemberBinding="{Binding Battery}" />
-                        <GridViewColumn Header="Location" Width="220" DisplayMemberBinding="{Binding Location}" />
+                        <GridViewColumn Header="Battery" x:Name="Battery" Width="120" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                            <TextBox x:Name="BatteryTextB" Width="{Binding BatteryNum}" IsEnabled="False"
+                                                 Text="{Binding BatteryNum}" TextAlignment="Center" BorderBrush="Black" BorderThickness="0.2" Background="{Binding Bcolor}" >
+                                            </TextBox>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Location" Width="190" DisplayMemberBinding="{Binding Location}" />
                         <GridViewColumn Header="Delivered Parcel Id" Width="140" DisplayMemberBinding="{Binding DeliveredParcelId}" />
                     </GridView>
                 </ListView.View>
