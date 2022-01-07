@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace BlApi
 {
@@ -172,6 +173,8 @@ namespace BlApi
         /// </summary>
         /// <returns></returns> return list of parcels accured to conditions
         public IEnumerable<BO.ParcelToList> GetParcelsList(System.Predicate<DalApi.DO.Parcel> match);
+        public void PlaySimulator(int droneId, Action ui_Update, Func<bool> stopCheck);
+
 
     }
 }

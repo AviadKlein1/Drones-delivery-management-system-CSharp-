@@ -134,29 +134,25 @@ namespace PrL
         }
         SolidColorBrush percentToColor(int battery)
         {
-            float percent = battery / 100;
             SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-            if (percent < 0 || percent > 1)
+            
+            double r, g;
             {
-                mySolidColorBrush.Color =
-                Color.FromArgb(255, 255, 255, 255);
-                return mySolidColorBrush;
+
+                g = R(battery);
+                r = 255 - g;
             }
-            int r, g;
-            if (percent < 0.5)
-            {
-                r = 255;
-                g = (int)(255 * percent / 0.5);  //closer to 0.5, closer to yellow (255,255,0)
-            }
-            else
-            {
-                g = 255;
-                r = 255 - ((int)(255 * (percent - 0.5) / 0.5)); //closer to 1.0, closer to green (0,255,0)
-            }
-            mySolidColorBrush.Color = Color.FromArgb(170, (byte)r, (byte)g, 0);
+            mySolidColorBrush.Color = Color.FromArgb(255, (byte)r, (byte)g, 0);
 
             return mySolidColorBrush;
         }
+        double R(int Battery)
+        {
+            return  (Battery * (2.55));
+        }
+
+
+
         //public SolidColorBrush GetColorOf(int value)
         //{
         //    SolidColorBrush mySolidColorBrush = new SolidColorBrush();
