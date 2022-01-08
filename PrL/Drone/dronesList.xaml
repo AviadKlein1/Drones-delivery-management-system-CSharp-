@@ -15,7 +15,7 @@
 
             <ListView x:Name="dronesListView" Background="Transparent" Margin="35,35,35,35"
                   Grid.Row="2"  MouseDoubleClick="dclick"
-                GridViewColumnHeader.Click="dronesListView_Click"
+                GridViewColumnHeader.Click="dronesListView_Click" IsSynchronizedWithCurrentItem="True"
            >
 
                 <ListView.ItemContainerStyle>

@@ -32,10 +32,10 @@ namespace BlApi
                 lock (dal)
                 {
                     var v = (List<DalApi.DO.DroneCharge>)dal.GetDroneCharges();
-                    var tempDC = new DalApi.DO.DroneCharge();
+                    var tempDC = new DalApi.DO.DroneCharge();//if it was in charge
                     for (int i = 0; i < v.Count(); i++)
                     {
-                        if (v[i].DroneId == myDrone.Id)
+                        if (v[i].DroneId == myDrone.Id && v[i].IsActive)
                         {
                             tempDC = v[i];
                             tempDC.IsActive = false;

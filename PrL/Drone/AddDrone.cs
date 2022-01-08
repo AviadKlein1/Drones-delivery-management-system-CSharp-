@@ -1,24 +1,102 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
 using MahApps.Metro.Controls;
 using ControlzEx.Theming;
+using System.Windows.Media.Imaging;
+using System.ComponentModel;
+using BlApi;
 
 namespace PrL
 {
-    public partial class AddDrone: MetroWindow
+    public partial class AddDrone : MetroWindow
     {
+        System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
         BlApi.BO.BL bl;
         BlApi.BO.Drone drone = new();
         DroneModelToList droneToList = new();
+        int myDroneId;
+        List<DroneModelToList> Mlist = new();
+        List<BlApi.BO.DroneToList> list = new();
 
+        private void Timer_Click(object sender, EventArgs e)
+        {
+            #region updateTimer
+            list = bl.GetDrones();
+            Mlist.Clear();
+            foreach (var item in list)
+            {
+                DroneModelToList temp = new();
+                temp.Id = item.Id;
+                temp.BatteryNum = item.Battery;
+                temp.Bcolor = percentToColor(item.Battery);
+                temp.LeftMargin = new Thickness(item.Battery, 0, 0, 0);
+                temp.DeliveredParcelId = item.DeliveredParcelId;
+                temp.Location = item.Location;
+                temp.Model = item.Model;
+                temp.Status = item.Status;
+                temp.Weight = item.Weight;
+                Mlist.Add(temp);
+            }
+            foreach (var Mitem in Mlist)
+                if (Mitem.Id == myDroneId) droneToList = Mitem;
+            DisplayDrone.DataContext = droneToList;
+            double minLat = (double)(droneToList.Location.Latitude - (int)droneToList.Location.Latitude) * 60;
+            double minLon = (double)(droneToList.Location.Longitude - (int)droneToList.Location.Longitude) * 60;
+            double secLat = (double)(minLat - (int)minLat) * 60;
+            double secLon = (double)(minLon - (int)minLon) * 60;
+
+            LocationBox.Text = $"{ (int)droneToList.Location.Latitude }° { (int)minLat }' { (int)secLat}\" N { (int)droneToList.Location.Longitude }° {(int)minLon}' {(int)secLon}\" E";
+            if (droneToList.Status == BlApi.BO.MyEnums.DroneStatus.available)
+            {
+                SendDroneToChargePanel.Visibility = Visibility.Visible;
+                ScheduleParcelToDronePanel.Visibility = Visibility.Visible;
+                EndChargePanel.Visibility = Visibility.Collapsed;
+                PickUpParcelPanel.Visibility = Visibility.Collapsed;
+                DeliverParcelPanel.Visibility = Visibility.Collapsed;
+            }
+            if (droneToList.Status == BlApi.BO.MyEnums.DroneStatus.maintenance)
+            {
+                EndChargePanel.Visibility = Visibility.Visible;
+                SendDroneToChargePanel.Visibility = Visibility.Collapsed;
+                ScheduleParcelToDronePanel.Visibility = Visibility.Collapsed;
+                PickUpParcelPanel.Visibility = Visibility.Collapsed;
+                DeliverParcelPanel.Visibility = Visibility.Collapsed;
+            }
+            if (droneToList.Status == BlApi.BO.MyEnums.DroneStatus.delivery)
+            {
+                EndChargePanel.Visibility = Visibility.Collapsed;
+                SendDroneToChargePanel.Visibility = Visibility.Collapsed;
+                ScheduleParcelToDronePanel.Visibility = Visibility.Collapsed;
+                if (bl.PickedUpButNotDelivered(droneToList.DeliveredParcelId))
+                {
+                    PickUpParcelPanel.Visibility = Visibility.Collapsed;
+                    DeliverParcelPanel.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    PickUpParcelPanel.Visibility = Visibility.Visible;
+                    DeliverParcelPanel.Visibility = Visibility.Collapsed;
+                }
+            } 
+            #endregion
+        }
         public AddDrone(BlApi.BO.BL mainBl)
         {
+
             ThemeManager.Current.ChangeTheme(this, "Light.blue");
             InitializeComponent();
             Title = "Add new drone";
             bl = mainBl;
+
             AddWeightselectorCombo.ItemsSource = Enum.GetValues(typeof(DalApi.DO.MyEnums.WeightCategory));
             var StationsNameId = bl.GetStationsList(BlApi.BO.BL.AllStations).Select(item => item.Id + " " + item.Name);
             AddIdOfFirstChargeSelectorCombo.ItemsSource = StationsNameId;
@@ -26,18 +104,22 @@ namespace PrL
         }
         public AddDrone(BlApi.BO.BL mainBl, DroneModelToList mainDrone)
         {
+            Timer.Tick += new EventHandler(Timer_Click);
+            Timer.Interval = new TimeSpan(0, 0, 1);
+            Timer.Start();
             ThemeManager.Current.ChangeTheme(this, "light.blue");
             InitializeComponent();
             Title = "Drone Diatels";
             bl = mainBl;
             droneToList = mainDrone;
+            myDroneId = droneToList.Id;
             DisplayDrone.DataContext = droneToList;
             DisplayDrone.Visibility = Visibility.Visible;
 
-            double minLat = ((double)(droneToList.Location.Latitude - (int)droneToList.Location.Latitude) * 60);
-            double minLon = ((double)(droneToList.Location.Longitude - (int)droneToList.Location.Longitude) * 60);
-            double secLat = ((double)(minLat - (int)minLat) * 60);
-            double secLon = ((double)(minLon - (int)minLon) * 60);
+            double minLat = (double)(droneToList.Location.Latitude - (int)droneToList.Location.Latitude) * 60;
+            double minLon = (double)(droneToList.Location.Longitude - (int)droneToList.Location.Longitude) * 60;
+            double secLat = (double)(minLat - (int)minLat) * 60;
+            double secLon = (double)(minLon - (int)minLon) * 60;
 
             LocationBox.Text = $"{ (int)droneToList.Location.Latitude }° { (int)minLat }' { (int)secLat}\" N { (int)droneToList.Location.Longitude }° {(int)minLon}' {(int)secLon}\" E";
             if (droneToList.Status == BlApi.BO.MyEnums.DroneStatus.available)
@@ -78,7 +160,7 @@ namespace PrL
                 MessageBox.Show(ex.Message);
                 return;
             }
-          
+
 
             MessageBox.Show("success!");
             Close();
@@ -89,7 +171,7 @@ namespace PrL
         }
         private void DeleteDrone_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (droneToList.Status == BlApi.BO.MyEnums.DroneStatus.delivery) throw new Exception("cannot delete, drone at deliver");
             bl.DeleteDrone(bl.DisplayDrone(droneToList.Id));
             Close();
         }
@@ -99,22 +181,18 @@ namespace PrL
             droneToList.Model = (string)DroneModelBox.Text;
             bl.UpdateDrone(droneToList.Id, droneToList.Model);
             MessageBox.Show("success!");
-            Close();
-            
+
         }
         private void SendDroneToCharge_Click(object sender, RoutedEventArgs e)
         {
             if (bl.ChargeDrone(droneToList.Id)) MessageBox.Show("success!");
             else MessageBox.Show("Faild!");
-            Close();
         }
 
         private void EndCharge_Click(object sender, RoutedEventArgs e)
         {
             if (bl.ReleaseDroneFromCharge(droneToList.Id)) MessageBox.Show("success!");
             else MessageBox.Show("failed!");
-            Close();
-
         }
 
         private void ScheduleParcelToDrone_Click(object sender, RoutedEventArgs e)
@@ -123,45 +201,53 @@ namespace PrL
             {
                 bl.ScheduleParcelToDrone(droneToList.Id);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _ = MessageBox.Show(ex.Message);
                 return;
             }
             MessageBox.Show("success!");
-            Close();
-
         }
 
         private void PickUpParcel_Click(object sender, RoutedEventArgs e)
         {
-            if (bl.PickUpParcel(droneToList.Id))  MessageBox.Show("success!");
+            if (bl.PickUpParcel(droneToList.Id)) MessageBox.Show("success!");
             else MessageBox.Show("failed!");
-            Close();
         }
 
         private void DeliverParcel_Click(object sender, RoutedEventArgs e)
         {
             if (bl.DeliverParcel(droneToList.Id)) MessageBox.Show("success!");
             else MessageBox.Show("Faild!");
-
-            Close();
-
         }
         private void DeliveredParcelIdBox_DClick(object sender, RoutedEventArgs e)
         {
             var v = int.Parse(DeliveredParcelIdBox.Text);
-            
+
             try
             {
                 MessageBox.Show(bl.DisplayDeliveredParcel(droneToList.Id).ToString());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _ = MessageBox.Show(ex.Message);
                 return;
             }
         }
-        
+
+        public SolidColorBrush percentToColor(int battery)
+        {
+            SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+
+            double r, g;
+            {
+
+                g = (battery * (2.55));
+                r = 255 - g;
+            }
+            mySolidColorBrush.Color = Color.FromArgb(255, (byte)r, (byte)g, 0);
+
+            return mySolidColorBrush;
+        }
     }
 }

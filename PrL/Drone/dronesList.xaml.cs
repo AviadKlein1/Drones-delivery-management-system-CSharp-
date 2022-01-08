@@ -26,7 +26,6 @@ namespace PrL
 
         List<DroneModelToList> Mlist = new();
         List<BlApi.BO.DroneToList> list = new();
-
         private void Timer_Click(object sender, EventArgs e)
         {
             list = bl.GetDrones();
@@ -132,59 +131,25 @@ namespace PrL
         {
             dronesListView.ItemsSource = Mlist;
         }
-        SolidColorBrush percentToColor(int battery)
+        public SolidColorBrush percentToColor(int battery)
         {
             SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-            
+
             double r, g;
             {
 
-                g = R(battery);
+                g = (battery * (2.55));
                 r = 255 - g;
             }
             mySolidColorBrush.Color = Color.FromArgb(255, (byte)r, (byte)g, 0);
 
             return mySolidColorBrush;
         }
-        double R(int Battery)
-        {
-            return  (Battery * (2.55));
-        }
-
-
-
-        //public SolidColorBrush GetColorOf(int value)
-        //{
-        //    SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-        //    double minValue = 0.0;
-        //    double maxValue = 1;
-        //    var currect = value/100;
-
-        //    if (value == 50)
-        //    {
-        //        mySolidColorBrush.Color = Color.FromArgb(100, 255, 255, 255);
-        //        return mySolidColorBrush;
-        //    }
-        //    if (value < 25)
-        //    {
-        //        currect = (currect) * -1;
-        //    }
-            
-
-           
-
-        //    var g = (int)(240 * currect / maxValue);
-        //    var r = (int)(240 * currect / minValue);
-
-        //   var color = (value > 0
-        //        ? Color.FromArgb(255, (byte)(240 - g) , (byte)(255 - (int)(g * ((255 - 155) / 240.0))), (byte)(240 - g))
-        //        : Color.FromArgb(255, (byte)(255 - (int)(r * ((255 - 230) / 240.0))), (byte)(240 - r), (byte)(240 - r)));
-        //    mySolidColorBrush.Color = color;
-        //    return mySolidColorBrush;
-        //}
 
     }
+
 }
+
 public class DroneModelToList
 {
     public int Id { get; set; }
