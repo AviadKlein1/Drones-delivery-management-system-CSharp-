@@ -9,92 +9,105 @@
         x:Class="PrL.AddDrone"
         mc:Ignorable="d"
     
-       Background="#FF517391" Height="570" Width="300">
+       Background="#FF517391" Height="610" Width="300">
     <Grid>
         <StackPanel x:Name="AddNewDrone" Visibility="Collapsed">
             <Label x:Name="InsertLabel" Content="Insert ditales" HorizontalAlignment="Center"  Margin="0,20,0,10" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
-            
+
             <TextBlock x:Name="AddIdBlock"  Text="ID: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox x:Name="AddDroneIdBox"  Text="Id..." HorizontalAlignment="Center" Width="150" />
-            
+
             <TextBlock x:Name="AddModelBlock" Text="Model: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150"/>
             <TextBox  x:Name="AddDroneModelBox" Text="Model..." HorizontalAlignment="Center" Width="150" />
-            
+
             <TextBlock x:Name="AddweightBlock"  Text="Weight: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <ComboBox x:Name="AddWeightselectorCombo" IsEditable="True" IsReadOnly="True" HorizontalAlignment="Center" Width="150" Text="-- Choose weight --" />
-            
+
             <TextBlock x:Name="AddIdOfChargeSlotBlock" Text="Id of station to first charge: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <ComboBox x:Name="AddIdOfFirstChargeSelectorCombo" IsEditable="True" IsReadOnly="True" HorizontalAlignment="Center" Width="150" Text="-- Choose Station --" />
-            
+
             <Button x:Name="AddSubmitButton" Content="Submit" HorizontalAlignment="Center" Margin="0,40,0,0"  Height="84" Width="84" Click="Submit_Click" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" BorderThickness="12" />
-            
+
         </StackPanel>
 
-        <StackPanel x:Name="DisplayDrone" Visibility="Collapsed">
+        <StackPanel x:Name="DisplayDrone" HorizontalAlignment="Center"  Visibility="Collapsed" DataContext="droneToList">
+            
             <Label x:Name="DroneDitails" Content="Drone ditales" HorizontalAlignment="Center"  Margin="0,20,0,10" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
             <TextBlock x:Name="IdBlock"  Text="ID: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox x:Name="DroneIdBox"  Text="{Binding Path = Id}" HorizontalAlignment="Center" Width="150" IsEnabled="False" />
-            
+
             <TextBlock x:Name="ModelBlock" Text="Model: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150"/>
             <TextBox  x:Name="DroneModelBox" Text="{Binding Path = Model}" HorizontalAlignment="Center" Width="150"/>
-            
+
             <TextBlock x:Name="WeightBlock"  Text="Weight: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox  x:Name="WeightBox" Text="{Binding Path = Weight}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
-            
+
             <TextBlock x:Name="StatusBlock" Text="Status: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox  x:Name="StatusBox" Text="{Binding Path = Status}" HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
-            
+
             <TextBlock x:Name="BatteryBlock" Text="Battery charge: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
-            <TextBox x:Name="BatteryBlockTextBox" Width="{Binding BatteryNum}" IsEnabled="False"
-                Text="{Binding BatteryNum}" TextAlignment="Center" BorderBrush="Black"
-                     BorderThickness="0.2" Background="{Binding  Bcolor}" >
-            </TextBox>
+            <Border Background="White" BorderBrush="Black" Width="100"  CornerRadius="6"
+                    SnapsToDevicePixels="True"  HorizontalAlignment="Center">
+                <TextBox x:Name="BatteryBlockTextBox" Width="{Binding BatteryNum}" HorizontalAlignment="Left" HorizontalContentAlignment="Left"  IsEnabled="False"
+                        Text="{Binding BatteryNum}" TextAlignment="Center" BorderBrush="Black"
+                             BorderThickness="0.2" Background="{Binding  Bcolor}" >
+                </TextBox>
+            </Border>
 
             <TextBlock x:Name="LocationBlock" Text="The location: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox  x:Name="LocationBox"   HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
-            
+
             <TextBlock x:Name="DeliveredParcelIdBlock" Text="Id of the deliverd parcel: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <TextBox  x:Name="DeliveredParcelIdBox" Text="{Binding Path = DeliveredParcelId}" HorizontalAlignment="Center" Width="150" IsEnabled="True" MouseDoubleClick="DeliveredParcelIdBox_DClick"/>
             
-            <Label x:Name="Options" Content="Update options"  HorizontalAlignment="Center"  Margin="0,20,0,2" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
             
-            <StackPanel x:Name="UpdatePanel" Visibility="Visible">
-                <Button x:Name="UpdateModel" Grid.Column="0" BorderBrush="Bisque" BorderThickness="2" Click="UpdateModel_Click" Width="224">
-                    <TextBlock Text="Update Drone Model" TextWrapping="Wrap" Cursor="Hand" />
-                </Button>
-            </StackPanel>
-
-            <StackPanel x:Name="SendDroneToChargePanel" Visibility="Collapsed">
-                <Button x:Name="SendDroneToCharge"  BorderBrush="Bisque" BorderThickness="2" Width="224" Click="SendDroneToCharge_Click">
-                    <TextBlock Text="SendDroneToCharge" TextWrapping="Wrap" Cursor="Hand" />
-                </Button>
-            </StackPanel>
-
-            <StackPanel x:Name="EndChargePanel" Visibility="Collapsed">
-                <Button x:Name="EndCharge" BorderBrush="Bisque" BorderThickness="2" Width="224" Click="EndCharge_Click">
-                    <TextBlock Text="EndCharge" TextWrapping="Wrap" Cursor="Hand" />
-                </Button>
-            </StackPanel>
-
-            <StackPanel x:Name="ScheduleParcelToDronePanel" Visibility="Collapsed">
-                <Button x:Name="ScheduleParcelToDrone" BorderBrush="Bisque"  BorderThickness="2" Width="224" Click="ScheduleParcelToDrone_Click" >
-                    <TextBlock Text="ScheduleParcelToDrone" TextWrapping="Wrap" Cursor="Hand" />
-                </Button>
-            </StackPanel>
-
-            <StackPanel x:Name="PickUpParcelPanel" Visibility="Collapsed">
-                <Button x:Name="PickUpParcel"  BorderBrush="Bisque" BorderThickness="2" Width="224" Click="PickUpParcel_Click">
-                    <TextBlock Text="PickUpParcel" TextWrapping="Wrap" Cursor="Hand" />
-                </Button>
-            </StackPanel>
-
-            <StackPanel x:Name="DeliverParcelPanel" Visibility="Collapsed">
-                <Button x:Name="DeliverParcel"  BorderBrush="Bisque" BorderThickness="2" Width="224" Click="DeliverParcel_Click">
-                    <TextBlock Text="DeliverParcel" TextWrapping="Wrap" Cursor="Hand" />
-                </Button>
-            </StackPanel>
+            <Label x:Name="Options" Content="Update options"  HorizontalAlignment="Center"  Margin="0,20,0,2" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+        <StackPanel x:Name="UpdatePanel" Visibility="Visible">
+            <Button x:Name="UpdateModel" Grid.Column="0" BorderBrush="Bisque" BorderThickness="2" Click="UpdateModel_Click" Width="224">
+                <TextBlock Text="Update Drone Model" TextWrapping="Wrap" Cursor="Hand" />
+            </Button>
         </StackPanel>
-        
+
+        <StackPanel x:Name="SendDroneToChargePanel" Visibility="Collapsed">
+            <Button x:Name="SendDroneToCharge"  BorderBrush="Bisque" BorderThickness="2" Width="224" Click="SendDroneToCharge_Click">
+                <TextBlock Text="SendDroneToCharge" TextWrapping="Wrap" Cursor="Hand" />
+            </Button>
+        </StackPanel>
+
+        <StackPanel x:Name="EndChargePanel" Visibility="Collapsed">
+            <Button x:Name="EndCharge" BorderBrush="Bisque" BorderThickness="2" Width="224" Click="EndCharge_Click">
+                <TextBlock Text="EndCharge" TextWrapping="Wrap" Cursor="Hand" />
+            </Button>
+        </StackPanel>
+
+        <StackPanel x:Name="ScheduleParcelToDronePanel" Visibility="Collapsed">
+            <Button x:Name="ScheduleParcelToDrone" BorderBrush="Bisque"  BorderThickness="2" Width="224" Click="ScheduleParcelToDrone_Click" >
+                <TextBlock Text="ScheduleParcelToDrone" TextWrapping="Wrap" Cursor="Hand" />
+            </Button>
+        </StackPanel>
+
+        <StackPanel x:Name="PickUpParcelPanel" Visibility="Collapsed">
+            <Button x:Name="PickUpParcel"  BorderBrush="Bisque" BorderThickness="2" Width="224" Click="PickUpParcel_Click">
+                <TextBlock Text="PickUp Parcel" TextWrapping="Wrap" Cursor="Hand" />
+            </Button>
+        </StackPanel>
+
+        <StackPanel x:Name="DeliverParcelPanel" Visibility="Collapsed">
+            <Button x:Name="DeliverParcel"  BorderBrush="Bisque" BorderThickness="2" Width="224" Click="DeliverParcel_Click">
+                <TextBlock Text="Deliver Parcel" TextWrapping="Wrap" Cursor="Hand" />
+            </Button>
+        </StackPanel>
+            
+        </StackPanel>
+
+
+
+
+        <DockPanel x:Name="Demo" VerticalAlignment="Bottom" >
+            <mah:ToggleSwitch x:Name="Switch" Header="--Simulation--" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" Width="100" Margin="112,0,0,0">
+                <mah:ProgressRing  Width="28" VerticalAlignment="Bottom" x:Name="progress" IsActive="False" Height="27" HorizontalAlignment="Right" Foreground="{DynamicResource AccentColorBrush}"/>
+            </mah:ToggleSwitch>
+        </DockPanel>
         <Button x:Name="CancelButton2" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,2"  Height="26" Width="52" Click="CancelButton_Click" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" />
         <Button x:Name="DeleteDrone" Content="Delete!" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="2,0,0,2"  Height="26" Width="52" Click="DeleteDrone_Click" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" />
 

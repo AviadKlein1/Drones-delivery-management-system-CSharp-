@@ -64,7 +64,7 @@ namespace BlApi
                     if (v == null)
                         throw new System.Exception("empty list");
                     List<DroneInCharge> temp = new();
-                    int tempBattery;
+                    double tempBattery;
                     foreach (var (item, Ditem) in from item in v
                                                   from Ditem in dronesList
                                                   where item.DroneId == Ditem.Id && item.StationId == stationId

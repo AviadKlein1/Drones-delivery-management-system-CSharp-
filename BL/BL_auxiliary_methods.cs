@@ -162,13 +162,41 @@ namespace BlApi
 
                 return false;
             }
-
+            public void DalPickUpParcel(int droneId,int parcelId)
+            {
+                dal.PickUpParcel(droneId, parcelId);
+            }
+            public void DalDeliverParcel(int droneId, int parcelId)
+            {
+                dal.DeliverParcel(droneId, parcelId);
+            }
+            public void DalDecreaseChargeSlot(int stationId)
+            {
+                dal.DecreaseChargeSlot(stationId);
+            }
+            public void DalAddDroneCharge(int droneId,int StationId, DateTime time)
+            {
+                dal.AddDroneCharge(droneId, StationId, time);
+            }
+            public DalApi.DO.Station DalNearestReachableChargeSlot(DalApi.DO.Location itemLocation,int droneId)
+            {
+                return NearestReachableChargeSlot(itemLocation, droneId);
+            }
+            public double BlBatteryRequirementForVoyage(int droneId,double distance)
+            {
+                var b = BatteryRequirementForVoyage(droneId, distance);
+                return b;
+            }
+            public double DalGetDistance(DalApi.DO.Location a, DalApi.DO.Location b)
+            {
+                return dal.GetDistance(a, b);
+            }
             /// <summary>
             /// search for parcel's sender location (giving parcel's id)
             /// </summary>
             /// <param name="parcelId"></param>
             /// return location type (longitude, latitude)
-            internal DalApi.DO.Location SenderLocation(int parcelId)
+            public DalApi.DO.Location SenderLocation(int parcelId)
             {
                 lock (dal)
                 {
@@ -195,7 +223,7 @@ namespace BlApi
             /// </summary>
             /// <param name="parcelId"></param>
             /// <returns></returns>
-            internal DalApi.DO.Location ReceiverLocation(int parcelId)
+            public DalApi.DO.Location ReceiverLocation(int parcelId)
             {
                 lock (dal)
                 {
@@ -364,9 +392,9 @@ namespace BlApi
             /// </summary>
             /// <param name="myDroneId"></param>
             /// <returns></returns>
-            internal int ChargingLevel(int myDroneId)
+            internal double ChargingLevel(int myDroneId)
             {
-                int b = 0;
+                double b = 0;
                 var v = dronesList;
                 foreach (var item in from item in v
                                      where item.Id == myDroneId
@@ -462,7 +490,7 @@ namespace BlApi
                     List<DroneToList> myDrones = dronesList;
                     DalApi.DO.MyEnums.WeightCategory myDroneWeight = new();
                     DalApi.DO.Location myDroneLocation = new();
-                    int myDroneBattery = 0;
+                    double myDroneBattery = 0;
                     foreach (var item in from DroneToList item in myDrones
                                          where item.Id == droneId
                                          select item)
@@ -584,7 +612,7 @@ namespace BlApi
             /// <param name="notSuatableList"></param>
             /// <returns></returns>
             internal bool IsPossibleVoyage(DalApi.DO.Parcel tempParcel,
-                DalApi.DO.Location myDroneLocation, int myDroneBattery)
+                DalApi.DO.Location myDroneLocation, double myDroneBattery)
             {
 
                 lock (dal)
@@ -646,6 +674,17 @@ namespace BlApi
                     //return parcel
                     return temp;
                 }
+            }
+
+            internal double ForTickLatt(double startLatt, double endLatt)
+            {
+                var currectLatt = Math.Abs(endLatt - startLatt);
+                return currectLatt;
+            }
+            internal double ForTickLong( double startLongi, double endLongi)
+            {
+                var currectLong = (endLongi - startLongi);
+                return currectLong;
             }
         }
     }

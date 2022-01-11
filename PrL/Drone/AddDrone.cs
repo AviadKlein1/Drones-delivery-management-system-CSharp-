@@ -14,40 +14,466 @@ using ControlzEx.Theming;
 using System.Windows.Media.Imaging;
 using System.ComponentModel;
 using BlApi;
+using System.Threading;
 
 namespace PrL
 {
     public partial class AddDrone : MetroWindow
     {
-        System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
+        //System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
         BlApi.BO.BL bl;
         BlApi.BO.Drone drone = new();
         DroneModelToList droneToList = new();
-        int myDroneId;
-        List<DroneModelToList> Mlist = new();
-        List<BlApi.BO.DroneToList> list = new();
+        internal BackgroundWorker DroneSimultor;
 
-        private void Timer_Click(object sender, EventArgs e)
+        public AddDrone(BlApi.BO.BL mainBl)
         {
-            #region updateTimer
-            list = bl.GetDrones();
-            Mlist.Clear();
-            foreach (var item in list)
+
+            ThemeManager.Current.ChangeTheme(this, "Light.blue");
+            InitializeComponent();
+            Title = "Add new drone";
+            bl = mainBl;
+
+            AddWeightselectorCombo.ItemsSource = Enum.GetValues(typeof(DalApi.DO.MyEnums.WeightCategory));
+            var StationsNameId = bl.GetStationsList(BlApi.BO.BL.AllStations).Select(item => item.Id + " " + item.Name);
+            AddIdOfFirstChargeSelectorCombo.ItemsSource = StationsNameId;
+            AddNewDrone.Visibility = Visibility.Visible;
+        }
+        public AddDrone(BlApi.BO.BL mainBl, DroneModelToList mainDrone)
+        {
+            //Timer.Tick += new EventHandler(Timer_Click);
+            //Timer.Interval = new TimeSpan(0, 0, 1);
+            //Timer.Start();
+            ThemeManager.Current.ChangeTheme(this, "light.blue");
+            InitializeComponent();
+            Title = "Drone Details";
+            bl = mainBl;
+            droneToList = mainDrone;
+            Load(droneToList.Id);
+            DisplayDrone.Visibility = Visibility.Visible;
+
+        }
+        private void Submit_Click(object sender, RoutedEventArgs e)
+        {
+            try
             {
-                DroneModelToList temp = new();
-                temp.Id = item.Id;
-                temp.BatteryNum = item.Battery;
-                temp.Bcolor = percentToColor(item.Battery);
-                temp.LeftMargin = new Thickness(item.Battery, 0, 0, 0);
-                temp.DeliveredParcelId = item.DeliveredParcelId;
-                temp.Location = item.Location;
-                temp.Model = item.Model;
-                temp.Status = item.Status;
-                temp.Weight = item.Weight;
-                Mlist.Add(temp);
+                drone.Id = int.Parse(AddDroneIdBox.Text);
+                drone.Model = (string)AddDroneModelBox.Text;
+                drone.Weight = (DalApi.DO.MyEnums.WeightCategory)AddWeightselectorCombo.SelectedItem;
+                var StationsNameId = bl.GetStationsList(BlApi.BO.BL.AllStations).Select(item => item.Id);
+                drone.FirstChargeStationId = StationsNameId.ElementAt(AddIdOfFirstChargeSelectorCombo.SelectedIndex);
+                bl.AddDrone(drone);
             }
-            foreach (var Mitem in Mlist)
-                if (Mitem.Id == myDroneId) droneToList = Mitem;
+            catch (System.NullReferenceException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+
+            MessageBox.Show("success!");
+            Load(droneToList.Id);
+            Close();
+        }
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+        private void DeleteDrone_Click(object sender, RoutedEventArgs e)
+        {
+            bl.DeleteDrone(bl.DisplayDrone(droneToList.Id));
+            Load(droneToList.Id);
+            Close();
+        }
+        private void UpdateModel_Click(object sender, RoutedEventArgs e)
+        {
+            droneToList.Model = (string)DroneModelBox.Text;
+            bl.UpdateDrone(droneToList.Id, droneToList.Model);
+            MessageBox.Show("success!");
+            Load(droneToList.Id);
+
+        }
+        private void SendDroneToCharge_Click(object sender, RoutedEventArgs e)
+        {
+            if (bl.ChargeDrone(droneToList.Id)) MessageBox.Show("success!");
+            else MessageBox.Show("Faild!");
+            Load(droneToList.Id);
+        }
+        private void EndCharge_Click(object sender, RoutedEventArgs e)
+        {
+            if (bl.ReleaseDroneFromCharge(droneToList.Id)) MessageBox.Show("success!");
+            else MessageBox.Show("failed!");
+            Load(droneToList.Id);
+
+        }
+        private void ScheduleParcelToDrone_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.ScheduleParcelToDrone(droneToList.Id);
+                Load(droneToList.Id);
+            }
+            catch (Exception ex)
+            {
+                _ = MessageBox.Show(ex.Message);
+                return;
+            }
+            MessageBox.Show("success!");
+        }
+        private void PickUpParcel_Click(object sender, RoutedEventArgs e)
+        {
+            if (bl.PickUpParcel(droneToList.Id)) MessageBox.Show("success!");
+            else MessageBox.Show("failed!");
+            Load(droneToList.Id);
+
+        }
+        private void DeliverParcel_Click(object sender, RoutedEventArgs e)
+        {
+            if (bl.DeliverParcel(droneToList.Id)) MessageBox.Show("success!");
+            else MessageBox.Show("Faild!");
+            Load(droneToList.Id);
+
+        }
+        private void DeliveredParcelIdBox_DClick(object sender, RoutedEventArgs e)
+        {
+            var v = int.Parse(DeliveredParcelIdBox.Text);
+
+            try
+            {
+                MessageBox.Show(bl.DisplayDeliveredParcel(droneToList.Id).ToString());
+            }
+            catch (Exception ex)
+            {
+                _ = MessageBox.Show(ex.Message);
+                return;
+            }
+        }
+        public SolidColorBrush percentToColor(double battery)
+        {
+            SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+
+            double r, g;
+            {
+
+                g = ((int)battery * (2.55));
+                r = 255 - g;
+            }
+            mySolidColorBrush.Color = Color.FromArgb(255, (byte)r, (byte)g, 0);
+
+            return mySolidColorBrush;
+        }
+        //public void PlaySimulator(int droneId, Action Worker_ProgressChanged, Func<bool> IsTimeRun)
+        //{
+            
+        //    //        bl.ScheduleParcelToDrone(droneId);
+        //    //        Load(droneId);
+        //    //        SimPickUpParcel(droneId, DroneSpeed);
+        //    //        Load(droneId);
+        //    //        SimDeliverParcel(droneId, DroneSpeed);
+        //    //        Load(droneId);
+        //    //        if (droneToList.BatteryNum < 40)SimChargeDrone(droneId, DroneSpeed);
+        //    //    catch(Exception ex)
+        //    //        Switch.IsOn = false;
+        //    //        progress.IsActive = false;
+        //    //        progress.Visibility = Visibility.Collapsed;
+        //    //        DeleteDrone.Visibility = Visibility.Visible;
+        //    //        DisplayDrone.IsEnabled = true;
+        //    //        MessageBox.Show(ex.Message);
+       
+        //}
+        public bool SimPickUpParcel(int droneId, double _droneSpeed)
+        {
+            BlApi.BO.DroneToList dtl = new();
+            double earlyBattery = 0;
+            double droneSpeed = _droneSpeed;
+            double tick = 0.5;
+            double distance = 0;
+            bool found = false;
+            bool droneExistFlag = false;
+            var v = bl.GetDrones();
+            int idOfThisParcel = 0;
+            DalApi.DO.Location ourSenderLocation = new();
+
+            foreach (var item in
+            //search drone
+            from item in v
+            where item.Id == droneId
+            select item)
+            {
+                idOfThisParcel = item.DeliveredParcelId;
+                droneExistFlag = true;
+            }
+
+            if (droneExistFlag == false)
+                throw new Exception($"wrong id: {droneId}");
+            if (bl.ScheduledButNotPickedUp(idOfThisParcel))
+            {
+                var parcelsList = bl.GetParcelsList(BlApi.BO.BL.AllParcels);
+                foreach (var item in from item in parcelsList//find parcel
+                                     where item.Id == idOfThisParcel
+                                     select item)
+                {
+                    ourSenderLocation = bl.SenderLocation(item.Id);
+                    //update parcel
+                    bl.DalPickUpParcel(droneId, item.Id);
+                    found = true;
+                    //update drone
+                    BlApi.BO.DroneToList temp = new();
+
+                    for (int i = 0; i < v.Count; i++)
+                    {
+                        BlApi.BO.DroneToList dItem = v[i];
+                        if (dItem.Id == droneId)
+                        {
+                            earlyBattery = dItem.Battery;
+                            DalApi.DO.Location earlyDroneLocation = new(dItem.Location.Longitude, dItem.Location.Latitude);
+                            var senderLocat = new BlApi.BO.Location(ourSenderLocation);
+                            distance = bl.DalGetDistance(earlyDroneLocation, ourSenderLocation) / 100;
+
+                            double time = (distance / droneSpeed);//time = way/speed represented in seconds
+                            var TicksNum = time / tick;
+                            var DistanceForTick = (droneSpeed * tick);
+                            var BatteryforAllJourny = (int)bl.BlBatteryRequirementForVoyage(droneId, distance * 100);
+                            var BatteryForTick = BatteryforAllJourny / TicksNum;
+                            for (int k = 0; k < (int)TicksNum; k++)
+                            {
+                                temp.Id = dItem.Id;
+                                temp.Model = dItem.Model;
+                                temp.Status = dItem.Status;
+                                temp.Battery = dItem.Battery;
+                                temp.Weight = dItem.Weight;
+                                temp.DeliveredParcelId = item.Id;
+                                //uodate location
+                                temp.Location = new BlApi.BO.Location(dItem.Location.Latitude + Math.Abs(dItem.Location.Latitude - ourSenderLocation.Latitude),
+                                    dItem.Location.Longitude + Math.Abs(dItem.Location.Longitude - ourSenderLocation.Longitude));
+                                ////update battery
+                                temp.Battery = dItem.Battery - BatteryForTick;
+                                if (temp.Battery < 0) temp.Battery = 0;
+                                v[i] = temp;
+                                Load(temp);
+                            }
+                            temp.Id = dItem.Id;
+                            temp.Model = dItem.Model;
+                            temp.Battery = dItem.Battery;
+                            temp.Status = dItem.Status;
+                            temp.Weight = dItem.Weight;
+                            temp.DeliveredParcelId = item.Id;
+                            //uodate location
+                            temp.Location = new BlApi.BO.Location(ourSenderLocation.Latitude, ourSenderLocation.Longitude);
+
+                            ////update battery
+                            temp.Battery = earlyBattery - bl.BlBatteryRequirementForVoyage(droneId, distance);
+                            if (temp.Battery < 0) temp.Battery = 0;
+                            v[i] = temp;
+                            dtl = temp;
+
+                        }
+                    }
+                        //Console.WriteLine("not our parcel");
+                }
+            }
+            return found;
+        }
+        public bool SimDeliverParcel(int droneId, double _droneSpeed)
+        {
+            double earlyBattery = 0;
+            double droneSpeed = _droneSpeed;
+            double tick = 0.5;
+            double distance = 0;
+            bool flag = false;
+            var droneExistFlag = false;
+            var v = bl.GetDrones();
+            int idOfThisParcel = 0;
+            DalApi.DO.Location ourReciverLocation = new();
+            foreach (var item in
+            //search drone
+            from item in v
+            where item.Id == droneId
+            select item)
+            {
+                idOfThisParcel = item.DeliveredParcelId;
+                droneExistFlag = true;
+            }
+
+            if (droneExistFlag == false)
+                throw new Exception( $"wrong id: { droneId }");
+            if (!bl.PickedUpButNotDelivered(idOfThisParcel))
+                Console.WriteLine("this parcel is not in the right status\n");
+            var parcelsList = bl.GetParcelsList(BlApi.BO.BL.AllParcels);
+            foreach (var item in from item in parcelsList//find our parcel
+                                 where item.Id == idOfThisParcel
+                                 select item)
+            {
+                ourReciverLocation = bl.ReceiverLocation(item.Id);
+                //update parcel
+                bl.DalDeliverParcel(droneId, item.Id);
+                flag = true;
+                //update drone
+                BlApi.BO.DroneToList temp = new();
+
+                for (int i = 0; i < v.Count; i++)
+                {
+                    BlApi.BO.DroneToList dItem = v[i];
+                    if (dItem.Id == droneId)
+                    {
+                        earlyBattery = dItem.Battery;
+                        DalApi.DO.Location earlyDroneLocation = new(dItem.Location.Longitude, dItem.Location.Latitude);
+                        var senderLocat = new BlApi.BO.Location(ourReciverLocation);
+                        distance = bl.DalGetDistance(earlyDroneLocation, ourReciverLocation);
+                        double time = distance / droneSpeed;//time = way/speed represented in seconds
+                        var TicksNum = time / tick;
+                        var DistanceForTick = droneSpeed * 0.5;
+                        var BatteryforAllJourny = (int)bl.BlBatteryRequirementForVoyage(droneId, distance);
+                        var BatteryForTick = BatteryforAllJourny / TicksNum;
+
+                        for (int k = 0; k < (int)TicksNum; k++)
+                        {
+                            temp.Id = dItem.Id;
+                            temp.Model = dItem.Model;
+                            temp.Status = dItem.Status;
+                            temp.Battery = dItem.Battery;
+
+                            temp.Weight = dItem.Weight;
+                            temp.DeliveredParcelId = item.Id;
+                            //uodate location
+                            temp.Location = new BlApi.BO.Location(dItem.Location.Latitude + Math.Abs(dItem.Location.Latitude - ourReciverLocation.Latitude),
+                                dItem.Location.Longitude + Math.Abs(dItem.Location.Longitude - ourReciverLocation.Longitude));
+
+                            ////update battery
+                            temp.Battery = dItem.Battery - BatteryForTick;
+                            if (temp.Battery < 0) temp.Battery = 0;
+                            v[i] = temp;
+                            //Thread.CurrentThread.Join(50);
+                            Load(temp);
+
+                        }
+                        temp.Id = dItem.Id;
+                        temp.Model = dItem.Model;
+                        temp.Battery = dItem.Battery;
+                        temp.Status = dItem.Status;
+                        temp.Weight = dItem.Weight;
+                        temp.DeliveredParcelId = item.Id;
+                        //uodate location
+                        temp.Location = new BlApi.BO.Location(ourReciverLocation.Latitude, ourReciverLocation.Longitude);
+                        ////update battery
+                        temp.Battery = earlyBattery - bl.BlBatteryRequirementForVoyage(droneId, distance);
+                        if (temp.Battery < 0) temp.Battery = 0;
+                        v[i] = temp;
+                    }
+                }
+            }
+            return flag;
+        }
+        public bool SimChargeDrone(int droneId, double _droneSpeed)
+        {
+           
+            BlApi.BO.DroneToList temp = new();
+            bool found = false;
+            double droneSpeed = _droneSpeed;
+            double earlyBattery = 0;
+            double tick = 0.5;
+            double distance = 0;
+            var v = bl.GetDrones();
+            DalApi.DO.Location itemLocation = new DalApi.DO.Location();
+            //search drone
+            foreach (var item in v)
+            {
+                if (item.Id == droneId)
+                {
+                    itemLocation = new(item.Location.Longitude, item.Location.Latitude);
+                    found = true;
+                }
+            }
+
+            var tempStation = bl.DalNearestReachableChargeSlot(itemLocation, droneId);
+            //if all stations are occupied
+            if (tempStation.Id == 0)
+            {
+                throw new Exception("not available station to charge drone\n");
+            }
+            // send drone to charge
+            bl.DalDecreaseChargeSlot(tempStation.Id);
+            //
+            for (int i = 0; i < v.Count; i++)
+            {
+                BlApi.BO.DroneToList dItem = v[i];
+                if (dItem.Id == droneId)
+                {
+                    earlyBattery = dItem.Battery;
+                    DalApi.DO.Location earlyDroneLocation = new(dItem.Location.Longitude, dItem.Location.Latitude);
+                    var chargeSlotLocation = new DalApi.DO.Location(tempStation.Location.Latitude, tempStation.Location.Longitude);
+                    distance = bl.DalGetDistance(earlyDroneLocation, chargeSlotLocation);
+
+                    var time = distance / droneSpeed;//time = way/speed represented in seconds
+                    var TicksNum = time / tick;
+                    var DistanceForTick = droneSpeed * 0.5;
+                    var BatteryforAllJourny = (int)bl.BlBatteryRequirementForVoyage(droneId, distance);
+                    var BatteryForTick = BatteryforAllJourny / TicksNum;
+                    for (int k = 0; k < (int)TicksNum; k++)
+                    {
+                        temp.Id = dItem.Id;
+                        temp.Model = dItem.Model;
+                        temp.Status = BlApi.BO.MyEnums.DroneStatus.maintenance;
+                        temp.Battery = dItem.Battery;
+
+                        temp.Weight = dItem.Weight;
+                        temp.DeliveredParcelId = dItem.Id;
+                        //uodate location
+
+                        temp.Location = new BlApi.BO.Location(dItem.Location.Latitude + Math.Abs(dItem.Location.Latitude - chargeSlotLocation.Latitude),
+                            dItem.Location.Latitude + Math.Abs(dItem.Location.Longitude - chargeSlotLocation.Longitude));
+                        ////update battery
+                        temp.Battery = dItem.Battery - BatteryForTick;
+                        if (temp.Battery < 0) temp.Battery = 0;
+                        v[i] = temp;
+                    }
+                    temp.Id = dItem.Id;
+                    temp.Model = dItem.Model;
+                    temp.Status = dItem.Status;
+                    temp.Battery = dItem.Battery;
+                    temp.Weight = dItem.Weight;
+                    temp.DeliveredParcelId = dItem.DeliveredParcelId;
+                    //uodate location
+                    temp.Location = new BlApi.BO.Location(tempStation.Location.Latitude, tempStation.Location.Longitude);
+
+                    ////update battery
+                    temp.Battery = earlyBattery - bl.BlBatteryRequirementForVoyage(droneId, distance);
+                    if (temp.Battery < 0) temp.Battery = 0;
+                    v[i] = temp;
+                    Load(temp);
+
+                }
+
+                bl.DalAddDroneCharge(droneId, tempStation.Id, DateTime.Now);
+            }
+            return found;
+        }
+        public void Load(int dId)
+        {
+            var v = bl.GetDrones();
+            DroneModelToList temp = new DroneModelToList();
+            foreach (var item in v)
+            {
+                if (item.Id == dId)
+                {
+
+                    temp.Id = item.Id;
+                    temp.BatteryNum = item.Battery;
+                    temp.Bcolor = percentToColor(item.Battery);
+                    temp.LeftMargin = new Thickness(item.Battery, 0, 0, 0);
+                    temp.DeliveredParcelId = item.DeliveredParcelId;
+                    temp.Location = item.Location;
+                    temp.Model = item.Model;
+                    temp.Status = item.Status;
+                    temp.Weight = item.Weight;
+                }
+            }
+            droneToList = temp;
             DisplayDrone.DataContext = droneToList;
             double minLat = (double)(droneToList.Location.Latitude - (int)droneToList.Location.Latitude) * 60;
             double minLon = (double)(droneToList.Location.Longitude - (int)droneToList.Location.Longitude) * 60;
@@ -86,36 +512,23 @@ namespace PrL
                     PickUpParcelPanel.Visibility = Visibility.Visible;
                     DeliverParcelPanel.Visibility = Visibility.Collapsed;
                 }
-            } 
-            #endregion
+            }
+            this.InitializeComponent();
         }
-        public AddDrone(BlApi.BO.BL mainBl)
+        public void Load(BlApi.BO.DroneToList item)
         {
-
-            ThemeManager.Current.ChangeTheme(this, "Light.blue");
-            InitializeComponent();
-            Title = "Add new drone";
-            bl = mainBl;
-
-            AddWeightselectorCombo.ItemsSource = Enum.GetValues(typeof(DalApi.DO.MyEnums.WeightCategory));
-            var StationsNameId = bl.GetStationsList(BlApi.BO.BL.AllStations).Select(item => item.Id + " " + item.Name);
-            AddIdOfFirstChargeSelectorCombo.ItemsSource = StationsNameId;
-            AddNewDrone.Visibility = Visibility.Visible;
-        }
-        public AddDrone(BlApi.BO.BL mainBl, DroneModelToList mainDrone)
-        {
-            Timer.Tick += new EventHandler(Timer_Click);
-            Timer.Interval = new TimeSpan(0, 0, 1);
-            Timer.Start();
-            ThemeManager.Current.ChangeTheme(this, "light.blue");
-            InitializeComponent();
-            Title = "Drone Diatels";
-            bl = mainBl;
-            droneToList = mainDrone;
-            myDroneId = droneToList.Id;
+            DroneModelToList temp = new DroneModelToList();
+            temp.Id = item.Id;
+            temp.BatteryNum = item.Battery;
+            temp.Bcolor = percentToColor(item.Battery);
+            temp.LeftMargin = new Thickness(item.Battery, 0, 0, 0);
+            temp.DeliveredParcelId = item.DeliveredParcelId;
+            temp.Location = item.Location;
+            temp.Model = item.Model;
+            temp.Status = item.Status;
+            temp.Weight = item.Weight;
+            droneToList = temp;
             DisplayDrone.DataContext = droneToList;
-            DisplayDrone.Visibility = Visibility.Visible;
-
             double minLat = (double)(droneToList.Location.Latitude - (int)droneToList.Location.Latitude) * 60;
             double minLon = (double)(droneToList.Location.Longitude - (int)droneToList.Location.Longitude) * 60;
             double secLat = (double)(minLat - (int)minLat) * 60;
@@ -126,128 +539,93 @@ namespace PrL
             {
                 SendDroneToChargePanel.Visibility = Visibility.Visible;
                 ScheduleParcelToDronePanel.Visibility = Visibility.Visible;
+                EndChargePanel.Visibility = Visibility.Collapsed;
+                PickUpParcelPanel.Visibility = Visibility.Collapsed;
+                DeliverParcelPanel.Visibility = Visibility.Collapsed;
             }
             if (droneToList.Status == BlApi.BO.MyEnums.DroneStatus.maintenance)
             {
                 EndChargePanel.Visibility = Visibility.Visible;
+                SendDroneToChargePanel.Visibility = Visibility.Collapsed;
+                ScheduleParcelToDronePanel.Visibility = Visibility.Collapsed;
+                PickUpParcelPanel.Visibility = Visibility.Collapsed;
+                DeliverParcelPanel.Visibility = Visibility.Collapsed;
             }
             if (droneToList.Status == BlApi.BO.MyEnums.DroneStatus.delivery)
             {
-                if (bl.PickedUpButNotDelivered(droneToList.DeliveredParcelId)) DeliverParcelPanel.Visibility = Visibility.Visible;
-                else PickUpParcelPanel.Visibility = Visibility.Visible;
+                EndChargePanel.Visibility = Visibility.Collapsed;
+                SendDroneToChargePanel.Visibility = Visibility.Collapsed;
+                ScheduleParcelToDronePanel.Visibility = Visibility.Collapsed;
+                if (bl.PickedUpButNotDelivered(droneToList.DeliveredParcelId))
+                {
+                    PickUpParcelPanel.Visibility = Visibility.Collapsed;
+                    DeliverParcelPanel.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    PickUpParcelPanel.Visibility = Visibility.Visible;
+                    DeliverParcelPanel.Visibility = Visibility.Collapsed;
+                }
             }
         }
 
-
-        private void Submit_Click(object sender, RoutedEventArgs e)
+        private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-            try
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            
+            if (toggleSwitch.IsOn == true)
             {
-                drone.Id = int.Parse(AddDroneIdBox.Text);
-                drone.Model = (string)AddDroneModelBox.Text;
-                drone.Weight = (DalApi.DO.MyEnums.WeightCategory)AddWeightselectorCombo.SelectedItem;
-                var StationsNameId = bl.GetStationsList(BlApi.BO.BL.AllStations).Select(item => item.Id);
-                drone.FirstChargeStationId = StationsNameId.ElementAt(AddIdOfFirstChargeSelectorCombo.SelectedIndex);
-                bl.AddDrone(drone);
+                Simultor(); //call to function who creates the process.
+                DroneSimultor.RunWorkerAsync(); //Run the process.
+                progress.IsActive = true;
+                progress.Visibility = Visibility.Visible;
+                DeleteDrone.Visibility = Visibility.Hidden;
             }
-            catch (System.NullReferenceException ex)
+            else
             {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-
-
-            MessageBox.Show("success!");
-            Close();
-        }
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-        private void DeleteDrone_Click(object sender, RoutedEventArgs e)
-        {
-            if (droneToList.Status == BlApi.BO.MyEnums.DroneStatus.delivery) throw new Exception("cannot delete, drone at deliver");
-            bl.DeleteDrone(bl.DisplayDrone(droneToList.Id));
-            Close();
-        }
-
-        private void UpdateModel_Click(object sender, RoutedEventArgs e)
-        {
-            droneToList.Model = (string)DroneModelBox.Text;
-            bl.UpdateDrone(droneToList.Id, droneToList.Model);
-            MessageBox.Show("success!");
-
-        }
-        private void SendDroneToCharge_Click(object sender, RoutedEventArgs e)
-        {
-            if (bl.ChargeDrone(droneToList.Id)) MessageBox.Show("success!");
-            else MessageBox.Show("Faild!");
-        }
-
-        private void EndCharge_Click(object sender, RoutedEventArgs e)
-        {
-            if (bl.ReleaseDroneFromCharge(droneToList.Id)) MessageBox.Show("success!");
-            else MessageBox.Show("failed!");
-        }
-
-        private void ScheduleParcelToDrone_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                bl.ScheduleParcelToDrone(droneToList.Id);
-            }
-            catch (Exception ex)
-            {
-                _ = MessageBox.Show(ex.Message);
-                return;
-            }
-            MessageBox.Show("success!");
-        }
-
-        private void PickUpParcel_Click(object sender, RoutedEventArgs e)
-        {
-            if (bl.PickUpParcel(droneToList.Id)) MessageBox.Show("success!");
-            else MessageBox.Show("failed!");
-        }
-
-        private void DeliverParcel_Click(object sender, RoutedEventArgs e)
-        {
-            if (bl.DeliverParcel(droneToList.Id)) MessageBox.Show("success!");
-            else MessageBox.Show("Faild!");
-        }
-        private void DeliveredParcelIdBox_DClick(object sender, RoutedEventArgs e)
-        {
-            var v = int.Parse(DeliveredParcelIdBox.Text);
-
-            try
-            {
-                MessageBox.Show(bl.DisplayDeliveredParcel(droneToList.Id).ToString());
-            }
-            catch (Exception ex)
-            {
-                _ = MessageBox.Show(ex.Message);
-                return;
+                DroneSimultor.CancelAsync();
+                progress.IsActive = false;
+                progress.Visibility = Visibility.Collapsed;
+                DeleteDrone.Visibility = Visibility.Visible;
+                DisplayDrone.IsEnabled = true;
             }
         }
-
-        public SolidColorBrush percentToColor(int battery)
+        public void ReportProgressInSimultor()
         {
-            SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-
-            double r, g;
-            {
-
-                g = (battery * (2.55));
-                r = 255 - g;
-            }
-            mySolidColorBrush.Color = Color.FromArgb(255, (byte)r, (byte)g, 0);
-
-            return mySolidColorBrush;
+            DroneSimultor.ReportProgress(0);
         }
+        public bool IsTimeRun()
+        {
+            return DroneSimultor.CancellationPending;
+        }
+        private void Simultor()
+        {
+            DroneSimultor = new BackgroundWorker() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
+            DroneSimultor.DoWork += DroneSimultor_DoWork; //Operation function.
+            DroneSimultor.ProgressChanged += DroneSimultor_ProgressChanged; //changed function.
+            DroneSimultor.RunWorkerCompleted += DroneSimultor_RunWorkerCompleted;
+        }
+        private void DroneSimultor_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+        }
+        private void DroneSimultor_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            DataContext = droneToList;
+
+            //var v = bl.GetDrones();
+            //BlApi.BO.DroneToList temp = new();
+            //foreach (var item in v)
+            //{
+            //    if (item.Id == droneToList.Id)
+            //        temp = item;
+            //}
+            //this.Load(temp);
+        }
+        private void DroneSimultor_DoWork(object sender, DoWorkEventArgs e)
+        {
+            bl.PlaySimulator(bl, droneToList.Id, ReportProgressInSimultor, IsTimeRun);
+        }
+       
     }
 }
+

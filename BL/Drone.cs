@@ -32,7 +32,7 @@ namespace BlApi
             public string Model { get; set; }
             public DalApi.DO.MyEnums.WeightCategory Weight { get; set; }
             public MyEnums.DroneStatus Status { get; set; }
-            public int Battery { get; set; }
+            public double Battery { get; set; }
             public ParcelInDelivery DeliveredParcel { get; set; }
             public Location Location { get; set; }
             public int FirstChargeStationId { get; set; }
@@ -48,14 +48,14 @@ namespace BlApi
         /// </summary>
         public class DroneInCharge
         {
-            public DroneInCharge(int Id, int Battery, DateTime time)
+            public DroneInCharge(int Id, double Battery, DateTime time)
             {
                 this.Id = Id;
                 this.Battery = Battery;
                 this.StartChargeTime = time;
             }
             public int Id { get; set; }
-            public int Battery { get; set; }
+            public double Battery { get; set; }
             public DateTime StartChargeTime { get; set; }
 
             public override string ToString()
@@ -87,7 +87,7 @@ namespace BlApi
             }
 
             public int Id { get; set; }
-            public int Battery { get; set; }
+            public double Battery { get; set; }
             public Location Location { get; set; }
             public override string ToString()
             {
@@ -104,13 +104,13 @@ namespace BlApi
             public string Model { get; set; }
             public DalApi.DO.MyEnums.WeightCategory Weight { get; set; }
             public MyEnums.DroneStatus Status { get; set; }
-            public int Battery { get; set; }
+            public double Battery { get; set; }
             public Location Location { get; set; }
             public int DeliveredParcelId { get; set; }
             public override string ToString()
             {
                 return $"ID: { Id }\nModel: { Model }\nWeight Category: { Weight }\nStatus: { Status }\nBattery: " +
-                   $" { Battery} \n{Location}\nCurrent parcel's id: { DeliveredParcelId }";
+                   $" { (int)Battery} \n{Location}\nCurrent parcel's id: { DeliveredParcelId }";
             }
         }
     }

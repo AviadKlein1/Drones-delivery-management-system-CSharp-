@@ -4,6 +4,7 @@ using System.Linq;
 using DalApi.DO;
 using DalApi;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace BlApi
 {
@@ -151,9 +152,10 @@ namespace BlApi
                     }
                 }
             }
-            public void PlaySimulator(int droneId, Action ui_Update, Func<bool> stopCheck)
-            {
 
+            public void PlaySimulator(BL _bl,int droneId, Action Worker_ProgressChanged, Func<bool> IsTimeRun)
+            {
+                BlApi.Simulator sim = new(_bl, droneId, Worker_ProgressChanged, IsTimeRun);
             }
         }
     }

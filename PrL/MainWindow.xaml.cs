@@ -528,6 +528,8 @@ namespace PrL
         private void AdminDrones_Click(object sender, RoutedEventArgs e)
         {
             new dronesList(bl).Show();
+            Timer.Stop();
+
         }
 
         private void AdminCustomers_Click(object sender, RoutedEventArgs e)

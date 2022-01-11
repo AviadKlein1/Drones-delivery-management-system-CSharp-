@@ -562,9 +562,9 @@ namespace DalApi
         {
             double[] droneElectricityConsumption = new double[5];
             //free
-            droneElectricityConsumption[0] = 0.15;
+            droneElectricityConsumption[0] = 0.05;
             //light weight
-            droneElectricityConsumption[1] = 0.1;
+            droneElectricityConsumption[1] = 0.15;
             //mediumweight
             droneElectricityConsumption[2] = 0.2;
             //heavy weight
