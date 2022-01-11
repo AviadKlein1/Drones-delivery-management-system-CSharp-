@@ -14,12 +14,14 @@
 
 # Features
 
-- hyperlink to git & mailto
-- Usese nuget- packet manager - metro packeg
-- toolbar change
-- icon on desktop taskbar
+- hyperlinks to git & mailto
+- Use in nuget packet manager for Metro packeges
+- Toolbar changes
+- Icon on desktop taskbar
 - Dll import of kernel32 let as show console mode at app
-- multi threding sincronize app - all wondows at the same time
+- Multi threding sincronize app - all windows at the same time
+- Battery proggres bar with colores scale
+- 
 
 
 

@@ -57,7 +57,6 @@ namespace PrL
         }
         private void dclick(object sender, MouseButtonEventArgs e)
         {
-            Timer.Stop();
             try
             {
                 new AddDrone(bl, (DroneModelToList)dronesListView.SelectedItem).Show();
