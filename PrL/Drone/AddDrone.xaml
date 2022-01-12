@@ -34,16 +34,16 @@
             
             <Label x:Name="DroneDitails" Content="Drone ditales" HorizontalAlignment="Center"  Margin="0,20,0,10" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
             <TextBlock x:Name="IdBlock"  Text="ID: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
-            <TextBox x:Name="DroneIdBox"  Text="{Binding Path = Id}" HorizontalAlignment="Center" Width="150" IsEnabled="False" />
+            <TextBox x:Name="DroneIdBox"  Text="{Binding Id}" HorizontalAlignment="Center" Width="150" IsEnabled="False" />
 
             <TextBlock x:Name="ModelBlock" Text="Model: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150"/>
-            <TextBox  x:Name="DroneModelBox" Text="{Binding Path = Model}" HorizontalAlignment="Center" Width="150"/>
+            <TextBox  x:Name="DroneModelBox" Text="{Binding Model}" HorizontalAlignment="Center" Width="150"/>
 
             <TextBlock x:Name="WeightBlock"  Text="Weight: "  TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
-            <TextBox  x:Name="WeightBox" Text="{Binding Path = Weight}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            <TextBox  x:Name="WeightBox" Text="{Binding Weight}"  HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
 
             <TextBlock x:Name="StatusBlock" Text="Status: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
-            <TextBox  x:Name="StatusBox" Text="{Binding Path = Status}" HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
+            <TextBox  x:Name="StatusBox" Text="{Binding Status}" HorizontalAlignment="Center" Width="150" IsEnabled="False"/>
 
             <TextBlock x:Name="BatteryBlock" Text="Battery charge: " TextDecorations="Underline" HorizontalAlignment="Center" Width="150" />
             <Border Background="White" BorderBrush="Black" Width="100"  CornerRadius="6"

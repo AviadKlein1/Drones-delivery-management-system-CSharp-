@@ -167,25 +167,6 @@ namespace PrL
 
             return mySolidColorBrush;
         }
-        //public void PlaySimulator(int droneId, Action Worker_ProgressChanged, Func<bool> IsTimeRun)
-        //{
-            
-        //    //        bl.ScheduleParcelToDrone(droneId);
-        //    //        Load(droneId);
-        //    //        SimPickUpParcel(droneId, DroneSpeed);
-        //    //        Load(droneId);
-        //    //        SimDeliverParcel(droneId, DroneSpeed);
-        //    //        Load(droneId);
-        //    //        if (droneToList.BatteryNum < 40)SimChargeDrone(droneId, DroneSpeed);
-        //    //    catch(Exception ex)
-        //    //        Switch.IsOn = false;
-        //    //        progress.IsActive = false;
-        //    //        progress.Visibility = Visibility.Collapsed;
-        //    //        DeleteDrone.Visibility = Visibility.Visible;
-        //    //        DisplayDrone.IsEnabled = true;
-        //    //        MessageBox.Show(ex.Message);
-       
-        //}
         public bool SimPickUpParcel(int droneId, double _droneSpeed)
         {
             BlApi.BO.DroneToList dtl = new();
@@ -580,14 +561,17 @@ namespace PrL
                 progress.IsActive = true;
                 progress.Visibility = Visibility.Visible;
                 DeleteDrone.Visibility = Visibility.Hidden;
+                DisplayDrone.Visibility = Visibility.Hidden;
             }
             else
             {
+                DisplayDrone.Visibility =   Visibility.Visible;
                 DroneSimultor.CancelAsync();
                 progress.IsActive = false;
                 progress.Visibility = Visibility.Collapsed;
-                DeleteDrone.Visibility = Visibility.Visible;
+                Load(droneToList.Id);
                 DisplayDrone.IsEnabled = true;
+
             }
         }
         public void ReportProgressInSimultor()
