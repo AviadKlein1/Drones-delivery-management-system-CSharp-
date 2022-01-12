@@ -28,7 +28,7 @@
 - Automaticly saving your jub when you exit program in xml files
 - Option to delete intitis
 - And more as uou can see...
-- 
+- ![](droneGif.gif)
 ## if you want to give us some adveices contact us in GitHub, thanks!
 
 
