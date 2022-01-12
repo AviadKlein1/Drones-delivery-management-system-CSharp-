@@ -12,7 +12,8 @@
 > Factory,and all. also we try to keep eyes abuot most bad code smells that we notice.
 >
 > Thankyou for reading, and enjoy this code..
-## If you want to see all features, login as adminisrator with this ditailes: *admin*, *123456.*
+## If you want to see all features, login as adminisrator with this ditailes: 
+## *admin* *123456*
 
 # Features for Bonus
 
